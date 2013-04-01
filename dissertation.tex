@@ -1,0 +1,159 @@
+%% Select the dissertation mode on
+% See the documentation for more information about the available class options
+% If you give option 'draft' or 'draft*', the draft mode is set on
+%\documentclass[dissertation,final,nocontribution]{aaltoseries}
+
+\documentclass[dissertation,draft*]{aaltoseries}
+%\documentclass[dissertation]{aaltoseries}
+\usepackage[utf8]{inputenc}
+
+% Set the document languages
+\usepackage[english]{babel}        % British hyphenation patterns
+
+%\usepackage[ELEC, RGB]{aaltologo}
+
+\usepackage[babel=true]{microtype} % http://ctan.org/tex-archive/macros/latex/contrib/microtype
+%\usepackage{graphicx}              %
+%\usepackage{amsmath}% http://ctan.org/pkg/amsmath
+%%,amsfonts,amsthm,amsxtra,amsbsy,amssymb,mathrsfs}   % Mathematics
+%\usepackage{bm} % bold math argument, http://www.ctan.org/pkg/bm
+
+\usepackage{url}                   % http://ctan.org/tex-archive/macros/latex/contrib/url
+\usepackage[caption=false,font=footnotesize]{subfig}                % http://ctan.org/tex-archive/macros/latex/contrib/subfig
+\usepackage{acronym}               % http://ctan.org/tex-archive/macros/latex/contrib/acronym
+\usepackage{booktabs}              % http://ctan.org/tex-archive/macros/latex/contrib/booktabs
+\usepackage{bytefield}             % http://ctan.org/tex-archive/macros/latex/contrib/bytefield
+\usepackage{listings}              % http://ctan.org/tex-archive/macros/latex/contrib/listings
+\usepackage{float}                 % Needed for hyperref - see note above
+\usepackage{hyperref}              % Problematic - see note above
+\usepackage{algorithm}             % http://ctan.org/tex-archive/macros/latex/contrib/algorithms
+\usepackage{algorithmic}           % (also part of the algorithms bundle)
+
+\hyphenation{tele-presence}
+\hyphenation{multi-media}
+
+\hypersetup{
+  pdfauthor={Varun Singh},
+  pdftitle={Adaptive Multimedia Systems}
+  pdfsubject={RTP Congestion Control},
+  pdfkeywords={RTP} {Congestion Control} {MPRTP} {geo-location}
+}
+
+
+
+% The author of the dissertation
+\author{Varun Singh}
+% The title of the thesis
+\title{Adaptive Multimedia Systems}
+
+\begin{document}
+
+%% The abstract of the dissertation in English
+% Use this command!
+\draftabstract{
+TBD
+}
+% Let's add another one in Finnish
+%\draftabstract[finnish]{\lipsum[4-6]}
+% And yet another one in Swedish
+%\draftabstract[swedish]{\lipsum[7-9]}
+
+%% Preface
+% If you write this somewhere else than in Helsinki, use the optional location.
+\begin{preface}[Espoo]
+%\lipsum[1-4]
+TBD
+\end{preface}
+
+%% Table of contents of the dissertation
+\tableofcontents
+
+% For article dissertations, remove if you write a monograph dissertation.
+\publicationdataorder{author}{title}{publication}{information}{month}{year and page}
+\publicationpunctuation[]{,}{}{,}{,}{,}{}
+\publicationformatting[]{}{}{\em}{}{}{}
+\publicationadditionalpreformatting{}{''}{}{}{}{}
+\publicationadditionalpostformatting{}{,``}{}{}{}{}
+\listofpublications
+
+
+%% Add lists of figures and tables as you usually.
+
+%% Add list of abbreviations, list of symbols, etc., using your preferred package/method.
+%\include{listofabbreviations}
+%\include{listofsymbols}
+
+\include{./chapters/_1intro}
+
+%% The following commands are for article dissertations, remove them if you write a monograph dissertation.
+
+% Errata list, if you have errors in the publications.
+%\errata
+
+%% The first publication (journal article)
+% Set the publication information.
+% This command musts to be the first!
+\addpublication[conference]{Devadoss J., Singh V., Liu C., Ott J., Wang Y-K., Curcio I.}{Evaluation of Error Resilience Mechanisms for 3G Conversational Video}{IEEE ISM}{Berkley, USA}{Dec}{2008}{IEEE}{c0}
+% Add the dissertation author's contribution to that publication (the order can be interchanged with \adderrata).
+\addcontribution{The author did this and that}
+% Add the errata of the publication, remove if there are none (the order can be interchanged with \addauthorscontribution).
+%\adderrata{This is wrong}
+% Add the publication pdf file, the filename is the parameter (must be the last).
+%\addpublicationpdf{add/1_3g_er.pdf}
+
+\addpublication[submitted]{V. Singh, J. Ott, C. Perkins}{Circuit Breakers}{---}{}{}{2013}{}{c1}
+% Add the dissertation author's contribution to that publication.
+\addcontribution{The author did also this and that}
+% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
+%\adderrata{This is wrong}
+% Add the publication pdf file, the filename is the parameter.
+%\addpublicationpdf{add/6_fec_ra.pdf}
+
+%% The second publication (conference article, note the optional parameter)
+% Set the publication information.
+\addpublication[conference]{V.Singh, J. Ott, I. D. D. Curcio}{Rate adaptation for 3G Conversational Video}{IEEE Infocom Workshops}{Rio de Janeiro, Brazil}{04}{2009}{IEEE}{c2}
+% Add the dissertation author's contribution to that publication.
+\addcontribution{The author did everything}
+% No errata
+% Add the publication pdf file, the filename is the parameter.
+%\addpublicationpdf{add/2_3g_ra.pdf}
+
+%% The third publication (another journal paper, accepted for publication, note the optional parameter)
+% Set the publication information, detailed information can be empty
+\addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Rate Adaption for Conversational Video in Heterogeneous Environments}{IEEE World of Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c3}
+% Add the dissertation author's contribution to that publication.
+\addcontribution{The author did everything}
+% Add the errata of the publication, remove if there are none.
+%\adderrata{This is wrong}
+% Add the publication pdf file, the filename is the parameter.
+%\addpublicationpdf{add/3_het_ra.pdf}
+
+\addpublication[submitted]{M. Nagy, V. Singh, J. Ott, L. Eggert}{Rate-control using FEC for Interactive Multimedia Communicarion}{---}{}{}{2013}{}{c4}
+% Add the dissertation author's contribution to that publication.
+\addcontribution{The author did also this and that}
+% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
+%\adderrata{This is wrong}
+% Add the publication pdf file, the filename is the parameter.
+%\addpublicationpdf{add/6_fec_ra.pdf}
+
+%% The fourth publication (yet another journal paper, submitted for publication, note the optional parameter)
+%% Note that you are allowed to use this option only when submitting the dissertation for pre-examination!
+% Set the publication information, detailed information is not printed
+\addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Predictive Buffering}{IEEE World of Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c8}
+% Add the dissertation author's contribution to that publication.
+\addcontribution{The author did everything}
+% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
+%\adderrata{This is wrong}
+% Add the publication pdf file, the filename is the parameter.
+%\addpublicationpdf{add/4_glass.pdf}
+
+\addpublication[conference]{V. Singh, S. Ahsan, J. Ott}{MPRTP}{ACM Multimedia Systems (MMSys)}{Oslo, Norway}{02}{2013}{ACM}{c10}
+% Add the dissertation author's contribution to that publication.
+\addcontribution{The author did also this and that}
+% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
+%\adderrata{This is wrong}
+% Add the publication pdf file, the filename is the parameter.
+%\addpublicationpdf{add/5_mprtp.pdf}
+
+
+\end{document}
