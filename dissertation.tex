@@ -29,6 +29,8 @@
 \usepackage{algorithm}             % http://ctan.org/tex-archive/macros/latex/contrib/algorithms
 \usepackage{algorithmic}           % (also part of the algorithms bundle)
 
+\usepackage{longtable}		% for tables that span across pages
+
 \hyphenation{tele-presence}
 \hyphenation{multi-media}
 
@@ -82,14 +84,20 @@ Internet Engineering Task Force (IETF).
 
 
 %% Add lists of figures and tables as you usually.
+% \listoffigures
+% \listoftables
+% \listofalgorithms
+% \listofequations
 
 %% Add list of abbreviations, list of symbols, etc., using your preferred package/method.
 %\include{listofabbreviations}
 %\include{listofsymbols}
+\chapter*{List of Abbreviations}
+\input{./chapters/_0lists}
 
+%% The main matter, one can obviously use \input or \include
 \chapter{Introduction}
-
-\include{./chapters/_1intro}
+\input{./chapters/_1intro}
 
 \chapter{Research Goal}
 
@@ -97,7 +105,7 @@ Internet Engineering Task Force (IETF).
 
 \chapter{Rate-control for Interactive Multimedia}
 
-\chapter{Error-Resilience and Rate-control for Interactive Multimedia}
+\chapter{Adaptive Error-Resilience and Congestion Control}
 
 %% An example for changing the running header (the optional parameter)
 
