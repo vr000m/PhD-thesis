@@ -96,25 +96,32 @@ Internet Engineering Task Force (IETF).
 
 %% The main matter, one can obviously use \input or \include
 \chapter{Introduction}
+\label{chap1}
 \input{./chapters/_1intro}
 
 \chapter{Research Goal}
+\label{chap2}
+%\section{Congestion Control Framework}
 %\input{./chapters/_2rg}
 
-\chapter{Congestion Control Cues}
+\chapter{RTP: Real-time Transport Protocol}
+\label{chap3}
 
 \chapter{Rate-control for Interactive Multimedia}
-
-\chapter{Adaptive Error-Resilience and Congestion Control}
-
+\label{chap4}
 %% An example for changing the running header (the optional parameter)
 
 \chapter{Multihoming, Overlay and Mobility Consideration}
+\label{chap5}
 
 \chapter{Network-assisted Congestion Control}
+\label{chap6}
+
+\chapter{Adaptive Error-Resilience and Congestion Control}
+\label{chap7}
 
 \chapter{Conclusions}
-
+\label{chap8}
 
 %% The following commands are for article dissertations, remove them if you write a monograph dissertation.
 
@@ -143,7 +150,7 @@ acted as the main editor of the paper.}
 % Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
 %\adderrata{This is wrong}
 % Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/6_fec_ra.pdf}
+%\addpublicationpdf{add/}
 
 %% The second publication (conference article, note the optional parameter)
 % Set the publication information.
@@ -200,9 +207,10 @@ and acting as the main editor of the paper.}
 % Add the publication pdf file, the filename is the parameter.
 %\addpublicationpdf{add/5_mprtp.pdf}
 
+%\bibliographystyle{IEEEtran} %plain, 
 \bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
 %\bibliography{IEEEabrv,../allpapers}
-\bibliography{IEEEabrv,bib/allpapers,bib/rfc,bib/fec}
+\bibliography{bib/allpapers,bib/rfc,bib/fec}
 
 \end{document}
