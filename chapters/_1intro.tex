@@ -16,20 +16,40 @@ while associating it with the pertinent related work in the area. The
 remainder of the thesis is organized as follows.
 
 Chapter~\ref{chap2} discribes the research goal of the thesis, which consists
-of creating a framework for congestion control that meets the  requirements
-for multimedia systems.
+of creating a framework for congestion control that meets the requirements for
+multimedia systems.
+
+%\chapter{RTP: Real-time Transport Protocol}
 
 Chapter~\ref{chap3} provides the neccessary background information to RTP
-(Real-time Transport Protocol).
+(Real-time Transport Protocol). RTP together with RTCP (RTP Control Protocol)
+forms the control loop that adapts media to the reported path characteristics.
+We also provide an high-level overview to our proposed `Congestion Cues
+Framework' and discuss criteria for evaluating congestion control for
+multimedia systems. This section is based on the RTP protocol
+suite~\cite{rfc3550, rfc4585, rfc3611, rfc5104, rfc5506} and our contributions
+to it~\cite{draft.rmcat.evaluate}.
 
-Chapter~\ref{chap4}
+%RTP, AVPF, CCM, XR, reduced-size, 
+%draft.rtp.cb, draft.rtp.tfrc, rrtcc
+% \chapter{Rate-control for Interactive Multimedia}
 
-Chapter~\ref{chap5}
+Chapter~\ref{chap4} discusses the mechanisms available for congestion control
+in interactive multimedia. We also discuss our contributions, which is
+documented in \citepub{c:cb}, \citepub{c:3grc}, \citepub{c:hetrc},
+\citepub{c:fecrc}, and \cite{draft.rtp.cb}.
 
+% \chapter{Multihoming, Overlay and Mobility Consideration}
+
+Chapter~\ref{chap5} discusses the impact of mobility 
+
+% \chapter{Network-assisted Congestion Control}
 Chapter~\ref{chap6}
 
+% \chapter{Adaptive Error-Resilience and Congestion Control}
 Chapter~\ref{chap7}
 
+% \chapter{Conclusions}
 Chapter~\ref{chap8} concludes the thesis and we analyse if the framework meets
 the requirements.
 
