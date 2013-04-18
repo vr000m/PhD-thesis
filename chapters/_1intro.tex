@@ -1,12 +1,12 @@
-In recent years, video has emerged as the dominant traffic on the
-Internet~\cite{cvni.13,dawn.zb}\footnote{In 2012, $51\%$ of mobile traffic was
-video.}, partly due to the success of YouTube and other over-the-top media
-streaming services. Video streaming emerged as a dominant traffic after it was
-easily accessible to Internet users in the web-browser (initially, due to the
-Adobe Flash Video plugin and later, due to HTML5 video tag). Currently, the
-same trend can be observed with interactive multimedia, i.e., web services can
-use Adobe's Real-time Media Flow Protocol (RTMFP)~\cite{draft.rtmfp} or
-HTML5's Web Real-Time Communication (WebRTC)~\cite{draft.webrtc}.
+In recent years, video has emerged as the dominant traffic\footnote{In 2012,
+$51\%$ of mobile traffic was video.} on the Internet~\cite{cvni.13,dawn.zb},
+partly due to the success of YouTube and other over-the-top media streaming
+services. Video streaming emerged as a dominant traffic after it was easily
+accessible to Internet users in the web-browser (initially, due to the Adobe
+Flash Video plugin and later, due to HTML5 video tag). Currently, the same
+trend can be observed with interactive multimedia, i.e., web services can use
+Adobe's Real-time Media Flow Protocol (RTMFP)~\cite{draft.rtmfp} or HTML5's
+Web Real-Time Communication (WebRTC)~\cite{draft.webrtc}.
 
 Real-time multimedia traffic on the Internet is subject to the
 unpredictability of the best-effort IP network. This uncertainity is mainly
@@ -23,12 +23,18 @@ levels. However, this strategy is not applicable to interactive multimedia,
 where the sending endpoint needs to immediately adapt the media encoding rate
 to the varying path characteristics.
 
-This thesis is about enabling congestion-control for real-time multimedia. The
-idea was to build a congestion-control that gets insights into the current
-network conditions, media codec operation and the demands of the multimedia
-application (user's preference, application settings, user's quality of
-experience).
+This thesis is about enabling congestion control for real-time multimedia. The
+idea was to build a congestion control that takes into account the network
+conditions, media codec capabilities and the demands of the multimedia
+application. Additionally, the congestion control can adjust by monitoring the
+user's preference, application policy changes and user's Quality of Experience
+(QoE). In this thesis we use Real-time Transport Protocol (RTP)~\cite{rfc3550}
+to carry media data, the congestion control algorithm is therefore built
+within the constraints of RTP. However, wherever possible we have attempted to
+fix these deficiencies by standardizing the protocol extensions.
 
+% classification of cues 
+% is a summary of papers
 
 \section{Research Methodology}
 
