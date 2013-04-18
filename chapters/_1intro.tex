@@ -3,34 +3,53 @@ Internet~\cite{cvni.13,dawn.zb}\footnote{In 2012, $51\%$ of mobile traffic was
 video.}, partly due to the success of YouTube and other over-the-top media
 streaming services. Video streaming emerged as a dominant traffic after it was
 easily accessible to Internet users in the web-browser (initially, due to the
-Adobe Flash Video plugin and later, due to HTML5 video tag).
+Adobe Flash Video plugin and later, due to HTML5 video tag). Currently, the
+same trend can be observed with interactive multimedia, i.e., web services can
+use Adobe's Real-time Media Flow Protocol (RTMFP)~\cite{draft.rtmfp} or
+HTML5's Web Real-Time Communication (WebRTC)~\cite{draft.webrtc}.
 
-Currently, the same trend can be observed with interactive multimedia, i.e.,
-web services can use Adobe's RTMFP (Real-time Media Flow
-Protocol)~\cite{draft.rtmfp} or HTML5's WebRTC (Web Real-Time
-Communication)~\cite{draft.webrtc}. 
+Real-time multimedia traffic on the Internet is subject to the
+unpredictability of the best-effort IP network. This uncertainity is mainly
+due to packet loss, packet re-ordering, variable queuing delay. Buffer-
+bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router may cause
+long delays and bursty losses. Video streaming overcomes most of these
+challenges by having larger playout buffers, but some over-the-top streaming
+applications now use TCP instead of UDP for delivering media data.
+Unfortunately, TCP is only suitable for interactive multimedia for paths with
+very low end-to-end delay ($<100$ms)~\cite{Brosh:tcp-real-time}. Furthermore,
+in video streaming, if the path characteristics change, the client can switch
+between files with the same media content pre-encoded at different quality
+levels. However, this strategy is not applicable to interactive multimedia,
+where the sending endpoint needs to immediately adapt the media encoding rate
+to the varying path characteristics.
+
+This thesis is about enabling congestion-control for real-time multimedia. The
+idea was to build a congestion-control that gets insights into both the
+current network conditions, media codec operation and the demands of the
+multimedia application. 
 
 
 \section{Research Methodology}
 
 This thesis aimed to produce original scientific work that would be widely
-applicable in the Internet community. The results that make up the core of the
-thesis are documented in the scientific papers and were implemented as
-simulations, proof-of-concept prototypes and in test-beds (in that order). Our
-ideas evolved and became more refined by implementing them on a real system.
-Consequently, this helped us make better decisions, based on preliminary
-performance measurements.
+applicable in the Internet community. Based on the cultural styles defined by
+ACM~\cite{Denning:CS.Method}, we use the \textit{abstraction} and
+\textit{design} paradigms in our scientific research. To elaborate, the
+results that make up the core of the thesis were implemented as simulations,
+proof-of-concept prototypes and in test-beds. Consequently, this process
+helped us make better design and implementation decisions.
 
-In order to make significant impact in the Internet community, we not only
-have to produce significant results to motivate deployment but also solve
-engineering issues and also document them as standards documents. By
-documenting these solutions, we create a more robust standard that facilitates
-interoperability and therefore deployment. For example, the protocol
-extensions to enable congestion control (i.e., to signal the congestion cues)
-are discussed mainly in the standards document, while the associated
-congestion control algorithm and the performance analysis is discussed in the
-scientifc papers. To summarize, we discuss both our research work and our
-engineering work; however in thesis, we emphasize more on the former.
+In order to make significant impact in the Internet community, researchers not
+only have to produce significant results to motivate deployment but also solve
+engineering issues. These engineering solutions may not fulfill the
+requirements of being described in scientific papers, but are instead
+described in standards documents, which facilitates interoperability and
+enthuses deployment. For example, the protocol extensions to enable congestion
+control (i.e., to signal the congestion cues) are discussed mainly in the
+standards document, while the associated congestion control algorithm and the
+performance analysis is discussed in the scientifc papers. To summarize, we
+discuss both our research work and our engineering work; however in the
+thesis, we emphasize more on the former.
 
 
 
@@ -53,8 +72,8 @@ multimedia systems.
 
 %\chapter{RTP: Real-time Transport Protocol}
 
-Chapter~\ref{chap3} provides the neccessary background information to RTP
-(Real-time Transport Protocol). RTP together with RTCP (RTP Control Protocol)
+Chapter~\ref{chap3} provides the neccessary background information to Real-
+time Transport Protocol (RTP). RTP together with RTP Control Protocol (RTCP)
 forms the control loop that adapts media to the reported path characteristics.
 We also provide an high-level overview to our proposed `Congestion Cues
 Framework' and discuss criteria for evaluating congestion control for
