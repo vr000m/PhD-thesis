@@ -21,17 +21,33 @@ in video streaming, if the path characteristics change, the client can switch
 between files with the same media content pre-encoded at different quality
 levels. However, this strategy is not applicable to interactive multimedia,
 where the sending endpoint needs to immediately adapt the media encoding rate
-to the varying path characteristics.
+to the available path capacity.
+
+%Compared to video streaming, video communication is more challenging. First,
+%it requires implementing a NAT traversal mechanism for communicating between
+%peers that may be behind a NATs or firewalls. Second, it requires agreeing on
+%a set of common codecs, protocols and formats to avoid negotiation failure.
+%Lastly, to provide  a decent end-user experience, it requires either the end-
+%point or a classifier to associate a DiffServ Code Point (DSCP) to the media
+%packets; therby, enabling Quality of Service (QoS). Additionally, it should be
+%able to adapt the media quality to the end-to-end path characteristics.
 
 This thesis is about enabling congestion control for real-time multimedia. The
 idea was to build a congestion control that takes into account the network
 conditions, media codec capabilities and the demands of the multimedia
-application. Additionally, the congestion control can adjust by monitoring the
-user's preference, application policy changes and user's Quality of Experience
-(QoE). In this thesis we use Real-time Transport Protocol (RTP)~\cite{rfc3550}
-to carry media data, the congestion control algorithm is therefore built
-within the constraints of RTP. However, wherever possible we have attempted to
-fix these deficiencies by standardizing the protocol extensions.
+application. Additionally, the congestion control can adjust to the user's
+preferences, changes in application policy/settings and by monitoring the
+user's Quality of Experience (QoE). In chapter~\ref{chap2} we discuss the
+requirements for congestion control, define a framework and categorize
+congestion control cues.
+
+
+In this thesis we use Real-time Transport Protocol (RTP)~\cite{rfc3550} to
+carry media data, the congestion control algorithm is therefore built within
+the constraints of RTP. Consequently, wherever possible we have attempted to
+fix these deficiencies by standardizing our proposed extensions to RTP. This
+thesis is a bundle of scientific papers that discuss various parts of the
+framework and this summary puts them in context.
 
 % classification of cues 
 % is a summary of papers
@@ -41,10 +57,10 @@ fix these deficiencies by standardizing the protocol extensions.
 This thesis aimed to produce original scientific work that would be widely
 applicable in the Internet community. Based on the cultural styles defined by
 ACM~\cite{Denning:CS.Method}, we use the \textit{abstraction} and
-\textit{design} paradigms in our scientific research. To elaborate, the
-results that make up the core of the thesis were implemented as simulations,
-proof-of-concept prototypes and in test-beds. Consequently, this process
-helped us make better design and implementation decisions.
+\textit{design} paradigms to conduct our scientific research. To elaborate,
+the results that make up the core of the thesis were implemented as
+simulations, proof-of-concept prototypes and in test-beds. Consequently, this
+process helped us make better design and implementation decisions.
 
 In order to make significant impact in the Internet community, researchers not
 only have to produce significant results to motivate deployment but also solve
@@ -54,9 +70,9 @@ described in standards documents, which facilitates interoperability and
 enthuses deployment. For example, the protocol extensions to enable congestion
 control (i.e., to signal the congestion cues) are discussed mainly in the
 standards document, while the associated congestion control algorithm and the
-performance analysis is discussed in the scientifc papers. To summarize, we
-discuss both our research work and our engineering work; however in the
-thesis, we emphasize more on the former.
+performance analysis is discussed in the scientifc papers. To summarize, in
+this thesis, we discuss both our research work and our engineering work, but
+emphasize more on the former.
 
 
 
