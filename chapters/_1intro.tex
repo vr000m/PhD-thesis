@@ -38,7 +38,7 @@ idea was to build a congestion control that takes into account the network
 conditions, media codec capabilities and the demands of the multimedia
 application. Additionally, the congestion control can adjust to the user's
 preferences, changes in application policy/settings and by monitoring the
-user's Quality of Experience (QoE). In chapter~\ref{chap2} we discuss the
+user's Quality of Experience (QoE). In chapter~\ref{chap:rg} we discuss the
 requirements for congestion control, define a framework and categorize
 congestion control cues.
 
@@ -90,18 +90,20 @@ various parts of the congestion control framework discuss both our scientific
 and engineering work, while associating it with the relevant related work in
 the area. The remainder of the thesis is organized as follows.
 
-Chapter~\ref{chap2} discribes the research goal of the thesis, which consists
+Chapter~\ref{chap:rg} discribes the research goal of the thesis, which consists
 of creating a framework for congestion control that meets the requirements for
 multimedia systems.
 
 %\chapter{RTP: Real-time Transport Protocol}
 
-Chapter~\ref{chap3} provides the neccessary background information to Real-
+Chapter~\ref{chap:rtp} provides the neccessary background information to Real-
 time Transport Protocol (RTP). RTP together with RTP Control Protocol (RTCP)
 forms the control loop that adapts media to the reported path characteristics.
-We also provide an high-level overview to our proposed `Congestion Cues
-Framework' and discuss criteria for evaluating congestion control for
-multimedia systems. This section is based on the RTP protocol
+
+
+Chapter~\ref{chap:cc.fw} provide an high-level overview to our proposed
+`Congestion Cues Framework' and discuss criteria for evaluating congestion
+control for multimedia systems. This section is based on the RTP protocol
 suite~\cite{rfc3550, rfc4585, rfc3611, rfc5104, rfc5506} and our contributions
 to it~\cite{draft.rmcat.evaluate, draft.xr.discard.rle, draft.xr.jb}.
 
@@ -109,36 +111,37 @@ to it~\cite{draft.rmcat.evaluate, draft.xr.discard.rle, draft.xr.jb}.
 % draft.rtp.cb, draft.rtp.tfrc, draft.rrtcc
 % \chapter{Rate-control for Interactive Multimedia}
 
-Chapter~\ref{chap4} discusses the mechanisms available for congestion control
+Chapter~\ref{chap:cc} discusses the mechanisms available for congestion control
 in interactive multimedia. We also discuss the circuit breaker--a minimal
 congestion control--conditions under which a multimedia stream will be
 terminated. The chapter is based on our contributions, which is documented
 in~\cite{draft.rtp.cb, Singh:control.loops.api}, \citepub{c:cb},
 \citepub{c:3grc}, \citepub{c:hetrc}.
 
+% \chapter{Adaptive Error-Resilience and Congestion Control}
+% +ECN
+
+Chapter~\ref{chap:er-cc} discusses the mechanisms available for error-resilience of
+interactive video. We also discuss using these error-resilience techniques for
+congestion control. The chapter is based on our contributions, which is
+documented in \citepub{c:err}, and \citepub{c:fecrc}.
+
+
 % \chapter{Multihoming, Overlay and Mobility Consideration}
 
-Chapter~\ref{chap5} discusses using multihoming for real-time media delivery
+Chapter~\ref{chap:mprtp} discusses using multihoming for real-time media delivery
 and introduces Multipath RTP (MPRTP). The chapter is mainly based on our
 contributions, which is documented in~\cite{draft.mprtp, draft.mprtp.sdp,
 Globisch:AsymGrpComm, draft.rtcp.overlay}, and \citepub{c:mprtp}.
 
 % \chapter{Network-assisted Congestion Control}
 
-Chapter~\ref{chap6} discusses using congestion cues from coverage maps, i.e.,
+Chapter~\ref{chap:cc.nw} discusses using congestion cues from coverage maps, i.e.,
 overlay coverage or througput information (collected by active/passive
 measurements) on a geographical map. The chapter is based on our
 contributions,  which is documented in \citepub{c:glass}.
 
-% \chapter{Adaptive Error-Resilience and Congestion Control}
-% +ECN
-
-Chapter~\ref{chap7} discusses the mechanisms available for error-resilience of
-interactive video. We also discuss using these error-resilience techniques for
-congestion control. The chapter is based on our contributions, which is
-documented in \citepub{c:err}, and \citepub{c:fecrc}.
-
 % \chapter{Conclusions}
 
-Chapter~\ref{chap8} concludes the thesis and we analyse if the framework meets
+Chapter~\ref{chap:conc} concludes the thesis and we analyse if the framework meets
 the requirements.

@@ -13,7 +13,11 @@
 %\usepackage[ELEC, RGB]{aaltologo}
 
 \usepackage[babel=true]{microtype} % http://ctan.org/tex-archive/macros/latex/contrib/microtype
-%\usepackage{graphicx}              %
+
+\usepackage{graphicx}
+ \graphicspath{{graphs/}}
+ \DeclareGraphicsExtensions{.pdf}
+ 
 %\usepackage{amsmath}% http://ctan.org/pkg/amsmath
 %%,amsfonts,amsthm,amsxtra,amsbsy,amssymb,mathrsfs}   % Mathematics
 %\usepackage{bm} % bold math argument, http://www.ctan.org/pkg/bm
@@ -100,27 +104,31 @@ Internet Engineering Task Force (IETF).
 \input{./chapters/_1intro}
 
 \chapter{Research Goal}
-\label{chap2}
+\label{chap:rg}
 \input{./chapters/_2rg}
 
 \chapter{RTP: Real-time Transport Protocol}
-\label{chap3}
+\label{chap:rtp}
 
-\chapter{Rate-control for Interactive Multimedia}
-\label{chap4}
+\chapter{Congestion Control Framework}
+\label{chap:cc.fw}
+\input{./chapters/_4fw}
+
+\chapter{Congestion Control for Interactive Multimedia}
+\label{chap:cc}
 %% An example for changing the running header (the optional parameter)
 
-\chapter{Multihoming, Offloading, Overlays and Mobility }
-\label{chap5}
+\chapter{Adaptive Error-Resilience and Congestion Control}
+\label{chap:er-cc}
+
+\chapter{Multihoming, Offloading, Overlays and Mobility}
+\label{chap:mprtp}
 
 \chapter{Network-assisted Congestion Control}
-\label{chap6}
-
-\chapter{Adaptive Error-Resilience and Congestion Control}
-\label{chap7}
+\label{chap:cc.net}
 
 \chapter{Conclusions}
-\label{chap8}
+\label{chap:conc}
 
 %% The following commands are for article dissertations, remove them if you write a monograph dissertation.
 
