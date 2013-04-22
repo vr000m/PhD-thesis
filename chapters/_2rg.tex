@@ -3,16 +3,29 @@
 The research goal of this thesis is to discuss congestion control for real-
 time media. To achieve a suitable end-user experience, a multimedia
 system\footnote{the transmitting endpoint or a classifier in the network} can:
-1) associate a DiffServ Code Point (DSCP) to the media packets; therby,
-enabling Quality of Service (QoS). Using DSCP poses some challenges, which are
-discussed in Section~\ref{rg.ch.dscp}. 2) instruct the encoder to modify the
-encoding rate to a certain target rate. To achieve media rate-adaption the
-endpoint needs to monitor and respond to congestion cues. Additionally, we 
-discuss requirements for implementing media rate-adaptation.
+1) associate a DiffServ Code Point (DSCP)~\cite{rfc2474} to the media packets;
+therby, enabling Quality of Service (QoS). Using DSCP poses some challenges,
+which are discussed in Section~\ref{rg.ch.dscp}. 2) instruct the encoder to
+modify the encoding rate to a certain target rate. To achieve media rate-
+adaption the endpoint needs to monitor and respond to congestion cues.
+Additionally, we  discuss requirements for media rate-adaptation.
 
 
 \section{Challenges with DSCP Markings}
 \label{rg.ch.dscp}
+
+DiffServ assigns each data packet to a traffic class and the network manages
+each traffic class differently, thereby some traffic classes receive
+preferential treatment (e.g., lower delay, lower losses)~\cite{rfc2475}. The
+routers overcome congestion between traffic classes by implementing
+\emph{priority queuing}, \emph{fair queuing}, or \emph{weighted fair queuing
+(WFQ)}~\cite{rfc5865}; for congestion within the same traffic class the
+router discards packets using \emph{tail drop} or \emph{Random Early Detection
+(RED)}~\cite{Floyd:RED}.
+
+Consequently, DiffServ needs to be implemented on every router along the data
+path and configured to have the same forwarding policy (i.e., belong to the
+same DiffServ administrative domain). 
 
 
 \section{Congestion Cues}
