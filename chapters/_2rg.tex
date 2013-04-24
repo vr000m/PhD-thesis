@@ -11,14 +11,50 @@ adaption the endpoint needs to monitor and respond to congestion cues.
 Additionally, we  discuss requirements for media rate-adaptation.
 
 
-\section{Multimedia Ecosystem}
+\section{Terminology}
 %definition of Multimedia System
 
-\textbf{Endpoint}:
+The real-time multimedia ecosystem is an interconnection of several
+components. These components are discussed below:
 
-\textbf{Multimedia System}:
+\textbf{Endpoint}: is the networked host at which the media flow is initiated
+or terminated. Typically, identified by its IP address and port number.
 
-\textbf{Multimedia Environment}:
+% or in the local area by its MAC address. the MAC address may appear in the 
+% CNAME-SDES item. rfc6222?
+
+\textbf{Multimedia Device}: captures multimedia content, for example a camera
+or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices are capable
+of encoding the raw frames into compressed media using a codec (e.g., OPUS,
+AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or a software
+library.
+
+%TODO: missing refs for the above acronyms.
+
+\textbf{Multimedia Application}: is a software program running on an endpoint
+that contains the logic for rendering the received multimedia streams,
+discovering, configuring, enabling and disabling the multimedia device(s). It
+also stores the user's preferences and application settings (typically, set by
+the developer or the multimedia service provider), it uses these stored
+settings to adjust the CODEC settings (frame rate, frame size), adjust the
+network parameters (size of dejitter buffer, enable/disable RTP flows,
+congestion control, etc).
+
+\textbf{Multimedia System}: is the combination of a multimedia application,
+controlling one or more multimedia device on an endpoint.
+
+\textbf{Middleboxes}: are network devices through which the media packets
+flow. These devices may be NATs or Firewalls, routers with limited capacity or
+queues.
+
+\textbf{Heterogeneous Environment}: real-time multimedia traffic is
+transmitted using best-effort IP networks that consists of paths with varying
+link properties. The variation may be due to properties of the link itself
+(for e.g., wireless links: WLAN, 3G, LTE) or due to varying amounts of cross-
+traffic on a bottleneck link.
+
+ {\color{red} TODO: why or put these terminologies in context of the thesis?}
+
 
 \section{Challenges with DSCP Markings}
 \label{rg.ch.dscp}
@@ -56,13 +92,70 @@ Despite the above listed challenges, DSCP markings can help in some
 environments~\cite{draft.rtcweb.qos}:
 
 \begin{itemize}
-	\item If the congested link is the last-but-one-hop broadband router that
-	often connects a residential or Small Office/Home Office (SOHO) then the 
-	DSCP markings can help in prioritizing the data traffic. 
+	
+    \item If the bottleneck link is the broadband router that often connects a
+    residential or Small Office/Home Office (SOHO) then the DSCP markings can 
+    help in prioritizing the data traffic at this bottleneck.
+
 	\item If the packets traverse a congested wireless link and the service 
 	provider did not scrub out the DSCP markings, the markings may help.
+
 \end{itemize}
 
 \section{Enabling Adaptive Multimedia Systems}
+
+In this thesis, we do not rely on the use of DSCP by any entity (endpoint or
+middlebox) along the path. We assume that the presence of these markings will
+only make the performance of our algorithms better. Consequently, the
+endpoints need to implement rate-control (or, congestion control), i.e., the
+endpoint needs to monitor the media flows and observe for congestion cues.
+Based on these cues, the endpoint may increase or decrease the media encoding
+rate\footnote{For the moment it can be assumed that the rate-controller can
+placed at either the sender or the receiver.}. We identify three control loops
+in~\cite{Singh:control.loops.api}, they are:
+
+\begin{enumerate}
+
+\item \textbf{Codec-Sender}: the codec adapts its encoding rate based on the feedback
+from the sender. Unlike elastic traffic, the codec cannot produce the expected
+media rate immediately. Therefore, the rate-controller needs to take into
+account the timeline in which the codec can produce the new rate. Typically,
+the codec can adapt to a lower rate immediately but cannot ramp-up very
+quickly.
+
+\item \textbf{Sender-Network}: the sender packetizes media frames and sends
+(it may concatenate small audio frames to form a larger packet, or fragment
+large video frames into small packets) them over the network to the receiver.
+It also collects feedback messages from the receiver that may contain
+congestion cues (i.e., variation in RTT, indication for lost or discarded
+packets, goodput, jitter, variation in inter-packet interval, etc).
+
+\item \textbf{Network-Receiver}: it has a playout buffer of media data waiting
+to be decoded and rendered; discarding packets that arrive late for playout,
+and attempting to conceal the missing packets from the observer. It is  also
+monitoring the media flow for loss packets, variation in jitter, receiver
+rate, goodput, calculate expected rate, etc. and reports these to the sender
+to act upon.
+
+\end{enumerate}
+
+Given a rapid detection of a congestion, and a sufficiently low RTT, it is
+possible to change the encoding rate rapidly to meet the requirements of the
+end-to-end path capacity. However, this not always possible because a)
+it may take multiple reports or data packets to detect a congestion cue, b)
+after detection it takes at one-way delay (OWD) to report it. We consider the 
+following scenarios to implement congestion control:
+
+\begin{itemize}
+\item Single media flow on an end-to-end path.
+\item Single media flow competing with the similar flows (i.e., all flows are
+interactive multimedia).
+\item Single media flow competing with multiple long-lived TCP
+\item Single media flow competing with bursty TCP.
+\end{itemize}
+
+To evaluate the performance of a congestion control algorithm, it needs to be
+tested in various application, network and flow settings. These scenarios
+are discussed in more detail in Section~\ref{fw.cc.eval}.
 
 \section{Contribution to Knowledge}
