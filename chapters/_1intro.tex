@@ -95,21 +95,24 @@ of creating a framework for congestion control that meets the requirements for
 multimedia systems.
 
 %\chapter{RTP: Real-time Transport Protocol}
+% RTP, AVPF, CCM, XR, reduced-size, 
 
 Chapter~\ref{chap:rtp} provides the neccessary background information to Real-
 time Transport Protocol (RTP). RTP together with RTP Control Protocol (RTCP)
 forms the control loop that adapts media to the reported path characteristics.
+This section is based on the RTP protocol suite~\cite{rfc3550, rfc4585,
+rfc3611, rfc5104, rfc5506} and our contributions to
+it~\cite{draft.xr.discard.rle, draft.xr.jb}.
 
-
+% \chapter{Rate-control Framework}
 Chapter~\ref{chap:cc.fw} provide an high-level overview to our proposed
 `Congestion Cues Framework' and discuss criteria for evaluating congestion
-control for multimedia systems. This section is based on the RTP protocol
-suite~\cite{rfc3550, rfc4585, rfc3611, rfc5104, rfc5506} and our contributions
-to it~\cite{draft.rmcat.evaluate, draft.xr.discard.rle, draft.xr.jb}.
+control for multimedia systems. This section is based on our contributions,
+which is documented in~\cite{draft.rmcat.evaluate}.
 
-% RTP, AVPF, CCM, XR, reduced-size, 
-% draft.rtp.cb, draft.rtp.tfrc, draft.rrtcc
+
 % \chapter{Rate-control for Interactive Multimedia}
+% draft.rtp.cb, draft.rtp.tfrc, draft.rrtcc
 
 Chapter~\ref{chap:cc} discusses the mechanisms available for congestion control
 in interactive multimedia. We also discuss the circuit breaker--a minimal
