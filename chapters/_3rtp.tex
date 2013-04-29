@@ -1,10 +1,30 @@
 % intro
 
-Real-time Transport Protocol (RTP) is suitable for multimedia communication
-(voice-over-IP, video conferencing, telepresence systems), multimedia
-streaming (video-on-demand, live streaming), media multicast and broadcast.
-RTP and the corresponding feedback messages, RTP Control Protocol (RTCP) are
-defined in~\cite{rfc3550}. RTP carries 
+Real-time Transport Protocol (RTP)~\cite{rfc3550} is suitable for multimedia
+communication (voice-over-IP, video conferencing, telepresence systems),
+multimedia streaming (video-on-demand, live streaming), media multicast and
+broadcast. RTP's design is based on the fundamental principles of \textit
+{application-layer framing} and \textit{integrated layer
+processing}~\cite{clark:alf}, i.e., it provides the following mechanisms:
+source identification, packet playout time, packet loss and reordering, report
+packet delay variation (jitter), and payload type identification. 
+
+The `synchronisation source' (SSRC) assists in determining the source
+endpoint, typically useful when an endpoint sends multiple media streams that
+need to be synchronized (e.g., Audio/Video lip-sync). The `RTP timestamp'
+assists in playing out the received packets at the appropriate instance of
+time and recomposing the media frame from RTP packets. The `RTP sequence
+number' assists in identifying the lost packets and re-ordering packets in
+case of out-of-order packet arrival. Lastly, RTP uses `payload formats' to
+describe the encoding of the media data it is transmitting. Consequentely,
+each codec needs to specify its corresponding payload format.
+
+RTP implements RTP Control Protocol (RTCP) to monitor the performance of the
+media stream (loss fraction, jitter, highest sequence number received), it
+also assists in synchronizing the media streams by relating  the RTP
+timestamps of the individual media streams to the wall clock time and measuring
+RTT.
+
 
 % In this thesis, we consider congestion control for unicast RTP traffic
 % flows.
