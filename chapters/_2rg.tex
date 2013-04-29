@@ -26,7 +26,7 @@ or terminated. Typically, identified by its IP address and port number.
 \textbf{Multimedia Device}: captures multimedia content, for example a camera
 or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices are capable
 of encoding the raw frames into compressed media using a codec (e.g., OPUS,
-AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or a software
+AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or as a software
 library.
 
 %TODO: missing refs for the above acronyms.
@@ -36,7 +36,7 @@ that contains the logic for rendering the received multimedia streams,
 discovering, configuring, enabling and disabling the multimedia device(s). It
 also stores the user's preferences and application settings (typically, set by
 the developer or the multimedia service provider), it uses these stored
-settings to adjust the CODEC settings (frame rate, frame size), adjust the
+settings to adjust the encoder settings (frame rate, frame size), adjust the
 network parameters (size of dejitter buffer, enable or disable RTP flows,
 congestion control, etc).
 
@@ -142,20 +142,22 @@ to act upon.
 
 \end{enumerate}
 
-Given a rapid detection of a congestion, and a sufficiently low RTT, it is
-possible to change the encoding rate rapidly to meet the requirements of the
-end-to-end path capacity. However, this not always possible because a)
-it may take multiple reports or data packets to detect a congestion cue, b)
-after detection it takes at one-way delay (OWD) to report it. We consider the 
-following scenarios to implement congestion control:
+If an endpoint can rapidly detect congestion, and a sufficiently low RTT, it
+is possible to change the encoding rate quickly to meet the requirements of
+the end-to-end path capacity. However in practice, this not always possible
+because a) it may take multiple reports or data packets to detect congestion,
+b) after detection it takes at least one-way delay (OWD) to report it. We
+consider the following scenarios to implement congestion control and evaluate
+its performance, these scenarios try to imitate real-world deployment
+conditions:
 
-\begin{itemize}
+\begin{enumerate}
 \item Single media flow on an end-to-end path.
 \item Single media flow competing with the similar flows (i.e., all flows are
 interactive multimedia).
 \item Single media flow competing with multiple long-lived TCP
 \item Single media flow competing with bursty TCP.
-\end{itemize}
+\end{enumerate}
 
 To evaluate the performance of a congestion control algorithm, it needs to be
 tested in various application, network and flow settings. These scenarios
