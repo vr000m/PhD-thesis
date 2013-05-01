@@ -1,8 +1,8 @@
 % intro
 
 Real-time Transport Protocol (RTP)~\cite{rfc3550} is suitable for multimedia
-communication (voice-over-IP, video conferencing, telepresence systems),
-multimedia streaming (video-on-demand, live streaming), media multicast and
+telephony (voice-over-IP, video conferencing, telepresence systems),
+multimedia streaming (video-on-demand, live streaming), and multimedia
 broadcast. RTP's design is based on the fundamental principles of \textit
 {application-layer framing} and \textit{integrated layer
 processing}~\cite{clark:alf}, i.e., it provides the following mechanisms:
@@ -16,19 +16,18 @@ assists in playing out the received packets at the appropriate instance of
 time and recomposing the media frame from RTP packets. The `RTP sequence
 number' assists in identifying the lost packets and re-ordering packets in
 case of out-of-order packet arrival. Lastly, RTP uses `payload formats' to
-describe the encoding of the media data it is transmitting. Consequentely,
+describe the encoding of the media data it is carrying. Consequentely,
 each codec needs to specify its corresponding payload format.
 
-RTP implements RTP Control Protocol (RTCP) to monitor the performance of the
-media stream (loss fraction, jitter, highest sequence number received), it
-also assists in synchronizing the media streams by relating  the RTP
-timestamps of the individual media streams to the wall clock time and measuring
-RTT.
-
+RTP utilizes RTP Control Protocol (RTCP) to monitor the performance of the
+media stream. Using RTCP reports, the endpoints report loss fraction, jitter,
+highest sequence number received, and calculate RTT. The RTCP reports also
+assist in synchronizing the media streams (audio and video) by relating the
+RTP timestamps of the individual media streams to the wall clock time and
+measuring RTT.
 
 % In this thesis, we consider congestion control for unicast RTP traffic
 % flows.
-
 
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
@@ -37,7 +36,9 @@ in the application or the media flows are transmitted over congestion-
 controlled transport (TCP or DCCP). While using a congestion controlled
 transport may be safe for the network, it is suboptimal for the media quality
 unless the congestion-controlled transport is designed to carry media flows.
-For real-time interactive
+On the other hand, using a non-congestion controlled transport (e.g., UDP),
+the rate-adaptation is implemented in the application based on RTCP reports.
+i.e., the application is network aware.
 
 % timing
 
