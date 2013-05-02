@@ -26,8 +26,6 @@ assist in synchronizing the media streams (audio and video) by relating the
 RTP timestamps of the individual media streams to the wall clock time and
 measuring RTT.
 
-% In this thesis, we consider congestion control for unicast RTP traffic
-% flows.
 
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
@@ -37,13 +35,22 @@ controlled transport (TCP or DCCP). While using a congestion controlled
 transport may be safe for the network, it is suboptimal for the media quality
 unless the congestion-controlled transport is designed to carry media flows.
 On the other hand, using a non-congestion controlled transport (e.g., UDP),
-the rate-adaptation is implemented in the application based on RTCP reports.
-i.e., the application is network aware.
+the rate-adaptation is implemented in the application. In this thesis, we
+consider congestion control for unicast RTP traffic running over best-effort
+IP network. To implement congestion control the sending endpoint needs to rely
+on RTCP feedback from the receiver, but unlike other delay-based variants of
+TCP there is insufficient RTCP bandwidth to provide feedback on a per-packet
+basis.
 
+% CC should not cause queuing delay. Or define low-delay operation of
+% multimedia cc.
+
+\section{RTCP Internval}
 % timing
 
 % avpf
 
+\section{Codec Control}
 % codec control
 
 % relationship with SDP
