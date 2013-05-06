@@ -44,7 +44,11 @@ measuring RTT. (See Figure~\ref{fig:3:rtcp.hdr} for packet header format)
 
 A closed control loop is formed by sending RTP media packets and receiving
 RTCP feedback packets. Unlike TCP, RTCP feedback interval is not associated to
-the path's RTT. Typically, the RTCP interval is $5 \pm 2.5$s. 
+the path's RTT and RTCP packets are sent periodically. To ensure that the RTCP
+reports are not sent too frequently, the endpoints limit the feedback rate to
+$5\%$ of the \textit{media rate}, typically, the RTCP interval is set to $5
+\pm 2.5$~s. However, the slow control loop can cause instability and
+oscillation in the media bit rate.
 
 
 % avpf
