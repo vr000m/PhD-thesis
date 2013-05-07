@@ -55,11 +55,39 @@ ensure that the RTCP reports are not sent too frequently, the endpoints limit
 the feedback rate to $5\%$ of the session \textit{media rate}, half for each
 participant. However, if the endpoint detects packet loss or onset of
 congestion midway through a reporting interval, the base RTP
-specification~\cite{rfc3550} does not allow sending the RTCP report early and
-the endpoint has to wait for the next scheduled RTCP report. Hence, the slow
-control loop can cause instability and oscillation in the media bit rate.
+specification~\cite{rfc3550} (AVP profile) does not allow sending the RTCP
+report early and the endpoint has to wait for the next scheduled RTCP report.
+Hence, the slow control loop can cause instability and oscillation in the
+media bit rate.
 
 % avpf
+
+To use rapid feedback, the endpoints need to implement the Extended RTP
+Profile for RTCP-Based Feedback (AVPF profile)~\cite{rfc4585}. This profile
+allows the endpoint to adjust the RTCP reporting interval to send the RTCP
+feedback reports earlier than the next scheduled RTCP report, sometimes even
+immidiately. As long as the average reporting duration remains unchanged.
+
+Along with the immediate feedback, the AVPF profile also defines a suite of
+error-resilience mechanisms, namely, Negative Acknowledgements (NACK), Picture
+Loss Indication (PLI), Slice Loss Indication (SLI), Reference Picture
+Selection Indication (RPSI). 
+
+\section{Extended Reports (XRs)}
+
+% Transport Metrics
+
+% The RTCP Extended Reports (XR) [RFC3611] allow reporting of more
+% complex and sophisticated reception quality metrics, but do not
+% change the RTCP timing rules.  RTCP extended reports of potential
+% interest for congestion control purposes are the extended packet
+% loss, discard, and burst metrics [RFC3611],
+% [I-D.ietf-xrblock-rtcp-xr-discard],
+% [I-D.ietf-xrblock-rtcp-xr-discard-rle-metrics],
+% [I-D.ietf-xrblock-rtcp-xr-burst-gap-discard],
+% [I-D.ietf-xrblock-rtcp-xr-burst-gap-loss]; and the extended delay
+% metrics [RFC6843], [RFC6798].
+
 
 \section{Codec Control}
 % codec control
