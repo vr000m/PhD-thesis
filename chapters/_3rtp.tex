@@ -41,17 +41,23 @@ format for a unicast media stream.
 \label{fig:3:rtcp.hdr}
 \end{figure}
 
-\section{RTCP Internval}
+\section{RTCP Reporting Interval}
 % timing
 
 A closed control loop is formed by sending RTP media packets and receiving
-RTCP feedback packets. Unlike TCP, RTCP feedback interval is not associated to
-the path's RTT and RTCP packets are sent periodically. To ensure that the RTCP
-reports are not sent too frequently, the endpoints limit the feedback rate to
-$5\%$ of the \textit{media rate}, typically, the RTCP interval is set to $5
-\pm 2.5$~s. However, the slow control loop can cause instability and
-oscillation in the media bit rate.
-
+RTCP feedback packets. The RTCP reporting interval is determined by the number
+of SSRCs in the session, and the chosen session bandwidth. Typically, in a
+unicast session there are two SSRCs, one for each participant, but the number
+of SSRCs can be higher if they send multiple media streams. The interval
+between reports tends to be on the order of a few seconds, and is randomized
+to avoid snchronization of reports from multiple endpoints. Formally, to
+ensure that the RTCP reports are not sent too frequently, the endpoints limit
+the feedback rate to $5\%$ of the session \textit{media rate}, half for each
+participant. However, if the endpoint detects packet loss or onset of
+congestion midway through a reporting interval, the base RTP
+specification~\cite{rfc3550} does not allow sending the RTCP report early and
+the endpoint has to wait for the next scheduled RTCP report. Hence, the slow
+control loop can cause instability and oscillation in the media bit rate.
 
 % avpf
 
