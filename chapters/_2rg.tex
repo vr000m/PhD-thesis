@@ -25,7 +25,7 @@ or terminated. Typically, identified by its IP address and port number.
 
 \textbf{Multimedia Device}: captures multimedia content, for example a camera
 or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices are capable
-of encoding the raw frames into compressed media using a codec (e.g., OPUS,
+of encoding the raw frames into compressed media using a codec (e.g., Opus,
 AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or as a software
 library.
 
@@ -170,22 +170,31 @@ The following are the main contributions to knowledge of this dissertation:
 \begin{itemize}
 
 \item A criteria to evaluate multimedia congestion control algorithms in
-diverse usage scenarios and network topologies. These form the basis of the
-performance evaluation in all our papers and makes it easier to compare
-results.
+diverse usage scenarios and network topologies. These standardized scenarios
+form the basis of the performance evaluation in all our papers and improves
+the process of comparing our proposed solutions.
 
-\item A mechanism to implement a rudimentary congestion control that aborts
-communication when a flow encounters the circuit-breaker conditions. By
-implementing such a mechanism the endpoints limit the impact of non-adaptive
-media flows on other elastic traffic.
+\item A mechanism to implement a rudimentary congestion control (circuit-
+breaker) that aborts communication when it encounters congestion. By
+implementing such a mechanism the endpoints limit the impact of a non-adaptive
+media flow on other elastic traffic.
 
 \item A study on implementing the congestion controller for interactive
 multimedia at the sender, or receiver.  Additionally, we also look at the
-possibility of reacting to congestion cues sent from collaborative network
-elements.
+possibility of reacting to congestion cues sent by network elements in the
+media path.
+
+\item A method to choose the best error-resilience scheme from a suite of
+error-resilience mechanisms. Consequently, we also propose a method to perform
+congestion control using Forward Error Correction (FEC) or redundant packets.
 
 \item A mechanism to use multiple interfaces to send and receive multimedia
-data.
+data. We also propose a scheduling algorithm that takes into account the
+variability in path characteristics and availability of diverse paths. 
+
+\item A mechanism to create congestion maps, i.e., associate throughput to 
+geo-location. In order to detect areas of good and poor connectivity, to 
+enable adaptive media delivery in mobile wireless (LTE) networks.
 
 {\color{red} TODO: complete this list.}
 
