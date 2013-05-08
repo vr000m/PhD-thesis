@@ -28,12 +28,12 @@ format.
 \end{figure}
 
 RTP utilizes RTP Control Protocol (RTCP) to monitor the performance of the
-media stream. Using RTCP reports, the endpoints report loss fraction, jitter,
-highest sequence number received, and calculate RTT. The RTCP reports also
-assist in synchronizing the media streams (audio and video) by relating the
-RTP timestamps of the individual media streams to the wall clock time and
-measuring RTT. Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet header
-format for a unicast media stream.
+media stream. Using RTCP reports (RRs), the endpoints report loss fraction,
+jitter, highest sequence number received, and calculate RTT. The RTCP reports
+(SRs) also assist in synchronizing the media streams (audio and video) by
+relating the RTP timestamps of the individual media streams to the wall clock
+time and measuring RTT. Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet
+header format for a unicast media stream.
 
 \begin{figure}
 \centerline{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
@@ -62,18 +62,30 @@ media bit rate.
 
 % avpf
 
-To use rapid feedback, the endpoints need to implement the Extended RTP
-Profile for RTCP-Based Feedback (AVPF profile)~\cite{rfc4585}. This profile
-allows the endpoint to adjust the RTCP reporting interval to send the RTCP
-feedback reports earlier than the next scheduled RTCP report, sometimes even
-immidiately. As long as the average reporting duration remains unchanged.
+Endpoints implement the Extended RTP Profile for RTCP-Based Feedback (AVPF
+profile)~\cite{rfc4585}, an extension to RTP's default timing rules to enable
+rapid feedback. This profile allows the endpoint to adjust the RTCP reporting
+interval to send the RTCP feedback reports earlier than the next scheduled
+RTCP report, sometimes even immidiately. As long as reporting interval on
+average remains the same. Figure~\ref{fig:3:avpf.interval} shows the dynamics
+of the AVPF-enabled RTCP reporting interval.
 
-Along with the immediate feedback, the AVPF profile also defines a suite of
-error-resilience mechanisms, namely, Negative Acknowledgements (NACK), Picture
-Loss Indication (PLI), Slice Loss Indication (SLI), Reference Picture
-Selection Indication (RPSI). 
+Along with the timely feedback, the AVPF profile also defines a suite of
+error-resilience feedback messages, namely, Negative Acknowledgements (NACK),
+Picture Loss Indication (PLI), Slice Loss Indication (SLI), Reference Picture
+Selection Indication (RPSI).
 
-\section{Extended Reports (XRs)}
+\section{RTCP Extended Reports (XRs)}
+
+Endpoints use RTCP XRs~\cite{rfc3611} to describe complex metrics that are not
+exposed by the RTCP Receiver Report (RR). Some examples of XRs relevant to
+performance monitoring and congestion control are: jitter buffer
+metrics~\cite{draft.xr.jb}, Packet Delay Variation (PDV)~\cite{rfc6798}, summary
+statistics~\cite{draft.xr.stat}, delay metric~\cite{rfc6843}, burst-gap
+discard/loss~\cite{draft.xr.bg.loss, draft.xr.bg.discard}, Run-Length Encoded
+(RLE) loss/discard~\cite{draft.xr.discard.rle}, Quality of Experience
+(QoE)~\cite{draft.xr.qoe}, loss concealment~\cite{draft.xr.conceal}, etc.
+
 
 % Transport Metrics
 
