@@ -41,6 +41,16 @@ header format for a unicast media stream.
 \label{fig:3:rtcp.hdr}
 \end{figure}
 
+\section{RTP Payload Formats}
+
+The general principle for defining payload formats/types are to be able to
+identify media packets and also distinguish packets meant to be decoded by
+different codecs. Typically the packet format and packetization of a payload
+format is well defined; the RTP header is immediately followed by payload-
+specific header and then by the media data. This allows the sending endpoint
+to enable semantic-based fragmentation, which simplifies processing and
+decoding at the receiver.
+
 \section{RTCP Reporting Interval}
 % timing
 
@@ -58,7 +68,7 @@ congestion midway through a reporting interval, the base RTP
 specification~\cite{rfc3550} (AVP profile) does not allow sending the RTCP
 report early and the endpoint has to wait for the next scheduled RTCP report.
 Hence, the slow control loop can cause instability and oscillation in the
-media bit rate.
+media bitrate.
 
 % avpf
 
@@ -80,10 +90,10 @@ Selection Indication (RPSI).
 Endpoints use RTCP XRs~\cite{rfc3611} to describe complex metrics that are not
 exposed by the RTCP Receiver Report (RR). Some examples of XRs relevant to
 performance monitoring and congestion control are: jitter buffer
-metrics~\cite{draft.xr.jb}, Packet Delay Variation (PDV)~\cite{rfc6798}, summary
-statistics~\cite{draft.xr.stat}, delay metric~\cite{rfc6843}, burst-gap
-discard/loss~\cite{draft.xr.bg.loss, draft.xr.bg.discard}, Run-Length Encoded
-(RLE) loss/discard~\cite{draft.xr.discard.rle}, Quality of Experience
+metrics~\cite{draft.xr.jb}, Packet Delay Variation (PDV)~\cite{rfc6798},
+summary statistics~\cite{draft.xr.stat}, delay metric~\cite{rfc6843}, burst-
+gap discard/loss~\cite{draft.xr.bg.loss, draft.xr.bg.discard}, Run-Length
+Encoded (RLE) loss/discard~\cite{draft.xr.discard.rle}, Quality of Experience
 (QoE)~\cite{draft.xr.qoe}, loss concealment~\cite{draft.xr.conceal}, etc.
 
 
@@ -101,9 +111,25 @@ discard/loss~\cite{draft.xr.bg.loss, draft.xr.bg.discard}, Run-Length Encoded
 % metrics [RFC6843], [RFC6798].
 
 
-\section{Codec Control}
+\section{Codec Control Messages}
 % codec control
 
+Sometimes an endpoint needs to configure or notify the other endpoint's codec.
+These messages can be broadly classified as \emph{Transport Layer} and  \emph
+{Payload-specific} feedback messages~\cite{rfc5104}. The transport layer
+messages are: Temporary Maximum Media Stream Bit Rate Request (TMMBR) and
+Temporary Maximum Media Stream Bit Rate Notification (TMMBN). The receiving
+endpoint uses the TMMBR message to configure the maximum encoding bitrate of
+the media stream, while the sending endpoint uses the TMMBN to inform the
+receiver of the updated bitrate. On the other hand, the payload-specific
+messages are: Full Intra Request (FIR), temporal-spataial tradeoff, framerate,
+frame size, maximum packet size or rate, etc.
+
+
+
 % relationship with SDP
-\section{RTP Extensions}
-\label{rtp.ext}
+\section{RTP Header Extensions}
+
+\section{Interaction between Signaling and Media paths}
+
+% SDP O/A, declarative SDP, RTCP notify
