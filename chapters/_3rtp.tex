@@ -47,12 +47,24 @@ characteristics.}
 \section{RTP Payload Formats}
 
 The general principle for defining payload formats/types are to be able to
-identify media packets and also distinguish packets meant to be decoded by
-different codecs. Typically the packet format and packetization of a payload
-format is well defined; the RTP header is immediately followed by payload-
-specific header and then by the media data. This allows the sending endpoint
-to enable semantic-based fragmentation, which simplifies processing and
-decoding at the receiver.
+identify the encoding of the media packets. These encodings can be codec-
+specific (e.g., H.264, H.263, H.261, MPEG-1, MPEG-2, JPEG, G.711, G.722, AMR,
+etc.), or generic (e.g., Forward Error Correction (FEC), Unequal Level of
+Protection (ULP), NACK, multiplexed streams). Typically the payload format
+specifies a well-defined packet format and packetization procedure. Hence, the
+RTP header is immediately followed by payload-specific header (payload format)
+and then by the media data. This allows the sending endpoint to enable
+semantic-based fragmentation, which simplifies processing and decoding at the
+receiver (i.e., be able to decode individual packets without relying on
+receiving other packets).
+
+\begin{figure}
+\centerline{\includegraphics[width=\columnwidth]{fig_hdr_pt_fmt}}
+\caption{shows the packet structure of an RTP packet encapsulating the
+payload-specific header and the associated media data.}
+\label{fig:3:pt.fmt}
+\end{figure}
+
 
 \section{RTCP Reporting Interval}
 % timing
@@ -88,7 +100,7 @@ error-resilience feedback messages, namely, Negative Acknowledgements (NACK),
 Picture Loss Indication (PLI), Slice Loss Indication (SLI), Reference Picture
 Selection Indication (RPSI).
 
-\section{RTCP Extended Reports (XRs)}
+\section{RTCP Extended Reports (XRs) for Performance Monitoring}
 
 Endpoints use RTCP XRs~\cite{rfc3611} to describe complex metrics that are not
 exposed by the RTCP Receiver Report (RR). Some examples of XRs relevant to
@@ -97,10 +109,10 @@ metrics~\cite{draft.xr.jb}, Packet Delay Variation (PDV)~\cite{rfc6798},
 summary statistics~\cite{draft.xr.stat}, delay metric~\cite{rfc6843}, burst-
 gap discard/loss~\cite{draft.xr.bg.loss, draft.xr.bg.discard}, Run-Length
 Encoded (RLE) loss/discard~\cite{draft.xr.discard.rle}, Quality of Experience
-(QoE)~\cite{draft.xr.qoe}, loss concealment~\cite{draft.xr.conceal}, etc.
+(QoE)~\cite{draft.xr.qoe}, and loss concealment~\cite{draft.xr.conceal}, etc.
+RTP allows for new metrics to be defined, the only requirement is to document
+what is measured, how it is measured and reported to the other endpoints.
 
-
-% Transport Metrics
 
 % The RTCP Extended Reports (XR) [RFC3611] allow reporting of more
 % complex and sophisticated reception quality metrics, but do not
@@ -126,7 +138,7 @@ endpoint uses the TMMBR message to configure the maximum encoding bitrate of
 the media stream, while the sending endpoint uses the TMMBN to inform the
 receiver of the updated bitrate. On the other hand, the payload-specific
 messages are: Full Intra Request (FIR), temporal-spataial tradeoff, framerate,
-frame size, maximum packet size or rate, etc.
+frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 
 
 
