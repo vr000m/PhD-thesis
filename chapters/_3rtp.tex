@@ -152,6 +152,40 @@ frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 
 
 % relationship with SDP
-\section{Interaction between Signaling and Media paths}
+\section{Interaction between Signaling and Media}
 
 % SDP O/A, declarative SDP, RTCP notify
+
+Interactive or conversational multimedia sessions can be setup using
+H.323~\cite{H.323}, Session Initiation Protocol (SIP)~\cite{rfc3261},
+Jingle~\cite{XEP-0166} an extension to Extensible Messaging and Presence
+Protocol (XMPP)~\cite{rfc6120}. SIP uses Session Description Protocol
+(SDP)~\cite{rfc4566} to describe the endpoint's transport and media
+capabilities. 
+
+The transport details in the SDP are mainly split into two parts: the protocol
+for delivering media packets (currently, TCP, UDP, or SCTP) and the outgoing
+IP address of the endpoint. The protocol to deliver the media packets is
+chosen by the application, but identifying the outgoing IP address of an
+endpoint is a bit complex. This is due to the presence of NAT devices in the
+network, which may change the IP address of the outgoing packets. Since,
+interactive media calls are between endpoints and media streams may have to
+traverse through a NAT at both ends, in some cases, the only way to deliver
+media packets between the two endpoints would be by accessing a relay on the
+public Internet. Hence, the endpoint needs to discover its 2-tuple [IP
+address:port] on the host, NAT~\cite{rfc5389} and the allocated
+relay~\cite{rfc5766} before it can notify the other endpoints about its
+transport details. This collection of 2-tuples is known as \emph{candidates}
+and both endpoints exchange their candidate addresses in the SDP. On receiving
+the candidates, the endpoint performs a probe between each combination of
+addresses in the two candidate lists and chooses the first one that is
+successfully received (\emph{aggressive nomination}). This process of
+performing pair-wise \emph{connectivity checks} is called Interactive
+Connectivity Establishment (ICE)~\cite{rfc5245} and it relies on \emph{Session
+Traversal Utilities for NAT} (STUN) protocol to establish connectivty across a
+NAT and in case it fails to establish connectivity, it uses \emph{Traversal
+Using Relays around NAT} (TURN) protocol to use a relay on the public Internet
+to deliver the media packets.
+
+% Depending on the type of NAT device (full-cone, address- or port-restricted
+% cone, symmetric).
