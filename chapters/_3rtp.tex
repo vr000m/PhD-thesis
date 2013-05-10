@@ -65,6 +65,15 @@ payload-specific header and the associated media data.}
 \label{fig:3:pt.fmt}
 \end{figure}
 
+\section{RTP Header Extensions}
+
+These extensions carry media-independent information, i.e., data that may be
+repeated in multiple payload formats (e.g., timing information), and cannot be
+reported in an RTCP report because RTCP is sent infrequently and unreliably.
+The advantage of using header extensions is that they are 1) backwards
+compatible, 2) these extensions can be ignored by an endpoint that does not
+understand them, and 3) the sender can add multiple header extensions to an
+RTP packet.
 
 \section{RTCP Reporting Interval}
 % timing
@@ -143,8 +152,6 @@ frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 
 
 % relationship with SDP
-\section{RTP Header Extensions}
-
 \section{Interaction between Signaling and Media paths}
 
 % SDP O/A, declarative SDP, RTCP notify
