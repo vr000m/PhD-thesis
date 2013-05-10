@@ -164,7 +164,7 @@ Protocol (XMPP)~\cite{rfc6120}. SIP uses Session Description Protocol
 capabilities. 
 
 \begin{figure}[!h]
-{\footnotesize
+{\small
 \begin{verbatim}
     v=0
     o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
@@ -180,6 +180,7 @@ capabilities.
             raddr 10.0.1.1 rport 8998
 \end{verbatim}}
 \caption{Sample SDP containing the sender's transport and media capabilities.}
+\label{fig:3:sdp}
 \end{figure}
 
 
@@ -201,13 +202,26 @@ the candidates, the endpoint performs a probe between each combination of
 addresses in the two candidate lists and chooses the first one that is
 successfully received (\emph{aggressive nomination}). This process of
 performing pair-wise \emph{connectivity checks} is called Interactive
-Connectivity Establishment (ICE)~\cite{rfc5245} and it relies on \emph{Session
-Traversal Utilities for NAT} (STUN) protocol to establish connectivty across a
-NAT and in case it fails to establish connectivity, it uses \emph{Traversal
-Using Relays around NAT} (TURN) protocol to use a relay on the public Internet
-to deliver the media packets.
+Connectivity Establishment (ICE)~\cite{rfc5245, rfc6544} and it relies on
+\emph{Session Traversal Utilities for NAT} (STUN) protocol to establish
+connectivty across a NAT and in case it fails to establish connectivity, it
+uses \emph{Traversal Using Relays around NAT} (TURN) protocol to use a relay
+on the public Internet to deliver the media packets.
 
 % Depending on the type of NAT device (full-cone, address- or port-restricted
 % cone, symmetric).
 
+The second part of SDP carries the media capabilities, which binds the SDP to
+the Offer/Answer (O/A) model. In the O/A model, the sending endpoint sends to
+the receiver a set of media capabilities (\emph{offer}) in decreasing order of
+preference, typically, multiple options of audio codecs and video codecs. On
+receiving the sender's capabilities, the receiver compares its media
+capabilities with the sender's and responds with the one that best fits the
+receiver's requirements (\emph{answer}). The \emph{offer is rejected} in the
+case where the receiver is unable to pick any of the options provided by the
+sender. Hence, the application at the sender needs to pick a minimum number of
+widely available audio and video codecs to avoid negotiation failure. If the
+\emph{offer is accepted}, both endpoints then know the following: 1) which
+codecs to use, 2) the payload type of the encoded media streams, and 3) on
+which IP address and port number to send the media stream.
 
