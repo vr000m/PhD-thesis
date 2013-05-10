@@ -9,6 +9,12 @@ processing}~\cite{clark:alf}, i.e., it provides the following mechanisms:
 source and payload type identification, packet playout time, stream
 synchronization, packet loss and re-ordering, media stream monitoring.
 
+\begin{figure}[!h]
+\centerline{\includegraphics[width=\columnwidth]{chap3-rtp-rtcp}}
+\caption{RTP and RTCP for adaptive real-time applications}
+\label{fig:3:rtp:model}
+\end{figure}
+
 Figure~\ref{fig:3:rtp.hdr} describes the RTP packet header format, the
 \textit{`synchronisation source'} (SSRC) assists in determining the source
 endpoint, typically useful when an endpoint sends multiple media streams that
@@ -21,7 +27,7 @@ ordering packets in case of out-of-order packet arrival. Lastly, RTP uses
 carrying. Consequentely, each codec needs to specify its corresponding payload
 format.
 
-\begin{figure}[!htbp]
+\begin{figure}[!h]
 \centerline{\includegraphics[width=\columnwidth]{fig_hdr_rtp}}
 \caption{shows the RTP packet format that encapsulates the media data.}
 \label{fig:3:rtp.hdr}
@@ -35,7 +41,7 @@ relating the RTP timestamps of the individual media streams to the wall clock
 time and measuring RTT. Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet
 header format for a unicast media stream.
 
-\begin{figure}
+\begin{figure}[!h]
 \centering{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
 \caption{shows the RTCP packet format for carrying the Sender Report (SR) and
 the Receiver Report (RR). The SR carries transport statistics and enables 
@@ -58,7 +64,7 @@ semantic-based fragmentation, which simplifies processing and decoding at the
 receiver (i.e., be able to decode individual packets without relying on
 receiving other packets).
 
-\begin{figure}
+\begin{figure}[!h]
 \centerline{\includegraphics[width=\columnwidth]{fig_hdr_pt_fmt}}
 \caption{shows the packet structure of an RTP packet encapsulating the
 payload-specific header and the associated media data.}
@@ -222,6 +228,6 @@ case where the receiver is unable to pick any of the options provided by the
 sender. Hence, the application at the sender needs to pick a minimum number of
 widely available audio and video codecs to avoid negotiation failure. If the
 \emph{offer is accepted}, both endpoints then know the following: 1) which
-codecs to use, 2) the payload type of the encoded media streams, and 3) on
-which IP address and port number to send the media stream.
-
+audio and/or video codecs to use, 2) the payload type of the encoded media
+streams (possibly even their respective SSRCs), 3) to which IP address and
+port number to send the media stream and 4) the session bandwidth.
