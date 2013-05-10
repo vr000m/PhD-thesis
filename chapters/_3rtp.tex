@@ -36,7 +36,7 @@ time and measuring RTT. Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet
 header format for a unicast media stream.
 
 \begin{figure}
-\centerline{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
+\centering{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
 \caption{shows the RTCP packet format for carrying the Sender Report (SR) and
 the Receiver Report (RR). The SR carries transport statistics and enables 
 stream synchronization, while the RR carries the receiver transport 
@@ -163,6 +163,26 @@ Protocol (XMPP)~\cite{rfc6120}. SIP uses Session Description Protocol
 (SDP)~\cite{rfc4566} to describe the endpoint's transport and media
 capabilities. 
 
+\begin{figure}[!h]
+{\footnotesize
+\begin{verbatim}
+    v=0
+    o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
+    s=
+    c=IN IP4 192.0.2.3
+    t=0 0
+    a=ice-pwd:asd88fgpdd777uzjYhagZg
+    a=ice-ufrag:8hhY
+    m=audio 45664 RTP/AVP 0
+    a=rtpmap:0 PCMU/8000
+    a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
+    a=candidate:2 1 UDP 1694498815 195.148.127.98 45664 typ srflx 
+            raddr 10.0.1.1 rport 8998
+\end{verbatim}}
+\caption{Sample SDP containing the sender's transport and media capabilities.}
+\end{figure}
+
+
 The transport details in the SDP are mainly split into two parts: the protocol
 for delivering media packets (currently, TCP, UDP, or SCTP) and the outgoing
 IP address of the endpoint. The protocol to deliver the media packets is
@@ -189,3 +209,5 @@ to deliver the media packets.
 
 % Depending on the type of NAT device (full-cone, address- or port-restricted
 % cone, symmetric).
+
+
