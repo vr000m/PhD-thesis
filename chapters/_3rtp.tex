@@ -7,7 +7,10 @@ broadcast. RTP's design is based on the fundamental principles of \textit
 {application-layer framing} and \textit{integrated layer
 processing}~\cite{clark:alf}, i.e., it provides the following mechanisms:
 source and payload type identification, packet playout time, stream
-synchronization, packet loss and re-ordering, media stream monitoring.
+synchronization, packet loss and re-ordering, media stream monitoring. RTP
+utilizes RTP Control Protocol (RTCP) to monitor the performance of the media
+stream. Figure~\ref{fig:3:rtp:model} describes the features provided by RTP
+and RTCP.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\columnwidth]{chap3-rtp-rtcp}}
@@ -33,13 +36,15 @@ format.
 \label{fig:3:rtp.hdr}
 \end{figure}
 
-RTP utilizes RTP Control Protocol (RTCP) to monitor the performance of the
-media stream. Using RTCP reports (RRs), the endpoints report loss fraction,
-jitter, highest sequence number received, and calculate RTT. The RTCP reports
-(SRs) also assist in synchronizing the media streams (audio and video) by
-relating the RTP timestamps of the individual media streams to the wall clock
-time and measuring RTT. Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet
-header format for a unicast media stream.
+The receiver measures the incoming streams and reports the coarse-grained
+transport statistics in an RTCP Receiver Report (RR). The RTCP RR contains the
+current loss fraction, jitter, highest sequence number received, and
+facilitates in calculating the RTT. The sender uses RTCP Sender Reports (SRs)
+to assist in synchronizing the media streams (audio and video) by relating the
+RTP timestamps of the individual media streams to the wall clock time (NTP)
+and to notify the receiver about the current packet rate and bitrate.
+Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet header format for a
+interactive unicast media stream (i.e., both sending and receiving media).
 
 \begin{figure}[!h]
 \centering{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
@@ -164,7 +169,7 @@ frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 
 
 % relationship with SDP
-\section{Interaction between Signaling and Media}
+\section{Relationship between the Signaling and Media Paths}
 
 % SDP O/A, declarative SDP, RTCP notify
 
