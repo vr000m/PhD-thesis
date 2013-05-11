@@ -1,18 +1,19 @@
 In recent years, video has emerged as the dominant traffic\footnote{In 2012,
 $51\%$ of mobile traffic was video.} on the Internet~\cite{cvni.13,dawn.zb},
 partly due to the success of YouTube and other over-the-top media streaming
-services. Video streaming emerged as a dominant traffic after it was easily
-accessible to Internet users in the web-browser (initially, attributed to the
-availability of Adobe Flash Video plugin and later, due to the inclusion of
-the HTML5 video tag). Currently, the same trend can be observed with web-based
-conversational multimedia, i.e., web services can use Adobe's Real-time Media
-Flow Protocol (RTMFP)~\cite{draft.rtmfp}\footnote{There are other plugin-based
-services: Facebook Video, Skype, Google Talk/Hangout, etc.} or HTML5's Web
-Real-Time Communication (WebRTC) stack~\cite{draft.webrtc}.
+services (e.g., Netflix, Vimeo, dailymotion, etc.). Video streaming emerged as
+the dominant traffic only after it was easily accessible to Internet users in
+the web-browser (initially, attributed to the availability of Adobe Flash
+Video plugin and later, due to the inclusion of the HTML5 video tag).
+Currently, the same trend can be observed with web-based conversational
+multimedia, i.e., web services can use Adobe's Real-time Media Flow Protocol
+(RTMFP)~\cite{draft.rtmfp}\footnote{There are other plugin-based services:
+Facebook Video, Skype, Google Talk/Hangout, etc.} or HTML5's Web Real-Time
+Communication (WebRTC) stack~\cite{draft.webrtc}.
 
-Real-time multimedia traffic on the Internet is subject to the
-unpredictability of the best-effort IP network. This uncertainity is mainly
-due to packet loss, packet re-ordering, variable queuing delay. Buffer-
+Real-time communication on the Internet is subject to the unpredictability of
+the best-effort IP network. This uncertainity is mainly due to packet loss,
+packet re-ordering, variable queuing delay. Additionally, Buffer-%
 bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router may cause
 long delays and bursty losses. Video streaming overcomes most of these
 challenges by having larger playout buffers, but some over-the-top streaming
@@ -34,22 +35,22 @@ to the available path capacity.
 %packets; therby, enabling Quality of Service (QoS). Additionally, it should be
 %able to adapt the media quality to the end-to-end path characteristics.
 
-This thesis is about enabling congestion control for real-time multimedia. The
-idea was to build a congestion control that takes into account the network
-conditions, media codec capabilities and the demands of the multimedia
-application. Additionally, the congestion control can adjust to the user's
-preferences, changes in application policy/settings and by monitoring the
-user's Quality of Experience (QoE). In chapter~\ref{chap:rg} we discuss the
+This thesis is about enabling congestion control for real-time communication.
+The idea was to build congestion control algorithms that takes into account
+the network conditions, media codec capabilities and the demands of the
+multimedia application. Additionally, the congestion control can adjust to the
+user's preferences, changes in application policy/settings and by monitoring
+the user's Quality of Experience (QoE). In this thesis, we discuss the
 requirements for congestion control, define a framework and categorize
 congestion control cues.
 
 
-In this thesis we use Real-time Transport Protocol (RTP)~\cite{rfc3550} to
-carry media data, the congestion control algorithm is therefore built within
-the constraints of RTP. Consequently, wherever possible we have attempted to
-fix these deficiencies by standardizing our proposed extensions to RTP. This
-thesis is a bundle of scientific papers that discuss various parts of the
-framework and this summary puts them in context.
+We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry media data,
+the congestion control algorithm is therefore built within the design
+constraints of RTP. Consequently, wherever possible we have attempted to fix
+these deficiencies by proposing extensions to RTP. This thesis is a bundle of
+scientific papers that discuss various parts of the framework and this summary
+puts them in context.
 
 % classification of cues 
 % is a summary of papers
@@ -80,16 +81,16 @@ emphasize more on the former.
 
 \section{Structure of the Thesis}
 
-This thesis describes techniques to adapt media to changing network
+This thesis describes techniques to adapt media data to changing network
 characteristics for different types of multimedia systems. The work is mainly
 a summary of scientific-papers, but is also supported by additional body of
 work. We have co-authored a number of Internet Drafts\footnote{at the time of
 writing this thesis, several of these documents are still in the Internet
-Draft state, but will be published as RFCs shortly}
-that complement the sceintific results discussed in the thesis. The chapters
-describing the various parts of the congestion control framework discuss both
-our scientific and engineering work, while associating it with the relevant
-related work in the area. The remainder of the thesis is organized as follows.
+Draft state, but will be published as RFCs shortly} that complement the
+sceintific results discussed in the thesis. The chapters describing the
+various parts of the congestion control framework discuss both our scientific
+and engineering work, while associating it with the relevant related work in
+the area. The remainder of the thesis is organized as follows.
 
 Chapter~\ref{chap:rg} discribes the research goal of the thesis, which consists
 of creating a framework for congestion control that meets the requirements for
@@ -109,7 +110,7 @@ it~\cite{draft.xr.discard.rle, draft.xr.jb}.
 Chapter~\ref{chap:cc.fw} provide an high-level overview to our proposed
 `Congestion Cues Framework' and discuss criteria for evaluating congestion
 control for multimedia systems. This section is based on our contributions,
-which is documented in~\cite{draft.rmcat.evaluate}.
+which is documented in~\cite{draft.rmcat.evaluate, Singh:PhDFw}.
 
 
 % \chapter{Rate-control for Interactive Multimedia}
