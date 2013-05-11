@@ -176,23 +176,10 @@ Protocol (XMPP)~\cite{rfc6120}. SIP uses Session Description Protocol
 capabilities. 
 
 \begin{figure}[!h]
-{\small
-\begin{verbatim}
-    v=0
-    o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
-    s=
-    c=IN IP4 192.0.2.3
-    t=0 0
-    a=ice-pwd:asd88fgpdd777uzjYhagZg
-    a=ice-ufrag:8hhY
-    m=audio 45664 RTP/AVP 0
-    a=rtpmap:0 PCMU/8000
-    a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
-    a=candidate:2 1 UDP 1694498815 195.148.127.98 45664 typ srflx 
-            raddr 10.0.1.1 rport 8998
-\end{verbatim}}
-\caption{Sample SDP containing the sender's transport and media capabilities.}
-\label{fig:3:sdp}
+\centerline{\includegraphics[width=\columnwidth]{chap3-sig-med}}
+\caption{shows the signaling and media paths between two endpoints engaging in
+a video call.}
+\label{fig:3:sig.media}
 \end{figure}
 
 
@@ -222,6 +209,26 @@ on the public Internet to deliver the media packets.
 
 % Depending on the type of NAT device (full-cone, address- or port-restricted
 % cone, symmetric).
+
+\begin{figure}[!h]
+{\small
+\begin{verbatim}
+        v=0
+        o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
+        s=
+        c=IN IP4 192.0.2.3
+        t=0 0
+        a=ice-pwd:asd88fgpdd777uzjYhagZg
+        a=ice-ufrag:8hhY
+        m=audio 45664 RTP/AVP 0
+        a=rtpmap:0 PCMU/8000
+        a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
+        a=candidate:2 1 UDP 1694498815 195.148.127.98 45664 typ srflx 
+            raddr 10.0.1.1 rport 8998
+\end{verbatim}}
+\caption{Sample SDP containing the sender's transport and media capabilities.}
+\label{fig:3:sdp}
+\end{figure}
 
 The second part of SDP carries the media capabilities, which binds the SDP to
 the Offer/Answer (O/A) model. In the O/A model, the sending endpoint sends to
