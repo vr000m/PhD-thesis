@@ -169,10 +169,47 @@ receiver of the updated bitrate. On the other hand, the payload-specific
 messages are: Full Intra Request (FIR), temporal-spataial tradeoff, framerate,
 frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 
+\section{Reduced-Size RTCP Reports}
+% non-compound feedback
+
+An endpoint can send RTCP feedback as a \emph{compound}, or \emph{minimal}
+RTCP packet. A \emph{compound RTCP packet} is defined in~\cite{rfc3585},
+contains at least a sender report (SR) or a receiver report (RR) or both,
+followed by Source Description (SDES) and any additional XR blocks. A
+\emph{minimal RTCP packet} is one that contains a SR and/or RR, and followed
+by an SDES containing just the canonical name (CNAME)\footnote{It is the real
+name (identifier) used to describe the source, it can be in any form desired
+by the user. Of the SDES items (username, email, phone, geo-location, etc.)
+CNAME is compulsory to include in every RTCP packet.}. Hence, every compound
+RTCP packet is a minimal RTCP packet with additional report blocks.
+
+Consequently, including any of the additional SDES items or adding XR blocks
+makes the compound RTCP packet very large. On a low bitrate links, during
+transmission these large compound RTCP packets can introduce more delay.
+Therefore, it may be desireable to logically fragment the report blocks in a
+compound RTCP packet and send them independently. These fragmented report
+blocks are called \emph{reduced-size RTCP packet}. Unlike compound RTCP
+packets, to transmit a reduced-size RTCP packet an endpoint does not need to
+include the minimal RTCP report. 
+
+Reduced-size RTCP reports are beneficial in wireless networks where the packet
+loss rate increases with the packet size, i.e., larger sized packets are more
+likely to  be dropped compared to smaller sized packets. Additionally, smaller
+packets have shorter serialization time, i.e., the amount of time it takes for
+the endpoint to put the data packet on to the link.
+
+The application can use the reduced-size RTCP reports to 1) notify the other
+endpoint of events, using the signaling channel would incur at least one RTT
+while implementing it as an RTCP extension would merely incur a one-way delay.
+2) send codec control (e.g., TMMBR) or feedback (e.g., NACK, RPSI) messages,
+these messages as reduced-size are more likely to be transmitted compared to
+the compound packets and with as little delay as possible. Especially since
+these types of messages are more likely to be sent when link conditions are
+poor.
 
 
 % relationship with SDP
-\section{Relationship between the Signaling and Media Paths}
+\section{Session Setup}
 
 % SDP O/A, declarative SDP, RTCP notify
 
@@ -181,7 +218,8 @@ H.323~\cite{H.323}, Session Initiation Protocol (SIP)~\cite{rfc3261},
 Jingle~\cite{XEP-0166} an extension to Extensible Messaging and Presence
 Protocol (XMPP)~\cite{rfc6120}. SIP uses Session Description Protocol
 (SDP)~\cite{rfc4566} to describe the endpoint's transport and media
-capabilities. 
+capabilities. An SDP description defines only one multimedia session, i.e., an
+association between a set of participants.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\columnwidth]{chap3-sig-med}}
