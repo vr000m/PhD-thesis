@@ -188,9 +188,9 @@ makes the compound RTCP packet very large. On a low bitrate links, during
 transmission these large compound RTCP packets can introduce more delay.
 Therefore, it may be desireable to logically fragment the report blocks in a
 compound RTCP packet and send them independently. These fragmented report
-blocks are called \emph{reduced-size RTCP packet}. Unlike compound RTCP
-packets, to transmit a reduced-size RTCP packet an endpoint does not need to
-include the minimal RTCP report. 
+blocks are called \emph{reduced-size RTCP packet}~\cite{rfc5506}. Unlike
+compound RTCP packets, to transmit a reduced-size RTCP packet an endpoint does
+not need to include the minimal RTCP report.
 
 Reduced-size RTCP reports are beneficial in wireless networks where the packet
 loss rate increases with the packet size, i.e., larger sized packets are more
