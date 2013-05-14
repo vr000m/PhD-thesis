@@ -11,14 +11,14 @@ adaption the endpoint needs to monitor and respond to congestion cues.
 Additionally, we  discuss requirements for media rate-adaptation.
 
 
-\section{Terminology}
+\section{Taxonomy of Multimedia Communication Systems}
 %definition of Multimedia System
 
 The real-time multimedia ecosystem is an interconnection of several
 components. These components are discussed below:
 
 \textbf{Endpoint}: is the networked host at which the media flow is initiated
-or terminated. Typically, identified by its IP address and port number.
+or terminated and is typically identified by its IP address(es).
 
 % or in the local area by its MAC address. the MAC address may appear in the 
 % CNAME SDES item. rfc6222?
@@ -27,7 +27,7 @@ or terminated. Typically, identified by its IP address and port number.
 or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices are capable
 of encoding the raw frames into compressed media using a codec (e.g., Opus,
 AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or as a software
-library.
+library (e.g., x264, libvpx).
 
 %TODO: missing refs for the above acronyms.
 
@@ -51,7 +51,14 @@ flow. These devices may be Network Address Translation (NAT) devices,
 firewalls, Session Border Controller (SBC), routers with limited capacity or
 queues.
 
-\textbf{Heterogeneous Environment}: real-time multimedia traffic is
+\textbf{Multipoint Control Unit (MCU)}: is an endpoint that acts as a bridge
+in many to many conferencing system. This is an alternative network
+architecture to a full-mesh system in which an endpoint sends its media stream
+to every other endpoint in the conference. Alternatively, the MCU acts as the
+terminating endpoint and each endpoint only sends its media stream  to the MCU
+instead of every participant. 
+
+\textbf{Operating Environment}: real-time multimedia traffic is
 transmitted using best-effort IP networks that consists of paths with varying
 link properties. The variation may be due to properties of the link itself
 (for e.g., wireless links: WLAN, 3G, LTE) or due to varying amounts of cross-
