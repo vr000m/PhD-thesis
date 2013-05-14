@@ -18,14 +18,23 @@ the rate-adaptation is implemented in the application.  In this thesis, we
 consider congestion control for unicast RTP traffic running over best-effort
 IP network.
 
-% CC should not cause queuing delay. Or define low-delay operation of
+% CC should not cause queuing delay. Or define low-latency operation of
 % multimedia cc.
 
-\section{RTCP Reporting Interval}
+Endpoints rely on RTCP feedback from the receiver to implement congestion
+control. Hence, the design of congestion control algorithm needs to be aware
+of the limits on the timing of the feedback. Normally congestion control
+requires a tight control loop, which means that the receiving endpoint should
+be able to provide feedback at very short intervals. For example in TCP, the
+receiver sends an \emph{acknowledgement} packet in response to every packet
+(or every few packets) it receives. Whereas, RTCP encourages infrequent
+feedback and specifies an upper-bound on the fraction of the session media
+bitrate that the feedback packets can use\footnote{The specified feedback rate
+is $5\%$ for each multimedia session}. Hence, the congestion control should
+take into 3 aspects into its design: congestion cues to report, block size of
+each report, and frequency of these feedback reports.
 
-Endpoint needs to rely on RTCP feedback from the receiver to implement
-congestion control.  Additionally, the congestion control algorithm needs to
-be aware of the limits on the timing of the feedback. 
+\section{Frequency of RTCP Feedback Reports}
 
 % per-packet, per-frame, per-RTT
 
