@@ -36,19 +36,47 @@ each report, and frequency of these feedback reports.
 
 \section{Frequency of RTCP Feedback Reports}
 
-% per-packet, per-frame, per-RTT
+\cite{draft.rmcat.feedback} discusses three options for the short report
+intervals, they are:
 
-but unlike other delay-based variants of TCP there
-may not be sufficient RTCP bandwidth to provide feedback on a per-packet
-basis~\cite{draft.rmcat.feedback}.
+\textbf{Per-packet feedback report}: sends RTCP feedback every time the
+endpoint receives a packet. For low bitrate media sessions (e.g., audio
+streams) this would be quite difficult to achieve because the size of the
+feedback packet would be comparable to the size of the media packet, i.e., the
+feedback bitrate would larger than the $5\%$ fraction specified for it. If an
+endpoint receives packets in a burts or at very short time intervals, the
+endpoints will not be able to meet the timing requirements for per-packet
+feedback because the RTCP timing interval calculation has a randomization
+factor to avoid synchronizing feedback from multiple endpoints.
 
+\textbf{Per-frame feedback report}: sends RTCP feedback every time the
+endpoint recives a complete frame. This is mainly applicable to video where a
+single video frame would be fragmented into multiple packets because the frame
+size exceeds MTU size. Typically, an average size of an RTCP packet size in a
+two-party call is $156$-$176$ bytes\footnote{The breakdown in bytes is:
+UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or more XR
+blocks (20 each).}. For a 30 FPS biderectional video stream, the $rtcp\_bw
+\approx 75$ \emph{kbps}, which requires the media session bitrate be set to a
+value higher than $1.5$ \emph{Mbps}. Consequently, it would not be possible to
+perform per-frame for sessions with lower media rates. It should be noted that
+the requirements for the media session butrate needs to be re-calculated if
+the number of participants change, or the number of reported blocks change or
+the frame rate changes.
 
+\textbf{Per-RTT feedback report}: sends RTCP feedback at regular intervals
+based on the RTT estimate. The requirement for the media session rate would be
+lower, if the RTT is higher than the frame inter-arrival time. The calculation
+of the RTCP interval for the per-frame still applies, except that the frame
+rate is replaced by the RTT estimate.
+
+Any feedback interval above these three lower-limits would require a lower
+media session bitrate.
 
 \section{Framework for Congestion Cues}
 \label{fw.fw}
 
 
-\begin{figure}
+\begin{figure}[!h]
 \includegraphics[scale=1.0]{chap2-fw-outline}
 \caption{Congestion Cue Framework}
 \label{fig:4:fw}
