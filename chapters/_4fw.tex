@@ -34,10 +34,10 @@ is $5\%$ for each multimedia session}. Hence, the congestion control should
 take into 3 aspects into its design: congestion cues to report, block size of
 each report, and frequency of these feedback reports.
 
-\section{Frequency of RTCP Feedback Reports}
 
 \cite{draft.rmcat.feedback} discusses three options for the short report
 intervals, they are:
+\section{Congestion Cues: Reporting Frequency}
 
 \textbf{Per-packet feedback report}: sends RTCP feedback every time the
 endpoint receives a packet. For low bitrate media sessions (e.g., audio
@@ -72,7 +72,7 @@ rate is replaced by the RTT estimate.
 Any feedback interval above these three lower-limits would require a lower
 media session bitrate.
 
-\section{Framework for Congestion Cues}
+\section{Congestion Cues: Sources and Signaling}
 \label{fw.fw}
 
 
@@ -83,10 +83,10 @@ media session bitrate.
 \end{figure}
 
 
-\section{Requirements for Congestion Control}
+\section{Requirements}
 \label{fw.cc.req}
 
-\section{Framework for Evaluating Congestion Control}
+\section{Evaluation Criteria}
 \label{fw.cc.eval}
 
 % Flow scenarios
