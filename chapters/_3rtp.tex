@@ -104,10 +104,16 @@ the feedback rate to $5\%$ of the session \textit{media rate}, shared equally
 by each participant in a video conference. Formally, the RTCP reporting
 interval is calculated as follows:
 
+\begin{align}
+rtcp\_interval = & \frac{n \times avg\_rtcp\_size}{rtcp\_bw}
+\label{eq:rtcp.int}
+\end{align}
+\hspace{35mm}$where,$
 \begin{align*}
-rtcp\_interval = & \frac{n \times avg\_rtcp\_size}{rtcp\_bw} \\
-rtcp\_bw = & \frac{5}{100} \times media\_rate
+n &=  number\ of\ senders \\
+rtcp\_bw &=  \frac{5}{100} \times media\_rate
 \end{align*}
+
 
 % avpf
 
