@@ -22,22 +22,25 @@ IP network.
 % multimedia cc.
 
 Endpoints rely on RTCP feedback from the receiver to implement congestion
-control. Hence, the design of congestion control algorithm needs to be aware
-of the limits on the timing of the feedback. Normally congestion control
-requires a tight control loop, which means that the receiving endpoint should
-be able to provide feedback at very short intervals. For example in TCP, the
-receiver sends an \emph{acknowledgement} packet in response to every packet
-(or every few packets) it receives. Whereas, RTCP encourages infrequent
-feedback and specifies an upper-bound on the fraction of the session media
-bitrate that the feedback packets can use\footnote{The specified feedback rate
-is $5\%$ for each multimedia session}. Hence, the congestion control should
-take into 3 aspects into its design: congestion cues to report, block size of
-each report, and frequency of these feedback reports.
+control. Hence, the congestion control should take into 3 aspects into its
+design: congestion cues to report, block size of each report, and frequency of
+these feedback reports. In the following subsections, we mainly discuss the
+feedback reporting frequency, the classification congestion cues, requirements
+of congestion control and lastly, criteria to evaluate congestion control
+proposals.
 
-
-\cite{draft.rmcat.feedback} discusses three options for the short report
-intervals, they are:
 \section{Congestion Cues: Reporting Frequency}
+
+Normally congestion control requires a tight control loop, which means that
+the receiving endpoint should be able to provide feedback at very short
+intervals. Hence, the design of congestion control algorithm needs to be aware
+of the limits on the timing of the feedback.  For example in TCP, the receiver
+sends an \emph{acknowledgement} packet in response to every packet (or every
+few packets) it receives. Whereas, RTCP encourages infrequent feedback and
+specifies an upper-bound on the fraction of the session media bitrate that the
+feedback packets can use\footnote{The specified feedback rate is $5\%$ for
+each multimedia session}.  \cite{draft.rmcat.feedback} discusses three options
+for the short report intervals, they are:
 
 \textbf{Per-packet feedback report}: sends RTCP feedback every time the
 endpoint receives a packet. For low bitrate media sessions (e.g., audio
@@ -53,15 +56,16 @@ factor to avoid synchronizing feedback from multiple endpoints.
 endpoint recives a complete frame. This is mainly applicable to video where a
 single video frame would be fragmented into multiple packets because the frame
 size exceeds MTU size. Typically, an average size of an RTCP packet size in a
-two-party call is $156$-$176$ bytes\footnote{The breakdown in bytes is:
+two-party call is $156$-$176$ bytes\footnote{The packet breakdown in bytes is:
 UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or more XR
 blocks (20 each).}. For a 30 FPS biderectional video stream, the $rtcp\_bw
 \approx 75$ \emph{kbps}, which requires the media session bitrate be set to a
-value higher than $1.5$ \emph{Mbps}. Consequently, it would not be possible to
-perform per-frame for sessions with lower media rates. It should be noted that
-the requirements for the media session butrate needs to be re-calculated if
-the number of participants change, or the number of reported blocks change or
-the frame rate changes.
+value higher than $1.5$ \emph{Mbps} (to calculate assign the above values in
+equation~\ref{eq:rtcp.int}). Consequently, it would not be possible to perform
+per-frame for sessions with lower media rates. It should be noted that the
+requirements for the media session butrate needs to be re-calculated if the
+number of participants change, or the number of reported blocks change or the
+frame rate changes.
 
 \textbf{Per-RTT feedback report}: sends RTCP feedback at regular intervals
 based on the RTT estimate. The requirement for the media session rate would be
@@ -69,8 +73,9 @@ lower, if the RTT is higher than the frame inter-arrival time. The calculation
 of the RTCP interval for the per-frame still applies, except that the frame
 rate is replaced by the RTT estimate.
 
-Any feedback interval above these three lower-limits would require a lower
-media session bitrate.
+To summarize, picking longer RTCP feedback intervals requires a lower media
+session bitrate, which increases the area of operation (in terms of session
+media rates).
 
 \section{Congestion Cues: Sources and Signaling}
 \label{fw.fw}
