@@ -83,13 +83,16 @@ media rates).
 A rate-control or congestion control algorithm relies on congestion cues to
 pick a new sending rate. These cues can be observed at the receiver or by a
 middlebox monitoring the flow, and it can also be aggregated by a
-$3^{rd}$\emph{--party} or a superpeer in an overlay network. Consequently, these
-observed cues need to be signaled back to the sender which will perform
-congestion control. We classify these congestion cues by, where are they
-measured/observed, and how is the sender notified; the classifications
-visualized in Figure~\ref{fig:4:fw}.
+3$^{rd}$-party\footnote{A system outside the signaling or media path} or a
+superpeer in an overlay network. Consequently, these observed cues need to be
+signaled back to the sender which will perform congestion control. We classify
+these congestion cues as a combination of \emph{where are they
+measured/observed?}, and \emph{how is the sender notified?} For each there
+are two options; In-path and Out-of-path \emph{sources} and In-band and Out-
+of-band \emph{signaling}. The combination forms two cases, they are visualized
+in Figure~\ref{fig:4:fw}.
 
-\textbf{a) In-band, In-path}:
+\textbf{a) In-band, In-path}: 
 
 \textbf{b) Out-of-band, In-path}:
 
