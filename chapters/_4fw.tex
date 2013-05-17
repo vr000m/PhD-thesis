@@ -94,6 +94,14 @@ by middleboxes along the path. Out-of-path congestion cues are reported by
 devices outside the media path (congestion maps, overlays, etc.). The
 combination forms four cases, they are visualized in Figure~\ref{fig:4:fw}.
 
+
+\begin{figure}[!h]
+\includegraphics[scale=1.0]{chap2-fw-outline}
+\caption{Congestion Cue Framework}
+\label{fig:4:fw}
+\end{figure}
+
+
 \textbf{a) In-path, In-band}: e.g., RTCP RR, TMMBR, etc.
 
 \textbf{b) In-path, Out-of-band}: e.g., RTSP Speed parameters, SDP, ECN, etc.
@@ -104,15 +112,14 @@ causes change in per path fractional distribution.)
 \textbf{d) Out-of-path, Out-of-band}: e.g., congestion maps, bandwidth lookup
 service, superpeers and overlays.
 
-
-\begin{figure}[!h]
-\includegraphics[scale=1.0]{chap2-fw-outline}
-\caption{Congestion Cue Framework}
-\label{fig:4:fw}
-\end{figure}
-
 % monitoring: long-term, short-term
 
+Another aspect to consider is long-term (order of seconds or minutes) and
+short-term (order of 100ms or a few seconds) statistics. For example, jitter
+is measured on a per-packet basis, but reported over a longer measurement
+interval (to filter for noise and transient delays). Alternatively, packet
+losses, discards, etc. are measured over a shorter interval so that the sender
+can react to these notifications.
 
 \section{Requirements}
 \label{fw.cc.req}
