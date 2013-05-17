@@ -29,7 +29,7 @@ feedback reporting frequency, the classification congestion cues, requirements
 of congestion control and lastly, criteria to evaluate congestion control
 proposals.
 
-\section{Congestion Cues: Reporting Frequency}
+\section{Congestion Reporting Frequency}
 
 Normally congestion control requires a tight control loop, which means that
 the receiving endpoint should be able to provide feedback at very short
@@ -77,7 +77,7 @@ To summarize, picking longer RTCP feedback intervals requires a lower media
 session bitrate, which increases the area of operation (in terms of session
 media rates).
 
-\section{Congestion Cues: Sources and Signaling}
+\section{Congestion Cues: Observation Points and Signaling}
 \label{fw.fw}
 
 A rate-control or congestion control algorithm relies on congestion cues to
@@ -87,18 +87,22 @@ middlebox monitoring the flow, and it can also be aggregated by a
 superpeer in an overlay network. Consequently, these observed cues need to be
 signaled back to the sender which will perform congestion control. We classify
 these congestion cues as a combination of \emph{where are they
-measured/observed?}, and \emph{how is the sender notified?} For each there
-are two options; In-path and Out-of-path \emph{sources} and In-band and Out-
-of-band \emph{signaling}. The combination forms two cases, they are visualized
-in Figure~\ref{fig:4:fw}.
+measured/observed?}, and \emph{how is the sender notified?} For each there are
+two options; In-path and Out-of-path \emph{sources} and In-band and Out-of-%
+band \emph{signaling}. In-path congestion cues are measured by the receiver or
+by middleboxes along the path. Out-of-path congestion cues are reported by
+devices outside the media path (congestion maps, overlays, etc.). The
+combination forms four cases, they are visualized in Figure~\ref{fig:4:fw}.
 
-\textbf{a) In-band, In-path}: 
+\textbf{a) In-path, In-band}: e.g., RTCP RR, TMMBR, etc.
 
-\textbf{b) Out-of-band, In-path}:
+\textbf{b) In-path, Out-of-band}: e.g., RTSP Speed parameters, SDP, ECN, etc.
 
-\textbf{c) In-band, Out-of-path}:
+\textbf{c) Out-of-path, In-band}: e.g., Multipath RTP (congestion on one path
+causes change in per path fractional distribution.)
 
-\textbf{d) Out-of-band, Out-of-path}:
+\textbf{d) Out-of-path, Out-of-band}: e.g., congestion maps, bandwidth lookup
+service, superpeers and overlays.
 
 
 \begin{figure}[!h]
