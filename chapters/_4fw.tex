@@ -102,24 +102,27 @@ combination forms four cases, they are visualized in Figure~\ref{fig:4:fw}.
 \end{figure}
 
 
-\textbf{a) In-path, In-band}: e.g., RTCP RR, TMMBR, etc.
+\textbf{a) In-path, In-band}: e.g., TFRC using information in RTCP RR, TMMBR,
+etc.
 
-\textbf{b) In-path, Out-of-band}: e.g., RTSP Speed parameters, SDP, ECN, etc.
+\textbf{b) In-path, Out-of-band}: e.g., RTSP SPEED parameter, bandwidth
+parameter in SDP, TFRC using additional loss reported by ECN markings, etc.
 
 \textbf{c) Out-of-path, In-band}: e.g., Multipath RTP (congestion on one path
 causes change in per path fractional distribution.)
 
-\textbf{d) Out-of-path, Out-of-band}: e.g., congestion maps, bandwidth lookup
-service, superpeers and overlays.
+\textbf{d) Out-of-path, Out-of-band}: e.g., bandwidth information from
+congestion maps, bandwidth lookup service, superpeers and overlays.
 
 % monitoring: long-term, short-term
 
-Another aspect to consider is long-term (order of seconds or minutes) and
-short-term (order of 100ms or a few seconds) statistics. For example, jitter
-is measured on a per-packet basis, but reported over a longer measurement
-interval (to filter for noise and transient delays). Alternatively, packet
-losses, discards, etc. are measured over a shorter interval so that the sender
-can react to these notifications.
+Another aspect to consider the measurement duration to identify congestion, it
+can be over a long-term (order of seconds or minutes) or a short-term (order
+of 100ms or a few seconds). For example, jitter is measured on a per-packet
+basis, but reported over a longer measurement interval (to filter for noise
+and transient delays). Alternatively, packet losses, discards, etc. are
+measured over a shorter interval so that the sender can react to these
+immediately.
 
 \section{Requirements}
 \label{fw.cc.req}
