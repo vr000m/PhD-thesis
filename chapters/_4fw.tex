@@ -77,7 +77,7 @@ To summarize, picking longer RTCP feedback intervals requires a lower media
 session bitrate, which increases the area of operation (in terms of session
 media rates).
 
-\section{Congestion Cues: Observation Points and Signaling}
+\section{Classification of Observation Points and Signaling of Congestion Cues}
 \label{fw.fw}
 
 A rate-control or congestion control algorithm relies on congestion cues to
@@ -97,32 +97,32 @@ combination forms four cases, they are visualized in Figure~\ref{fig:4:fw}.
 
 \begin{figure}[!h]
 \includegraphics[scale=1.0]{chap2-fw-outline}
-\caption{Congestion Cue Framework}
+\caption{Classification of Congestion cues}
 \label{fig:4:fw}
 \end{figure}
 
+Following are the examples for each category in the classification:
 
-\textbf{a) In-path, In-band}: e.g., TFRC using information in RTCP RR, TMMBR,
-etc.
+\textbf{a) In-path, In-band}: TFRC using information in RTCP RR, TMMBR.
 
-\textbf{b) In-path, Out-of-band}: e.g., RTSP SPEED parameter, bandwidth
-parameter in SDP, TFRC using additional loss reported by ECN markings, etc.
+\textbf{b) In-path, Out-of-band}: RTSP SPEED parameter, bandwidth parameter in
+SDP, TFRC using additional loss reported by ECN markings.
 
-\textbf{c) Out-of-path, In-band}: e.g., Multipath RTP (congestion on one path
-causes change in per path fractional distribution.)
+\textbf{c) Out-of-path, In-band}: Multipath RTP (congestion on one path causes
+change in per path fractional distribution.)
 
-\textbf{d) Out-of-path, Out-of-band}: e.g., bandwidth information from
-congestion maps, bandwidth lookup service, superpeers and overlays.
+\textbf{d) Out-of-path, Out-of-band}: bandwidth information from congestion
+maps, bandwidth lookup service, superpeers and overlays.
 
 % monitoring: long-term, short-term
 
-Another aspect to consider the measurement duration to identify congestion, it
-can be over a long-term (order of seconds or minutes) or a short-term (order
-of 100ms or a few seconds). For example, jitter is measured on a per-packet
-basis, but reported over a longer measurement interval (to filter for noise
-and transient delays). Alternatively, packet losses, discards, etc. are
-measured over a shorter interval so that the sender can react to these
-immediately.
+Another aspect to consider for classifying cues is the the measurement
+duration to identify congestion, it can be over a long-term (order of seconds
+or minutes) or a short-term (order of 100ms or a few seconds). For example,
+jitter is measured on a per-packet basis, but reported over a longer
+measurement interval (to filter for noise and transient delays).
+Alternatively, packet losses, discards, etc. are measured over a shorter
+interval so that the sender can react to these immediately.
 
 \section{Requirements}
 \label{fw.cc.req}
