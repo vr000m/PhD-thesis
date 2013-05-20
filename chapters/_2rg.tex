@@ -46,7 +46,7 @@ controlling one or more multimedia device on an endpoint.
 \textbf{Point-to-point (PtP) communication}: media traffic flows between two
 endpoints on the Internet, i.e., these are bidirectional unicast flows.
 
-\textbf{Middleboxes}: are network devices through which the media packets
+\textbf{Intermediaries}: are network devices through which the media packets
 flow. These devices may be Network Address Translation (NAT) devices,
 firewalls, Session Border Controller (SBC), routers with limited capacity or
 queues.
@@ -119,8 +119,8 @@ environments~\cite{draft.rtcweb.qos}:
 \label{rg.title}
 
 In this thesis, we do not rely on the use of DSCP by any entity (endpoint or
-middlebox) along the path. We assume that the presence of these markings will
-only make the performance of our algorithms better. Consequently, the
+intermediary) along the path. We assume that the presence of these markings
+will only make the performance of our algorithms better. Consequently, the
 endpoints need to implement rate-control (or, congestion control), i.e., the
 endpoint needs to monitor the media flows and observe for congestion cues.
 Based on these cues, the endpoint may increase or decrease the media encoding
