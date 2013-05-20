@@ -95,7 +95,6 @@ by middleboxes along the path. Out-of-path congestion cues are reported by
 devices outside the media path (congestion maps, overlays, etc.). The
 combination forms four cases, they are visualized in Figure~\ref{fig:4:fw}.
 
-
 \begin{figure}[!h]
 \includegraphics[scale=1.0]{chap2-fw-outline}
 \caption{Classification of Congestion cues}
@@ -134,8 +133,19 @@ measurement interval (to filter for noise and transient delays).
 Alternatively, packet losses, discards, etc. are measured over a shorter
 interval so that the sender can react to these immediately.
 
-\section{Requirements}
+\section{Congestion Control Requirements}
 \label{fw.cc.req}
+
+We need to define a set of requirements in order to design a congestion
+control algorithm for multimedia. As a second step these requirements can be
+used as a checklist to evaluate the suitability of the proposed algorithms.
+Real-time interactive communication differs greatly from \emph{elastic}
+traffic because the sender generates media packets in real-time and expects it
+to be delivered in 100s of milliseconds and the receiver consumes the media
+packets almost immediately, hence late arriving packets are useless.
+Additionally, real-time communication systems can tolerate some amount of
+packet loss and do not generate only constant bit rate streams but can adapt
+the media rate over a fairly large range.
 
 \section{Evaluation Criteria}
 \label{fw.cc.eval}
