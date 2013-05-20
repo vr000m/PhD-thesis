@@ -27,7 +27,7 @@ or terminated and is typically identified by its IP address(es).
 or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices are capable
 of encoding the raw frames into compressed media using a codec (e.g., Opus,
 AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or as a software
-library (e.g., x264, libvpx).
+library (e.g., \texttt{x264}, \texttt{libvpx}).
 
 %TODO: missing refs for the above acronyms.
 
@@ -158,15 +158,29 @@ the end-to-end path capacity. However in practice, this not always possible
 because a) it may take multiple reports or data packets to detect congestion,
 b) after detection it takes at least one-way delay (OWD) to report it. We
 consider the following scenarios to implement congestion control and evaluate
-its performance, these scenarios try to imitate real-world deployment
-conditions:
+its performance, these scenarios try to imitate a subset of real-world
+deployment conditions:
 
 \begin{enumerate}
-\item Single media flow on an end-to-end path.
-\item Single media flow competing with the similar flows (i.e., all flows are
+
+\item \texttt{Single media flow on an end-to-end path}: this scenario describes
+the best case, wherein the network puts each flow identified by its 5-tuple
+(protocol, source and destination IP address, source and destination port
+numbers) on its own queue, thereby the flow using the proposed congestion
+control algorithm does not encounter any cross-traffic.
+
+\item \texttt{Single media flow competing with the similar flows}: in this
+scenario, the flow using the proposed congestion control algorithm competes
+with flows using the same congestion control algorithm (i.e., all flows are
 interactive multimedia).
-\item Single media flow competing with multiple long-lived TCP
-\item Single media flow competing with bursty TCP.
+
+
+\item \texttt{Single media flow competing with TCP}: in this scenario, the flow
+using the proposed congestion control algorithm competes with TCP flows. These
+maybe \emph{short} TCP flows depicting common web-traffic patterns or
+\emph{long} TCP flows depicting bulk transfers (e.g., large file downloads).
+
+
 \end{enumerate}
 
 To evaluate the performance of a congestion control algorithm, it needs to be
