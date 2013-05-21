@@ -49,8 +49,8 @@ feedback packets can use\footnote{The specified feedback rate is $5\%$ for
 each multimedia session}.  \cite{draft.rmcat.feedback} discusses three options
 for the short report intervals, they are:
 
-\textbf{Per-packet feedback report}: sends RTCP feedback every time the
-endpoint receives a packet. For low bitrate media sessions (e.g., audio
+\textbf{\texttt{Per-packet feedback report}}: sends RTCP feedback every time
+the endpoint receives a packet. For low bitrate media sessions (e.g., audio
 streams) this would be quite difficult to achieve because the size of the
 feedback packet would be comparable to the size of the media packet, i.e., the
 feedback bitrate would larger than the $5\%$ fraction specified for it. If an
@@ -59,26 +59,26 @@ endpoints will not be able to meet the timing requirements for per-packet
 feedback because the RTCP timing interval calculation has a randomization
 factor to avoid synchronizing feedback from multiple endpoints.
 
-\textbf{Per-frame feedback report}: sends RTCP feedback every time the
-endpoint recives a complete frame. This is mainly applicable to video where a
-single video frame would be fragmented into multiple packets because the frame
-size exceeds MTU size. Typically, an average size of an RTCP packet size in a
-two-party call is $156$-$176$ bytes\footnote{The packet breakdown in bytes is:
-UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or more XR
-blocks (20 each).}. For a 30 FPS biderectional video stream, the $rtcp\_bw
-\approx 75$ \emph{kbps}, which requires the media session bitrate be set to a
-value higher than $1.5$ \emph{Mbps} (to calculate assign the above values in
-equation~\ref{eq:rtcp.int}). Consequently, it would not be possible to perform
-per-frame for sessions with lower media rates. It should be noted that the
-requirements for the media session butrate needs to be re-calculated if the
-number of participants change, or the number of reported blocks change or the
-frame rate changes.
+\textbf{\texttt{Per-frame feedback report}}: sends RTCP feedback every time
+the endpoint recives a complete frame. This is mainly applicable to video
+where a single video frame would be fragmented into multiple packets because
+the frame size exceeds MTU size. Typically, an average size of an RTCP packet
+size in a two-party call is $156$-$176$ bytes\footnote{The packet breakdown in
+bytes is: UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or
+more XR blocks (20 each).}. For a 30 FPS biderectional video stream, the
+$rtcp\_bw \approx 75$ \emph{kbps}, which requires the media session bitrate be
+set to a value higher than $1.5$ \emph{Mbps} (to calculate assign the above
+values in equation~\ref{eq:rtcp.int}). Consequently, it would not be possible
+to perform per-frame for sessions with lower media rates. It should be noted
+that the requirements for the media session butrate needs to be re-calculated
+if the number of participants change, or the number of reported blocks change
+or the frame rate changes.
 
-\textbf{Per-RTT feedback report}: sends RTCP feedback at regular intervals
-based on the RTT estimate. The requirement for the media session rate would be
-lower, if the RTT is higher than the frame inter-arrival time. The calculation
-of the RTCP interval for the per-frame still applies, except that the frame
-rate is replaced by the RTT estimate.
+\textbf{\texttt{Per-RTT feedback report}}: sends RTCP feedback at regular
+intervals based on the RTT estimate. The requirement for the media session
+rate would be lower, if the RTT is higher than the frame inter-arrival time.
+The calculation of the RTCP interval for the per-frame still applies, except
+that the frame rate is replaced by the RTT estimate.
 
 To summarize, picking longer RTCP feedback intervals requires a lower media
 session bitrate, which increases the area of operation (in terms of session
@@ -118,16 +118,17 @@ the cues out-of-band, re-use the signaling path (e.g., SIP, XMPP) or setup an
 alternate signaling path (e.g., HTTP or websockets). Following are the
 examples for each category in the classification:
 
-\textbf{a) In-path, In-band}: TFRC using information in RTCP RR, TMMBR.
+\textbf{texttt{a) In-path, In-band}}: TFRC using information in RTCP RR,
+\TMMBR.
 
-\textbf{b) In-path, Out-of-band}: RTSP SPEED parameter, bandwidth parameter in
-SDP, TFRC using additional loss reported by ECN markings.
+\textbf{\texttt{b) In-path, Out-of-band}}: RTSP SPEED parameter, bandwidth
+parameter in SDP, TFRC using additional loss reported by ECN markings.
 
-\textbf{c) Out-of-path, In-band}: Multipath RTP (congestion on one path causes
-change in per path fractional distribution.)
+\textbf{\texttt{c) Out-of-path, In-band}}: Multipath RTP (congestion on one
+path causes change in per path fractional distribution.)
 
-\textbf{d) Out-of-path, Out-of-band}: bandwidth information from congestion
-maps, bandwidth lookup service, superpeers and overlays.
+\textbf{\texttt{d) Out-of-path, Out-of-band}}: bandwidth information from
+congestion maps, bandwidth lookup service, superpeers and overlays.
 
 % monitoring: long-term, short-term
 
@@ -163,11 +164,11 @@ bottleneck link.
 These scenarios can be described as network topologies with varying link and
 router characteristics, they are:
 
-\textbf{Network topology}:
+\textbf{\texttt{Network topology}}:
 
-\textbf{Link characteristics}:
+\textbf{\texttt{Link characteristics}}:
 
-\textbf{Router characteristics}:
+\textbf{\texttt{Router characteristics}}:
 
 
 % Flow scenarios
