@@ -36,6 +36,15 @@ format.
 \label{fig:3:rtp.hdr}
 \end{figure}
 
+\begin{figure}[!h]
+\centering{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
+\caption{shows the RTCP packet format for carrying the Sender Report (SR) and
+the Receiver Report (RR). The SR carries transport statistics and enables 
+stream synchronization, while the RR carries the receiver transport 
+characteristics.}
+\label{fig:3:rtcp.hdr}
+\end{figure}
+
 The receiver measures the incoming streams and reports the coarse-grained
 transport statistics in an RTCP Receiver Report (RR). The RTCP RR contains the
 current loss fraction, jitter, highest sequence number received, and
@@ -45,15 +54,6 @@ RTP timestamps of the individual media streams to the wall clock time (NTP)
 and to notify the receiver about the current packet rate and bitrate.
 Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet header format for a
 interactive unicast media stream (i.e., both sending and receiving media).
-
-\begin{figure}[!h]
-\centering{\includegraphics[width=\columnwidth]{fig_hdr_rtcp}}
-\caption{shows the RTCP packet format for carrying the Sender Report (SR) and
-the Receiver Report (RR). The SR carries transport statistics and enables 
-stream synchronization, while the RR carries the receiver transport 
-characteristics.}
-\label{fig:3:rtcp.hdr}
-\end{figure}
 
 \section{RTP Payload Formats}
 
