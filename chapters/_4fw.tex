@@ -24,10 +24,10 @@ IP network.
 Endpoints rely on RTCP feedback from the receiver to implement congestion
 control. Hence, the congestion control should take into 3 aspects into its
 design: congestion cues to report, block size of each report, and frequency of
-these feedback reports. In the following subsections, we mainly discuss the
-feedback reporting frequency, the classification congestion cues, requirements
-of congestion control and lastly, criteria to evaluate congestion control
-proposals.
+these feedback reports. In the following subsections, we list common
+congestion cues, discuss the feedback reporting frequency, the classification
+of cues, requirements of congestion control and lastly, criteria to evaluate
+congestion control proposals.
 
 \section{Congestion Cues}
 \label{fw.cues}
@@ -39,15 +39,21 @@ cues. Some common congestion cues are listed below:
 
 \begin{itemize}
 
-\item \textbf{\texttt{Losses}}: are detected at the receiving endpoint and may
-occur when routers drop packets from their queues (\emph{congestion loss}), or
-are lost due to contention, interference or fading on wireless link (\emph
-{bit- error loss}).
+\item \textbf{\texttt{Losses}}: occur when intermediate routers drop packets
+from their queues (\emph{congestion loss}), or due to contention, interference
+or fading on wireless link (\emph {bit-error loss}). Losses are detected at
+the receiving endpoint by gaps in RTP sequence numbers. Typically, a dejitter
+buffer is used to reorder out of order packets and the fraction packet loss is
+only calculated at the end of each reporting interval. Retransmission of lost
+packets can be indicated by sending a NACK RTCP packet.
 
-\item \textbf{\texttt{Discards}}: are packets that arrive too late at the
-receiver to be decoded or played back. These late-arriving packets are dropped
-by the receiver eventhough they are received because packets with higher
-\textit{timestamps} have already been sent to the decoder for playback.
+\item \textbf{\texttt{Discards}}: packets that arrive too late at the receiver
+to be decoded or played back may be discarded by the receiving endpoint. These
+late-arriving packets are discarded by the receiver eventhough they are
+received because packets with higher \textit{timestamps} have already been
+sent to the decoder for playback. The fractional loss in the standard RTCP RR
+does not identify these discarded packets as lost, hence they need to be
+reported in an RTCP XRs.
 
 \item \textbf{\texttt{Sending rate, Receiver rate and Goodput}}: is the
 bitrate measured at the sender, the receiver and at the decoder, respectively.
@@ -59,11 +65,40 @@ discarded after arrival or dropped by the decoder, the goodput will be lower
 than both the sending rate and receiver rate. Hence, goodput represents the
 actual playback bitrate or the bitrate of the rendered bitstream.
 
-\item \textbf{\texttt{Round trip time (RTT)}}: 
+\item \textbf{\texttt{One-way delay (OWD)}}: is a combination of
+\emph{propagation}, \emph{queuing}, \emph{serialization} and \emph{processing}
+delay. Propagation delay is calculated from the ratio of the phyical length of
+the interconnected link and the propagation speed over the specific
+medium\footnote{Usually, propagation speed is a fraction of the speed of light
+($0.5$c-$0.8$c).}. The serialization delay is the time taken to put the
+complete packet on to the communication channel (link), it is a function of
+the throughput of the link and the size of the packet. Processing delay is the
+time taken for the router to determine the next hop or the destination of the
+packet. Lastly, when multiple packets are received, the router queues them and
+transmits them one by one. Having large sized buffers in the router can cause
+\emph{bufferbloat} and increase the overall one-way delay. However measuring
+one-way delay is difficult because the clocks at the endpoints are normally
+not synchronized instead, the endpoints rely on RTT measurements for
+congestion control.
 
-\item \textbf{\texttt{Jitter and packet inter-arrival time}}:
+%In a multihop environment, these delays are calculated per hop.
 
-\item \textbf{\texttt{Adaptive playout time or Size of Receiver buffer}}:
+\item \textbf{\texttt{Round trip time (RTT)}}: is the time taken from the
+sender to the receiver (upstream) and then back (downstream). In RTP, it is
+calculated with the collaboration of sending RTCP SRs and receiving RTCP RRs.
+In conversational multimedia the media flows in both directions, the one-way
+delay (OWD) is approximated as half of the measured RTT. Observing the changes
+in RTT provides an indication of congestion and by smoothing the RTT
+(averaging over a short interval) protects against over-reacting to the subtle
+changes in RTT.
+
+\item \textbf{\texttt{Jitter and packet inter-arrival time}}: packets may
+arrive at different times due to route changes, , i.e., packets sent
+periodically may appear aperiodically at the receiver. Additionally,
+congestion at the bottleneck link causes a fluctuation in the inter-arrival
+time (IAT) between packets, also known as packet jitter.
+
+%\item \textbf{\texttt{Adaptive playout time or Size of Receiver buffer}}:
 
 \end{itemize}
 
