@@ -3,12 +3,14 @@
 The research goal of this thesis is to discuss congestion control for real-
 time media. To achieve a suitable end-user experience, a multimedia
 system\footnote{the transmitting endpoint or a classifier in the network} can:
-1) associate a DiffServ Code Point (DSCP)~\cite{rfc2474} to the media packets;
-therby, enabling Quality of Service (QoS). Using DSCP poses some challenges,
-which are discussed in Section~\ref{rg.ch.dscp}. 2) instruct the encoder to
-modify the encoding rate to a certain target rate. To achieve media rate-
-adaption the endpoint needs to monitor and respond to congestion cues.
-Additionally, we  discuss requirements for media rate-adaptation.
+\textbf{1)} associate a DiffServ Code Point (DSCP)~\cite{rfc2474} to the media
+packets; therby, enabling Quality of Service (QoS). Using DSCP poses some
+challenges, which are discussed in Section~\ref{rg.ch.dscp}. \textbf{2)}
+instruct the encoder to modify the encoding rate to a certain target rate. To
+achieve media rate- adaption the endpoint needs to monitor and respond to
+congestion cues.
+
+%Additionally, we  discuss requirements for media rate-adaptation.
 
 
 \section{Taxonomy of Multimedia Communication Systems}
@@ -156,38 +158,12 @@ sender to act upon.
 If an endpoint can rapidly detect congestion, and a sufficiently low RTT, it
 is possible to change the encoding rate quickly to meet the requirements of
 the end-to-end path capacity. However in practice, this not always possible
-because a) it may take multiple reports or data packets to detect congestion,
-b) after detection it takes at least one-way delay (OWD) to report it. We
-consider the following scenarios to implement congestion control and evaluate
-its performance, these scenarios try to imitate a subset of real-world
-deployment conditions:
-
-\begin{enumerate}
-
-\item \textbf{\texttt{Single media flow on an end-to-end path}}: this scenario
-describes the best case, wherein the network puts each flow identified by its
-5-tuple (protocol, source and destination IP address, source and destination
-port numbers) on its own queue, thereby the flow using the proposed congestion
-control algorithm does not encounter any cross-traffic.
-
-\item \textbf{\texttt{Single media flow competing with the similar flows}}: in
-this scenario, the flow using the proposed congestion control algorithm
-competes with flows using the same congestion control algorithm (i.e., all
-flows are interactive multimedia).
-
-
-\item \textbf{\texttt{Single media flow competing with TCP}}: in this
-scenario, the flow using the proposed congestion control algorithm competes
-with TCP flows. These maybe \emph{short} TCP flows depicting common web-
-traffic patterns or \emph{long} TCP flows depicting bulk transfers (e.g.,
-large file downloads).
-
-
-\end{enumerate}
-
-To evaluate the performance of a congestion control algorithm, it needs to be
-tested in various application, network and flow settings. These scenarios
-are discussed in more detail in Section~\ref{fw.cc.eval}.
+because \textbf{a)} it may take multiple reports or data packets to detect
+congestion, \textbf{b)} after detecting a congestion cue at the receiver it
+takes at least one-way delay (OWD) amount of time to report it. To deploy a
+congestion control algorithm, we need to evaluate and discuss the performance
+in various application, network and flow settings. These scenarios are
+discussed in more detail in Section~\ref{fw.cc.eval}.
 
 \section{Contribution to Knowledge}
 

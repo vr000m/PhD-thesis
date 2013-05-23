@@ -2,8 +2,8 @@ In the forthcoming deployment of WebRTC systems, we speculate that high
 quality\footnote{normally, corresponds to increase in required bandwidth}
 video confrencing will see wide adoption. Normally, to assure stability of the
 network (and avoid congestion collapse), these real-time communication systems
-will need to implement some kind of congestion control for their RTP-based
-media traffic.
+need to implement some kind of congestion control for their RTP-based media
+traffic.
 
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
@@ -22,20 +22,21 @@ IP network.
 % multimedia cc.
 
 Endpoints rely on RTCP feedback from the receiver to implement congestion
-control. Hence, the congestion control should take into 3 aspects into its
-design: congestion cues to report, block size of each report, and frequency of
-these feedback reports. In the following subsections, we list common
-congestion cues, discuss the feedback reporting frequency, the classification
-of cues, requirements of congestion control and lastly, criteria to evaluate
-congestion control proposals.
+control. Hence, the congestion control should consider the following 3 aspects
+into its design: congestion cues to report, block size of each report or the
+overhead incurred by reporting a cue, and the frequency of these feedback
+reports. In the following subsections, we list common congestion cues, discuss
+the feedback reporting frequency, the classification of cues, requirements of
+congestion control and lastly, criteria to evaluate congestion control
+proposals.
 
 \section{Congestion Cues}
 \label{fw.cues}
 
 Congestion control algorithms rely on cues to detect congestion, these cues
-are detected either by the sender, receiver, or by an intermediary network
-elements. The endpoint adapts the sending rate upon receiving the congestion
-cues. Some common congestion cues are listed below:
+are detected either by the sender, receiver, or by an intermediary router. The
+endpoint adapts the sending rate upon receiving the congestion cues. Some
+common congestion cues are listed below:
 
 \begin{itemize}
 
@@ -222,15 +223,41 @@ Additionally, real-time communication systems can tolerate some amount of
 packet loss and do not generate only constant bit rate streams but can adapt
 the media rate over a fairly large range. \cite{draft.rmcat.req} lists a set
 of requirements for RTP-based interactive multimedia sessions, these
-requirements make up the guidelines described in~\cite{draft.rmcat.evaluate}.
+requirements form the basis of the guidelines described
+in~\cite{draft.rmcat.evaluate}.  We define a catelogue of \emph{traffic flows}
+traversing through a \emph{network topology} with varying \emph{link
+characteristics} and diverse \emph{queuing} strategies. By picking one feature
+from each category in the category, we can construct scenarios to evaluate the
+performance of the congestion control.These scenarios try to imitate a subset
+of real-world deployment conditions.
 
-In Section~\ref{rg.title}, we describe the scenarios in which to evaluate
-congestion control, namely, when the flows are a) alone, b) competing with
-self-similar flows, and c) competing with TCP flows (short-, long-lived) on a
-bottleneck link.
 
-These scenarios can be described as network topologies with varying link and
-router characteristics, they are:
+\begin{enumerate}
+
+\item \textbf{\texttt{Single media flow on an end-to-end path}}: this scenario
+describes the best case, wherein the network puts each flow identified by its
+5-tuple (protocol, source and destination IP address, source and destination
+port numbers) on its own queue, thereby the flow using the proposed congestion
+control algorithm does not encounter any cross-traffic.
+
+\item \textbf{\texttt{Single media flow competing with the similar flows}}: in
+this scenario, the flow using the proposed congestion control algorithm
+competes with flows using the same congestion control algorithm (i.e., all
+flows are interactive multimedia).
+
+
+\item \textbf{\texttt{Single media flow competing with TCP}}: in this
+scenario, the flow using the proposed congestion control algorithm competes
+with TCP flows. These maybe \emph{short} TCP flows depicting common web-
+traffic patterns or \emph{long} TCP flows depicting bulk transfers (e.g.,
+large file downloads).
+
+\end{enumerate}
+
+In Section~\ref{rg.title}, we describe the network traffic scenarios to
+evaluate the proposed congestion control algorithms, namely, when the flows
+are a) alone, b) competing with self-similar flows, and c) competing with TCP
+flows (short-, long-lived) on a bottleneck link.
 
 \textbf{\texttt{Network topology}}:
 
