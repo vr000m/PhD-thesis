@@ -218,6 +218,24 @@ jitter is measured on a per-packet basis, but reported over a longer
 measurement interval (to filter for noise and transient delays).
 Alternatively, packet losses, discards, etc. are measured over a shorter
 interval so that the sender can react to these immediately.
+Another aspect to consider for classifying cues is the the monitoring duration
+to identify congestion, i.e., either over a \emph{long-term} (order of seconds
+or minutes) or a \emph{short-term} (order of 100ms or a few seconds). For
+example, jitter is measured on a per-packet basis, but reported over a longer
+measurement interval (to filter for noise and transience). Alternatively,
+packet losses, discards, etc. are measured over a shorter interval so that the
+sender can react to these immediately. 
+
+% Additionally if the cue reliably
+% describes the onset of congestion (\emph{knee}) or the collapse
+% (\emph{cliff}).
+
+% \begin{figure}[!h]
+% \includegraphics[width=\columnwidth]{chap4-knee-cliff}
+% \caption{Shows the variation throughput and delay with increasing network load}
+% \label{fig:4:knee}
+% \end{figure}
+
 
 \section{Congestion Control Evaluation}
 \label{fw.cc.eval}
