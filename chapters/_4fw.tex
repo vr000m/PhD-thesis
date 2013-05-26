@@ -93,16 +93,24 @@ in RTT provides an indication of congestion and by smoothing the RTT
 (averaging over a short interval) protects against over-reacting to the subtle
 changes in RTT.
 
-\item \textbf{\texttt{Jitter and packet inter-arrival time}}: packets may
-arrive at different times due to route changes, , i.e., packets sent
-periodically may appear aperiodically at the receiver. Additionally,
-congestion at the bottleneck link causes a fluctuation in the inter-arrival
-time (IAT) between packets, also known as packet jitter.
+\item \textbf{\texttt{Packet delay variation and packet inter-arrival time}}:
+packets may arrive at different times due to route changes, or congestion at
+the bottleneck link causes jitter. Enpoints detect jitter by comparing the
+send or media generation timestamps with the receiving timestamps. The
+endpoint can assume congestion if the packets were sent periodically but
+appear aperiodically at the receiver. There are however some caveats to this
+generalization, if the packet sizes vary (because of varying video frame
+sizes), a large packet or a burst of packets (a video frame fragmented over
+several RTP packets) may cause the queues in an intermediate router to
+increase, thus causing queuing delay for several frame cycles.
 
 %\item \textbf{\texttt{Adaptive playout time or Size of Receiver buffer}}:
 
 \end{itemize}
 
+This thesis is not about the performance of congestion cues but using the cues
+to build a congestion control that works in various operating environments.
+Therefore, in any given scenario some cues are more reliable than others.
 
 \section{Congestion Reporting Frequency}
 \label{fw.freq}
@@ -187,17 +195,19 @@ the cues out-of-band, re-use the signaling path (e.g., SIP, XMPP) or setup an
 alternate signaling path (e.g., HTTP or websockets). Following are the
 examples for each category in the classification:
 
-\textbf{\texttt{a) In-path, In-band}}: TFRC using information in RTCP RR,
-TMMBR.
+\textbf{\texttt{a) In-path, In-band}}: TFRC using information in RTCP RR, TFRC
+using additional loss reported by ECN markings, Temporary Maximum Media Stream
+Bit Rate Request (TMMBR), Receiver Estimated Max Bitrate (REMB).
 
-\textbf{\texttt{b) In-path, Out-of-band}}: RTSP SPEED parameter, bandwidth
-parameter in SDP, TFRC using additional loss reported by ECN markings.
+\textbf{\texttt{b) In-path, Out-of-band}}: RTSP implements a SPEED parameter
+to vary the transmission rate, announcing bandwidth in the SDP.
 
 \textbf{\texttt{c) Out-of-path, In-band}}: Multipath RTP (congestion on one
-path causes change in per path fractional distribution.)
+path causes a change in the fractional distribution of traffic on each path.)
 
-\textbf{\texttt{d) Out-of-path, Out-of-band}}: bandwidth information from
-congestion maps, bandwidth lookup service, superpeers and overlays.
+\textbf{\texttt{d) Out-of-path, Out-of-band}}: bandwidth/congestion
+notifications from congestion maps, bandwidth lookup service, superpeers and
+overlays.
 
 % monitoring: long-term, short-term
 
@@ -248,7 +258,7 @@ flows are interactive multimedia).
 
 \item \textbf{\texttt{Single media flow competing with TCP}}: in this
 scenario, the flow using the proposed congestion control algorithm competes
-with TCP flows. These maybe \emph{short} TCP flows depicting common web-
+with TCP flows. These maybe \emph{short} TCP flows depicting common web-%
 traffic patterns or \emph{long} TCP flows depicting bulk transfers (e.g.,
 large file downloads).
 
