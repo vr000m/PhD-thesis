@@ -59,7 +59,7 @@ interactive unicast media stream (i.e., both sending and receiving media).
 \section{RTP Payload Formats}
 
 The general principle for defining payload formats/types are to be able to
-identify the encoding of the media packets. These encodings can be codec-
+identify the encoding of the media packets. These encodings are either codec-%
 specific (e.g., H.264, H.263, H.261, MPEG-1, MPEG-2, JPEG, G.711, G.722, AMR,
 etc.), or generic (e.g., Forward Error Correction (FEC), Unequal Level of
 Protection (ULP), NACK, multiplexed streams). Typically the payload format
@@ -84,11 +84,11 @@ repeated in multiple payload formats (e.g., timing information), and cannot be
 reported in an RTCP report because RTCP is sent infrequently and unreliably.
 The advantage of using header extensions is that they are 1) backwards
 compatible, 2) can be ignored by an endpoint that does not understand them,
-and 3) the sender can add multiple header extensions to an RTP packet. Some
-current use-cases for RTP header extensions are: reporting the network send
-timestamp (this allows the sender to pace large frames on to the network, so
-not to cause temporary bandwidth overuse), client's audio levels (to equalize
-audio levels across multiple streams in a video conference).
+and 3) the sender is able to add multiple header extensions to an RTP packet.
+Some current use-cases for RTP header extensions are: reporting the network
+send timestamp (this allows the sender to pace large frames on to the network,
+so not to cause temporary bandwidth overuse), client's audio levels (to
+equalize audio levels across multiple streams in a video conference).
 
 \section{RTCP Reporting Interval}
 % timing
@@ -97,13 +97,13 @@ A closed control loop is formed by sending RTP media packets and receiving
 RTCP feedback packets. The RTCP reporting interval is determined by the number
 of SSRCs in the session, and the chosen session bandwidth. Typically, in a
 unicast session there are two SSRCs, one for each participant, but the number
-of SSRCs can be higher if they send multiple media streams. The interval
-between reports tends to be on the order of a few seconds, and is randomized
-to avoid snchronization of reports from multiple endpoints. Formally, to
-ensure that the RTCP reports are not sent too frequently, the endpoints limit
-the feedback rate to $5\%$ of the session \textit{media rate}, shared equally
-by each participant in a video conference. Formally, the RTCP reporting
-interval is calculated as follows:
+of SSRCs can be higher if each endpoint sends multiple media streams. The
+interval between reports tends to be on the order of a few seconds, and is
+randomized to avoid snchronization of reports from multiple endpoints.
+Formally, to ensure that the RTCP reports are not sent too frequently, the
+endpoints limit the feedback rate to $5\%$ of the session \textit{media rate},
+shared equally by each participant in a video conference. Formally, the RTCP
+reporting interval is calculated as follows:
 
 \begin{align}
 rtcp\_interval = & \frac{n \times avg\_rtcp\_size}{rtcp\_bw}
@@ -121,7 +121,7 @@ rtcp\_bw &=  \frac{5}{100} \times media\_rate
 If the endpoint detects packet loss or onset of congestion midway through a
 reporting interval, the base RTP specification~\cite{rfc3550} (AVP profile)
 does not allow sending the RTCP report early and the endpoint has to wait for
-the next scheduled RTCP report. Hence, the slow control loop can cause
+the next scheduled RTCP report. In this case, the slow control loop causes
 instability and oscillation in the media bitrate. To overcome this
 shortcoming, endpoints implement the Extended RTP Profile for RTCP-Based
 Feedback (AVPF profile)~\cite{rfc4585}, an extension to RTP's default timing
@@ -173,7 +173,7 @@ what is measured, how it is measured and reported to the other endpoints.
 % codec control
 
 Sometimes an endpoint needs to configure or notify the other endpoint's codec.
-These messages can be broadly classified as \emph{Transport Layer} and  \emph
+These messages are broadly classified as \emph{Transport Layer} and  \emph
 {Payload-specific} feedback messages~\cite{rfc5104}. The transport layer
 messages are: Temporary Maximum Media Stream Bit Rate Request (TMMBR) and
 Temporary Maximum Media Stream Bit Rate Notification (TMMBN). The receiving
@@ -186,20 +186,20 @@ frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 \section{Reduced-Size RTCP Reports}
 % non-compound feedback
 
-An endpoint can send RTCP feedback as a \emph{compound}, or \emph{minimal}
-RTCP packet. A \emph{compound RTCP packet} is defined in~\cite{rfc3585},
-contains at least a sender report (SR) or a receiver report (RR) or both,
-followed by Source Description (SDES) and any additional XR blocks. A
-\emph{minimal RTCP packet} is one that contains a SR and/or RR, and followed
-by an SDES containing just the canonical name (CNAME)\footnote{It is the real
-name (identifier) used to describe the source, it can be in any form desired
-by the user. Of the SDES items (username, email, phone, geo-location, etc.)
-CNAME is compulsory to include in every RTCP packet.}. Hence, every compound
-RTCP packet is a minimal RTCP packet with additional report blocks.
+An endpoint sends RTCP feedback as a \emph{compound}, or \emph{minimal} RTCP
+packet. A \emph{compound RTCP packet} is defined in~\cite{rfc3585}, contains
+at least a sender report (SR) or a receiver report (RR) or both, followed by
+Source Description (SDES) and any additional XR blocks. A \emph{minimal RTCP
+packet} is one that contains a SR and/or RR, and followed by an SDES
+containing just the canonical name (CNAME)\footnote{It is the real name
+(identifier) used to describe the source, it can be in any form desired by the
+user. Of the SDES items (username, email, phone, geo-location, etc.) CNAME is
+compulsory to include in every RTCP packet.}. Hence, every compound RTCP
+packet is a minimal RTCP packet with additional report blocks.
 
 Consequently, including any of the additional SDES items or adding XR blocks
 makes the compound RTCP packet very large. On a low bitrate links, during
-transmission these large compound RTCP packets can introduce more delay.
+transmission these large compound RTCP packets may introduce more delay.
 Therefore, it may be desireable to logically fragment the report blocks in a
 compound RTCP packet and send them independently. These fragmented report
 blocks are called \emph{reduced-size RTCP packet}~\cite{rfc5506}. Unlike
@@ -212,14 +212,14 @@ likely to  be dropped compared to smaller sized packets. Additionally, smaller
 packets have shorter serialization time, i.e., the amount of time it takes for
 the endpoint to put the data packet on to the link.
 
-The application can use the reduced-size RTCP reports to 1) notify the other
-endpoint of events, using the signaling channel would incur at least one RTT
-while implementing it as an RTCP extension would merely incur a one-way delay.
-2) send codec control (e.g., TMMBR) or feedback (e.g., NACK, RPSI) messages,
-these messages as reduced-size are more likely to be transmitted compared to
-the compound packets and with as little delay as possible. Especially since
-these types of messages are more likely to be sent when link conditions are
-poor.
+The main reasons for the application to use the reduced-size RTCP reports are:
+1) notify the other endpoint of events, using the signaling channel would
+incur at least one RTT while implementing it as an RTCP extension would merely
+incur a one-way delay. 2) send codec control (e.g., TMMBR) or feedback (e.g.,
+NACK, RPSI) messages, these messages as reduced-size are more likely to be
+transmitted compared to the compound packets and with as little delay as
+possible. Especially since these types of messages are more likely to be sent
+when link conditions are poor.
 
 
 % relationship with SDP
@@ -227,13 +227,15 @@ poor.
 
 % SDP O/A, declarative SDP, RTCP notify
 
-Interactive or conversational multimedia sessions can be setup using
+There are several ways to setup an interactive or conversational multimedia
+session, for example by implementing one of the following:
 H.323~\cite{H.323}, Session Initiation Protocol (SIP)~\cite{rfc3261},
 Jingle~\cite{XEP-0166} an extension to Extensible Messaging and Presence
-Protocol (XMPP)~\cite{rfc6120}. SIP uses Session Description Protocol
-(SDP)~\cite{rfc4566} to describe the endpoint's transport and media
-capabilities. An SDP description defines only one multimedia session, i.e., an
-association between a set of participants.
+Protocol (XMPP)~\cite{rfc6120}. 
+
+SIP uses Session Description Protocol (SDP)~\cite{rfc4566} to describe the
+endpoint's transport and media capabilities. An SDP description defines only
+one multimedia session, i.e., an association between a set of participants.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\columnwidth]{chap3-sig-med}}
@@ -254,7 +256,7 @@ traverse through a NAT at both ends, in some cases, the only way to deliver
 media packets between the two endpoints would be by accessing a relay on the
 public Internet. Hence, the endpoint needs to discover its 2-tuple [IP
 address:port] on the host, NAT~\cite{rfc5389} and the allocated
-relay~\cite{rfc5766} before it can notify the other endpoints about its
+relay~\cite{rfc5766} before it notifies the other endpoints about its
 transport details. This collection of 2-tuples is known as \emph{candidates}
 and both endpoints exchange their candidate addresses in the SDP. On receiving
 the candidates, the endpoint performs a probe between each combination of

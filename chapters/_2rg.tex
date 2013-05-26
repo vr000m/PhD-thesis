@@ -2,12 +2,12 @@
 
 The research goal of this thesis is to discuss congestion control for real-
 time media. To achieve a suitable end-user experience, a multimedia
-system\footnote{the transmitting endpoint or a classifier in the network} can:
-\textbf{1)} associate a DiffServ Code Point (DSCP)~\cite{rfc2474} to the media
-packets; therby, enabling Quality of Service (QoS). Using DSCP poses some
-challenges, which are discussed in Section~\ref{rg.ch.dscp}. \textbf{2)}
-instruct the encoder to modify the encoding rate to a certain target rate. To
-achieve media rate- adaption the endpoint needs to monitor and respond to
+system\footnote{the transmitting endpoint or a classifier in the network}:
+\textbf{1)} associates a DiffServ Code Point (DSCP)~\cite{rfc2474} to the
+media packets; thereby, enabling Quality of Service (QoS). Using DSCP poses
+some challenges, which are discussed in Section~\ref{rg.ch.dscp}. \textbf{2)}
+instructs the encoder to modify the encoding rate to a certain target rate. To
+achieve media rate-adaption the endpoint needs to monitor and respond to
 congestion cues.
 
 %Additionally, we  discuss requirements for media rate-adaptation.
@@ -19,42 +19,43 @@ congestion cues.
 The real-time multimedia ecosystem is an interconnection of several
 components. These components are discussed below:
 
-\textbf{\texttt{Endpoint}}: is the networked host at which the media flow is initiated
-or terminated and is typically identified by its IP address(es).
+\textbf{\texttt{Endpoint}}: is the networked host at which the media flow is
+initiated or terminated and is typically identified by its IP address(es).
 
 % or in the local area by its MAC address. the MAC address may appear in the 
 % CNAME SDES item. rfc6222?
 
-\textbf{\texttt{Multimedia Device}}: captures multimedia content, for example a camera
-or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices are capable
-of encoding the raw frames into compressed media using a codec (e.g., Opus,
-AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or as a software
-library (e.g., \texttt{x264}, \texttt{libvpx}).
+\textbf{\texttt{Multimedia Device}}: captures multimedia content, for example
+a camera or microphone, in a raw format (e.g., PCM, YUV, RGB). Some devices
+are capable of encoding the raw frames into compressed media using a codec
+(e.g., Opus, AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or
+as a software library (e.g., \texttt{x264}, \texttt{libvpx}).
 
 %TODO: missing refs for the above acronyms.
 
-\textbf{\texttt{Multimedia Application}}: is a software program running on an endpoint
-that contains the logic for rendering the received multimedia streams,
-discovering, configuring, enabling and disabling the multimedia device(s). It
-also stores the user's preferences and application settings (typically, set by
-the developer or the multimedia service provider), it uses these stored
-settings to adjust the encoder settings (frame rate, frame size), adjust the
-network parameters (size of dejitter buffer, enable or disable RTP flows,
-congestion control, etc).
+\textbf{\texttt{Multimedia Application}}: is a software program running on an
+endpoint that contains the logic for rendering the received multimedia
+streams, discovering, configuring, enabling and disabling the multimedia
+device(s). It also stores the user's preferences and application settings
+(typically, set by the developer or the multimedia service provider), it uses
+these stored settings to adjust the encoder settings (frame rate, frame size),
+adjust the network parameters (size of dejitter buffer, enable or disable RTP
+flows, congestion control, etc).
 
-\textbf{\texttt{Multimedia System}}: is the combination of a multimedia application,
-controlling one or more multimedia device on an endpoint.
+\textbf{\texttt{Multimedia System}}: is the combination of a multimedia
+application, controlling one or more multimedia device on an endpoint.
 
-\textbf{\texttt{Point-to-point (PtP) communication}}: media traffic flows between two
-endpoints on the Internet, i.e., these are bidirectional unicast flows.
+\textbf{\texttt{Point-to-point (PtP) communication}}: media traffic flows
+between two endpoints on the Internet, i.e., these are bidirectional unicast
+flows.
 
-\textbf{\texttt{Intermediaries}}: are network devices through which the media packets
-flow. These devices may be Network Address Translation (NAT) devices,
+\textbf{\texttt{Intermediaries}}: are network devices through which the media
+packets flow. These devices may be Network Address Translation (NAT) devices,
 firewalls, Session Border Controller (SBC), routers with limited capacity or
 queues.
 
-\textbf{\texttt{Multipoint Control Unit (MCU)}}: is an endpoint that acts as a bridge
-in many to many conferencing system. This is an alternative network
+\textbf{\texttt{Multipoint Control Unit (MCU)}}: is an endpoint that acts as a
+bridge in many to many conferencing system. This is an alternative network
 architecture to a full-mesh system in which an endpoint sends its media stream
 to every other endpoint in the conference. Alternatively, the MCU acts as the
 terminating endpoint and each endpoint only sends its media stream  to the MCU
@@ -62,7 +63,7 @@ instead of every participant. The MCU on receiving the individual streams can
 behave like an RTP Mixer and output a single stream (e.g., audio or composited
 video).
 
-\textbf{Operating Environment}: real-time multimedia traffic is
+\textbf{\texttt{Operating Environment}}: real-time multimedia traffic is
 transmitted using best-effort IP networks that consists of paths with varying
 link properties. The variation may be due to properties of the link itself
 (for e.g., wireless links: WLAN, 3G, LTE) or due to varying amounts of cross-
@@ -103,14 +104,14 @@ system.
 
 % cases where it might work
 
-Despite the above listed challenges, DSCP markings can help in some
-environments~\cite{draft.rtcweb.qos}:
+Despite the above listed challenges, marking packets with a DSCP code point
+helps in some environments~\cite{draft.rtcweb.qos}:
 
 \begin{itemize}
 	
     \item If the bottleneck link is the broadband router that often connects a
-    residential or Small Office/Home Office (SOHO) then the DSCP markings can 
-    help in prioritizing the data traffic at this bottleneck.
+    residential or Small Office/Home Office (SOHO) then the DSCP markings 
+    helps in prioritizing the data traffic at this bottleneck.
 
 	\item If the packets traverse a congested wireless link and the service 
 	provider did not scrub out the DSCP markings, the markings may help.
@@ -126,17 +127,17 @@ will only make the performance of our algorithms better. Consequently, the
 endpoints need to implement rate-control (or, congestion control), i.e., the
 endpoint needs to monitor the media flows and observe for congestion cues.
 Based on these cues, the endpoint may increase or decrease the media encoding
-rate\footnote{For the moment it can be assumed that the rate-controller can
-placed at either the sender or the receiver.}. We identify three control loops
+rate\footnote{For the moment the rate-controller can be placed at either the
+sender or the receiver.}. We identify three control loops
 in~\cite{Singh:control.loops.api}, they are:
 
 \begin{enumerate}
 
 \item \textbf{\texttt{Codec-Sender}}: the codec adapts its encoding rate based
-on the feedback from the sender. Unlike elastic traffic, the codec cannot
-produce the expected media rate immediately. Therefore, the rate-controller
-needs to take into account the timeline in which the codec can produce the new
-rate. Typically, the codec can adapt to a lower rate immediately but cannot
+on the feedback from the sender. Unlike elastic traffic, the codec is unable
+to produce the expected media rate immediately. Therefore, the rate-controller
+needs to take into account the timeline in which the codec produces the new
+rate. Typically, the codec adapts to a lower rate immediately but is unable to
 ramp-up very quickly.
 
 \item \textbf{\texttt{Sender-Network}}: the sender packetizes media frames and
@@ -155,15 +156,22 @@ sender to act upon.
 
 \end{enumerate}
 
-If an endpoint can rapidly detect congestion, and a sufficiently low RTT, it
-is possible to change the encoding rate quickly to meet the requirements of
-the end-to-end path capacity. However in practice, this not always possible
-because \textbf{a)} it may take multiple reports or data packets to detect
-congestion, \textbf{b)} after detecting a congestion cue at the receiver it
-takes at least one-way delay (OWD) amount of time to report it. To deploy a
-congestion control algorithm, we need to evaluate and discuss the performance
-in various application, network and flow settings. These scenarios are
-discussed in more detail in Section~\ref{fw.cc.eval}.
+If an endpoint detects congestion rapidly, and a the end-to-end path has a
+sufficiently low RTT, it is possible to change the encoding rate quickly to
+meet the requirements of the end-to-end path capacity. However in practice,
+this not always possible because \textbf{a)} it may take multiple reports or
+data packets to detect congestion, \textbf{b)} after detecting a congestion
+cue at the receiver it takes at least one-way delay (OWD) amount of time to
+report it. To deploy a congestion control algorithm, we need to evaluate and
+discuss the performance in various application, network and flow settings.
+In~\cite{draft.rmcat.evaluate} we consider the following guidelines for
+evaluating congestion control.
+
+
+
+The guidelines lead to identifying building blocks  discussed in more detail
+in Section~\ref{fw.cc.eval}.
+
 
 \section{Contribution to Knowledge}
 
