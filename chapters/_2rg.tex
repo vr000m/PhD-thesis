@@ -163,14 +163,30 @@ this not always possible because \textbf{a)} it may take multiple reports or
 data packets to detect congestion, \textbf{b)} after detecting a congestion
 cue at the receiver it takes at least one-way delay (OWD) amount of time to
 report it. To deploy a congestion control algorithm, we need to evaluate and
-discuss the performance in various application, network and flow settings.
-In~\cite{draft.rmcat.evaluate} we consider the following guidelines for
-evaluating congestion control.
+discuss the performance in various application, network and flow settings. We
+consider the following requirements for implementing congestion
+control~\cite{draft.rmcat.evaluate}.
 
+\begin{itemize}
 
+\item Avoid congestion collapse.
 
-The guidelines lead to identifying building blocks  discussed in more detail
-in Section~\ref{fw.cc.eval}.
+\item If the channel conditions are relatively stable over time, the media
+rate should be stable too because changing the media encoding rate too often
+or by too much may adversely affect the users' quality of
+experience~\cite{Zink03subjectiveimpression}.
+
+\item Test performance in a range of network characteristics. Namely, varying
+end-to-end capacity, latency, and router queue-sizes. Also test bottleneck
+capacity sharing with varying amount of cross-traffic.
+
+\item Feedback overhead.
+
+\end{itemize}
+
+These guidelines lead to identifying building blocks for creating evaluation
+scenarios, the building blocks are discussed in more detail in
+Section~\ref{fw.cc.eval}.
 
 
 \section{Contribution to Knowledge}
