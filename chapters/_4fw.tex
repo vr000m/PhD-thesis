@@ -114,9 +114,15 @@ A congestion control algorihtm takes into account the type of media stream
 (audio/video sync, multi-view video), the operating environment (Internet-
 scale, low-delay local area deployment, heterogeneous environement with a mix
 of wired and wireless links) and the application requirements (audio preferred
-over video or vice versa) to pick the right congestion cues. This thesis is
-not about the performance of congestion cues but using the cues to build a
-congestion control that works in various operating environments.
+over video or vice versa) to pick the right congestion cues. 
+
+Another aspect to consider when picking congestion cues is the the monitoring
+duration to identify congestion, i.e., either over a \emph{long-term} (order
+of seconds or minutes) or a \emph{short-term} (order of 100ms or a few
+seconds). For example, jitter is measured on a per-packet basis, but reported
+over a longer measurement interval (to filter for noise and transience).
+Alternatively, packet losses, discards, etc. are measured over a shorter
+interval so that the sender can react to these immediately.
 
 \section{Congestion Reporting Frequency}
 \label{fw.freq}
@@ -194,7 +200,7 @@ Figure~\ref{fig:4:fw}.
 
 A congestion control algorithm needs to pick one or more measurement points,
 picking multiple adds to the feedback overhead and then choose a method to
-signal it to the sending endpoint. It can choose to do it in-band by
+signal it to the sending endpoint. It can choose to report it in-band by
 encapsulating the cues either by piggybacking them on endpoint's own media
 packets as RTP header extensions (this adds to the header overhead of a media
 packet) or as RTCP extension blocks (see section~\ref{fw.freq} for details on
@@ -219,14 +225,6 @@ overlays.
 
 % monitoring: long-term, short-term
 
-Another aspect to consider for classifying cues is the the monitoring duration
-to identify congestion, i.e., either over a \emph{long-term} (order of seconds
-or minutes) or a \emph{short-term} (order of 100ms or a few seconds). For
-example, jitter is measured on a per-packet basis, but reported over a longer
-measurement interval (to filter for noise and transience). Alternatively,
-packet losses, discards, etc. are measured over a shorter interval so that the
-sender can react to these immediately. 
-
 % Additionally if the cue reliably
 % describes the onset of congestion (\emph{knee}) or the collapse
 % (\emph{cliff}).
@@ -236,7 +234,6 @@ sender can react to these immediately.
 % \caption{Shows the variation throughput and delay with increasing network load}
 % \label{fig:4:knee}
 % \end{figure}
-
 
 \section{Congestion Control Evaluation}
 \label{fw.cc.eval}
@@ -256,9 +253,11 @@ described in~\cite{draft.rmcat.evaluate}.  We define a catelogue of
 \emph{traffic flows} traversing through a \emph{network topology} with varying
 \emph{link characteristics} and diverse \emph{queuing} strategies. By picking
 one feature from each category in the category, we construct scenarios to
-evaluate the performance of the congestion control. These scenarios try to
-imitate a subset of real-world deployment conditions.
+evaluate the performance of the congestion control. The evaluation scenarios
+are built using the following components: network topology, link and router
+characteristics.
 
+\subsection{Network flows}
 
 \begin{enumerate}
 
@@ -282,16 +281,16 @@ large file downloads).
 
 \end{enumerate}
 
-In Section~\ref{rg.title}, we describe the network traffic scenarios to
-evaluate the proposed congestion control algorithms, namely, when the flows
-are a) alone, b) competing with self-similar flows, and c) competing with TCP
-flows (short-, long-lived) on a bottleneck link.
+% In Section~\ref{rg.title}, we describe the network traffic scenarios to
+% evaluate the proposed congestion control algorithms, namely, when the flows
+% are a) alone, b) competing with self-similar flows, and c) competing with TCP
+% flows (short-, long-lived) on a bottleneck link.
 
-\textbf{\texttt{Network topology}}:
+\subsection{Network topology}
 
-\textbf{\texttt{Link characteristics}}:
+\subsection{Link characteristics}
 
-\textbf{\texttt{Router characteristics}}:
+\subsection{Router characteristics}
 
 
 % Flow scenarios
