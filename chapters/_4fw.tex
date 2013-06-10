@@ -292,7 +292,78 @@ large file downloads).
 
 \subsection{Router characteristics}
 
-
 % Flow scenarios
 % Link properties
 % Router properties
+
+\section{Circuit Breakers for Unicast RTP Sessions}
+
+Due to media flow's (chiefly due to video) high data rate, if congestion
+control is not implemented by multimedia applications, they can cause severe
+congestion in the network, especially in low capacity networks. This can
+disrupt multimedia's quality of experience and other applications on the
+network.
+
+We are developing a circuit breaker algorithm that can work with unmodified
+RTP applications, and determine when those applications are causing excessive
+network congestion and should cease their
+transmission~\cite{draft.rmcat.evaluate}.  Furthermore, the new congestion
+control algorithms for multimedia defined in the IETF will need to work inside
+the envelope of this circuit breaker algorithm. Hence, the circuit breakers
+cannot be too aggressive in terminating media  flows because it should allow
+sufficient time for the congestion control algorithm  to monitor and respond
+to congestion cues. 
+
+Developing standard congestion control algorithms for unicast RTP-based
+interactive multimedia applications is expected to be a multi-year process at
+the IETF. The development of the circuit breaker is on a tight schedule, to be
+ready for inclusion in the initial roll out of the WebRTC framework
+\cite{jennings:2013:webrtc} in web browsers.
+
+\subsection{Circuit Breaker Design}
+
+The RTP circuit breaker algorithm relies on the basic feedback mechanisms
+defined in the RTP Control Protocol (RTCP) \cite{RFC3550}. That it, it solely
+uses the information available in the RTCP Sender Report (SR) and Receiver
+Report (RR) packets to detect if the flow is overusing the capacity or causing
+congestion.
+
+Common congestion indicators are: 1) the network round trip time (RTT)
+calculated  using timing information in RTCP SR and RR packets, 2) jitter
+estimated by the receiver over the last reporting interval, and 3) fractional
+packet loss and cumulative  loss reported by the receiver during the last RTCP
+interval. These indicators  unfortunately only provide a limited insight into
+the behavior of the network and cannot be used as strong signals for a circuit
+breaker.
+
+Variation in RTT is used as a congestion indicator in delay-based congestion
+control  algorithms. Additionally, some algorithms use RTT estimates to
+configure connection timeouts. In RTP/RTCP, the RTT is estimated infrequently
+because the feedback intervals are rather long making it difficult to detect
+the cause in  variation of delay. Likewise, variation in jitter can indicate a
+transient network congestion but do not  provide a strong signals to implement
+a circuit breaker. On the other hand, loss is a strong indicator of congestion
+in networks where  packet losses predominantly occur due to queue overflows
+and less accurate indicator where packet loss can occur due to bit-error
+corruption (e.g., wireless  and mobile links). Therefore, we base the circuit
+breaker conditions on packet losses. They are:
+
+\begin{enumerate}
+
+\item \textbf{\texttt{Media Timeout}}: An endpoint is sending media data but
+the receiver reports a non-increasing \emph{Highest Sequence Number} (HSN) for
+two consecutive RTCP intervals the flow is terminated.
+
+\item \textbf{\texttt{RTCP Timeout}}: An endpoint is sending media data but
+receives no RTCP RR for two consecutive RTCP intervals the flow is terminated.
+
+\item \textbf{\texttt{Congestion}}: An endpoint is sending media data and
+receives RTCP RRs indicating fractional packet loss, it calculates the TCP
+friendly rate and compares it to the sending rate. If the sending rate exceeds
+the TCP friendly rate  by a factor of 10 for two consecutive RTCP intervals
+the flow is terminated.
+
+\end{enumerate}
+
+The RTP circuit breaker algorithm is discussed in detail in
+\cite{draft.rtp.cb}.
