@@ -334,18 +334,18 @@ browsers.
 \subsection{Circuit Breaker Design}
 
 The RTP circuit breaker algorithm relies on the basic feedback mechanisms
-defined in the RTP Control Protocol (RTCP) \cite{RFC3550}. That it, it solely
+defined in the RTP Control Protocol (RTCP)~\cite{RFC3550}. That is, it solely
 uses the information available in the RTCP Sender Report (SR) and Receiver
 Report (RR) packets to detect if the flow is overusing the capacity or causing
 congestion.
 
-Common congestion indicators are: 1) the network round trip time (RTT)
-calculated  using timing information in RTCP SR and RR packets, 2) jitter
-estimated by the receiver over the last reporting interval, and 3) fractional
-packet loss and cumulative  loss reported by the receiver during the last RTCP
-interval. These indicators  unfortunately only provide a limited insight into
-the behavior of the network and cannot be used as strong signals for a circuit
-breaker.
+Common congestion indicators are: 1) the network \emph{round trip time} (RTT)
+calculated  using timing information in RTCP SR and RR packets, 2)
+\emph{jitter} estimated by the receiver over the last reporting interval, and
+3) fractional packet loss and cumulative \emph{loss} reported by the receiver
+during the last RTCP interval. These indicators  unfortunately only provide a
+limited insight into the behavior of the network and cannot be used as strong
+signals for a circuit breaker.
 
 Variation in RTT is used as a congestion indicator in delay-based congestion
 control  algorithms. Additionally, some algorithms use RTT estimates to
@@ -376,5 +376,5 @@ the flow is terminated.
 
 \end{enumerate}
 
-The RTP circuit breaker algorithm is discussed in detail
+Details of the RTP circuit breaker algorithm is discussed
 in~\cite{draft.rtp.cb}.
