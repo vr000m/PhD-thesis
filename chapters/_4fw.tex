@@ -313,20 +313,23 @@ disrupt multimedia's quality of experience and other applications on the
 network.
 
 We are developing a circuit breaker algorithm that can work with unmodified
-RTP applications, and determine when those applications are causing excessive
-network congestion and should cease their
-transmission~\cite{draft.rmcat.evaluate}.  Furthermore, the new congestion
-control algorithms for multimedia defined in the IETF will need to work inside
-the envelope of this circuit breaker algorithm. Hence, the circuit breakers
-cannot be too aggressive in terminating media  flows because it should allow
-sufficient time for the congestion control algorithm  to monitor and respond
-to congestion cues. 
+RTP applications, and determine when these non-adaptive multimedia
+applications are causing excessive network congestion and cease their
+transmission.  We envision that the congestion control algorithms for
+multimedia standardized in the IETF will need to work inside the envelope of
+this circuit breaker algorithm~\cite{draft.rmcat.evaluate}. Hence, the circuit
+breakers cannot be too aggressive in terminating media flows because it
+should allow sufficient time for the congestion control algorithm  to monitor
+and respond to congestion cues.
 
-Developing standard congestion control algorithms for unicast RTP-based
-interactive multimedia applications is expected to be a multi-year process at
-the IETF. The development of the circuit breaker is on a tight schedule, to be
-ready for inclusion in the initial roll out of the WebRTC framework
-\cite{jennings:2013:webrtc} in web browsers.
+The circuit breaker algorithm in the short term will serve as a policer,
+during which time the congestion control algorithm is developed. Developing
+standard congestion control algorithms for unicast RTP-based interactive
+multimedia applications is expected to be a multi-year process at the IETF.
+Consequently, the development of the circuit breaker is on a tight schedule,
+to be ready for inclusion in the initial roll out of the WebRTC (Web-based
+Real-time Communication) framework~\cite{jennings:2013:webrtc} in web
+browsers.
 
 \subsection{Circuit Breaker Design}
 
@@ -373,5 +376,5 @@ the flow is terminated.
 
 \end{enumerate}
 
-The RTP circuit breaker algorithm is discussed in detail in
-\cite{draft.rtp.cb}.
+The RTP circuit breaker algorithm is discussed in detail
+in~\cite{draft.rtp.cb}.
