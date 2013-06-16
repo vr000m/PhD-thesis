@@ -45,3 +45,5 @@ dissertation.pdf
 
 *.py
 accr.ignore
+
+*.lox
