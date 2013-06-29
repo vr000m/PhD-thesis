@@ -8,11 +8,12 @@ Video plugin and later, due to the inclusion of the HTML5 video tag).
 Currently, the same trend can be observed with web-based conversational
 multimedia, i.e., web services can use Adobe's Real-time Media Flow Protocol
 (RTMFP)~\cite{draft.rtmfp}\footnote{There are other plugin-based services:
-Facebook Video, Skype, Google Talk/Hangout, etc.} or HTML5's Web Real-Time
-Communication (WebRTC) stack~\cite{draft.webrtc}.
+Facebook Video, Skype, Google Talk/Hangout, etc.} or HTML5's Web-based
+Real-Time Communication (WebRTC) stack~\cite{draft.webrtc}.
+
 
 Real-time communication on the Internet is subject to the unpredictability of
-the best-effort IP network. This uncertainity is mainly due to packet loss,
+the best-effort IP network. This uncertainty is mainly due to packet loss,
 packet re-ordering, variable queuing delay. Additionally, Buffer-%
 bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router may cause
 long delays and bursty losses. Video streaming overcomes most of these
@@ -25,6 +26,13 @@ between files with the same media content pre-encoded at different quality
 levels. However, this strategy is not applicable to interactive multimedia,
 where the sending endpoint needs to immediately adapt the media encoding rate
 to the available path capacity.
+
+% While video communication has existed for the last decade (via Skype, etc.),
+% there is no standardized congestion-control, but many have been proposed in
+% the past. To tackle congestion control, the IETF has chartered a new working
+% group, RMCAT\footnote{http://tools.ietf.org/wg/rmcat/} that aims at
+% standardizing congestion-control for real-time communication, but it is
+% expected to be a multi-year process\cite{jennings:2013:webrtc}.
 
 %Compared to video streaming, video communication is more challenging. First,
 %it requires implementing a NAT traversal mechanism for communicating between
@@ -73,7 +81,7 @@ described in standards documents, which facilitates interoperability and
 enthuses deployment. For example, the protocol extensions to enable congestion
 control (i.e., to signal the congestion cues) are discussed mainly in the
 standards document, while the associated congestion control algorithm and the
-performance analysis is discussed in the scientifc papers. To summarize, in
+performance analysis is discussed in the scientific papers. To summarize, in
 this thesis, we discuss both our research work and our engineering work, but
 emphasize more on the former.
 
@@ -87,19 +95,19 @@ a summary of scientific-papers, but is also supported by additional body of
 work. We have co-authored a number of Internet Drafts\footnote{at the time of
 writing this thesis, several of these documents are still in the Internet
 Draft state, but will be published as RFCs shortly} that complement the
-sceintific results discussed in the thesis. The chapters describing the
+scientific results discussed in the thesis. The chapters describing the
 various parts of the congestion control framework discuss both our scientific
 and engineering work, while associating it with the relevant related work in
 the area. The remainder of the thesis is organized as follows.
 
-Chapter~\ref{chap:rg} discribes the research goal of the thesis, which consists
+Chapter~\ref{chap:rg} describes the research goal of the thesis, which consists
 of creating a framework for congestion control that meets the requirements for
 multimedia systems.
 
 %\chapter{RTP: Real-time Transport Protocol}
 % RTP, AVPF, CCM, XR, reduced-size, 
 
-Chapter~\ref{chap:rtp} provides the neccessary background information to Real-
+Chapter~\ref{chap:rtp} provides the necessary background information to Real-
 time Transport Protocol (RTP). RTP together with RTP Control Protocol (RTCP)
 forms the control loop that adapts media to the reported path characteristics.
 This section is based on the RTP protocol suite~\cite{rfc3550, rfc4585,
@@ -142,11 +150,11 @@ Globisch:AsymGrpComm, draft.rtcp.overlay}, and \citepub{c:mprtp}.
 % \chapter{Network-assisted Congestion Control}
 
 Chapter~\ref{chap:cc.nw} discusses using congestion cues from coverage maps, i.e.,
-overlay coverage or througput information (collected by active/passive
+overlay coverage or throughput information (collected by active/passive
 measurements) on a geographical map. The chapter is based on our
 contributions,  which is documented in \citepub{c:glass}.
 
 % \chapter{Conclusions}
 
-Chapter~\ref{chap:conc} concludes the thesis and we analyse if the framework meets
+Chapter~\ref{chap:conc} concludes the thesis and we analyze if the framework meets
 the requirements.

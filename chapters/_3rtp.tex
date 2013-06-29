@@ -99,7 +99,7 @@ of SSRCs in the session, and the chosen session bandwidth. Typically, in a
 unicast session there are two SSRCs, one for each participant, but the number
 of SSRCs can be higher if each endpoint sends multiple media streams. The
 interval between reports tends to be on the order of a few seconds, and is
-randomized to avoid snchronization of reports from multiple endpoints.
+randomized to avoid synchronization of reports from multiple endpoints.
 Formally, to ensure that the RTCP reports are not sent too frequently, the
 endpoints limit the feedback rate to $5\%$ of the session \textit{media rate},
 shared equally by each participant in a video conference. Formally, the RTCP
@@ -127,7 +127,7 @@ shortcoming, endpoints implement the Extended RTP Profile for RTCP-Based
 Feedback (AVPF profile)~\cite{rfc4585}, an extension to RTP's default timing
 rules to enable rapid feedback. This profile allows the endpoint to adjust the
 RTCP reporting interval to send the RTCP feedback reports earlier than the
-next scheduled RTCP report, sometimes even immidiately. As long as reporting
+next scheduled RTCP report, sometimes even immediately. As long as reporting
 interval on average remains the same. Figure~\ref{fig:3:avpf.interval} shows
 the dynamics of the AVPF-enabled RTCP reporting interval.
 
@@ -180,7 +180,7 @@ Temporary Maximum Media Stream Bit Rate Notification (TMMBN). The receiving
 endpoint uses the TMMBR message to configure the maximum encoding bitrate of
 the media stream, while the sending endpoint uses the TMMBN to inform the
 receiver of the updated bitrate. On the other hand, the payload-specific
-messages are: Full Intra Request (FIR), temporal-spataial tradeoff, framerate,
+messages are: Full Intra Request (FIR), temporal-spataial tradeoff, frame rate,
 frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
 
 \section{Reduced-Size RTCP Reports}
@@ -200,7 +200,7 @@ packet is a minimal RTCP packet with additional report blocks.
 Consequently, including any of the additional SDES items or adding XR blocks
 makes the compound RTCP packet very large. On a low bitrate links, during
 transmission these large compound RTCP packets may introduce more delay.
-Therefore, it may be desireable to logically fragment the report blocks in a
+Therefore, it may be desirable to logically fragment the report blocks in a
 compound RTCP packet and send them independently. These fragmented report
 blocks are called \emph{reduced-size RTCP packet}~\cite{rfc5506}. Unlike
 compound RTCP packets, to transmit a reduced-size RTCP packet an endpoint does
@@ -265,7 +265,7 @@ successfully received (\emph{aggressive nomination}). This process of
 performing pair-wise \emph{connectivity checks} is called Interactive
 Connectivity Establishment (ICE)~\cite{rfc5245, rfc6544} and it relies on
 \emph{Session Traversal Utilities for NAT} (STUN) protocol to establish
-connectivty across a NAT and in case it fails to establish connectivity, it
+connectivity across a NAT and in case it fails to establish connectivity, it
 uses \emph{Traversal Using Relays around NAT} (TURN) protocol to use a relay
 on the public Internet to deliver the media packets.
 
