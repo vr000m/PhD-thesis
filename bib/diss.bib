@@ -6,8 +6,39 @@
   howpublished = "\url{http://www.isi.edu/nsnam/ns/}",
 }
 
+@misc{netem,
+    Author = {Stephen Hemminger},
+    Howpublished = {LCA'05},
+    Title = {{Network Emulation with NetEm}}
+}
 
-#### Internet draft 
+@misc{s4.eval.bitrate,
+    Author = {{{3GPP R1-081955}}},
+    Days = 5,
+    Month = may,
+    Title = {{{LTE} Link Level Throughput Data for SA4 Evaluation Framework.}},
+    Type = {Proposal},
+    Year = 2008,
+}
+
+@misc{3gppSim,
+    Author = {{{3GPP S4-050560}}},
+    Days = 5,
+    Month = sep,
+    Title = {{Software Simulator for MBMS Streaming over UTRAN and GERAN}},
+    Type = {Proposal},
+    Year = 2005,
+}
+
+@article{Carbone:2010p3502,
+    Author = {M Carbone and L Rizzo},
+    Journal = {ACM SIGCOMM CCR},
+    Month = {Jan},
+    Title = {{Dummynet revisited}},
+    Year = {2010}
+}
+
+#### Internet drafts 
 
 @misc{draft.rrtcc,
     Title = {{A Google Congestion Control Algorithm for Real-Time Communication}},
@@ -20,11 +51,11 @@
 
 @misc{draft.rtp.cb,
     Title = {{Multimedia Congestion Control: Circuit Breakers for Unicast RTP Sessions}},
-	Author = {C. Perkins and V. Singh},
-	Institution = {IETF},
-	Type = {(Work in progress)},
-	Note = {{IETF Internet Draft}},
-	Year = {2013}
+    Author = {C. Perkins and V. Singh},
+    Institution = {IETF},
+    Type = {(Work in progress)},
+    Note = {{IETF Internet Draft}},
+    Year = {2013}
 }
 
 @misc{draft.rmcat.evaluate,
@@ -44,12 +75,12 @@
 }
 
 @misc{draft.mprtp,
-	Title = {{Multipath RTP (MPRTP)}},
+    Title = {{Multipath RTP (MPRTP)}},
     author={Singh, V. and Ott, J. and Karkkainen, T. and Ahsan, S. and Eggert, L.},
-	Institution = {IETF},
-	Type = {(Work in progress)},
-	Note = {IETF Draft},
-	Year = {2013}
+    Institution = {IETF},
+    Type = {(Work in progress)},
+    Note = {IETF Draft},
+    Year = {2013}
 }
 
 @misc{draft.rtcp.overlay,
@@ -272,14 +303,15 @@
 
 # Related work
 @article{gettys:bufferbloat,
-	Author = {Gettys, J. and Nichols, K.},
-	Journal = {in Proc. of Communications of the {ACM}},
-	Month = {Jan},
-	Pages = {57--65},
-	Title = {Bufferbloat: dark buffers in the {Internet}},
-	Volume = {55},
-	Year = {2012}}
-	
+    Author = {Gettys, J. and Nichols, K.},
+    Journal = {in Proc. of Communications of the {ACM}},
+    Month = {Jan},
+    Pages = {57--65},
+    Title = {Bufferbloat: dark buffers in the {Internet}},
+    Volume = {55},
+    Year = {2012}
+}
+
 @inproceedings{Brosh:tcp-real-time,
      author = {Brosh, E. and Baset, S.A. and Rubenstein, D. and Schulzrinne, H.},
      title = {The delay-friendliness of TCP},
@@ -308,13 +340,14 @@
     ISSN={1063-6692},}
 
 @inproceedings{clark:alf,
-	Address = {Philadelphia, {PA}, {USA}},
-	Author = {Clark, D. D. and Tennenhouse, D. L.},
-	Booktitle = {{SIGCOMM}},
-	Month = {September},
-	Organization = {{ACM}},
-	Title = {Architectural Considerations for a New Generation of Protocols},
-	Year = {1990}}
+    Address = {Philadelphia, {PA}, {USA}},
+    Author = {Clark, D. D. and Tennenhouse, D. L.},
+    Booktitle = {{SIGCOMM}},
+    Month = {September},
+    Organization = {{ACM}},
+    Title = {Architectural Considerations for a New Generation of Protocols},
+    Year = {1990}
+}
 
 
 @article{jennings:2013:webrtc,
@@ -325,4 +358,39 @@
   Pages = {20--26},
   Title = {Real-Time Communications for the Web},
   Volume = {51},
-  Year = {2013}}
+  Year = {2013}
+}
+
+@article{gilbert1960capacity,
+    title={Capacity of a burst-noise channel},
+    author={Gilbert, Edgar N and others},
+    journal={Bell Syst. Tech. J},
+    volume={39},
+    number={9},
+    pages={1253--1265},
+    year={1960}
+}
+
+@book{elliott1963estimates,
+    title={Estimates of error rates for codes on burst-noise channels},
+    author={Elliott, EO},
+    year={1963},
+    publisher={Bell Telephone Laboratories}
+}
+
+@inproceedings{ellis:2011:dataset,
+    Address = {San Jose, {CA}, {USA}},
+    Author = {Ellis, M. and Perkins, C. S. and Pezaros, D. P.},
+    Booktitle = {Proc.\ {ACM} {MMSys}},
+    Month = {Feb.},
+    Title = {End-to-End and Network-Internal Measurements of Real-Time Traffic to Residential Users},
+    Year = {2011}
+}
+
+@inproceedings{schier:DCCP,
+  title={Using {DCCP}: Issues and improvements},
+  author={Schier, M. and Welzl, M.},
+  booktitle="Proc.\ {IEEE} {ICNP}",
+  year={2012}
+}
+
