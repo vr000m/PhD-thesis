@@ -42,8 +42,8 @@ these stored settings to adjust the encoder settings (frame rate, frame size),
 adjust the network parameters (size of dejitter buffer, enable or disable RTP
 flows, congestion control, etc).
 
-\textbf{\texttt{Multimedia System}}: is the combination of a multimedia
-application, controlling one or more multimedia device on an endpoint.
+% \textbf{\texttt{Multimedia System}}: is the combination of a multimedia
+% application, controlling one or more multimedia device on an endpoint.
 
 \textbf{\texttt{Point-to-point (PtP) communication}}: media traffic flows
 between two endpoints on the Internet, i.e., these are bidirectional unicast
@@ -69,7 +69,24 @@ link properties. The variation may be due to properties of the link itself
 (for e.g., wireless links: WLAN, 3G, LTE) or due to varying amounts of cross-
 traffic on a bottleneck link.
 
- \fxnote{{\color{red} TODO: why or put these terminologies in context of the thesis?}}
+
+In this thesis, we mainly examine \emph{endpoints} that are connected to the
+internet by one or more network interfaces, potentially having more than one
+identifiable IP address. These endpoints run a \emph{multimedia system} which
+is a combination of a \emph{multimedia application} controlling one or  more
+\emph{multimedia device}. Typically, we use only video sources with standard
+video sequences (instead of a live camera). The main reason for this is to be
+able to create comparable results in repeatable experiments. Furthermore,  the
+video calls are mainly \emph{point-to-point} communication between  endpoints
+in our testbed. Our testbed emulates the real-world by controling the
+transport characteristics of the \emph{intermediaries} or by introducing
+impairments. Lastly, for limited number of cases, we run our evaluation setup
+over real-world networks that cover different \emph{operating environments}.
+For example, a call may be initiated by an endpoint connected via Ethernet to
+a terminating endpoint connected over 3G wireless.
+
+% \fxnote{{\color{red} TODO: why or put these terminologies in context of the
+% \thesis?}}
 
 
 \section{Challenges with DSCP Markings}
