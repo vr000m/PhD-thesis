@@ -59,9 +59,9 @@ interactive unicast media stream (i.e., both sending and receiving media).
 \section{RTP Payload Formats}
 
 The general principle for defining payload formats/types are to be able to
-identify the encoding of the media packets. These encodings are either codec-%
-specific (e.g., H.264, H.263, H.261, MPEG-1, MPEG-2, JPEG, G.711, G.722, AMR,
-etc.), or generic (e.g., Forward Error Correction (FEC), Unequal Level of
+identify the encoding of the media packets. These encodings are either
+codec-specific (e.g., H.264, H.263, H.261, MPEG-1, MPEG-2, JPEG, G.711, G.722,
+AMR, etc.), or generic (e.g., Forward Error Correction (FEC), Unequal Level of
 Protection (ULP), NACK, multiplexed streams). Typically the payload format
 specifies a well-defined packet format and packetization procedure. Hence, the
 RTP header is immediately followed by payload-specific header (payload format)
@@ -150,7 +150,7 @@ metrics that are not exposed by the RTCP Receiver Report (RR). Some examples
 of XRs relevant to performance monitoring and congestion control are:
 de-jitter buffer metrics~\cite{draft.xr.jb}, Packet Delay Variation
 (PDV)~\cite{rfc6798}, summary statistics~\cite{draft.xr.stat}, delay
-metric~\cite{rfc6843}, burst- gap discard/loss~\cite{rfc6958,
+metric~\cite{rfc6843}, burst-gap discard/loss~\cite{rfc6958,
 draft.xr.bg.discard}, Run-Length Encoded (RLE)
 loss/discard~\cite{draft.xr.discard.rle}, Quality of Experience
 (QoE)~\cite{draft.xr.qoe}, and loss concealment~\cite{draft.xr.conceal}, etc.

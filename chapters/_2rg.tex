@@ -31,7 +31,7 @@ are capable of encoding the raw frames into compressed media using a codec
 (e.g., Opus, AMR, H.263, H.264, VP8) implemented in the hardware (silicon) or
 as a software library (e.g., \texttt{x264}, \texttt{libvpx}).
 
-\fxnote{{\color{red} TODO: missing refs for the above acronyms.}}
+% \fxnote{{\color{red} TODO: missing refs for the above acronyms.}}
 
 \textbf{\texttt{Multimedia Application}}: is a software program running on an
 endpoint that contains the logic for rendering the received multimedia
@@ -58,7 +58,7 @@ queues.
 bridge in many to many conferencing system. This is an alternative network
 architecture to a full-mesh system in which an endpoint sends its media stream
 to every other endpoint in the conference. Alternatively, the MCU acts as the
-terminating endpoint and each endpoint only sends its media stream  to the MCU
+terminating endpoint and each endpoint only sends its media stream to the MCU
 instead of every participant. The MCU on receiving the individual streams can
 behave like an RTP Mixer and output a single stream (e.g., audio or composited
 video).
@@ -73,11 +73,11 @@ traffic on a bottleneck link.
 In this thesis, we mainly examine \emph{endpoints} that are connected to the
 internet by one or more network interfaces, potentially having more than one
 identifiable IP address. These endpoints run a \emph{multimedia system} which
-is a combination of a \emph{multimedia application} controlling one or  more
+is a combination of a \emph{multimedia application} controlling one or more
 \emph{multimedia device}. Typically, we use only video sources with standard
 video sequences (instead of a live camera). The main reason for this is to be
-able to create comparable results in repeatable experiments. Furthermore,  the
-video calls are mainly \emph{point-to-point} communication between  endpoints
+able to create comparable results in repeatable experiments. Furthermore, the
+video calls are mainly \emph{point-to-point} communication between endpoints
 in our testbed. Our testbed emulates the real-world by controlling the
 transport characteristics of the \emph{intermediaries} or by introducing
 impairments. Lastly, for limited number of cases, we run our evaluation setup
@@ -125,10 +125,10 @@ Despite the above listed challenges, marking packets with a DSCP code point
 helps in some environments~\cite{draft.rtcweb.qos}:
 
 \begin{itemize}
-	
-    \item If the bottleneck link is the broadband router that often connects a
-    residential or Small Office/Home Office (SOHO) then the DSCP markings 
-    helps in prioritizing the data traffic at this bottleneck.
+
+ \item If the bottleneck link is the broadband router that often connects a
+residential or Small Office/Home Office (SOHO) then the DSCP markings helps in
+prioritizing the data traffic at this bottleneck.
 
 	\item If the packets traverse a congested wireless link and the service 
 	provider did not scrub out the DSCP markings, the markings may help.
