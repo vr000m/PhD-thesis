@@ -455,5 +455,12 @@ the flow is terminated.
 
 \end{enumerate}
 
-Details of the RTP circuit breaker algorithm is discussed
-in~\cite{draft.rtp.cb}.
+In \citepub{c:cb}, we proposed a set of circuit breaker conditions that can be
+applied to RTP media flows. Such flows typically do not implement congestion
+control at this time, and are likely to cause congestion if deployed on the
+Internet. We carried out a series of experiments based on real-world traces
+and on a test-bed emulating real-world conditions. Our results show that the
+proposed RTP circuit breaker performs well, triggering in cases of bursty loss
+and in sessions that are congesting the links, and does not trigger in
+low-loss and non-bursty scenarios. Full details of the RTP circuit breaker
+algorithm is discussed in~\cite{draft.rtp.cb}.
