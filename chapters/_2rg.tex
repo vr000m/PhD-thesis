@@ -171,18 +171,18 @@ control~\cite{draft.rmcat.evaluate}.
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 
-\item Avoid congestion collapse.
+\item Avoid congestion collapse, i.e., do not starve background traffic.
 
-\item If the channel conditions are relatively stable over time, the media
-rate should be stable too because changing the media encoding rate too often
-or by too much may adversely affect the users' quality of
+\item If the channel conditions or background traffic are relatively stable
+over time, the media rate should be stable too. Changing the media encoding
+rate too often or by too much may adversely affect the users' quality of
 experience~\cite{Zink03subjectiveimpression}.
 
-\item Test performance in a range of network characteristics. Namely, varying
-end-to-end capacity, latency, and router queue-sizes. Also test bottleneck
-capacity sharing with varying amount of cross-traffic.
+\item Measure performance for a range of network characteristics. Namely,
+varying end-to-end capacity, latency, and router queue-sizes. Also evaluate
+performance with varying amount of cross-traffic.
 
-\item Feedback overhead.
+% \item Optimize feedback overhead.
 
 \end{itemize}
 
@@ -201,7 +201,9 @@ The following are the main contributions to knowledge of this dissertation:
 \item A criteria to evaluate multimedia congestion control algorithms in
 diverse usage scenarios and network topologies. These standardized scenarios
 form the basis of the performance evaluation in all our papers and improves
-the process of comparing our proposed solutions.
+the process of comparing our proposed solutions. We also evaluate the
+performance of the congestion control currently implemented by the Chrome Web-
+browser.
 
 \item A mechanism to implement a rudimentary congestion control (circuit-
 breaker) that aborts communication when it encounters congestion. By
@@ -225,6 +227,6 @@ variability in path characteristics and availability of diverse paths.
 geo-location. In order to detect areas of good and poor connectivity, to 
 enable adaptive media delivery in mobile wireless (LTE) networks.
 
-\fxnote{{\color{red} TODO: complete this list.}}
+% \fxnote{{\color{red} TODO: complete this list.}}
 
 \end{itemize}
