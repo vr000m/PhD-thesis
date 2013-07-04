@@ -100,9 +100,10 @@ various parts of the congestion control framework discuss both our scientific
 and engineering work, while associating it with the relevant related work in
 the area. The remainder of the thesis is organized as follows.
 
-Chapter~\ref{chap:rg} describes the research goal of the thesis, which consists
-of creating a framework for congestion control that meets the requirements for
-multimedia systems.
+Chapter~\ref{chap:rg} describes the research goal of the thesis, which
+consists of creating a framework for congestion control that meets the
+requirements for multimedia systems. This section is based on
+\cite{draft.rmcat.req} and our contribution \cite{Singh:control.loops.api}.
 
 %\chapter{RTP: Real-time Transport Protocol}
 % RTP, AVPF, CCM, XR, reduced-size, 
@@ -115,21 +116,25 @@ rfc3611, rfc5104, rfc5506} and our contributions to
 it~\cite{draft.xr.discard.rle, draft.xr.jb}.
 
 % \chapter{Rate-control Framework}
+
 Chapter~\ref{chap:cc.fw} provide an high-level overview to our proposed
 `Congestion Cues Framework' and discuss criteria for evaluating congestion
-control for multimedia systems. This section is based on our contributions,
-which is documented in~\cite{draft.rmcat.evaluate, Singh:PhDFw}.
+control for multimedia systems. We also discuss the circuit breaker--a minimal
+congestion control--conditions under which a multimedia stream will be
+terminated. The circuit breaker is applicabke to applications that do not
+currently implement congestion control, are about to be deployed on the wide
+Internet and do not want to cause a congestion collapse. This section is based
+on our contributions, which is documented in~\cite{draft.rmcat.evaluate,
+Singh:PhDFw, draft.rtp.cb}, \citepub{c:cb}.
 
 
 % \chapter{Rate-control for Interactive Multimedia}
 % draft.rtp.cb, draft.rtp.tfrc, draft.rrtcc
 
-Chapter~\ref{chap:cc} discusses the mechanisms available for congestion control
-in interactive multimedia. We also discuss the circuit breaker--a minimal
-congestion control--conditions under which a multimedia stream will be
-terminated. The chapter is based on our contributions, which is documented
-in~\cite{draft.rtp.cb, Singh:control.loops.api}, \citepub{c:cb},
-\citepub{c:3grc}, \citepub{c:hetrc}.
+Chapter~\ref{chap:cc} discusses the mechanisms available for congestion
+control in interactive multimedia. We consider sender-driven, receiver-driven
+and hybrid congestion control algorithms. The chapter is based on our
+contributions, which is documented in \citepub{c:3grc}, \citepub{c:hetrc}.
 
 % \chapter{Adaptive Error-Resilience and Congestion Control}
 % +ECN
