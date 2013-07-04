@@ -8,15 +8,21 @@ traffic.
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
 Consequently, congestion control for RTP-based media flows is implemented
-either in the application or the media flows are transmitted over congestion-%
-controlled transport (TCP or DCCP). While using a congestion controlled
-transport may be safe for the network, it is suboptimal for the media quality
-unless the congestion-controlled transport is designed to carry media flows or
-operates in a very low latency network ($<100$ms)~\cite{Brosh:tcp-real-time}.
-On the other hand, using a non-congestion controlled transport (e.g., UDP),
-the rate-adaptation is implemented in the application.  In this thesis, we
-consider congestion control for unicast RTP traffic running over best-effort
-IP network.
+either in the application or the media flows are transmitted over
+congestion-controlled transport (TCP or DCCP). While using a congestion
+controlled transport may be safe for the network, it is suboptimal for the
+media quality unless the congestion-controlled transport is designed to carry
+media flows. Unfortunately, TCP is only suitable for interactive multimedia
+for paths with very low RTT ($<100$ms)~\cite{Brosh:tcp-real-time}, and DCCP
+packets has problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
+encapsulated in UDP~\cite{RFC6773}.
+
+This motivates the need for a UDP congestion control, where the congestion
+control is implemented in-between the application and the underlying
+transport. Thereby the congestion control algorithm takes into account both
+the application's and the transport's requirements/constraints and make the
+appropriate trade-off. In this thesis, we consider congestion control for
+unicast RTP traffic running over best-effort IP network.
 
 % CC should not cause queuing delay. Or define low-latency operation of
 % multimedia cc.
@@ -111,11 +117,11 @@ increase, thus causing queuing delay for several frame cycles.
 \end{itemize}
 
 A congestion control algorithm takes into account the type of media stream
-(audio or video), packet or frame rate, MTU size, interdependence of the streams
-(audio/video sync, multi-view video), the operating environment (Internet-
-scale, low-delay local area deployment, heterogeneous environment with a mix
-of wired and wireless links) and the application requirements (audio preferred
-over video or vice versa) to pick the right congestion cues. 
+(audio or video), packet or frame rate, MTU size, interdependence of the
+streams (audio/video sync, multi-view video), the operating environment
+(Internet-scale, low-delay local area deployment, heterogeneous environment
+with a mix of wired and wireless links) and the application requirements
+(audio preferred over video or vice versa) to pick the right congestion cues.
 
 Another aspect to consider when picking congestion cues is the the monitoring
 duration to identify congestion, i.e., either over a \emph{long-term} (order
@@ -277,8 +283,8 @@ flows are interactive multimedia).
 
 \item \textbf{\texttt{Single media flow competing with TCP}}: in this
 scenario, the flow using the proposed congestion control algorithm competes
-with TCP flows. These maybe \emph{short} TCP flows depicting common web-%
-traffic patterns or \emph{long} TCP flows depicting bulk transfers (e.g.,
+with TCP flows. These maybe \emph{short} TCP flows representing common
+web-traffic patterns or \emph{long} TCP flows depicting bulk transfers (e.g.,
 large file downloads).
 
 \end{enumerate}
