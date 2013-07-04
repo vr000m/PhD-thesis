@@ -20,7 +20,7 @@ and RTCP.
 \end{figure}
 
 Figure~\ref{fig:3:rtp.hdr} describes the RTP packet header format, the
-\textit{`synchronisation source'} (SSRC) assists in determining the source
+\textit{`synchronization source'} (SSRC) assists in determining the source
 endpoint, typically useful when an endpoint sends multiple media streams that
 need to be synchronized (e.g., Audio/Video lip-sync). The \textit{`RTP
 timestamp'} assists in playing out the received packets at the appropriate
@@ -28,7 +28,7 @@ instance of time and recomposing the media frame from RTP packets. The
 \textit{`RTP sequence number'} assists in identifying the lost packets and re-
 ordering packets in case of out-of-order packet arrival. Lastly, RTP uses
 \textit{`payload type'} (PT) to describe the encoding of the media data it is
-carrying. Consequentely, each codec needs to specify its corresponding payload
+carrying. Consequently, each codec needs to specify its corresponding payload
 format.
 
 \begin{figure}[!h]
@@ -52,7 +52,7 @@ current loss fraction, jitter, highest sequence number received, and
 facilitates in calculating the RTT. The sender uses RTCP Sender Reports (SRs)
 to assist in synchronizing the media streams (audio and video) by relating the
 RTP timestamps of the individual media streams to the wall clock time (NTP)
-and to notify the receiver about the current packet rate and bitrate.
+and to notify the receiver about the current packet rate and bit rate.
 Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet header format for a
 interactive unicast media stream (i.e., both sending and receiving media).
 
@@ -122,7 +122,7 @@ If the endpoint detects packet loss or onset of congestion midway through a
 reporting interval, the base RTP specification~\cite{rfc3550} (AVP profile)
 does not allow sending the RTCP report early and the endpoint has to wait for
 the next scheduled RTCP report. In this case, the slow control loop causes
-instability and oscillation in the media bitrate. To overcome this
+instability and oscillation in the media bit rate. To overcome this
 shortcoming, endpoints implement the Extended RTP Profile for RTCP-Based
 Feedback (AVPF profile)~\cite{rfc4585}, an extension to RTP's default timing
 rules to enable rapid feedback. This profile allows the endpoint to adjust the
@@ -145,12 +145,13 @@ Acknowledgements (NACK), Picture Loss Indication (PLI), Slice Loss Indication
 
 \section{RTCP Extended Reports (XRs) for Performance Monitoring}
 
-Endpoints use RTCP XRs~\cite{rfc3611} to describe complex metrics that are not
-exposed by the RTCP Receiver Report (RR). Some examples of XRs relevant to
-performance monitoring and congestion control are: jitter buffer
-metrics~\cite{draft.xr.jb}, Packet Delay Variation (PDV)~\cite{rfc6798},
-summary statistics~\cite{draft.xr.stat}, delay metric~\cite{rfc6843}, burst-
-gap discard/loss~\cite{rfc6958, draft.xr.bg.discard}, Run-Length Encoded (RLE)
+Endpoints use RTCP Extended Reports (XRs)~\cite{rfc3611} to describe complex
+metrics that are not exposed by the RTCP Receiver Report (RR). Some examples
+of XRs relevant to performance monitoring and congestion control are:
+de-jitter buffer metrics~\cite{draft.xr.jb}, Packet Delay Variation
+(PDV)~\cite{rfc6798}, summary statistics~\cite{draft.xr.stat}, delay
+metric~\cite{rfc6843}, burst- gap discard/loss~\cite{rfc6958,
+draft.xr.bg.discard}, Run-Length Encoded (RLE)
 loss/discard~\cite{draft.xr.discard.rle}, Quality of Experience
 (QoE)~\cite{draft.xr.qoe}, and loss concealment~\cite{draft.xr.conceal}, etc.
 RTP allows for new metrics to be defined, the only requirement is to document
@@ -173,15 +174,16 @@ what is measured, how it is measured and reported to the other endpoints.
 % codec control
 
 Sometimes an endpoint needs to configure or notify the other endpoint's codec.
-These messages are broadly classified as \emph{Transport Layer} and  \emph
+These messages are broadly classified as \emph{Transport Layer} and \emph
 {Payload-specific} feedback messages~\cite{rfc5104}. The transport layer
 messages are: Temporary Maximum Media Stream Bit Rate Request (TMMBR) and
 Temporary Maximum Media Stream Bit Rate Notification (TMMBN). The receiving
-endpoint uses the TMMBR message to configure the maximum encoding bitrate of
+endpoint uses the TMMBR message to configure the maximum encoding bit rate of
 the media stream, while the sending endpoint uses the TMMBN to inform the
-receiver of the updated bitrate. On the other hand, the payload-specific
-messages are: Full Intra Request (FIR), temporal-spataial tradeoff, frame rate,
-frame size, maximum packet size or packet rate, etc~\cite{draft.avt.cop}.
+receiver of the updated bit rate. On the other hand, the payload-specific
+messages are: Full Intra Request (FIR), temporal-spatial tradeoff, frame
+rate, frame size, maximum packet size or packet rate,
+etc~\cite{draft.avt.cop}.
 
 \section{Reduced-Size RTCP Reports}
 % non-compound feedback
@@ -198,7 +200,7 @@ compulsory to include in every RTCP packet.}. Hence, every compound RTCP
 packet is a minimal RTCP packet with additional report blocks.
 
 Consequently, including any of the additional SDES items or adding XR blocks
-makes the compound RTCP packet very large. On a low bitrate links, during
+makes the compound RTCP packet very large. On a low bit rate links, during
 transmission these large compound RTCP packets may introduce more delay.
 Therefore, it may be desirable to logically fragment the report blocks in a
 compound RTCP packet and send them independently. These fragmented report
