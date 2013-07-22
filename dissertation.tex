@@ -22,19 +22,26 @@
 %%,amsfonts,amsthm,amsxtra,amsbsy,amssymb,mathrsfs}   % Mathematics
 %\usepackage{bm} % bold math argument, http://www.ctan.org/pkg/bm
 
-\usepackage{url}                   % http://ctan.org/tex-archive/macros/latex/contrib/url
-\usepackage[caption=false,font=footnotesize]{subfig}                % http://ctan.org/tex-archive/macros/latex/contrib/subfig
+\usepackage{url}                   
+                % http://ctan.org/tex-archive/macros/latex/contrib/url
+\usepackage[caption=false,font=footnotesize]{subfig}                
+                % http://ctan.org/tex-archive/macros/latex/contrib/subfig
 \usepackage[labelfont=bf]{caption}
-\usepackage{acronym}               % http://ctan.org/tex-archive/macros/latex/contrib/acronym
-\usepackage{booktabs}              % http://ctan.org/tex-archive/macros/latex/contrib/booktabs
-\usepackage{bytefield}             % http://ctan.org/tex-archive/macros/latex/contrib/bytefield
-\usepackage{listings}              % http://ctan.org/tex-archive/macros/latex/contrib/listings
+\usepackage{acronym}               
+                % http://ctan.org/tex-archive/macros/latex/contrib/acronym
+\usepackage{booktabs}              
+                % http://ctan.org/tex-archive/macros/latex/contrib/booktabs
+\usepackage{bytefield}             
+                % http://ctan.org/tex-archive/macros/latex/contrib/bytefield
+\usepackage{listings}              
+                % http://ctan.org/tex-archive/macros/latex/contrib/listings
 \usepackage{float}                 % Needed for hyperref - see note above
 \usepackage{hyperref}              % Problematic - see note above
-\usepackage{algorithm}             % http://ctan.org/tex-archive/macros/latex/contrib/algorithms
+\usepackage{algorithm}             
+                % http://ctan.org/tex-archive/macros/latex/contrib/algorithms
 \usepackage{algorithmic}           % (also part of the algorithms bundle)
 
-\usepackage{longtable}		% for tables that span across pages
+\usepackage{longtable}             % for tables that span across pages
 
 \usepackage[footnote,draft,silent,nomargin]{fixme} %added FIXME!
 
@@ -53,7 +60,8 @@
   pdfauthor={Varun Singh},
   pdftitle={Enabling Adaptive Multimedia Applications}
   pdfsubject={RTP Congestion Control},
-  pdfkeywords={RTP} {Congestion Control} {MPRTP} {geo-location} {Multipath RTP} {Interactive Multimedia}
+  pdfkeywords={RTP} {Congestion Control} {MPRTP} {geo-location} 
+              {Multipath RTP} {Interactive Multimedia}
 }
 
 
@@ -104,9 +112,12 @@ Internet Engineering Task Force (IETF).
 % \listofalgorithms
 % \listofequations
 
-%% Add list of abbreviations, list of symbols, etc., using your preferred package/method.
+%% Add list of abbreviations, list of symbols, etc., using your preferred
+%% package/method.
+
 %\include{listofabbreviations}
 %\include{listofsymbols}
+
 \chapter*{List of Abbreviations}
 \input{./chapters/_0lists}
 
@@ -144,7 +155,8 @@ Internet Engineering Task Force (IETF).
 \chapter{Conclusions}
 \label{chap:conc}
 
-%% The following commands are for article dissertations, remove them if you write a monograph dissertation.
+%% The following commands are for article dissertations, remove them if you
+%% write a monograph dissertation.
 
 % Errata list, if you have errors in the publications.
 %\errata
@@ -153,34 +165,55 @@ Internet Engineering Task Force (IETF).
 % Set the publication information.
 % This command musts to be the first!
 
-\addpublication[submitted]{V. Singh, S. McQuistin, M. Ellis, C. Perkins}{Circuit Breakers for Multimedia Congestion Control}{IEEE Packet Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:cb}
+\addpublication[submitted]{V. Singh, S. McQuistin, M. Ellis, C.
+Perkins}{Circuit Breakers for Multimedia Congestion Control}{IEEE Packet
+Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:cb}
+
 % Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was the main author of this paper~\cite{Singh:CB.eval}. 
-His contribution consisted of implementing the algorithms and conducting experiments
-in one of the two evaluation scenarios discussed in the paper. He also acted as the main editor of the paper.}
-% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
+
+\addcontribution{The author of this dissertation was the main author of this
+paper~\cite{Singh:CB.eval}. His contribution consisted of implementing the
+algorithms and conducting experiments in one of the two evaluation scenarios
+discussed in the paper. He also acted as the main editor of the paper.}
+
+% Add the errata of the publication, remove if there are none. (in submitted
+% paper this is unlikely)
 %\adderrata{This is wrong}
 % Add the publication pdf file, the filename is the parameter.
 %\addpublicationpdf{add/}
 
-\addpublication[submitted]{V. Singh, A. A. Lozano, J. Ott}{Performance Analysis of Receive-Side Real-Time Congestion Control for WebRTC}{IEEE Packet Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:eval}
+\addpublication[submitted]{V. Singh, A. A. Lozano, J. Ott}{Performance
+Analysis of Receive-Side Real-Time Congestion Control for WebRTC}{IEEE Packet
+Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:eval}
+
 % Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was the main author of this paper~\cite{Singh:rrtcc.eval}. 
-His contribution consisted of implementing the algorithms and conducting experiments
-in one of the two evaluation scenarios discussed in the paper. He also acted as the main editor of the paper.}
+
+\addcontribution{The author of this dissertation was the main author of this
+paper~\cite{Singh:rrtcc.eval}. His contribution consisted of implementing the
+algorithms and conducting experiments in one of the two evaluation scenarios
+discussed in the paper. He also acted as the main editor of the paper.}
 
 %% The second publication (conference article, note the optional parameter)
 % Set the publication information.
-\addpublication[conference]{V.Singh, J. Ott, I. D. D. Curcio}{Rate adaptation for 3G Conversational Video}{IEEE Infocom Workshops}{Rio de Janeiro, Brazil}{04}{2009}{IEEE}{c:3grc}
+
+\addpublication[conference]{V.Singh, J. Ott, I. D. D. Curcio}{Rate adaptation
+for 3G Conversational Video}{IEEE Infocom Workshops}{Rio de Janeiro,
+Brazil}{04}{2009}{IEEE}{c:3grc}
+
 % Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was the main author of the paper~\cite{Singh:3gRC}. His
-contribution consisted of implementing the system and analyzing the results.}
+
+\addcontribution{The author of this dissertation was the main author of the
+paper~\cite{Singh:3gRC}. His contribution consisted of implementing the system
+and analyzing the results.}
+
 % No errata
 % Add the publication pdf file, the filename is the parameter.
 %\addpublicationpdf{add/2_3g_ra.pdf}
 
-%% The third publication (another journal paper, accepted for publication, note the optional parameter)
+%% The third publication (another journal paper, accepted for publication,
+%% note the optional parameter)
 % Set the publication information, detailed information can be empty
+
 \addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Rate Adaption for Conversational Video in Heterogeneous Environments}{IEEE World of Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c:hetrc}
 % Add the dissertation author's contribution to that publication.
 \addcontribution{The author of this dissertation was the main author of the paper~\cite{Singh:HetRC}. His
