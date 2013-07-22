@@ -445,7 +445,8 @@ the receiver reports a non-increasing \emph{Highest Sequence Number} (HSN) for
 two consecutive RTCP intervals the flow is terminated.
 
 \item \textbf{\texttt{RTCP Timeout}}: An endpoint is sending media data but
-receives no RTCP RR for two consecutive RTCP intervals the flow is terminated.
+receives no RTCP RR for three consecutive RTCP intervals the flow is
+terminated.
 
 \item \textbf{\texttt{Congestion}}: An endpoint is sending media data and
 receives RTCP RRs indicating fractional packet loss, it calculates the TCP
@@ -455,12 +456,84 @@ the flow is terminated.
 
 \end{enumerate}
 
-In \citepub{c:cb}, we proposed a set of circuit breaker conditions that can be
-applied to RTP media flows. Such flows typically do not implement congestion
-control at this time, and are likely to cause congestion if deployed on the
-Internet. We carried out a series of experiments based on real-world traces
-and on a test-bed emulating real-world conditions. Our results show that the
-proposed RTP circuit breaker performs well, triggering in cases of bursty loss
-and in sessions that are congesting the links, and does not trigger in
-low-loss and non-bursty scenarios. Full details of the RTP circuit breaker
-algorithm is discussed in~\cite{draft.rtp.cb}.
+Full details of the RTP circuit breaker algorithm is discussed
+in~\cite{draft.rtp.cb}, it is a work in progress and covers various deployment
+cases such as multiple media sources, impact of shorter than standard
+reporting interval, deployment of Explicit Congestion Notification (ECN), etc.
+
+In \citepub{c:cb}, we apply these circuit breaker conditions to non-adaptive
+RTP media flows. Such flows typically do not implement congestion control at
+this time, and are likely to cause congestion if deployed on the Internet. We
+carried out a series of experiments based on real-world traces and on a
+test-bed emulating real-world conditions. Our results show that the proposed
+RTP circuit breaker performs well, triggering in cases of bursty loss and in
+sessions that are congesting the links, and does not trigger in low-loss and
+non-bursty scenarios. 
+
+We simulated RTP circuit breaker performance on $3833$ generated RTCP traces
+corresponding to the measurements collected in \emph{dataset-A} and
+\emph{dataset-B} of~\cite{ellis:2011:dataset}. Of these, $1626$ traces have no
+packet loss, and hence cannot trigger the RTP circuit breaker. The remaining
+traces each include at least one lost packet. We categorize the remaining
+traces into two categories: those that have non-bursty packet loss; and those
+that exhibit bursty loss using the definition of bursty loss
+from~\cite{rfc3611} (Figure~\ref{fig:bursty} shows representative samples of
+the non-bursty and bursty packet loss patterns). The data comprises $1344$
+traces with bursty loss, $863$ traces with non-bursty loss.
+
+\begin{figure}
+  \centerline{
+    \subfloat[Non-bursty]{
+      \includegraphics[width=0.5\columnwidth]
+      {graphs/chap4_graph_cb_20090707-1515-barcode}
+    }
+    \subfloat[Bursty]{
+      \includegraphics[width=0.5\columnwidth]
+      {graphs/chap4_graph_20091011-2012-barcode}
+    }
+  }
+  \caption{Sample bursty and non-bursty packet loss traces\citepub{c:cb}.}
+  \label{fig:bursty}
+\end{figure}
+
+\begin{table}
+  \begin{center}
+    \begin{tabular}{rcc}
+    \toprule
+    Loss Pattern       & Triggered & Did not trigger \\
+    \midrule
+             Loss free &   0.0\% & 100.0\% \\
+       Non-bursty loss &   0.0\% & 100.0\% \\
+          Bursty loss  &  11.9\% &  88.1\% \\
+    \bottomrule
+    \end{tabular}
+    \caption{Sessions triggering circuit breaker by loss pattern}
+    \label{tab:cb_bursty}
+  \end{center}
+\end{table}
+
+Table~\ref{tab:cb_bursty} shows the fraction of sessions that triggered the
+RTP circuit breaker for each of the categories of packet loss. The RTP circuit
+breaker did not trigger for sessions without loss; it also did not trigger for
+any of the sessions with non-bursty packet loss. However, we observe that the
+RTP circuit breaker is triggered more often in sessions that contain bursty
+packet loss.
+
+
+The circuit breaker conditions trigger mainly due to loss,
+Figure~\ref{fig:short-rtcp} shows the percentage of sessions triggering the
+circuit breaker increases with the increase in loss rate. The figure also
+shows the impact of the RTCP reporting interval, i.e., by reducing the RTCP
+interval from 5s to 2.5s, fewer sessions are terminated. The endpoints become
+robust to loss of feedback packets by sending feedback often and we observe
+a longer time to trigger the circuit breaker ($t_{CB}$).
+
+\begin{figure}
+  \centerline{
+    {\includegraphics[width=\columnwidth]{graphs/chap4_graph_cb_cmp_trr_2s}}
+  }
+  \caption{Impact of using a shorter RTCP interval on the circuit breaker. 
+    Each scenario is run 50 times and the error bars represent the $95\%$ 
+    confidence level\citepub{c:cb}.}
+  \label{fig:short-rtcp}
+\end{figure}
