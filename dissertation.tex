@@ -64,12 +64,14 @@
               {Multipath RTP} {Interactive Multimedia}
 }
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % The author of the dissertation
 \author{Varun Singh}
 % The title of the thesis: Algorithms and Protocol extensions for Enabling Adaptive Multimedia Applications
 \title{Enabling Adaptive Multimedia Applications}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -83,6 +85,8 @@ TBD
 % And yet another one in Swedish
 %\draftabstract[swedish]{\lipsum[7-9]}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% Preface
 % If you write this somewhere else than in Helsinki, use the optional location.
 \begin{preface}[Espoo]
@@ -93,6 +97,8 @@ Internet Engineering Task Force (IETF).
 
 \end{preface}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% Table of contents of the dissertation
 \tableofcontents
 
@@ -100,8 +106,9 @@ Internet Engineering Task Force (IETF).
 \publicationdataorder{author}{title}{publication}{information}{month}{year and page}
 \publicationpunctuation[]{,}{}{,}{,}{,}{}
 \publicationformatting[]{}{}{\em}{}{}{}
-\publicationadditionalpreformatting{}{''}{}{}{}{}
-\publicationadditionalpostformatting{}{,``}{}{}{}{}
+\publicationadditionalpreformatting{}{``}{}{}{}{}
+\publicationadditionalpostformatting{}{,''}{}{}{}{}
+
 \listofpublications
 
 %\listoffixmes
@@ -117,6 +124,8 @@ Internet Engineering Task Force (IETF).
 
 %\include{listofabbreviations}
 %\include{listofsymbols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter*{List of Abbreviations}
 \input{./chapters/_0lists}
@@ -155,11 +164,15 @@ Internet Engineering Task Force (IETF).
 \chapter{Conclusions}
 \label{chap:conc}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% The following commands are for article dissertations, remove them if you
 %% write a monograph dissertation.
 
 % Errata list, if you have errors in the publications.
 %\errata
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% The first publication (journal article)
 % Set the publication information.
@@ -174,13 +187,20 @@ Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:cb}
 \addcontribution{The author of this dissertation was the main author of this
 paper~\cite{Singh:CB.eval}. His contribution consisted of implementing the
 algorithms and conducting experiments in one of the two evaluation scenarios
-discussed in the paper. He also acted as the main editor of the paper.}
+discussed in the paper.}
 
-% Add the errata of the publication, remove if there are none. (in submitted
-% paper this is unlikely)
+% Add the errata of the publication, remove if there are none (the order can
+% be interchanged with \addauthorscontribution).
 %\adderrata{This is wrong}
-% Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/}
+% Add the publication pdf file, the filename is the parameter (must be the
+% last).
+
+% \addpublicationpdf{add/9_cb.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% The second publication (conference article, note the optional parameter)
+% Set the publication information.
 
 \addpublication[submitted]{V. Singh, A. A. Lozano, J. Ott}{Performance
 Analysis of Receive-Side Real-Time Congestion Control for WebRTC}{IEEE Packet
@@ -189,12 +209,17 @@ Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:eval}
 % Add the dissertation author's contribution to that publication.
 
 \addcontribution{The author of this dissertation was the main author of this
-paper~\cite{Singh:rrtcc.eval}. His contribution consisted of implementing the
-algorithms and conducting experiments in one of the two evaluation scenarios
-discussed in the paper. He also acted as the main editor of the paper.}
+paper~\cite{Singh:rrtcc.eval}. His contribution consisted of designing the
+experiments discussed in the paper. He also acted as the main editor of the
+paper.}
 
-%% The second publication (conference article, note the optional parameter)
-% Set the publication information.
+% \addpublicationpdf{add/10_rrtcc.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% The third publication (another journal paper, accepted for publication,
+%% note the optional parameter)
+% Set the publication information, detailed information can be empty
 
 \addpublication[conference]{V.Singh, J. Ott, I. D. D. Curcio}{Rate adaptation
 for 3G Conversational Video}{IEEE Infocom Workshops}{Rio de Janeiro,
@@ -206,72 +231,99 @@ Brazil}{04}{2009}{IEEE}{c:3grc}
 paper~\cite{Singh:3gRC}. His contribution consisted of implementing the system
 and analyzing the results.}
 
-% No errata
-% Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/2_3g_ra.pdf}
+% \addpublicationpdf{add/2_3g_ra.pdf}
 
-%% The third publication (another journal paper, accepted for publication,
-%% note the optional parameter)
-% Set the publication information, detailed information can be empty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Rate Adaption for Conversational Video in Heterogeneous Environments}{IEEE World of Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c:hetrc}
+
+\addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Rate Adaption
+for Conversational Video in Heterogeneous Environments}{IEEE World of
+Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco,
+USA}{06}{2012}{IEEE}{c:hetrc}
+
 % Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was the main author of the paper~\cite{Singh:HetRC}. His
-contribution consisted of implementing the system and analyzing the results.}
-% Add the errata of the publication, remove if there are none.
-%\adderrata{This is wrong}
-% Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/3_het_ra.pdf}
 
-\addpublication[conference]{Devadoss J., Singh V., Liu C., Ott J., Wang Y-K., Curcio I.}{Evaluation of Error Resilience Mechanisms for 3G Conversational Video}{IEEE ISM}{Berkley, USA}{Dec}{2008}{IEEE}{c:err}
-% Add the dissertation author's contribution to that publication (the order can be interchanged with \adderrata).
-\addcontribution{The author of this dissertation was one of the co-authors of the paper~\cite{Devadoss:3gErr}. His
-contribution consisted of providing 2 out of the 4 ideas discussed in the paper, 
-implementing the corresponding algorithms, providing the configurations for the experiments 
-and co-editing the paper.}
-% Add the errata of the publication, remove if there are none (the order can be interchanged with \addauthorscontribution).
-%\adderrata{This is wrong}
-% Add the publication pdf file, the filename is the parameter (must be the last).
-%\addpublicationpdf{add/1_3g_er.pdf}
+\addcontribution{The author of this dissertation was the main author of the
+paper~\cite{Singh:HetRC}. His contribution consisted of implementing the
+system and analyzing the results.}
 
-\addpublication[submitted]{M. Nagy, V. Singh, J. Ott, L. Eggert}{Rate-control using FEC for Interactive Multimedia Communication}{---}{}{}{2013}{}{c:fecrc}
+% \addpublicationpdf{add/3_het_ra.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addpublication[conference]{Devadoss J., Singh V., Liu C., Ott J., Wang Y-K.,
+Curcio I.}{Evaluation of Error Resilience Mechanisms for 3G Conversational
+Video}{IEEE ISM}{Berkley, USA}{Dec}{2008}{IEEE}{c:err}
+
+% Add the dissertation author's contribution to that publication (the order
+% can be interchanged with \adderrata).
+
+\addcontribution{The author of this dissertation was one of the co-authors of
+the paper~\cite{Devadoss:3gErr}. His contribution consisted of providing 2 out
+of the 4 ideas discussed in the paper, implementing the corresponding
+algorithms, providing the configurations for the experiments and co-editing
+the paper.}
+
+% \addpublicationpdf{add/1_3g_er.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addpublication[submitted]{M. Nagy, V. Singh, J. Ott, L. Eggert}{Rate-control
+using FEC for Interactive Multimedia Communication}{---}{}{}{2013}{}{c:fecrc}
+
 % Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was one of the co-authors of the paper~\cite{Singh:FECRC}. His
-contribution consisted of providing the main idea for the paper, implementing the comparative 
-algorithms, providing the configurations for the experiments and co-editing the paper.}
 
-% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
-%\adderrata{This is wrong}
-% Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/6_fec_ra.pdf}
+\addcontribution{The author of this dissertation was one of the co-authors of
+the paper~\cite{Singh:FECRC}. His contribution consisted of providing the main
+idea for the paper, implementing the comparative algorithms, providing the
+configurations for the experiments and co-editing the paper.}
 
-%% The fourth publication (yet another journal paper, submitted for publication, note the optional parameter)
-%% Note that you are allowed to use this option only when submitting the dissertation for pre-examination!
+% \addpublicationpdf{add/6_fec_ra.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% The fourth publication (yet another journal paper, submitted for
+%% publication, note the optional parameter) Note that you are allowed to use
+%% this option only when submitting the dissertation for pre-examination!
 % Set the publication information, detailed information is not printed
-\addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Predictive Buffering for Streaming Video in 3G Networks}{IEEE World of Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c:glass}
-% Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was the main author of the paper~\cite{Singh:Glass}. His
-contribution consisted of implementing the system and analyzing the results.}
-% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
-%\adderrata{This is wrong}
-% Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/4_glass.pdf}
 
-\addpublication[conference]{V. Singh, S. Ahsan, J. Ott}{MPRTP: Multipath Considerations for Real-time Media}{ACM Multimedia Systems (MMSys)}{Oslo, Norway}{02}{2013}{ACM}{c:mprtp}
+\addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Predictive
+Buffering for Streaming Video in 3G Networks}{IEEE World of Wireless, Mobile
+and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c:glass}
+
 % Add the dissertation author's contribution to that publication.
-\addcontribution{The author of this dissertation was the main author of the paper~\cite{Singh:MPRTP}.
-His contribution consisted of providing the main idea for the paper, providing
-the configurations for the experiments, performing the statistical analysis, 
-and acting as the main editor of the paper.}
-% Add the errata of the publication, remove if there are none. (in submitted paper this is unlikely)
-%\adderrata{This is wrong}
-% Add the publication pdf file, the filename is the parameter.
-%\addpublicationpdf{add/5_mprtp.pdf}
+
+\addcontribution{The author of this dissertation was the main author of the
+paper~\cite{Singh:Glass}. His contribution consisted of implementing the
+system and analyzing the results.}
+
+% \addpublicationpdf{add/4_glass.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addpublication[conference]{V. Singh, S. Ahsan, J. Ott}{MPRTP: Multipath
+Considerations for Real-time Media}{ACM Multimedia Systems (MMSys)}{Oslo,
+Norway}{02}{2013}{ACM}{c:mprtp}
+
+% Add the dissertation author's contribution to that publication.
+
+\addcontribution{The author of this dissertation was the main author of the
+paper~\cite{Singh:MPRTP}. His contribution consisted of providing the main
+idea for the paper, providing the configurations for the experiments,
+performing the statistical analysis, and acting as the main editor of the
+paper.}
+
+% \addpublicationpdf{add/5_mprtp.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\bibliographystyle{IEEEtran} %plain, 
+
 \bibliographystyle{amsalpha}
+
 % argument is your BibTeX string definitions and bibliography database(s)
 %\bibliography{IEEEabrv,../allpapers}
+
 \bibliography{bib/diss,bib/rfc}
 
 \end{document}

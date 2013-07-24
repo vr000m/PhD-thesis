@@ -178,7 +178,7 @@ that the frame rate is replaced by the RTT estimate.
 
 To summarize, picking longer RTCP feedback intervals requires a lower media
 session bit rate, hence it increases the possibility of applying the same
-congestion control to a larger operating are (in terms of session media
+congestion control to a larger operating area (in terms of session media
 rates).
 
 \section{Classifying Congestion Cues}
@@ -221,7 +221,9 @@ using additional loss reported by ECN markings, Temporary Maximum Media Stream
 Bit Rate Request (TMMBR), Receiver Estimated Max Bit rate (REMB).
 
 \textbf{\texttt{b) In-path, Out-of-band}}: RTSP implements a SPEED parameter
-to vary the transmission rate, announcing bandwidth in the SDP.
+to vary the transmission rate, or announcing bandwidth in the SDP at the start
+of the session (instead of starting at a low media bit rate) for rudimentary
+congestion control.
 
 \textbf{\texttt{c) Out-of-path, In-band}}: Multipath RTP (congestion on one
 path causes a change in the fractional distribution of traffic on each path.)
