@@ -1,9 +1,9 @@
 In the forthcoming deployment of WebRTC systems, we speculate that high
 quality\footnote{normally, corresponds to increase in required bandwidth}
-video conferencing will see wide adoption. Normally, to assure stability of the
-network (and avoid congestion collapse), these real-time communication systems
-need to implement some kind of congestion control for their RTP-based media
-traffic.
+video conferencing will see wide adoption. Normally, to assure stability of
+the network (and avoid congestion collapse), these real-time communication
+systems need to implement some kind of congestion control for their RTP-based
+media traffic.
 
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
@@ -266,6 +266,12 @@ evaluate the performance of the congestion control. The evaluation scenarios
 are built using the following components: network topology, link and router
 characteristics.
 
+The difference between testing in real-world deployments and in simulations is
+also important to consider. It mainly affects the accuracy of RTT
+measurements, impacting delay based algorithm (e.g., TFRC). Time slot driven
+simulation systems, such as \emph{ns2}, have accurate timing that is not
+representative of real-world systems.
+
 \subsection{Network flows}
 
 \begin{enumerate}
@@ -305,6 +311,9 @@ The link characteristics can be broken down into the following categories:
 throughput, latency, loss. Throughput of a link typically only varies in
 wireless networks, for example in 3G, LTE, WLAN, etc. In Wireless LAN (WLAN)
 networks it may also vary depending on the density of nodes using the network.
+In 3G/LTE networks fading, interference, mobility, handovers, cell loading and
+other factors often cause the available capacity for each user to fluctuate.
+
 
 Next, latency of a link is the propagation and serialization delay. Queuing
 delay is based on the queue-size of the router and hence, a router
