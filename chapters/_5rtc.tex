@@ -28,12 +28,13 @@ cues to the sender which calculates the new sending rate (sender's estimate)
 and uses it as the new sending rate. In the \emph{receiver-driven} scheme, the
 receiver calculates the new sending rate (receiver's estimate) based on the
 congestion cues, and signals the new rate to the sender, which on receiving
-the new rate, adapts the media bit rate. In the \emph{co-operative} scheme,
-the receiver calculates the new rate but along with the new rate also signals
-the congestion cues, the sender calculates its new rate based on its
-congestion cues and chooses a new sending rate between its estimate and the
-receiver's estimate. Figure~\ref{fig:cc:scheme} shows the interaction of the
-sender and receiver for each scheme.
+the new rate, adapts the media bit rate. The \emph{co-operative} scheme is an
+extension to the \emph{sender-driven} scheme, the receiver calculates the
+receiver's estimated rate and along with it signals the congestion cues, the
+sender at its end calculates the sender's estimate based on the congestion
+cues and chooses a new sending rate, typically, between the sender's estimate
+and the receiver's estimate. Figure~\ref{fig:cc:scheme} shows the interaction
+of the sender and receiver for each scheme.
 
 \begin{figure}
   \centerline{
@@ -80,11 +81,11 @@ TFRC on a slow time-varying link and a 3G link.
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=2cm 0 4cm 0]
+      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_tfrc}
     }
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=2cm 0 4cm 0]
+      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_tfrc_1}
     }
   }
@@ -109,11 +110,11 @@ link and a 3G link.
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=2cm 0 4cm 0]
+      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_tmmbr}
     }
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=2cm 0 4cm 0]
+      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_tmmbr_u}
     }
   }
@@ -123,26 +124,69 @@ link and a 3G link.
 
 \subsection{Co-operative Congestion Control Scheme}
 
-Conversational NADU (C-NADU) described in \citepub{c:3grc} is an extension to
-Next Application Data Unit (NADU) signaling for video
+Conversational NADU (C-NADU) is described in \citepub{c:3grc} as an extension
+to Next Application Data Unit (NADU) signaling for video
 streaming~\cite{nadu.1070341,nadu.1530486}. A NADU receiver measures the
-playout delay and signals it to the sender along with the next sequence number
-to be played out. In C-NADU, the receiver also calculates the \emph{receiver
-estimate} by measuring the frame inter-arrival time and signals that along
-with the NADU report. At the sender, the application calculates the
-TCP-friendly rate,
+playout delay (as a measure of buffer occupancy relative to time) and signals
+it to the sender along with the next sequence number to be played out. In
+C-NADU, the receiver also calculates the \emph{receiver's capacity estimate}
+by measuring the frame inter-arrival time and signals that along with the NADU
+report. At the sender, the application calculates the TCP-friendly rate, and
+measures the variation in RTT (75 and 90 percentile values) and if fraction of
+frames that missed their playout deadline. In \citepub{c:3grc}, we show that
+C-NADU has higher bandwidth utilization compared to TMMBR and TFRC.
+Figure~\ref{fig:cnadu} shows the performance of C-NADU on a slow time-varying
+link and a 3G link. Additionally, in \citepub{c:hetrc}, we show that C-NADU is
+self-fair with other C-NADU flows in both wired and wireless
+environments~\cite{singh:2010:thesis} and in \citepub{c:fecrc} we show that it
+competes fairly with TCP cross-traffic, both long and short (bursty) TCP
+flows.
 
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=2cm 0 4cm 0]
+      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_cnadu}
     }
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=2cm 0 4cm 0]
+      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_cnadu}
     }
   }
-  \caption{Performance of TMMBR in a slow time-varying link and 3G network.}
+  \caption{Performance of C-NADU in a slow time-varying link and 3G network.}
   \label{fig:cnadu}
+\end{figure}
+
+Receiver-side Real-Time Congestion Control is described in~\cite{draft.rrtcc}
+and is proposed as one of the solution candidates for WebRTC by Google. Like
+C-NADU, RRTCC also has a receiver- and sender-side component. The
+receiver-side measures the capacity overuse and underuse by monitoring the
+timestamp jitter of the incoming frames. The arrival-times are modeled as a
+white Gaussian process; when the mean is 0 there is no congestion, the mean is
+expected to increase when there is ongoing congestion and expected to decrease
+when the congestion abates. Based on this expectation, the receiver calculates
+the capacity estimate and signals it to the sender. The sender calculates its
+estimate based on TFRC and finally, chooses the new sending rate as a value
+between the TFRC rate calculated by the sender and receiver estimate. Full
+details can be found in the Internet-Draft~\cite{draft.rrtcc}.
+Figure~\ref{fig:rrtcc} shows that by increasing latency and fractional loss
+affects the bandwidth utilization of RRTCC. For example, in
+Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link latency reduces
+the sending rate of RRTCC.
+
+\begin{figure}
+  \centerline{
+    \subfloat{
+      \includegraphics[width=0.8\textwidth]
+      {chap5-graph-rrtcc-latency}
+    }
+  }
+  \centerline{
+    \subfloat{
+      \includegraphics[width=0.8\textwidth]
+      {chap5-graph-rrtcc-plr}
+    }
+  }
+  \caption{Performance of RRTCC on a link with varying delay and fractional loss rate.}
+  \label{fig:rrtcc}
 \end{figure}
