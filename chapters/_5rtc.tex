@@ -4,8 +4,9 @@ categorizes \emph{In-path} sources and \emph{In-band} signaling for
 implementing congestion control, which are discussed in this chapter. This
 chapter is based on our work on congestion control for interactive multimedia
 applications, which is documented in \citepub{c:3grc}, \citepub{c:hetrc},
-\citepub{c:eval}, \cite{draft.xr.discard.rle}, \cite{draft.xr.bytes.discarded}
-and \cite{Singh:control.loops.api}.
+\citepub{c:eval}, \cite{draft.xr.discard.rle},
+\cite{draft.xr.bytes.discarded}, \cite{singh:2010:thesis} and
+\cite{Singh:control.loops.api}.
 
 In \citepub{c:3grc}, we propose a new congestion control algorithm for the
 mobile (e.g., 3G) environment, to be deployed in IP Multimedia System (IMS).
@@ -75,17 +76,36 @@ AVPF-profile~\cite{rfc4585} for very short RTTs ($<20ms$).
 stable for shorter paths~\cite{saurin:2006:thesis}. Our results in
 \citepub{c:3grc} shows that TFRC underutilizes the link (average bandwidth
 utilization (ABU) is between 30-40\%) and has higher fractional loss (\~6\%)
-which results in lower PSNR. Figure~\ref{fig:tfrc} shows the performance of
-TFRC on a slow time-varying link and a 3G link.
+which results in lower PSNR. One disadvantage of TFRC is that it produces a
+sawtooth sending rate \cite{saurin:2006:thesis},\citepub{c:3grc}.
+Figure~\ref{fig:tfrc} shows the performance of TFRC on a slow time-varying
+link and a 3G link.
+
+RAP~\cite{rap:752152} uses a windowed-approach and this too exhibits a
+sawtooth-type of behavior. Any algorithm that consistently produces a sawtooth
+media rate is not well suited for real-time communication because it generates
+a poor user-experience \cite{Gharai:2002wt,VladBalan:2007dq,
+Zink03subjectiveimpression}. Instead of just relying on RTT and loss for
+congestion control, Garudadri~\textit{et al.}\cite{4397059} also use the
+receiver playout buffer to detect underutilization and overuse, i.e., the
+receiver signals to the sender the current receiver buffer occupancy.
+Zhu~\textit{et al.}\cite{rmcat-nada} use PCN, ECN and loss rate to get an
+accurate estimate of losses for implementing congestion control. In this case,
+they assume all packets marked by ECN and PCN as lost. O'Hanlon~\textit{et
+al.}\cite{rmcat-dflow} propose using a delay-based estimate when competing
+with similar traffic and using a windowed-approach when competing with
+TCP-type cross traffic, they switch modes by using a threshold on the observed
+end-to-end delay, the idea is similar to the one discussed
+in~\cite{budzisz2011fair}.
 
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_tfrc}
     }
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_tfrc_1}
     }
   }
@@ -110,11 +130,11 @@ link and a 3G link.
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_tmmbr}
     }
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_tmmbr_u}
     }
   }
@@ -124,20 +144,26 @@ link and a 3G link.
 
 \subsection{Co-operative Congestion Control Scheme}
 
-Conversational NADU (C-NADU) is described in \citepub{c:3grc} as an extension
-to Next Application Data Unit (NADU) signaling for video
-streaming~\cite{nadu.1070341,nadu.1530486}. A NADU receiver measures the
-playout delay (as a measure of buffer occupancy relative to time) and signals
-it to the sender along with the next sequence number to be played out. In
-C-NADU, the receiver also calculates the \emph{receiver's capacity estimate}
-by measuring the frame inter-arrival time and signals that along with the NADU
-report. At the sender, the application calculates the TCP-friendly rate, and
-measures the variation in RTT (75 and 90 percentile values) and if fraction of
-frames that missed their playout deadline. In \citepub{c:3grc}, we show that
-C-NADU has higher bandwidth utilization compared to TMMBR and TFRC.
-Figure~\ref{fig:cnadu} shows the performance of C-NADU on a slow time-varying
-link and a 3G link. Additionally, in \citepub{c:hetrc}, we show that C-NADU is
-self-fair with other C-NADU flows in both wired and wireless
+Conversational NADU (C-NADU) is described in \citepub{c:3grc} and
+\citepub{c:hetrc} as an extension to Next Application Data Unit (NADU)
+signaling for video streaming~\cite{nadu.1070341,nadu.1530486}. A NADU
+receiver measures the playout delay (as a measure of buffer occupancy in time)
+and signals it to the sender along with the next sequence number to be played
+out. In C-NADU, the receiver also calculates the \emph{receiver's capacity
+estimate} by measuring the frame inter-arrival time and signals that along
+with the NADU report. If the video frame arrives at the expected time, the
+receiver estimates no ongoing congestion, and if it arrives later than the
+expected time, it is considered late and the receiver estimates overuse. If
+the frame is delayed and misses its playout time, it is discarded and in this
+case the receiver estimates congestion. Based on the above cases, the receiver
+estimates the current capacity and signals it to the sender. At the sender,
+the application calculates the TCP-friendly rate, and measures the variation
+in RTT (75 and 90 percentile values) and if fraction of frames that missed
+their playout deadline. In \citepub{c:3grc}, we show that C-NADU has higher
+bandwidth utilization compared to TMMBR and TFRC. Figure~\ref{fig:cnadu} shows
+the performance of C-NADU on a slow time-varying link and a 3G link.
+Additionally, in \citepub{c:hetrc}, we show that C-NADU is self-fair with
+other C-NADU flows in both wired and wireless
 environments~\cite{singh:2010:thesis} and in \citepub{c:fecrc} we show that it
 competes fairly with TCP cross-traffic, both long and short (bursty) TCP
 flows.
@@ -145,11 +171,11 @@ flows.
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_cnadu}
     }
     \subfloat{
-      \includegraphics[width=0.6\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_cnadu}
     }
   }
@@ -168,25 +194,33 @@ when the congestion abates. Based on this expectation, the receiver calculates
 the capacity estimate and signals it to the sender. The sender calculates its
 estimate based on TFRC and finally, chooses the new sending rate as a value
 between the TFRC rate calculated by the sender and receiver estimate. Full
-details can be found in the Internet-Draft~\cite{draft.rrtcc}.
-Figure~\ref{fig:rrtcc} shows that by increasing latency and fractional loss
-affects the bandwidth utilization of RRTCC. For example, in
-Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link latency reduces
+details can be found in the Internet-Draft~\cite{draft.rrtcc}. In
+\citepub{c:eval}, we evaluate the performance of RRTCC in several scenarios:
+by itself on a bottleneck link, competing with other RRTCC flows and competing
+with TCP cross-traffic. Figure~\ref{fig:rrtcc} shows an example plot of the
+performance of RRTCC when increasing latency and fractional loss. For example,
+in Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link latency reduces
 the sending rate of RRTCC.
 
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.8\textwidth]
+      \includegraphics[width=0.5\textwidth]
       {chap5-graph-rrtcc-latency}
     }
-  }
-  \centerline{
+  % }
+  % \centerline{
     \subfloat{
-      \includegraphics[width=0.8\textwidth]
+      \includegraphics[width=0.5\textwidth]
       {chap5-graph-rrtcc-plr}
     }
   }
-  \caption{Performance of RRTCC on a link with varying delay and fractional loss rate.}
+  \caption{Performance of RRTCC on a link with varying delay and fractional
+  loss rate. We observe that by the sending rate decreases when increasing
+  link latency or bit-error loss. }
   \label{fig:rrtcc}
 \end{figure}
+
+% \section{Summary}
+% 
+% In this section, we introduced 
