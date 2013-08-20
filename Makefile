@@ -15,7 +15,8 @@ TEX_STATIC    = chapters/_0lists.tex \
                 chapters/_2rg.tex \
                 chapters/_3rtp.tex \
                 chapters/_4fw.tex \
-                chapters/_5rtc.tex
+                chapters/_5rtc.tex \
+                chapters/_8nwc.tex
 
 TEX_BIB = bib/diss.bib \
           bib/rfc.bib
