@@ -48,30 +48,46 @@ sender calculates the new rate based on the variation in the delay cue
 compared to earlier measurements and the priority of the multimedia
 stream~\cite{pv-nada}.
 
-
-In \citepub{c:3grc}, we implement a network-assisted congestion control
-scheme, wherein, base-stations connected to the mobile clients notify them
-about the available capacity. In wireless networks, such as 3G/LTE, the last
-hop is typically the bottleneck because the core network is well 
-
-% ECN, PCN, BW indication
-
-
 \begin{figure}
   \centerline{
-    \subfloat{
+    \subfloat[TMMBR-A]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap8_graph_3g_tmmbr_a}
     }
-    \subfloat{
+    \subfloat[TMMBR-B]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap8_graph_3g_tmmbr_b}
     }
   }
-  \caption{Performance of bandwidth indications by the base stations in a slow
-  time-varying link and 3G network.}
+  \caption{Performance of bandwidth indications by the base stations a)
+  TMMBR-A: both terminals are assisted, b) TMMBR-B: only receiver is
+  assisted.}
   \label{fig:tmmbn}
 \end{figure}
+
+In wireless networks, such as 3G/LTE, the last hop is typically the bottleneck
+because the core network is well provisioned. In \citepub{c:3grc}, we
+implement a network-assisted congestion control scheme, wherein, base-stations
+(along the media path) notify the mobile terminals about the available link
+capacity. In TMMBR-A, the base-stations notify both the sending and receiving
+endpoints about the available capacity, i.e., the sender is notified about the
+uplink capacity and the receiver is notified about the downlink capacity. If
+an endpoint sends and receives data, it is notified asynchronously about the
+uplink and downlink capacity. In TMMBR-B, only the receiving endpoint is
+notified about the downlink capacity. Both TMMBR-A and TMMBR-B employ a
+co-operative congestion control scheme, wherein the receiver sends a TMMBR
+request to the sender containing the current downlink capacity. In TMMBR-A the
+sender also receives a notification about the uplink capacity from the
+base-station, hence, comparing the request from the receiver and the
+notification from the base-station, it chooses the minimum of the two values
+as the new sending rate. In TMMBR-B, the sender implements calculates the
+\emph{sender's estimate} (similar to the one described in~\ref{cc:co-op}) and
+chooses the minimum of the sender's estimate and the receiver's bit rate
+request. Figure~\ref{fig:tmmbn} shows the performance of TMMBR-A and TMMBR-B,
+where both endpoints are sending media over a 3G network.
+
+% ECN, PCN, BW indication
+
 
 \section{Out-of-path Congestion Cues}
 
