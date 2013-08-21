@@ -89,9 +89,10 @@ Zink03subjectiveimpression}. Instead of just relying on RTT and loss for
 congestion control, Garudadri~\textit{et al.}\cite{4397059} also use the
 receiver playout buffer to detect underutilization and overuse, i.e., the
 receiver signals to the sender the current receiver buffer occupancy.
-Zhu~\textit{et al.}\cite{rmcat-nada} use PCN, ECN and loss rate to get an
-accurate estimate of losses for implementing congestion control. In this case,
-they assume all packets marked by ECN and PCN as lost. O'Hanlon~\textit{et
+Zhu~\textit{et al.}\cite{rmcat-nada} use Pre-Congestion Notification (PCN),
+Explicit Congestion Notification (ECN) and loss rate to get an accurate
+estimate of losses for implementing congestion control. In this case, they
+assume all packets marked by ECN and PCN as lost. O'Hanlon~\textit{et
 al.}\cite{rmcat-dflow} propose using a delay-based estimate when competing
 with similar traffic and using a windowed-approach when competing with
 TCP-type cross traffic, they switch modes by using a threshold on the observed
