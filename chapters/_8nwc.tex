@@ -91,4 +91,45 @@ where both endpoints are sending media over a 3G network.
 
 \section{Out-of-path Congestion Cues}
 
-Congestion Maps
+Service Maps are presented in~\cite{1630563} and the measurement based
+approach is proposed in~\cite{Aravinda:2008p14}. GPS-based congestion control
+is introduced in~\cite{Yao:2008p21}, and evaluated in different
+scenarios~\cite{Yao:2009p57}, \cite{Yao:2010p64}, but they take signal
+strength as an influential factor for rate-control and show that predicting
+based on signal strength alone is insufficient. Yet, their results indicate
+that past information can be used to predict future network characteristics.
+
+To overcome these challenges, in \citepub{c:glass}, we implement a bandwidth
+coverage map that collects connectivity information from the users
+(\emph{crowd-sourcing}) and calculates the available capacity at the reported
+geographical locations. \cite{6012045} also proposes a similar architecture
+(\emph{bandwidth lookup service}) to the one in \citepub{c:glass} and uses
+different types of averaging algorithms to predict future network
+characteristics in Dynamic Adaptive Streaming over HTTP (DASH). While the
+averaging algorithm is not a focus of this thesis, we use
+K-means~\cite{Kanungo:2002:LSA:513400.513402} and K-nearest neighbor
+(K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to form regions with
+similar bandwidth. Details of the averaging algorithms can be read
+in~\cite{sharmistha-thesis}. Additionally, \cite{Riiser:2012:2240136} proposes
+fetching the bandwidth along a travel route in steps of 100 meters, which we
+find limiting. Instead we propose multiple methods for discovering areas with
+poor connectivity and show that not only looking up future bandwidth but also
+when to vary the sending rate (\emph{prefetch}) affects the usefulness of the
+service. A preliminary analysis using simulations of our system is done
+in~\cite{Curcio:glass}.
+
+
+
+In \citepub{c:glass}, we presented a mechanism enabling an endpoint (usually a
+receiver) to proactively react to upcoming capacity limitations in wireless
+access networks. The receiver uses hints provided by a network coverage map
+service (NCMS), which uses crowd sourcing to gather the coverage and capacity
+information. These hints are sent to the sender, which can alter the sending
+rate. We find that the information provided by the NCMS is suitable for both
+predictive rate-switching and pre-buffering and helped in avoiding almost all
+packet losses in the scenarios we investigated, noticeably increasing video
+quality. While these results are promising, they are only a first step: flash
+crowd effects resulting from many clients approaching and/or creating a
+coverage hole at the same time require further study. Similarly, the
+performance impact for a more encompassing geographical coverage and more
+diverse network connectivity deserves further investigation.
