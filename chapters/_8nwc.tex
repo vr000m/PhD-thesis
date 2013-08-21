@@ -31,6 +31,8 @@ and is queried by the mobile to predict coverage outage. This paper covers the
 
 \section{In-path Congestion Cues}
 
+% ECN, PCN, BW indication
+
 In some network deployments, routers along the media path are capable of
 detecting congestion before the queue overflows, typically, using active queue
 management (e.g., RED). A router marks a packet, indicating that the packet
@@ -49,20 +51,9 @@ compared to earlier measurements and the priority of the multimedia
 stream~\cite{pv-nada}.
 
 \begin{figure}
-  \centerline{
-    \subfloat[TMMBR-A]{
-      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
-      {chap8_graph_3g_tmmbr_a}
-    }
-    \subfloat[TMMBR-B]{
-      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
-      {chap8_graph_3g_tmmbr_b}
-    }
-  }
-  \caption{Performance of bandwidth indications by the base stations a)
-  TMMBR-A: both terminals are assisted, b) TMMBR-B: only receiver is
-  assisted.}
-  \label{fig:tmmbn}
+\includegraphics[width=\textwidth]{chap8-fig-tmmbr}
+\caption{Endpoints receiving capacity indication from the middleboxes for implementing congestion control.}
+\label{fig:cc:tmmbrab}
 \end{figure}
 
 In wireless networks, such as 3G/LTE, the last hop is typically the bottleneck
@@ -86,10 +77,27 @@ chooses the minimum of the sender's estimate and the receiver's bit rate
 request. Figure~\ref{fig:tmmbn} shows the performance of TMMBR-A and TMMBR-B,
 where both endpoints are sending media over a 3G network.
 
-% ECN, PCN, BW indication
+\begin{figure}
+  \centerline{
+    \subfloat[TMMBR-A]{
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      {chap8_graph_3g_tmmbr_a}
+    }
+    \subfloat[TMMBR-B]{
+      \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
+      {chap8_graph_3g_tmmbr_b}
+    }
+  }
+  \caption{Performance of bandwidth indications by the base stations a)
+  TMMBR-A: both terminals are assisted, b) TMMBR-B: only receiver is
+  assisted.}
+  \label{fig:tmmbn}
+\end{figure}
 
 
 \section{Out-of-path Congestion Cues}
+
+% Congestion map
 
 Service Maps are presented in~\cite{1630563} and the measurement based
 approach is proposed in~\cite{Aravinda:2008p14}. GPS-based congestion control
@@ -118,6 +126,11 @@ when to vary the sending rate (\emph{prefetch}) affects the usefulness of the
 service. A preliminary analysis using simulations of our system is done
 in~\cite{Curcio:glass}.
 
+\begin{figure}
+\includegraphics[width=\textwidth]{chap8-fig-ecv}
+\caption{Endpoints using a Network Coverage Map Service to send coverage updates, query for upcoming congestion and receive coverage updates.}
+\label{fig:cc:ecv}
+\end{figure}
 
 
 In \citepub{c:glass}, we presented a mechanism enabling an endpoint (usually a
