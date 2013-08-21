@@ -52,7 +52,8 @@ stream~\cite{pv-nada}.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-fig-tmmbr}
-\caption{Endpoints receiving capacity indication from the middleboxes for implementing congestion control.}
+  \caption{Endpoints receiving capacity indication from the middleboxes for
+  implementing congestion control.}
 \label{fig:cc:tmmbrab}
 \end{figure}
 
@@ -64,18 +65,20 @@ capacity. In TMMBR-A, the base-stations notify both the sending and receiving
 endpoints about the available capacity, i.e., the sender is notified about the
 uplink capacity and the receiver is notified about the downlink capacity. If
 an endpoint sends and receives data, it is notified asynchronously about the
-uplink and downlink capacity. In TMMBR-B, only the receiving endpoint is
-notified about the downlink capacity. Both TMMBR-A and TMMBR-B employ a
-co-operative congestion control scheme, wherein the receiver sends a TMMBR
-request to the sender containing the current downlink capacity. In TMMBR-A the
-sender also receives a notification about the uplink capacity from the
-base-station, hence, comparing the request from the receiver and the
-notification from the base-station, it chooses the minimum of the two values
-as the new sending rate. In TMMBR-B, the sender implements calculates the
-\emph{sender's estimate} (similar to the one described in~\ref{cc:co-op}) and
-chooses the minimum of the sender's estimate and the receiver's bit rate
-request. Figure~\ref{fig:tmmbn} shows the performance of TMMBR-A and TMMBR-B,
-where both endpoints are sending media over a 3G network.
+uplink and downlink capacity. Figure~\ref{fig:cc:tmmbrab} shows a schematic
+representation about the interaction between the middleboxes and the
+endpoints. In TMMBR-B, only the receiving endpoint is notified about the
+downlink capacity. Both TMMBR-A and TMMBR-B employ a co-operative congestion
+control scheme, wherein the receiver sends a TMMBR request to the sender
+containing the current downlink capacity. In TMMBR-A the sender also receives
+a notification about the uplink capacity from the base-station, hence,
+comparing the request from the receiver and the notification from the
+base-station, it chooses the minimum of the two values as the new sending
+rate. In TMMBR-B, the sender implements calculates the \emph{sender's
+estimate} (similar to the one described in~\ref{cc:co-op}) and chooses the
+minimum of the sender's estimate and the receiver's bit rate request.
+Figure~\ref{fig:tmmbn} shows the performance of TMMBR-A and TMMBR-B, where
+both endpoints are sending media over a 3G network.
 
 \begin{figure}
   \centerline{
@@ -117,32 +120,34 @@ characteristics in Dynamic Adaptive Streaming over HTTP (DASH). While the
 averaging algorithm is not a focus of this thesis, we use
 K-means~\cite{Kanungo:2002:LSA:513400.513402} and K-nearest neighbor
 (K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to form regions with
-similar bandwidth. Details of the averaging algorithms can be read
-in~\cite{sharmistha-thesis}. Additionally, \cite{Riiser:2012:2240136} proposes
-fetching the bandwidth along a travel route in steps of 100 meters, which we
-find limiting. Instead we propose multiple methods for discovering areas with
-poor connectivity and show that not only looking up future bandwidth but also
-when to vary the sending rate (\emph{prefetch}) affects the usefulness of the
-service. A preliminary analysis using simulations of our system is done
-in~\cite{Curcio:glass}.
+similar bandwidth. Details of the averaging algorithms employed by our
+coverage map server are discussed in~\cite{sharmistha-thesis}. Additionally,
+\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
+route in steps of 100 meters, which we find limiting. Instead we propose
+multiple methods for discovering areas with poor connectivity and show that
+not only looking up future bandwidth but also when to vary the sending rate
+(\emph{prefetch}) affects the usefulness of the service. A preliminary
+analysis using simulations of our system is done in~\cite{Curcio:glass}.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-fig-ecv}
-\caption{Endpoints using a Network Coverage Map Service to send coverage updates, query for upcoming congestion and receive coverage updates.}
+  \caption{Endpoints using a Network Coverage Map Service to send coverage
+  updates, query for upcoming congestion and receive coverage updates.}
 \label{fig:cc:ecv}
 \end{figure}
 
 
-In \citepub{c:glass}, we presented a mechanism enabling an endpoint (usually a
+In \citepub{c:glass}, we present a mechanism enabling an endpoint (usually a
 receiver) to proactively react to upcoming capacity limitations in wireless
 access networks. The receiver uses hints provided by a network coverage map
 service (NCMS), which uses crowd sourcing to gather the coverage and capacity
 information. These hints are sent to the sender, which can alter the sending
-rate. We find that the information provided by the NCMS is suitable for both
+rate. Figure~\ref{chap8-fig-ecv} shows the interaction between the endpoints
+and the network coverage map server.
+
+
+
+We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality. While these results are promising, they are only a first step: flash
-crowd effects resulting from many clients approaching and/or creating a
-coverage hole at the same time require further study. Similarly, the
-performance impact for a more encompassing geographical coverage and more
-diverse network connectivity deserves further investigation.
+quality.
