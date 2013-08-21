@@ -245,31 +245,36 @@ geo-location. In order to detect areas of good and poor connectivity, to
 enable adaptive media delivery in mobile wireless (LTE) networks.
 \end{itemize}
 
+\vspace{-1cm}
 \section{Summary of the Publications}
 
 This thesis consists of an introductory part and eight original publications.
 In~\citepub{c:cb}, we propose a set of circuit-breaker conditions which are
 applied to non-adaptive media streams. At the moment, these media streams do
 not implement congestion control and if deployed on the Internet, are expected
-to cause congestion. \citepub{c:err} discusses about error resilience for
-interactive multimedia communication in a mobile (3G) environment.
+to cause congestion.
 
-\citepub{c:3grc}, \citepub{c:hetrc}, \citepub{c:fecrc}, and \citepub{c:eval}
-discuss about congestion control for interactive multimedia communication.
-\citepub{c:3grc} performs congestion control in a wireless environment. In
-this paper, we introduce three algorithms for implementing congestion control:
-sender-driven, the sender decides the new sending rate; receiver-driven, the
-receiver decides the new sending rate; and network-assisted, the network
-notifies the endpoints about the available rate. \citepub{c:hetrc} extends the
-sender-driven algorithm in \citepub{c:3grc} for deployment in heterogeneous
-environments.
+% \citepub{c:3grc}, \citepub{c:hetrc}, \citepub{c:fecrc}, and \citepub{c:eval}
+% discuss about congestion control for interactive multimedia communication.
 
-In \citepub{c:fecrc}, we unify the concepts of error-resilience and congestion
-control to propose a new algorithm. This new algorithm would replace the two
-separate algorithms currently implemented by existing interactive multimedia
-applications (e.g., Skype, Google Hangouts). \citepub{c:eval} evaluates the
-performance of the congestion control algorithm proposed by Google for WebRTC
-and remarks on the deployability on the Internet.
+\citepub{c:eval} evaluates the performance of the congestion control algorithm
+proposed by Google for WebRTC and remarks on the deployability on the
+Internet. \citepub{c:3grc} performs congestion control in a wireless
+environment. In this paper, we introduce three algorithms for implementing
+congestion control: sender-driven, the sender decides the new sending rate;
+receiver-driven, the receiver decides the new sending rate; and
+network-assisted, the network notifies the endpoints about the available rate.
+\citepub{c:hetrc} extends the sender-driven algorithm in \citepub{c:3grc} for
+deployment in heterogeneous environments.
+
+\citepub{c:err} discusses about error resilience for interactive multimedia
+communication in a mobile (3G) environment. We experiment with different types
+of error resilience schemes, namely, NACKs, FEC, adaptive slice-size, and
+requesting new reference pictures. In \citepub{c:fecrc}, we unify the concepts
+of error-resilience and congestion control to propose a new algorithm. This
+new algorithm would replace the two separate algorithms currently implemented
+by existing interactive multimedia applications (e.g., Skype, Google
+Hangouts).
 
 
 In \citepub{c:glass}, we propose a system to enable network-assisted
