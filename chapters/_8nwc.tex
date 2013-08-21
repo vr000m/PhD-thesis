@@ -4,18 +4,30 @@ categorizes \emph{In-path} and \emph{Out-of-path} sources and
 \emph{out-of-band} signaling for implementing congestion control, which are
 discussed in this chapter. This chapter is based on our work on congestion
 control for interactive multimedia applications, which is documented in
-\citepub{c:3grc}, \citepub{c:glass}.
+\citepub{c:3grc} and \citepub{c:glass}.
 
-In \citepub{c:3grc}, when the available link capacity changes at a routers (in
-this case, the 3G base stations), it notifies the endpoint connected to it
-about the current capacity. Based on the notifications the sender adapts the
-sending rate of the video call.
+In a 3G network, mobility, cell loading, handovers and other factors can
+affect the throughput available to each user and the varying network capacity
+affects the video quality~\cite{diaz2007evaluating}. Deployments of GPRS, 3G
+and LTE show that there are still geographical areas where capacity is
+constrained~\cite{Curcio:glass, 6576402}. These constrained geographical areas
+may occur due to fading and interference from large building structures or
+closed or inaccessible areas (e.g., tunnels, boats on lakes or in the
+archipelago, rural areas).
+
+In \citepub{c:3grc}, when the available link capacity changes at a base
+station, it notifies the endpoint connected to it about the current capacity.
+Based on the notifications the sender adapts the media sending rate. Hence,
+this paper covers the \emph{in-path} sources and \emph{out-of-band} signaling
+of the framework defined in Chapter~\ref{chap:cc.fw}.
 
 In \citepub{c:glass}, we explore the use of coverage maps for congestion
 control. The map server collect throughput information from the mobile
 clients, which also add geo-location information along with the throughput
 information. This assists the map server to build a bandwidth and coverage map
-and is queried by the mobile to predict coverage outage.
+and is queried by the mobile to predict coverage outage. This paper covers the
+\emph{out-of-path} sources (e.g., coverage map) signaling congestion cues
+\emph{out-of-band} to the endpoints.
 
 \section{In-path Congestion Cues}
 
