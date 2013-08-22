@@ -81,23 +81,23 @@ sawtooth sending rate \cite{saurin:2006:thesis},\citepub{c:3grc}.
 Figure~\ref{fig:tfrc} shows the performance of TFRC on a slow time-varying
 link and a 3G link.
 
-RAP~\cite{rap:752152} uses a windowed-approach and this too exhibits a
-sawtooth-type of behavior. Any algorithm that consistently produces a sawtooth
-media rate is not well suited for real-time communication because it generates
-a poor user-experience \cite{Gharai:2002wt,VladBalan:2007dq,
-Zink03subjectiveimpression}. Instead of just relying on RTT and loss for
-congestion control, Garudadri~\textit{et al.}\cite{4397059} also use the
-receiver playout buffer to detect underutilization and overuse, i.e., the
-receiver signals to the sender the current receiver buffer occupancy.
-Zhu~\textit{et al.}\cite{rmcat-nada} use Pre-Congestion Notification (PCN),
-Explicit Congestion Notification (ECN) and loss rate to get an accurate
-estimate of losses for implementing congestion control. In this case, they
-assume all packets marked by ECN and PCN as lost. O'Hanlon~\textit{et
-al.}\cite{rmcat-dflow} propose using a delay-based estimate when competing
-with similar traffic and using a windowed-approach when competing with
-TCP-type cross traffic, they switch modes by using a threshold on the observed
-end-to-end delay, the idea is similar to the one discussed
-in~\cite{budzisz2011fair}.
+Network-Assisted Dynamic Adaptation (RAP)~\cite{rap:752152} uses a
+windowed-approach and this too exhibits a sawtooth-type of behavior. Any
+algorithm that consistently produces a sawtooth media rate is not well suited
+for real-time communication because it generates a poor user-experience
+\cite{Gharai:2002wt,VladBalan:2007dq, Zink03subjectiveimpression}. Instead of
+just relying on RTT and loss for congestion control, Garudadri~\textit{et
+al.}\cite{4397059} also use the receiver playout buffer to detect
+underutilization and overuse, i.e., the receiver signals to the sender the
+current receiver buffer occupancy. Zhu~\textit{et al.}\cite{rmcat-nada} use
+Pre-Congestion Notification (PCN), Explicit Congestion Notification (ECN) and
+loss rate to get an accurate estimate of losses for implementing congestion
+control. In this case, they assume all packets marked by ECN and PCN as lost.
+O'Hanlon~\textit{et al.}\cite{rmcat-dflow} propose using a delay-based
+estimate when competing with similar traffic and using a windowed-approach
+when competing with TCP-type cross traffic, they switch modes by using a
+threshold on the observed end-to-end delay, the idea is similar to the one
+discussed in~\cite{budzisz2011fair}.
 
 \begin{figure}
   \centerline{
@@ -185,23 +185,24 @@ flows.
   \label{fig:cnadu}
 \end{figure}
 
-Receiver-side Real-Time Congestion Control is described in~\cite{draft.rrtcc}
-and is proposed as one of the solution candidates for WebRTC by Google. Like
-C-NADU, RRTCC also has a receiver- and sender-side component. The
-receiver-side measures the capacity overuse and underuse by monitoring the
-timestamp jitter of the incoming frames. The arrival-times are modeled as a
-white Gaussian process; when the mean is 0 there is no congestion, the mean is
-expected to increase when there is ongoing congestion and expected to decrease
-when the congestion abates. Based on this expectation, the receiver calculates
-the capacity estimate and signals it to the sender. The sender calculates its
-estimate based on TFRC and finally, chooses the new sending rate as a value
-between the TFRC rate calculated by the sender and receiver estimate. Full
-details can be found in the Internet-Draft~\cite{draft.rrtcc}. In
-\citepub{c:eval}, we evaluate the performance of RRTCC in several scenarios:
-by itself on a bottleneck link, competing with other RRTCC flows and competing
-with TCP cross-traffic. Figure~\ref{fig:rrtcc} shows an example plot of the
-performance of RRTCC when increasing latency and fractional loss. For example,
-in Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link latency reduces
+Receiver-side Real-Time Congestion Control (RRTCC) is described
+in~\cite{draft.rrtcc} and is proposed as one of the solution candidates for
+WebRTC by Google. Like C-NADU, RRTCC also has a receiver- and sender-side
+component. The receiver-side measures the capacity overuse and underuse by
+monitoring the timestamp jitter of the incoming frames. The arrival-times are
+modeled as a white Gaussian process; when the mean is 0 there is no
+congestion, the mean is expected to increase when there is ongoing congestion
+and expected to decrease when the congestion abates. Based on this
+expectation, the receiver calculates the capacity estimate and signals it to
+the sender. The sender calculates its estimate based on TFRC and finally,
+chooses the new sending rate as a value between the TFRC rate calculated by
+the sender and receiver estimate. Full details can be found in the
+Internet-Draft~\cite{draft.rrtcc}. In \citepub{c:eval}, we evaluate the
+performance of RRTCC in several scenarios: by itself on a bottleneck link,
+competing with other RRTCC flows and competing with TCP cross-traffic.
+Figure~\ref{fig:rrtcc} shows an example plot of the performance of RRTCC when
+increasing latency and fractional loss. For example, in
+Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link latency reduces
 the sending rate of RRTCC.
 
 \begin{figure}
