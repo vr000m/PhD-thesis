@@ -139,15 +139,119 @@ analysis using simulations of our system is done in~\cite{Curcio:glass}.
 
 In \citepub{c:glass}, we present a mechanism enabling an endpoint (usually a
 receiver) to proactively react to upcoming capacity limitations in wireless
-access networks. The receiver uses hints provided by a network coverage map
-service (NCMS), which uses crowd sourcing to gather the coverage and capacity
-information. These hints are sent to the sender, which can alter the sending
-rate. Figure~\ref{chap8-fig-ecv} shows the interaction between the endpoints
-and the network coverage map server.
+access networks. We enable this by implementing three steps,
+Figure~\ref{fig:cc:ecv} shows the interaction between the endpoints and the
+Network Coverage Map Server (NCMS). First, each endpoint receiving a media
+stream monitors the throughput and its geolocation and reports it to the NCMS.
+Figure~\ref{fig:glass:map} shows the throughput around the university area in
+Espoo. Second, each endpoint is capable of querying the NCMS for upcoming
+congestion (known as \emph{lookahead}). It can \emph{lookahead} using one of
+the following methods: known travel rote, area lookahead or by subscribing to
+areas with poor coverage. Figure~\ref{fig:glass:map} shows a graphical
+representation of the average throughput for a \emph{area lookahead} and a
+\emph{known travel route}. Third, for each lookahead requests, the NCMS
+responds with an coverage map info, i.e., the expected throughput at every
+geolocation along the route or requested area. The receiver uses these hints
+provided by the NCMS to implement congestion control. For example, the
+receiver sends an estimated capacity vector (a data structure containing a
+time-series of available throughput, thus preserving user's location privacy)
+are sent to the sender, which can alter the sending rate based on it.
 
+\begin{figure}
+  \centerline{
+    \subfloat[Map Area Lookahead]{
+      \includegraphics[width=0.8\textwidth]
+      {chap8-fig-ota-tr-net-02}
+    }
+  }
+  \centerline{
+    \subfloat[Known Travel Route Lookahead]{
+      \includegraphics[width=0.8\textwidth]
+      {chap8-graph_route_thin_throughput}
+    }
+  }
+  \caption{a) A map of the available capacity around Otaniemi (university
+  area). b) Example of the average and the Inter Quartile Range
+  ($IQR=\pm1\sigma$) throughput along a known route. The data in both
+  representations are captured over several days.}
+  \label{fig:glass:map}
+\end{figure}
 
+In \citepub{c:glass}, we stream video from a server to mobile clients moving
+around the city, mainly using public transport. The NCMS collected the
+throughput traces, thereafter, we conduct simulated experiments of users
+traveling at different vehicular speeds through the Helsinki region. In total,
+the NCMS collected over 400,000 updates over a month of operation (about 40-50
+bus-trips). For 6 geographical areas, the NCMS received more than 10,000
+updates (\emph{Otaniemi}, Helsinki City Center) while on average each
+geographical had around 100 updates.
+
+\begin{table}
+  \begin{center}
+\begin{tabular}{ccccccc} \hline
+Method & $SR_{avg}$ & $PSNR_{avg}$ & $\sigma_{PSNR}$ & PLR \\ \hline
+% & $buffer_{max}$\\ \hline
+No adaptation   & 865   & 27.48 & 4.55  & 6.6 \\
+Omniscient      & 929   & 43.12 & 1.9   & 0.33 \\ 
+Rate-switching  & 881   & 42.75 & 2.21  & 0.0  \\ 
+Late scheduling & 1014  & 48.43 & 0.18 & 0.0  \\ \hline
+\end{tabular}
+\caption{Bus ride with good 3G coverage}
+\label{table-glass-sim7res}
+\end{center}
+\end{table}
+
+Table~\ref{table-glass-sim7res} compares the results for the different schemes
+and Figure~\ref{fig:glass:sim7res} shows the sending/receiver rate variation
+to channel throughput for one out of 10 simulation runs. In this scenario the
+user moves smoothly through the locations along the route and the receiver
+performs \emph{lookahead} queries to fetch coverage information. In this
+scenario, there are intermittent gaps in coverage but overall the throughput
+at most locations is above the required media rate. The \emph{omniscient
+algorithm}\footnote{The endpoint is aware of the exact end-to-end channel
+capacity and performs the perfect rate-adaptation.} provides the best
+rate-adaptation but since it is unable pre-buffer, the PSNR ($PSNR_{avg}$=43)
+is lower than that of late scheduling ($PSNR_{avg}$=48). Alternatively,
+performing \emph{no adaptation}\footnote{Endpoints perform no congestion
+control and stream at a constant bit rate and periods when the link capacity
+falls below the media rate, will cause losses} causes frequent pausing and
+packet loss which is reflected in the low PSNR ($PSNR_{avg}$=27).
+\emph{Rate-switching}\footnote{Endpoints perform short \emph{lookahead}
+requests and is only able to detect outage moments before the user arrives at
+the location with poor connectivity. In this case, the receiver sends a TMMBR
+message (with lowest available bit rate in the area) before entering the area
+and another one after the exiting the area (to reset the bit rate). The sender
+reacts by switching the media stream to the closest available media rate.} has
+comparable PSNR ($PSNR_{avg}$=42.75) to \emph{Omniscient} and has no packet
+losses. \emph{Rate-switching} avoids all drops by switching to values lower
+than the average or minimum reported throughput. \emph{Late
+scheduling}\footnote{The receiving endpoint performs lookahead requests and
+tries to detect areas with poor coverage much before the user arrives at those
+locations. To reduce the impact of changing routes, the streaming client uses
+the late scheduling proposed in \citepub{c:glass}.} outperforms the rest of
+the schemes in terms of PSNR ($PSNR_{avg}$=48.43) because it predictively
+pre-buffers content and does not have to rate-switch. This is largely due to
+the low density of coverage holes and good connectivity between them. In the
+case of interactive multimedia communication implementing network-assisted
+congestion cues, we expect the performance of the congestion control to be at
+least that of rate-switching because the sender will be able to reduce and
+increase the sending rate preemptively without probing.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{chap8-graph-sim7-3}
+  \caption{Variation of receiver rate to 3G link capacity based on a) no
+  adaptation b) Omniscient c) Rate-switching d) Late scheduling when there are
+  few coverage holes and good connectivity between them.}
+\label{fig:glass:sim7res}
+\end{figure}
 
 We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality.
+quality. This system can be easily adapted for interactive media
+communication, wherein the sender employs a co-operative congestion control
+scheme, i.e., the sender receives the \emph{estimated capacity vector} from
+the receiver and \emph{coverage map information} for itself from the NCMS, it
+then picks the minimum of the two rates and any additional rate recommended by
+the congestion control (one of the algorithms discussed in
+Chapter~\ref{chap:cc}) it implements.
