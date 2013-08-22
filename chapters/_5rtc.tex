@@ -14,11 +14,20 @@ The main distinction between mobile (e.g., 3G, LTE) and other wireless
 environments (e.g., 802.11x) is the media streams are transmitted using the
 \emph{unacknowledged mode}; the packets corrupted due to bit-errors (e.g.,
 wireless interference) are not re-transmitted and hence, packets incur low
-delay. We compare a sender-driven congestion control with receiver-driven. In
-\citepub{c:hetrc}, we extend the approach in \citepub{c:3grc} for deploying on
-the Internet and show that the congestion control scheme is deployable.
+delay. We evaluate the performance of a sender-driven congestion control with
+a receiver-driven congestion control and evaluate the performance of the
+proposed congestion control algorithm in a simulated environment using
+real-world 3G traces. In \citepub{c:hetrc}, we extend the approach in
+\citepub{c:3grc} for deploying on the Internet and show that the congestion
+control scheme is deployable. 
+
 Lastly, in \citepub{c:eval} we evaluate the performance of a congestion
-control algorithm proposed by Google for WebRTC.
+control algorithm proposed by Google for WebRTC. We evaluate the performance
+in diverse scenarios measuring scalability (\emph{how quickly is the
+congestion control able to utilize the available capacity}), self-fairness and
+competing against bursty cross-traffic. We evaluate the performance of
+web-browsers implementing the congestion control algorithm in our testbed that
+emulates the diverse scenarios.
 
 \section{Schemes of Congestion Control}
 
