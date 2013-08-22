@@ -19,7 +19,9 @@ In \citepub{c:3grc}, when the available link capacity changes at a base
 station, it notifies the endpoint connected to it about the current capacity.
 Based on the notifications the sender adapts the media sending rate. Hence,
 this paper covers the \emph{in-path} sources and \emph{out-of-band} signaling
-of the framework defined in Chapter~\ref{chap:cc.fw}.
+of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
+performance of employing network-assistance for congestion control in a
+simulated environment using real-world 3G traces.
 
 In \citepub{c:glass}, we explore the use of coverage maps for congestion
 control. The map server collect throughput information from the mobile
@@ -27,7 +29,9 @@ clients, which also add geo-location information along with the throughput
 information. This assists the map server to build a bandwidth and coverage map
 and is queried by the mobile to predict coverage outage. This paper covers the
 \emph{out-of-path} sources (e.g., coverage map) signaling congestion cues
-\emph{out-of-band} to the endpoints.
+\emph{out-of-band} to the endpoints. We evaluate the performance of using a
+coverage map for congestion control by collecting 3G traces and emulating it
+in our testbed.
 
 \section{In-path Congestion Cues}
 
