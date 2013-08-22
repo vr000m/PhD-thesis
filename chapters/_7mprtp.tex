@@ -2,5 +2,15 @@ Figure~\ref{fig:4:fw} in Chapter~\ref{chap:cc.fw} shows the structure of the
 congestion control framework described in this thesis. The framework
 categorizes \emph{In-path} sources and \emph{out-of-band} signaling for
 implementing congestion control, which are discussed in this chapter. This
-chapter is based on our work on congestion control for interactive multimedia
-applications, which is documented in \citepub{c:3grc} and \citepub{c:glass}.
+chapter is based on our work on Multipath RTP (MPRTP), which is documented in
+\citepub{c:mprtp}, in \cite{draft.mprtp}, \cite{draft.mprtp.sdp},
+\cite{Globisch:AsymGrpComm}, and \cite{draft.rtcp.overlay}.
+
+In \citepub{c:mprtp}, we propose the following: design goals of implement a
+multipath protocol for multimedia, protocol details, scheduling algorithm to
+send media packets over multiple paths, a dejitter buffer implementation to
+playout packets smoothly even when the path skew is high. We evaluate the
+performance of the proposed mechanisms in diverse scenarios in our testbed.
+Lastly, we discuss the system consideration for deployment.
+
+\section{Multihoming}
