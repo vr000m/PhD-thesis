@@ -114,3 +114,44 @@ capabilities. This can either be done by signaling over the media path
 \label{chap7:fig_mprtp_arch}
 \end{figure}
 
+
+\section{Multihoming and Offloading}
+
+We focus on spreading constant bit rate (CBR) media streams across multiple
+paths, for which we present a scheduling algorithm for allocating traffic
+based on path characteristics. We use an adaptive dejitter buffer at the
+receiver so that the endpoint can playback media packets from paths with
+diverse characteristics. However, our work is orthogonal to rate
+adaptation--which would just change the total media rate to spread across each
+subflow.
+
+Figure~\ref{chap7:fig_sim_bb_3g} shows the bandwidth utilization of a WLAN and
+3G path and the overall bandwidth distribution between the paths. When the 3G
+path is constrained, the scheduling algorithm offloads the remaining media on
+to the WLAN path, however, it does not quickly reallocate the bandwidth it
+took away from the link to avoid bandwidth oscillations. Moreover, the 3G path
+encounters packet losses more often than on the WLAN path, which makes the
+scheduling algorithm prefer sending more media over the WLAN path.
+
+\begin{figure}
+    \centerline{
+        {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
+        {chap7_graph_bb_3g_s17075-2p3-2}}
+    }
+    \caption{MPRTP using WLAN and 3G paths}
+    \label{chap7:fig_sim_bb_3g}
+\end{figure}
+
+
+\textbf{Conclusions}: We have explored the criteria for assigning traffic
+shares as a function of the diverse path properties and presented
+considerations for scheduling algorithms. Our evaluation shows that our design
+1) allows exploiting multiple paths without performance degradation compared
+to suitable single-path cases—so that it is safe to deploy—and 2) enables load
+distribution and capacity aggregation in diverse scenarios. Mobile users (and
+operators) may benefit from aggregating or dynamically shifting load between
+different wireless interfaces of their mobile devices and MPRTP may assist
+well in bundling multiple wireless access networks for vehicular Internet
+access.
+
+\section{Applying MPRTP to Application Layer Multicast}
