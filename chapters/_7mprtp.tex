@@ -105,14 +105,16 @@ the application) and the other endpoints aware of their multipath
 capabilities. This can either be done by signaling over the media path
 (\emph{in-band}) or over the signaling channel (\emph{out-of-band}).
 
-
 \begin{figure}
 \centerline {
 \includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
 }
-\caption{MPRTP Stack}
+\caption{Visualizing the RTP and MPRTP communication stack, SSRC$\#1$ uses
+MPRTP while SSRC$\#2$ and SSRC$\#3$ uses single path RTP.}
 \label{chap7:fig_mprtp_arch}
 \end{figure}
+
+
 
 
 \section{Multihoming and Offloading}
@@ -124,6 +126,17 @@ receiver so that the endpoint can playback media packets from paths with
 diverse characteristics. However, our work is orthogonal to rate
 adaptation--which would just change the total media rate to spread across each
 subflow.
+
+
+\begin{figure}
+    \centerline{
+        {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
+        {chap7-graph_variable_bw_13073-2p5-2}}
+    }
+    \caption{MPRTP using WLAN and 3G paths}
+    \label{chap7:fig_sim_var_bw}
+\end{figure}
+
 
 Figure~\ref{chap7:fig_sim_bb_3g} shows the bandwidth utilization of a WLAN and
 3G path and the overall bandwidth distribution between the paths. When the 3G
