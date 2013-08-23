@@ -86,3 +86,31 @@ different RTTs, mechanisms must be developed to overcome the resulting skew.
 Furthermore, the choice of suitable transmission paths should reflect the
 demands of the application. From a protocol perspective, RTP must be extended
 to perform these functions, yet maintain backwards compatibility.
+
+\section{Call Establishment and NAT Traversal}
+
+When endpoints want to use multiple paths or offload traffic onto another path
+(or interface) or move between networks, it requires the endpoint to either
+change its IP address or use multiple IP addresses at the same time.
+Typically, an endpoint changing its IP addresses breaks some of the higher
+level protocols (e.g., TCP, RTP), unless the higher level protocol is designed
+to be oblivious to the changes in IP address (e.g., SCTP~\cite{rfc4960}).
+
+Various techniques exist for handling mobility, such as, Mobile IP, Proxy
+Mobile IP, Locator/ID Separation Protocol (LISP), but these techniques are not
+useful for enabling multipath because they attempt to assign a static IP
+address to the endpoint and hence disables the use of multiple paths.
+Therefore, the endpoints need to make the higher layers (e.g., MPTCP, MPRTP or
+the application) and the other endpoints aware of their multipath
+capabilities. This can either be done by signaling over the media path
+(\emph{in-band}) or over the signaling channel (\emph{out-of-band}).
+
+
+\begin{figure}
+\centerline {
+\includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
+}
+\caption{MPRTP Stack}
+\label{chap7:fig_mprtp_arch}
+\end{figure}
+
