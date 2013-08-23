@@ -31,37 +31,22 @@ emulates the diverse scenarios.
 
 \section{Schemes of Congestion Control}
 
-The congestion control algorithm can be implemented at the sender, at the
-receiver, or co-operatively. The \emph{sender-driven} scheme requires that the
-receiver measures the current network conditions and signals these congestion
-cues to the sender which calculates the new sending rate (sender's estimate)
-and uses it as the new sending rate. In the \emph{receiver-driven} scheme, the
-receiver calculates the new sending rate (receiver's estimate) based on the
-congestion cues, and signals the new rate to the sender, which on receiving
-the new rate, adapts the media bit rate. The \emph{co-operative} scheme is an
-extension to the \emph{sender-driven} scheme, the receiver calculates the
-receiver's estimated rate and along with it signals the congestion cues, the
-sender at its end calculates the sender's estimate based on the congestion
-cues and chooses a new sending rate, typically, between the sender's estimate
-and the receiver's estimate. Figure~\ref{fig:cc:scheme} shows the interaction
-of the sender and receiver for each scheme.
-
 \begin{figure}
   \centerline{
     \subfloat[Sender-driven Scheme]{
-      \includegraphics[width=\textwidth]
+      \includegraphics[width=0.9\textwidth]
       {chap5-fig-cc-scheme-s}
     }
   }
   \centerline{
     \subfloat[Receiver-driven Scheme]{
-      \includegraphics[width=\textwidth]
+      \includegraphics[width=0.9\textwidth]
       {chap5-fig-cc-scheme-r}
     }
   }
   \centerline{
     \subfloat[Co-operative Scheme]{
-      \includegraphics[width=\textwidth]
+      \includegraphics[width=0.9\textwidth]
       {chap5-fig-cc-scheme-c}
     }
   }
@@ -70,8 +55,25 @@ and c) co-operative.}
   \label{fig:cc:scheme}
 \end{figure}
 
+The congestion control algorithm can be implemented at the sender, at the
+receiver, or the sender and receiver operate co-operatively. The
+\emph{sender-driven} scheme requires that the receiver measure the current
+network condition and signal the observed congestion cues to the sender, which
+calculates the sender's estimate and uses it as the new sending rate. In the
+\emph{receiver-driven} scheme, the receiver calculates the new sending rate
+(receiver's estimate) based on the observed congestion cues, and signals the
+new rate to the sender, which on receiving the new rate, adapts the media bit
+rate to received value. The \emph{co-operative} scheme is an extension to the
+\emph{sender-driven} scheme, in this case, the receiver calculates the
+receiver's estimated rate and signals it along with the observed congestion
+cues, the sender at its end calculates the sender's estimate based on the
+congestion cues and chooses a new sending rate, typically, between the
+sender's estimate and the receiver's estimate. Figure~\ref{fig:cc:scheme}
+shows the interaction of the sender and receiver for each scheme.
 
-\subsection{Sender-driven Congestion Control Schemes}
+
+
+\section{Sender-driven Congestion Control Schemes}
 
 TCP Friendly Rate Control (TFRC) is an equation based congestion control
 algorithm implemented at the sender~\cite{tfrc_347397} and is also implemented
@@ -90,24 +92,6 @@ sawtooth sending rate \cite{saurin:2006:thesis},\citepub{c:3grc}.
 Figure~\ref{fig:tfrc} shows the performance of TFRC on a slow time-varying
 link and a 3G link.
 
-Network-Assisted Dynamic Adaptation (RAP)~\cite{rap:752152} uses a
-windowed-approach and this too exhibits a sawtooth-type of behavior. Any
-algorithm that consistently produces a sawtooth media rate is not well suited
-for real-time communication because it generates a poor user-experience
-\cite{Gharai:2002wt,VladBalan:2007dq, Zink03subjectiveimpression}. Instead of
-just relying on RTT and loss for congestion control, Garudadri~\textit{et
-al.}\cite{4397059} also use the receiver playout buffer to detect
-underutilization and overuse, i.e., the receiver signals to the sender the
-current receiver buffer occupancy. Zhu~\textit{et al.}\cite{rmcat-nada} use
-Pre-Congestion Notification (PCN), Explicit Congestion Notification (ECN) and
-loss rate to get an accurate estimate of losses for implementing congestion
-control. In this case, they assume all packets marked by ECN and PCN as lost.
-O'Hanlon~\textit{et al.}\cite{rmcat-dflow} propose using a delay-based
-estimate when competing with similar traffic and using a windowed-approach
-when competing with TCP-type cross traffic, they switch modes by using a
-threshold on the observed end-to-end delay, the idea is similar to the one
-discussed in~\cite{budzisz2011fair}.
-
 \begin{figure}
   \centerline{
     \subfloat{
@@ -123,8 +107,26 @@ discussed in~\cite{budzisz2011fair}.
   \label{fig:tfrc}
 \end{figure}
 
+Rate Adaption Protocol (RAP)~\cite{rap:752152} uses a windowed-approach and
+this too exhibits a sawtooth-type of behavior. Any algorithm that consistently
+produces a sawtooth media rate is not well suited for real-time communication
+because it generates a poor user-experience
+\cite{Gharai:2002wt,VladBalan:2007dq, Zink03subjectiveimpression}. Instead of
+just relying on RTT and loss for congestion control, Garudadri~\textit{et
+al.}\cite{4397059} also use the receiver playout buffer to detect
+underutilization and overuse, i.e., the receiver signals to the sender the
+current receiver buffer occupancy. Zhu~\textit{et al.}\cite{rmcat-nada} use
+Pre-Congestion Notification (PCN), Explicit Congestion Notification (ECN) and
+loss rate to get an accurate estimate delay estimate for implementing
+congestion control. In this case, they assume all packets marked by ECN and
+PCN as lost. O'Hanlon~\textit{et al.}\cite{rmcat-dflow} propose using a
+delay-based estimate when competing with similar traffic and using a
+windowed-approach when competing with TCP-type cross traffic, they switch
+modes by using a threshold on the observed end-to-end delay, the idea is
+similar to the one discussed in~\cite{budzisz2011fair}.
 
-\subsection{Receiver-driven Congestion Control Schemes}
+
+\section{Receiver-driven Congestion Control Schemes}
 
 Temporary Maximum Media Bit-rate Request (TMMBR) is defined as a codec control
 messages in \cite{rfc5104}, it is generated by the receiver in a
@@ -152,7 +154,7 @@ link and a 3G link.
   \label{fig:tmmbr}
 \end{figure}
 
-\subsection{Co-operative Congestion Control Schemes}
+\section{Co-operative Congestion Control Schemes}
 \label{cc:co-op}
 
 Conversational NADU (C-NADU) is described in \citepub{c:3grc} and
@@ -194,8 +196,8 @@ flows.
   \label{fig:cnadu}
 \end{figure}
 
-Receiver-side Real-Time Congestion Control (RRTCC) is described
-in~\cite{draft.rrtcc} and is proposed as one of the solution candidates for
+Receiver-side Real-Time Congestion Control (RRTCC) is described in
+\cite{draft.rrtcc} and is proposed as one of the solution candidates for
 WebRTC by Google. Like C-NADU, RRTCC also has a receiver- and sender-side
 component. The receiver-side measures the capacity overuse and underuse by
 monitoring the timestamp jitter of the incoming frames. The arrival-times are
@@ -217,13 +219,13 @@ the sending rate of RRTCC.
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.5\textwidth]
+      \includegraphics[width=0.7\textwidth]
       {chap5-graph-rrtcc-latency}
     }
-  % }
-  % \centerline{
+   }
+   \centerline{
     \subfloat{
-      \includegraphics[width=0.5\textwidth]
+      \includegraphics[width=0.7\textwidth]
       {chap5-graph-rrtcc-plr}
     }
   }
