@@ -32,6 +32,16 @@ scheduling algorithms do not consider real-time bounds when spreading data
 segments across different paths and diverse paths may lead to worst case delay
 and thus even longer buffering time.
 
+\begin{figure}
+\centerline {
+\includegraphics[width=0.9\textwidth]{chap7-fig_mprtp-1}
+}
+\caption{System Overview: A sender uses multiple paths to stream media
+  to a receiver.  The receiver uses a dejitter buffer to reorder
+  packets and sends per-path characteristics to the sender that
+  distributes the packets based on the reported values.}
+\label{chap7:fig_mprtp}
+\end{figure}
 
 We propose Multipath RTP (MPRTP) as a backwards compatible extension to
 RTP~\cite{rfc3550}, it is documented in \cite{draft.mprtp} and defines the
@@ -70,14 +80,16 @@ network to another.
 
 \begin{figure}
 \centerline {
-\includegraphics[width=0.9\textwidth]{chap7-fig_mprtp-1}
+\includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
 }
-\caption{System Overview: A sender uses multiple paths to stream media
-  to a receiver.  The receiver uses a dejitter buffer to reorder
-  packets and sends per-path characteristics to the sender that
-  distributes the packets based on the reported values.}
-\label{chap7:fig_mprtp}
+\caption{Visualizing the RTP and MPRTP communication stack, SSRC$\#1$ uses
+MPRTP while SSRC$\#2$ and SSRC$\#3$ uses single path RTP.}
+\label{chap7:fig_mprtp_arch}
 \end{figure}
+
+Figure~\ref{chap7:fig_mprtp_arch} compares the network stack of a single path
+and a multipath-capable endpoints. SSRCs\#2 and SSRC\#3 use a single path,
+while SSRC\#1 uses multiple paths (with two subflows for the two paths).
 
 The design goals for MPRTP from our perspective are: MPRTP-enabled system to
 be able to make use of multiple paths and adapt to their relative capacity
@@ -85,7 +97,7 @@ changes by redistributing the load. As different paths will likely exhibit
 different RTTs, mechanisms must be developed to overcome the resulting skew.
 Furthermore, the choice of suitable transmission paths should reflect the
 demands of the application. From a protocol perspective, RTP must be extended
-to perform these functions, yet maintain backwards compatibility.
+to perform these functions, yet maintain backwards compatibility. 
 
 \section{Call Establishment and NAT Traversal}
 
@@ -100,30 +112,40 @@ Various techniques exist for handling mobility, such as, Mobile IP, Proxy
 Mobile IP, Locator/ID Separation Protocol (LISP), but these techniques are not
 useful for enabling multipath because they attempt to assign a static IP
 address to the endpoint and hence disables the use of multiple paths.
-Therefore, the endpoints need to make the higher layers (e.g., MPTCP, MPRTP or
-the application) and the other endpoints aware of their multipath
-capabilities. This can either be done by signaling over the media path
-(\emph{in-band}) or over the signaling channel (\emph{out-of-band}).
+Endpoints will generally use a signaling protocol to establish a media
+session. With the existence of such a signaling relationship, two alternatives
+become available to advertise an endpoint's multiple interfaces:
+\emph{in-band} (over the media path) or \emph{out-of-band} (over the signaling
+path).
 
-\begin{figure}
-\centerline {
-\includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
-}
-\caption{Visualizing the RTP and MPRTP communication stack, SSRC$\#1$ uses
-MPRTP while SSRC$\#2$ and SSRC$\#3$ uses single path RTP.}
-\label{chap7:fig_mprtp_arch}
-\end{figure}
+Typically, performing interface advertisement is tightly coupled with NAT and
+firewall traversal. Endpoints implement NAT and FW traversal using Interactive
+Connectivity Establishment (ICE)~\cite{rfc5245} procedures, which enables the
+endpoints to ascertain connectivity between the endpoints by performing
+connectivity tests before transmitting media. The endpoint usually advertises
+the multiple interfaces in SDP, which usually couples the interface
+advertisement to the offer/answer mechanism. The offer/answer mechanism is
+excessive in this case, because a declarative mechanism would suffice. The
+endpoint mainly wants to notify the other endpoints of its multiple
+interfaces. Likewise, when multiple interfaces become available at the other
+endpoint, it would notify its peers.
+
+To summarize, in \cite{draft.mprtp}, we define an \emph{in-band} mechanism to
+advertise interfaces in RTCP. The endpoint is able to update its existing
+interfaces or advertise new ones, whenever the RTCP interval expires.
+Advertising in-band is mainly useful when the endpoints are not deployed
+behind NATs or the ICE agent works together with the MPRTP
+stack~\cite{draft.mice}. In \cite{draft.mprtp.sdp}, we define the \emph{out-of
+band} mechanism in SDP. The endpoint in this case performs the first round of
+offer/answer exactly like it would do for a multimedia session using a single
+path, but indicating it supports MPRTP and containing multiple \emph{ICE
+candidates}. Later, when the connectivity checks for more than one path are
+successful, each endpoint advertises its MPRTP interfaces.
+Figure~\ref{chap7:fig_mprtp_arch} show the interworking of the MPRTP stack
+with an ICE Agent implementing STUN connectivity checks. In \citepub{c:mprtp}
+we show that advertising the multipath interfaces \emph{in-band} leads to a quicker call establishment than when advertising \emph{out-of-band}.
 
 
-
-
-\section{Multihoming and Offloading}
-
-We focus on spreading constant bit rate (CBR) media streams across multiple
-paths, for which we present a scheduling algorithm for allocating traffic
-based on path characteristics. We use an adaptive dejitter buffer at the
-receiver so that the endpoint can playback media packets from paths with
-diverse characteristics. However, our work is orthogonal to rate
 adaptation--which would just change the total media rate to spread across each
 subflow.
 
