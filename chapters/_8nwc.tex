@@ -232,14 +232,14 @@ than the average or minimum reported throughput. \emph{Late
 scheduling}\footnote{The receiving endpoint performs lookahead requests and
 tries to detect areas with poor coverage much before the user arrives at those
 locations. To reduce the impact of changing routes, the streaming client uses
-the late scheduling proposed in \citepub{c:glass}.} outperforms the rest of
-the schemes in terms of PSNR ($PSNR_{avg}$=48.43) because it predictively
-pre-buffers content and does not have to rate-switch. This is largely due to
-the low density of coverage holes and good connectivity between them. In the
-case of interactive multimedia communication implementing network-assisted
-congestion cues, we expect the performance of the congestion control to be at
-least that of rate-switching because the sender will be able to reduce and
-increase the sending rate preemptively without probing.
+the congestion control algorithm proposed in \citepub{c:glass}.} outperforms
+the rest of the schemes in terms of PSNR ($PSNR_{avg}$=48.43) because it
+predictively pre-buffers content and does not have to rate-switch. This is
+largely due to the low density of coverage holes and good connectivity between
+them. In the case of interactive multimedia communication implementing
+network-assisted congestion cues, we expect the performance of the congestion
+control to be at least that of rate-switching because the sender will be able
+to reduce and increase the sending rate preemptively without probing.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-graph-sim7-3}
