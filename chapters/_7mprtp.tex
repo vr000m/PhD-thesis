@@ -146,6 +146,13 @@ with an ICE Agent implementing STUN connectivity checks. In \citepub{c:mprtp}
 we show that advertising the multipath interfaces \emph{in-band} leads to a quicker call establishment than when advertising \emph{out-of-band}.
 
 
+\section{Offloading and Multihoming}
+
+In \citepub{c:mprtp}, we focus on spreading a constant bit rate (CBR) media
+stream across multiple paths, for which we present a scheduling algorithm for
+allocating traffic based on path characteristics. We use an adaptive dejitter
+buffer at the receiver so that the endpoint can playback media packets from
+paths with diverse characteristics. However, our work is orthogonal to rate
 adaptation--which would just change the total media rate to spread across each
 subflow.
 
@@ -155,38 +162,66 @@ subflow.
         {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap7-graph_variable_bw_13073-2p5-2}}
     }
-    \caption{MPRTP using WLAN and 3G paths}
+    \caption{MPRTP offloading from a constrained path.}
     \label{chap7:fig_sim_var_bw}
 \end{figure}
 
+\textbf{\texttt{Offloading}}: In this scenario, the e2e capacity on one path
+is variable, it demonstrates the sensitivity of the scheduling algorithm to
+the changes in network capacity, which may be caused by \emph{cross-traffic}.
+Path B in Figure~\ref{chap7:fig_sim_var_bw} shows the link with variable e2e
+capacity and the per-instant bandwidth utilization by an MPRTP subflow. Note
+that the scheduling algorithm uses cues on one path to reallocate the media on
+to the other paths (observe the points where the link rate drops). The
+scheduling algorithm also tries to probe the network, so that an equilibrium
+state of fair sharing can be achieved. However, this is done at long
+time-scales (order of seconds) so that the per-path load does not oscillate.
 
-Figure~\ref{chap7:fig_sim_bb_3g} shows the bandwidth utilization of a WLAN and
-3G path and the overall bandwidth distribution between the paths. When the 3G
-path is constrained, the scheduling algorithm offloads the remaining media on
-to the WLAN path, however, it does not quickly reallocate the bandwidth it
-took away from the link to avoid bandwidth oscillations. Moreover, the 3G path
-encounters packet losses more often than on the WLAN path, which makes the
-scheduling algorithm prefer sending more media over the WLAN path.
+\begin{table}[!t]%htbp]
+\centering
+% \resizebox{\textwidth}{!}{%\scalebox{0.75}
+{
+\begin{tabular}{ccccc} \hline
+Path Characteristic & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
+Offloading & 42.93 & 2.23 & 0.772 \\
+Multihoming & 46.7173 & 0.21 & 0.33 \\ \hline
+\end{tabular}
+}
+\caption{Performance of multipath scheduling when offloading (from a
+constrained path) and multihoming (with WLAN and 3G paths)}
+\label{table-bb-3g}
+\end{table}
+
+\textbf{\texttt{Multihoming}}: Figure~\ref{chap7:fig_sim_bb_3g} shows the
+bandwidth utilization of a WLAN and 3G path and the overall bandwidth
+distribution between the paths. The bandwidth is more evenly shared except
+when the 3G path is constrained, the scheduling algorithm offloads the
+remaining media on to the WLAN path, however, it does not quickly reallocate
+the bandwidth it took away from the link to avoid bandwidth oscillations. This
+is a useful feature for the scheduling algorithm because it can then use the
+passive or idle paths for fallback. Moreover, the 3G path encounters packet
+losses more often than on the WLAN path, which makes the scheduling algorithm
+prefer sending more media over the WLAN path.
 
 \begin{figure}
     \centerline{
         {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap7_graph_bb_3g_s17075-2p3-2}}
     }
-    \caption{MPRTP using WLAN and 3G paths}
+    \caption{A multihomed endpoint load-balancing a media flow over WLAN and
+    3G paths.}
     \label{chap7:fig_sim_bb_3g}
 \end{figure}
 
-
-\textbf{Conclusions}: We have explored the criteria for assigning traffic
-shares as a function of the diverse path properties and presented
-considerations for scheduling algorithms. Our evaluation shows that our design
-1) allows exploiting multiple paths without performance degradation compared
-to suitable single-path cases—so that it is safe to deploy—and 2) enables load
-distribution and capacity aggregation in diverse scenarios. Mobile users (and
-operators) may benefit from aggregating or dynamically shifting load between
-different wireless interfaces of their mobile devices and MPRTP may assist
-well in bundling multiple wireless access networks for vehicular Internet
-access.
+% \textbf{Conclusions}: We have explored the criteria for assigning traffic
+% shares as a function of the diverse path properties and presented
+% considerations for scheduling algorithms. Our evaluation shows that our
+% design 1) allows exploiting multiple paths without performance degradation
+% compared to suitable single-path cases—so that it is safe to deploy—and 2)
+% enables load distribution and capacity aggregation in diverse scenarios.
+% Mobile users (and operators) may benefit from aggregating or dynamically
+% shifting load between different wireless interfaces of their mobile devices
+% and MPRTP may assist well in bundling multiple wireless access networks for
+% vehicular Internet access.
 
 \section{Applying MPRTP to Application Layer Multicast}
