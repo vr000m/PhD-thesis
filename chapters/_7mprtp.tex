@@ -201,7 +201,9 @@ the bandwidth it took away from the link to avoid bandwidth oscillations. This
 is a useful feature for the scheduling algorithm because it can then use the
 passive or idle paths for fallback. Moreover, the 3G path encounters packet
 losses more often than on the WLAN path, which makes the scheduling algorithm
-prefer sending more media over the WLAN path.
+prefer sending more media over the WLAN path. Despite using two lossy paths
+the PSNR of the media stream (see Table~\ref{table-bb-3g}) in this scenario is
+close to optimum.
 
 \begin{figure}
     \centerline{
@@ -225,3 +227,25 @@ prefer sending more media over the WLAN path.
 % vehicular Internet access.
 
 \section{Applying MPRTP to Application Layer Multicast}
+
+
+Various conference server architectures can be used to distribute the media in
+a many-to-many communication scenario: centralized, unicast receive with
+multicast send, full mesh, overlays, and trees
+\cite{Li2010a,Noh2008,Singh2001}. When developing a conferencing server, the
+scalability, reliability, quality and delay characteristics, for each of these
+architecture needs to be considered. In group communication, we assume a low
+peer churn i.e., all participants arrive and leave roughly at the same time.
+The use of multiple Application Layer Multicast (ALM) trees for media delivery
+minimizes the end-to-end delay and results in asymmetric relationships between
+participants and introduces complex forwarding. Chu et al. show ALM as a
+viable solution for real-time conferencing over the Internet~\cite{Chu2001}.
+Banerjee et al.\cite{Banerjee2002} present an ALM protocol that has a
+hierarchical control structure with low overhead. Noh et al.~\cite{Noh2008}
+use multiple trees to reduce the end-to-end delay and determine the optimal
+number of ALM trees depending on specific network characteristics. They
+conclude that the fan-out of a peer influences the trade-off between the
+propagation delay and the queuing delay. Li et al.~\cite{Li2010a} describes
+the use of multiple trees as a mechanism to scale to more clients by
+introducing multiple focus-mixer structures where each structure is dedicated
+to serving a set of clients in a region.
