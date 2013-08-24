@@ -226,16 +226,25 @@ close to optimum.
 % and MPRTP may assist well in bundling multiple wireless access networks for
 % vehicular Internet access.
 
-\section{Applying MPRTP to Application Layer Multicast}
+\section{Applying MPRTP to Group Communication}
 
 
-Various conference server architectures can be used to distribute the media in
-a many-to-many communication scenario: centralized, unicast receive with
+Various conference architectures can be used to distribute the media in a
+many-to-many communication scenario: centralized, unicast receive with
 multicast send, full mesh, overlays, and trees
-\cite{Li2010a,Noh2008,Singh2001}. When developing a conferencing server, the
-scalability, reliability, quality and delay characteristics, for each of these
-architecture needs to be considered. In group communication, we assume a low
-peer churn i.e., all participants arrive and leave roughly at the same time.
+\cite{Li2010a,Noh2008,Singh2001}. When developing a conferencing systems for a
+specific use-case, the scalability, reliability, quality and delay
+characteristics, for each of these architecture needs to be considered. In the
+case of of very large video conferences, such as, massive open online course,
+seminars or conferences, we assume a low peer churn i.e., all participants
+arrive and leave roughly at the same time. Also, active participants produce
+the media flows, while the dormant/passive participant consume it. In
+\cite{Globisch:AsymGrpComm}, we propose using multiple Application Layer
+Multicast (ALM) distribution trees to broadcast the media from an active
+speaker to the participants listening in to the conference. The ALM tree
+network minimizes the end-to-end delay and reduces the load on the active
+participants.
+
 The use of multiple Application Layer Multicast (ALM) trees for media delivery
 minimizes the end-to-end delay and results in asymmetric relationships between
 participants and introduces complex forwarding. Chu et al. show ALM as a
@@ -249,3 +258,11 @@ propagation delay and the queuing delay. Li et al.~\cite{Li2010a} describes
 the use of multiple trees as a mechanism to scale to more clients by
 introducing multiple focus-mixer structures where each structure is dedicated
 to serving a set of clients in a region.
+
+In \cite{draft.rtcp.overlay}, instead of using a centralized conferencing
+server to maintain the media sessions and inserting peers or nodes in the
+appropriate location, we propose protocol extensions (e.g., to RTCP) to help
+nodes re-arrange themselves based on their pairwise connectivity, i.e.,
+reconstructing the tree by preferring links with better network
+characteristics.
+
