@@ -329,14 +329,14 @@ address. When using a TURN server (in the presence of symmetric NATs or not to
 reveal the host address of the caller for privacy reasons), the RTP packets
 are encapsulated inside the TURN's \texttt{ChannelData}
 message~\cite{rfc5766}. In the Figure~\ref{fig:3:rtp-stack} four media streams
-(SSRC \#1--4) are transmitted over RTP over UDP, but two streams (SSRC \#1--2)
-are relayed through a TURN server. Secure RTP (SRTP)~\cite{rfc3611} is a
-security framework that provides confidentiality by encrypting RTP payload
-(not the RTP headers) and supports source origin authentication. While SRTP is
-not the only security mechanism for RTP~\cite{draft.srtp-not-must}, it is
-widely applicable, especially to voice telephony and group communication.
-However, the main challenge for SRTP is key management~\cite{draft.sec-opts},
-here too many options exist (e.g., SRTP over DTLS in WebRTC~\cite{rfc5763},
-MIKEY in SIP~\cite{rfc3830}, Security Description in SDP~\cite{rfc4566},
+(SSRC \#1-4) are transmitted by RTP over UDP, but two streams (SSRC \#1-2) are
+relayed through a TURN server. Secure RTP (SRTP)~\cite{rfc3611} is a security
+framework that provides confidentiality by encrypting RTP payload (not the RTP
+headers) and supports source origin authentication. While SRTP is not the only
+security mechanism for RTP~\cite{draft.srtp-not-must}, it is widely
+applicable, especially to voice telephony and group communication. However,
+the main challenge for SRTP is key management~\cite{draft.sec-opts}, here too
+many options exist (e.g., SRTP over DTLS in WebRTC~\cite{rfc5763}, MIKEY in
+SIP~\cite{rfc3830}, Security Description in SDP~\cite{rfc4566},
 ZRTP~\cite{RFC6189}, etc.) and largely depends on the signaling protocol
 chosen for session establishment (e.g., SIP, Jingle, etc.).
