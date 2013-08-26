@@ -82,14 +82,17 @@ network to another.
 \centerline {
 \includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
 }
-\caption{Visualizing the RTP and MPRTP communication stack, SSRC$\#1$ uses
-MPRTP while SSRC$\#2$ and SSRC$\#3$ uses single path RTP.}
+\caption{Visualizing the RTP and MPRTP communication stack, SSRC $\#1$ uses
+MPRTP while SSRC $\#2$ and SSRC $\#3$ uses single path RTP.}
 \label{chap7:fig_mprtp_arch}
 \end{figure}
 
 Figure~\ref{chap7:fig_mprtp_arch} compares the network stack of a single path
-and a multipath-capable endpoints. SSRCs\#2 and SSRC\#3 use a single path,
-while SSRC\#1 uses multiple paths (with two subflows for the two paths).
+and a multipath-capable endpoints. SSRC \#2 and SSRC \#3 use a single path,
+while SSRC \#1 uses multiple paths (with two subflows for the two interfaces).
+Subflow \#1 and \#2 are expected flow over IP address \#1 and \#2,
+respectively. To discover its multiple interfaces, the multimedia application
+either uses the ICE procedures (hence, STUN) or polls the kernel repeatedly.
 
 The design goals for MPRTP from our perspective are: MPRTP-enabled system to
 be able to make use of multiple paths and adapt to their relative capacity
@@ -142,8 +145,11 @@ path, but indicating it supports MPRTP and containing multiple \emph{ICE
 candidates}. Later, when the connectivity checks for more than one path are
 successful, each endpoint advertises its MPRTP interfaces.
 Figure~\ref{chap7:fig_mprtp_arch} show the interworking of the MPRTP stack
-with an ICE Agent implementing STUN connectivity checks. In \citepub{c:mprtp}
-we show that advertising the multipath interfaces \emph{in-band} leads to a quicker call establishment than when advertising \emph{out-of-band}.
+with an ICE Agent implementing STUN connectivity checks. Irrespective of the
+presence of a NAT, in \citepub{c:mprtp} we show that advertising the multiple
+interfaces \emph{in-band} leads to a establishing the call (with MPRTP
+capablities) more quickly than when advertising the same interfaces
+\emph{out-of-band}.
 
 
 \section{Offloading and Multihoming}
