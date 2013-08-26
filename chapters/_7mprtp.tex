@@ -102,6 +102,53 @@ Furthermore, the choice of suitable transmission paths should reflect the
 demands of the application. From a protocol perspective, RTP must be extended
 to perform these functions, yet maintain backwards compatibility. 
 
+\begin{table}
+  \begin{center}
+	\begin{tabular}{cccc} \hline
+	 & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
+	\multirow {2}{*}{} 
+	1-Path (no loss) & 48.427 & 0.00 & 0.00 \\ 
+	2-Path (no loss) & 48.427 & 0.00 & 0.00 \\
+	3-Path (no loss) & 48.427 & 0.00 & 0.00 \\ \hline
+	\multicolumn{4}{c}{Variable losses per path} \\ \hline	
+	\multirow {2}{*}{} 
+	1-Path (0.5\% loss) & 40.887 & 0.506 & 0.49 \\
+	1-Path (1\% loss) & 36.172 & 0.705 & 1.01 \\ %\hline
+	2-Path (0-0.5\%) & 43.4 & 1.9 & 0.24 \\
+	3-Path (0-1.0\%) & 40.5 & 0.49 & 0.48\\ \hline	
+	\multicolumn{4}{c}{Variable RTT per path} \\ \hline
+	2-Path & 48.303 & 0.278 & 0.004 \\ \hline
+	3-Path & 48.164 & 0.32 & 0.0121\\ \hline
+\end{tabular}
+\caption{Comparing performance of using a single path with using multiple paths}
+\label{table-var-path}
+\end{center}
+\end{table}
+
+In \citepub{c:mprtp}, we show that by using the performance of an MPRTP
+endpoint does not deteriorate when comparing to the performance of a flow
+using just a single interface. In our experiment in the testbed, we use the
+results from a single-path media flow as the benchmark to compare the
+performance of MPRTP. Table~\ref{table-var-path} shows that the performance of
+endpoints implementing MPRTP compared to single path is not adversely
+affected. When none of the paths exhibit any losses, the performance of MPRTP
+was exactly the same, except that MPRTP induces an overhead because it uses
+additional extension for identifying, monitoring and reporting subflows. In
+our experiments in \citepub{c:mprtp} the RTP overhead for a 1 Mbps media flow
+is an additional 1.275 kbps and the Multipath RTCP (MPRTCP) accounted for
+$\approx$70\% of the total RTCP bandwdith ($\approx$0.25 kbps). When we
+introduce losses, the PSNR drops for the single path, however, for the
+multipath case the PSNR is significantly higher because the paths do not
+necessarily exhibit losses at the same instance in time, hence, the MPRTP
+scheduling algorithm is able to redistribute the capacity and preferring the
+path with lower loss rate. Additionally, when the paths have dissimilar RTTs
+(up to 150ms of skew across paths), yet again the receiver is able to playout
+packets across all paths and performs (compare PSNR) at par with the single
+path. The scheduling algorithm and the adaptive dejitter buffer to playout
+packets across different path skews is discussed in detail in
+\citepub{c:mprtp}.
+
+
 \section{Call Establishment and NAT Traversal}
 
 When endpoints want to use multiple paths or offload traffic onto another path
