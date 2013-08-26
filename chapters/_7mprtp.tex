@@ -46,7 +46,7 @@ today feature multiple network interfaces (e.g., WLAN and 3G on mobile
 devices), this may yield the possibility for two endpoints to communicate via
 multiple paths. While exploiting multipath characteristics
 \cite{Wischik:2008:RPP} has been explored for TCP (e.g.,
-MPTCP)~\cite{rfc6824}, the requirements for real-time traffic differs notably
+MPTCP~\cite{rfc6824}), the requirements for real-time traffic differs notably
 and TCP can only serve real-time communication within tight constraints of
 network characteristics~\cite{Brosh:tcp-real-time}. In the multipath case, the
 scheduling algorithms do not consider real-time bounds when spreading data
@@ -121,7 +121,36 @@ changes by redistributing the load. As different paths will likely exhibit
 different RTTs, mechanisms must be developed to overcome the resulting skew.
 Furthermore, the choice of suitable transmission paths should reflect the
 demands of the application. From a protocol perspective, RTP must be extended
-to perform these functions, yet maintain backwards compatibility. 
+to perform these functions, yet maintain backwards compatibility.
+
+
+Specifically for multimedia, Liang \emph{et al.}~\cite{Liang01} show that
+transmitting redundant voice traffic over multiple paths perform better than a
+FEC protected single stream. While Chesterfield \emph{et al.}~\cite{1498479}
+show that by sending media over one 3G interface and Unequal Protection (UEP)
+packets over a separate 3G interface can compensate for losses on the first
+path. Chebrolu \emph{et al.}~\cite{1599407} propose bandwidth aggregation for
+multimedia applications by computing the earliest delivery time for each
+packet. They further propose to drop less important frames (e.g., B-frames) if
+the available capacity is smaller than the current encoding
+rate~\cite{1313320}. Jurca \emph{et al.}~\cite{4130370:jurca} propose a
+frame-aware scheduling algorithm that sends key-frames and other important
+media packets over less lossy paths and this approach is similar to the one
+proposed in this paper. However, they also propose sending future packets over
+high latency paths by reading ahead in the media stream. While this is an
+interesting concept, it would require larger buffers and more state at the
+sender (typically, RTSP servers) to read ahead the stored media stream and
+this would not work for interactive multimedia and live video streams where it
+cannot read ahead. Our proposed scheduling algorithm in \citepub{c:mprtp}
+calculates the per path rate based on the the following: a) characterize the
+path based on the observed network behavior, b) choosing performant paths from
+the available paths for active transmission, c) follows packet scheduling
+rules that can be described by the multimedia application. We do not use
+B-frames and do not discard any packets at the sender. Furthermore, we try to
+maintain optimal playout by choosing paths that meet the latency constraints
+and try to maintain a very short de-jitter buffer ($<500ms$), so that the
+scheduling algorithm can be extended to include interactive applications.
+
 
 \begin{table}
   \begin{center}
