@@ -11,9 +11,9 @@ Acknowledgement (NACK) or Packet Loss Indication (PLI), Forward Error
 Correction (FEC) or Unequal Level of Protection (ULP), slice size adaption
 (SSA), and Reference Pictures Selection Indication (RPSI). We evaluate the
 performance of the proposed mechanisms in diverse scenarios in a simulated
-environment using real-world 3G loss patterns. Lastly, based on our
-observations, we define the applicability of the various error-resilience with
-respect to end-to-end delay and packet loss.
+environment (in ns-2) using real-world 3G loss patterns~\cite{3gppSim}.
+Lastly, based on our observations, we define the applicability of the various
+error-resilience with respect to end-to-end delay and packet loss.
 
 In \citepub{c:fecrc}, we propose using FEC not only for error-resilience but
 also for congestion control. Instead of probing for available capacity by
@@ -25,8 +25,8 @@ there is additional available capacity, but also has a sense of the magnitude
 (at minimum) of the available capacity. We compare our proposal with our
 previous work in \citepub{c:3grc} and \citepub{c:hetrc}, and Google's
 congestion control~\cite{draft.rrtcc}. We evaluate the performance of the
-mechanisms in diverse scenarios implemented in a simulation environment and in
-our testbed.
+mechanisms in diverse scenarios implemented in a simulation environment (in
+ns-2) and in our testbed.
 
 \section{Error-resilience Schemes}
 % explain all 4 and the adaptivity
