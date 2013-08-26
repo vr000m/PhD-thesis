@@ -42,7 +42,7 @@ proposals.
 Congestion control algorithms rely on cues to detect congestion, these cues
 are detected either by the sender, receiver, or by an intermediary router. The
 endpoint adapts the sending rate upon receiving the congestion cues. Some
-common congestion cues are listed below:
+common (not all) congestion cues are listed below:
 
 \begin{itemize}
 \setlength{\itemsep}{5pt}
@@ -258,13 +258,13 @@ real-time communication systems are able to tolerate some amount of packet
 loss and adapt the media rate over a fairly large range.
 \cite{draft.rmcat.req} lists a set of requirements for RTP-based interactive
 multimedia sessions, these requirements form the basis of the guidelines
-described in~\cite{draft.rmcat.evaluate}.  We define a catalogue of
-\emph{traffic flows} traversing through a \emph{network topology} with varying
-\emph{link characteristics} and diverse \emph{queuing} strategies. By picking
-one feature from each category in the category, we construct scenarios to
-evaluate the performance of the congestion control. The evaluation scenarios
-are built using the following components: network topology, link and router
-characteristics.
+described in~\cite{draft.rmcat.evaluate}. In~\cite{draft.rmcat.evaluate}, we
+define a catalogue of \emph{traffic flows} traversing through a \emph{network
+topology} with varying \emph{link characteristics} and diverse \emph{queuing}
+strategies. By picking one feature from each category in the category, we
+construct scenarios to evaluate the performance of the congestion control. The
+evaluation scenarios are built using the following components: network
+topology, link and router characteristics.
 
 The difference between testing in real-world deployments and in simulations is
 also important to consider. It mainly affects the accuracy of RTT
@@ -505,7 +505,9 @@ traces with bursty loss, $863$ traces with non-bursty loss.
       {chap4_graph_cb_bursty}
     }
   }
-  \caption{Sample bursty and non-bursty packet loss traces.}
+  \caption{Sample non-bursty and bursty packet loss traces. The bursty packet
+  triggers the circuit breaker even though the overall packet loss ratio is
+  0.6\%.}
   \label{fig:bursty}
 \end{figure}
 
