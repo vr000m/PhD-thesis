@@ -11,7 +11,28 @@ multipath protocol for multimedia, protocol details, scheduling algorithm to
 send media packets over multiple paths, a dejitter buffer implementation to
 playout packets smoothly even when the path skew is high. We evaluate the
 performance of the proposed mechanisms in diverse scenarios in our testbed.
-Lastly, we discuss the system consideration for deployment.
+Lastly, we discuss the system consideration for deployment. 
+
+In \cite{draft.mprtp}, we describe the requirements, functional blocks and
+protocol formats to extend RTP for enabling multipath capabilities. However,
+this document does not define a scheduling algorithm and allows for multiple
+proposals. In \cite{draft.mprtp.sdp}, we describe SDP and RTSP extensions
+required to setup MPRTP sessions and also ICE extensions to advertise MPRTP
+interfaces and perform NAT traversal.
+
+In \cite{Globisch:AsymGrpComm}, we propose using a network topology with
+multiple distribution trees to distribute video streams in a very large call
+video conference with few active speakers and many passive participants
+listening in. The multiple distribution trees carry separate MPRTP subflows
+and participants are members of multiple distribution trees, but actively
+forward media flows in one of the distribution trees. Therefore, a node is an
+overlay node in a few (e.g., one) distribution trees and a leaf node in the
+rest. In the paper, we use a centralized focus to manage the joining, leaving
+and inserting the participant in the appropriate position in the distribution
+tree. \cite{draft.rtcp.overlay} is a work in progress and proposes protocol
+extensions to perform tree constructions in a distribution tree without the
+need of a centralized conferencing focus.
+
 
 \section{Multipath RTP (MPRTP)}
 
