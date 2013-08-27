@@ -156,7 +156,7 @@ discarded packets~\cite{draft.xr.discard} and
 bytes~\cite{draft.xr.bytes.discarded}, summary
 statistics~\cite{draft.xr.stat}, Quality of Experience
 (QoE)~\cite{draft.xr.qoe}, and loss concealment~\cite{draft.xr.conceal}, etc.
-RTP allows for new metrics to be defined, the only requirement is to document
+RTP allows for new metrics to be defined, the main requirement is to document
 what is measured, how it is measured and reported to the other endpoints.
 
 
@@ -238,8 +238,9 @@ Jingle~\cite{XEP-0166} an extension to Extensible Messaging and Presence
 Protocol (XMPP)~\cite{rfc6120}. 
 
 SIP uses Session Description Protocol (SDP)~\cite{rfc4566} to describe the
-endpoint's transport and media capabilities. An SDP description defines only
-one multimedia session, i.e., an association between a set of participants.
+endpoint's transport and media capabilities. An SDP description defines a
+single multimedia session, i.e., an association between a set of participants.
+It may however, carry multiple media stream in the session.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\columnwidth]{chap3-sig-med}}

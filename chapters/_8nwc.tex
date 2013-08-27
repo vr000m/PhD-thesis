@@ -72,7 +72,7 @@ uplink capacity and the receiver is notified about the downlink capacity. If
 an endpoint sends and receives data, it is notified asynchronously about the
 uplink and downlink capacity. Figure~\ref{fig:cc:tmmbrab} shows a schematic
 representation about the interaction between the middleboxes and the
-endpoints. In TMMBR-B, only the receiving endpoint is notified about the
+endpoints. In TMMBR-B, the receiving endpoint is solely notified about the
 downlink capacity. Both TMMBR-A and TMMBR-B employ a co-operative congestion
 control scheme, wherein the receiver sends a TMMBR request to the sender
 containing the current downlink capacity. In TMMBR-A the sender also receives
@@ -97,8 +97,8 @@ both endpoints are sending media over a 3G network.
     }
   }
   \caption{Performance of bandwidth indications by the base stations a)
-  TMMBR-A: both terminals are assisted, b) TMMBR-B: only receiver is
-  assisted.}
+  TMMBR-A: both terminals are assisted, b) TMMBR-B: the receiver is
+  only assisted.}
   \label{fig:tmmbn}
 \end{figure}
 
@@ -131,8 +131,8 @@ coverage map server are discussed in~\cite{sharmistha-thesis}. Additionally,
 route in steps of 100 meters, which we find limiting. Instead we propose
 multiple methods for discovering areas with poor connectivity and show that
 not only looking up future bandwidth but also when to vary the sending rate
-(\emph{prefetch}) affects the usefulness of the service. A preliminary
-analysis using simulations of our system is done in~\cite{Curcio:glass}.
+affects the usefulness of the service. A preliminary analysis using
+simulations of our system is done in~\cite{Curcio:glass}.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-fig-ecv}
@@ -253,10 +253,10 @@ to reduce and increase the sending rate preemptively without probing.
 We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality. This system can be easily adapted for interactive media
-communication, wherein the sender employs a co-operative congestion control
-scheme, i.e., the sender receives the \emph{estimated capacity vector} from
-the receiver and \emph{coverage map information} for itself from the NCMS, it
-then picks the minimum of the two rates and any additional rate recommended by
-the congestion control (one of the algorithms discussed in
-Chapter~\ref{chap:cc}) it implements.
+quality. This system can be adapted for interactive media communication,
+wherein the sender employs a co-operative congestion control scheme, i.e., the
+sender receives the \emph{estimated capacity vector} from the receiver and
+\emph{coverage map information} for itself from the NCMS, it then picks the
+minimum of the two rates and any additional rate recommended by the congestion
+control (one of the algorithms discussed in Chapter~\ref{chap:cc}) it
+implements.

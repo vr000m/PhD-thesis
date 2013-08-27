@@ -19,13 +19,13 @@ Buffer-bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router may
 cause long delays and bursty losses. Video streaming overcomes most of these
 challenges by having larger playout buffers, but some over-the-top streaming
 applications now use TCP instead of UDP for delivering media data.
-Unfortunately, TCP is only suitable for interactive multimedia for paths with
-very low end-to-end delay ($<100$ms)~\cite{Brosh:tcp-real-time}. Furthermore,
-in video streaming, if the path characteristics change, the client can switch
-between files with the same media content pre-encoded at different quality
-levels. However, this strategy is not applicable to interactive multimedia,
-where the sending endpoint needs to immediately adapt the media encoding rate
-to the available path capacity.
+Unfortunately, TCP is at best suitable for interactive multimedia for paths
+with very low end-to-end delay ($<100$ms)~\cite{Brosh:tcp-real-time}.
+Furthermore, in video streaming, if the path characteristics change, the
+client can switch between files with the same media content pre-encoded at
+different quality levels. However, this strategy is not applicable to
+interactive multimedia, where the sending endpoint needs to immediately adapt
+the media encoding rate to the available path capacity.
 
 % While video communication has existed for the last decade (via Skype, etc.),
 % there is no standardized congestion-control, but many have been proposed in
