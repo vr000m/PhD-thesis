@@ -183,9 +183,11 @@ later than the expected time, it is considered late and the receiver estimates
 overuse. If the frame is delayed and misses its playout time, it is discarded
 and in this case the receiver estimates congestion. Based on the above cases,
 the receiver estimates the current capacity and signals it to the sender. At
-the sender, the application calculates the TCP-friendly rate, and measures the
-variation in RTT (75 and 90 percentile values) and if fraction of frames that
-missed their playout deadline.
+the sender, the C-NADU controller, calculates the TCP-friendly rate, measures
+the variation in RTT ($75$ and $90$ percentile values), calculates the
+fraction of video frames that missed their playout deadline. Based on these
+congestion cues and the receiver estimate, the sender chooses a new sending
+rate.
 
 
 Receiver-side Real-Time Congestion Control (RRTCC) is described in
@@ -204,84 +206,68 @@ Internet-Draft~\cite{draft.rrtcc}.
 
 
 
-\section{Analyzing the Three Schemes}
-
-Our results in \citepub{c:3grc} shows that TFRC underutilizes the link
-(average bandwidth utilization (ABU) is between 30-40\%) and has higher
-fractional loss (\~6\%) which results in lower PSNR. One disadvantage of TFRC
-is that it produces a sawtooth sending rate \cite{saurin:2006:thesis},
-\citepub{c:3grc}. Figure~\ref{fig:tfrc} shows the performance of TFRC on a
-slow time-varying link and a 3G link.
-
-\begin{figure}
+\begin{figure}[!t]
   \centerline{
-    \subfloat{
+    \subfloat[TFRC]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_tfrc}
     }
-    \subfloat{
+    \subfloat[TFRC]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_tfrc_1}
     }
   }
-  \caption{Performance of TFRC in a slow time-varying link and 3G network.}
-  \label{fig:tfrc}
-\end{figure}
-
-Our results in \citepub{c:3grc} shows that TMMBR-based congestion control
-utilizes the link better than TFRC (ABU between 50-70\%) and much lower
-fractional loss ($\le$2\%). Figure~\ref{fig:tmmbr} shows the performance of
-TMMBR on a slow time-varying link and a 3G link.
-
-\begin{figure}
   \centerline{
-    \subfloat{
+    \subfloat[TMMBR]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_tmmbr}
     }
-    \subfloat{
+    \subfloat[TMMBR]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_tmmbr_u}
     }
   }
-  \caption{Performance of TMMBR in a slow time-varying link and 3G network.}
-  \label{fig:tmmbr}
-\end{figure}
-
-
-In \citepub{c:3grc}, we show that C-NADU has
-higher bandwidth utilization compared to TMMBR and TFRC.
-Figure~\ref{fig:cnadu} shows the performance of C-NADU on a slow time-varying
-link and a 3G link. Additionally, in \citepub{c:hetrc}, we show that C-NADU is
-self-fair with other C-NADU flows in both wired and wireless
-environments~\cite{singh:2010.thesis} and in \citepub{c:fecrc} we show that it
-competes fairly with TCP cross-traffic, both long and short (bursty) TCP
-flows.
-
-\begin{figure}
   \centerline{
-    \subfloat{
+    \subfloat[C-NADU]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_sl_cnadu}
     }
-    \subfloat{
+    \subfloat[C-NADU]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
       {chap5_graph_3g_cnadu}
     }
   }
-  \caption{Performance of C-NADU in a slow time-varying link and 3G network.}
-  \label{fig:cnadu}
+  \caption{Performance of TFRC, TMMBR and C-NADU in a slow time-varying (a, c, e) link and 3G network (b, d, f).}
+  \label{fig:3g}
 \end{figure}
 
+\section{Analyzing the Three Schemes}
+
+Our results in \citepub{c:3grc} shows that TFRC underutilizes the link and
+produces a sawtooth sending rate, similar to the performance
+in~\cite{saurin:2006:thesis}. We also observe the average bandwidth
+utilization (ABU) when the media stream is the only flow on the end-to-end
+path is between 30-40\% and has a loss ratio (\~6\%) which results in lower
+PSNR. Compared to TMMBR-based congestion control utilizes the link better than
+TFRC (ABU between 50-70\%) and much lower fractional loss ($\le$2\%). In
+\citepub{c:3grc}, we show that C-NADU has higher bandwidth utilization
+compared to TMMBR and TFRC. Figure~\ref{fig:tfrc} shows the performance of
+TFRC, TMMBR and C-NADU on a slow time-varying link and a 3G link. .
+Additionally, in \citepub{c:hetrc}, we show that C-NADU is self-fair with
+other C-NADU flows in both wired and wireless
+environments~\cite{singh:2010.thesis} and in \citepub{c:fecrc} we show that it
+competes fairly with TCP cross-traffic, both long and short (bursty) TCP
+flows.
 
 
-In \citepub{c:eval}, we evaluate the
-performance of RRTCC in several scenarios: by itself on a bottleneck link,
-competing with other RRTCC flows and competing with TCP cross-traffic.
-Figure~\ref{fig:rrtcc} shows an example plot of the performance of RRTCC when
-increasing latency and fractional loss. For example, in
-Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link latency reduces
-the sending rate of RRTCC.
+
+
+In \citepub{c:eval}, we evaluate the performance of RRTCC in several
+scenarios: by itself on a bottleneck link, competing with other RRTCC flows
+and competing with TCP cross-traffic. Figure~\ref{fig:rrtcc} shows an example
+plot of the performance of RRTCC when increasing latency and fractional loss.
+For example, in Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link
+latency reduces the sending rate of RRTCC.
 
 \begin{figure}
   \centerline{
