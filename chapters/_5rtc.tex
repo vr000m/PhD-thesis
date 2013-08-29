@@ -205,8 +205,8 @@ and expected to decrease when the congestion abates. Based on this
 expectation, the receiver calculates the capacity estimate and signals it to
 the sender. The sender calculates its estimate based on TFRC and finally,
 chooses the new sending rate as a value between the TFRC rate calculated by
-the sender and receiver estimate. Full details can be found in the
-Internet-Draft~\cite{draft.rrtcc}.
+the sender and receiver estimate. Full details of the algorithm proposed by
+Google are documented in an Internet-Draft~\cite{draft.rrtcc}.
 
 
 
@@ -312,11 +312,9 @@ the quality).
 }
 %\hfill
 }
-\caption{C-NADU: Goodput of five calls competing for bandwidth on a shared
-bottleneck in a heterogeneous network. At some instances of time the 3G link
-is the constraint and at other times the bottleneck link. Each calls needs to
-quickly adapt to changes in 3G link capacity and fairly share the bottleneck
-link.}
+\caption{C-NADU: Goodput of five calls competing for capacity on a shared
+bottleneck in a heterogeneous network. Each calls needs to quickly adapt to
+changes in 3G link capacity and fairly share the bottleneck link.}
 \label{fig:hetrc}
 \end{figure}
 
@@ -346,6 +344,10 @@ and competing with TCP cross-traffic. Figure~\ref{fig:rrtcc-single} shows an
 example plot of the performance of RRTCC when increasing latency and
 fractional loss. For example, in Figure~\ref{fig:rrtcc-single}(a) by
 increasing the bottleneck link latency reduces the sending rate of RRTCC.
+Similarly, Figure~\ref{fig:rrtcc-single}(a) shows that increasing the loss
+rate also affects the sending rate. However, we observe that even though the
+link has high loss rate, the residual loss rate is low (even when the loss is
+20\%), mainly due to the use of NACKs, PLI and FEC.
 
 \begin{figure}
   \centerline{
@@ -385,24 +387,24 @@ increasing the bottleneck link latency reduces the sending rate of RRTCC.
 \end{table}
 
 
-Next, we emulate three calls share the bottleneck, in this case the individual
-media rates do not reach their individual maximum rate of 2Mbps.
+Next, we emulate three calls sharing a common bottleneck, in this case the
+individual media rates do not reach their individual maximum rate of 2Mbps.
 Figure~\ref{fig:rrtcc-self-fair}(a) shows three calls ramp-up at about the
-same rate, reach a peak and drop their rate together. Even though the flows
-start from different endpoints using independent WebRTC stacks, the sending
-rates synchronize.
+same rate, reach a peak and drop their rate simultaneously. The sending rates
+synchronize, even though the flows originate from different endpoints using
+independent WebRTC stacks.
 
-Lastly, three calls share the bottleneck link, but each call starts at 30s
+Lastly, instead of the three calls starting together, each call starts at 30s
 intervals. We observe that while the media rate per call on average is higher,
-almost 3 times higher compared to the first scenario, the first call has a
-disadvantage and in all the cases, temporarily starves when the new flows
-appear and after a few minutes starts to ramp-up.
+the first call has a disadvantage and in all the cases, temporarily starves
+when a new flow appears and after a few minutes starts to ramp-up again.
 Figure~\ref{fig:rrtcc-self-fair}(b) shows the instantaneous rates of each of
-the calls. The first call temporarily starves because when it starts it is the
-only flow on the bottleneck and does not encounter any queues. When the second
-flow appears, it already observes queues from the existing stream and competes
-with it, while the initial flow observes an increase in queues and reduces the
-sending rate to avoid congestion.
+the calls. The first call temporarily starves when new flows appear because
+when it starts it is the only flow on the bottleneck and does not encounter
+any queues, it observes a certain RTT and uses that as the baseline. When the
+second flow appears, the second flow already observes queues from the existing
+stream and competes with it, while the initial flow observes an increase in
+queues and reduces the sending rate to avoid congestion.
 
 \begin{figure}
 \centerline{
