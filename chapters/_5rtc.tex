@@ -242,7 +242,7 @@ Internet-Draft~\cite{draft.rrtcc}.
   \label{fig:3grc}
 \end{figure}
 
-\section{Analyzing the Three Schemes}
+\section{Performance Analysis of TFRC, TMMBR, C-NADU, RRTCC}
 
 Our results in \citepub{c:3grc} shows that TFRC produces a sawtooth sending
 rate, similar to the performance in~\cite{saurin:2006:thesis}. When the media
@@ -259,7 +259,7 @@ of TFRC, TMMBR and C-NADU on a slow time-varying link and a 3G link.
 \centering{
 \begin{tabular}{cccc}
 \hline
- & Avg. goodput & DLR & Avg. PSNR\\
+ & Avg. goodput & PLR & Avg. PSNR\\
  & (kbps)  &(\%) & (dB)\\
 \hline
 TFRC & 84.1 & 6.9\%& 29.3 \\ %
@@ -280,26 +280,6 @@ In \citepub{c:hetrc}, we show that C-NADU is self-fair with other C-NADU flows
 in both wired and wireless environments~\cite{singh:2010.thesis} and in
 \citepub{c:fecrc} we show that it competes fairly with TCP cross-traffic, both
 long and short (bursty) TCP flows.
-
-\begin{table}
-\centering{
-\begin{tabular}{ccccc}
-\hline
- & $Goodput_{avg}$ & Loss Rate & $PSNR_{avg}$ & ABU \\
-& (kbps) & (\%) & (dB) & (\%) \\ 
-\hline
-Call 1 & 140.10 & 2.15\% & 31.4 ($\sigma=0.39$) & 70.1\% \\ 
-Call 2 & 133.55 & 1.61\% & 31.9 ($\sigma=0.62$)& 66.8\% \\ 
-Call 3 & 35.18 & 1.55\% & 22.2 ($\sigma=1.13$)& 17.59\% \\ 
-Call 4 & 114.96 & 2.75\% & 31.1 ($\sigma=0.75$)& 57.5\% \\ 
-Call 5 & 130.23 & 2.25\% & 31.3 ($\sigma=0.13$)& 65.1\% \\ 
-\hline
-\end{tabular}
-}
-\caption{C-NADU: Five calls in a heterogeneous network with end-to-end latency
-between \emph{60-120ms} and 0.5\% link-layer losses.}
-\label{table:hetrc}
-\end{table}
 
 \begin{figure}
 \centerline{
@@ -325,33 +305,118 @@ bottleneck in a heterogeneous network. At some instances of time the 3G link
 is the constraint and at other times the bottleneck link. Each calls needs to
 quickly adapt to changes in 3G link capacity and fairly share the bottleneck
 link.}
-\label{fig_sim-mixed-1}
+\label{fig:hetrc}
 \end{figure}
 
-
+\begin{table}
+\centering{
+\begin{tabular}{ccccc}
+\hline
+ & $Goodput_{avg}$ & PLR & $PSNR_{avg}$ & ABU \\
+& (kbps) & (\%) & (dB) & (\%) \\ 
+\hline
+Call 1 & 140.10 & 2.15\% & 31.4 ($\sigma=0.39$) & 70.1\% \\ 
+Call 2 & 133.55 & 1.61\% & 31.9 ($\sigma=0.62$)& 66.8\% \\ 
+Call 3 & 35.18 & 1.55\% & 22.2 ($\sigma=1.13$)& 17.59\% \\ 
+Call 4 & 114.96 & 2.75\% & 31.1 ($\sigma=0.75$)& 57.5\% \\ 
+Call 5 & 130.23 & 2.25\% & 31.3 ($\sigma=0.13$)& 65.1\% \\ 
+\hline
+\end{tabular}
+}
+\caption{C-NADU: Five calls in a heterogeneous network with end-to-end latency
+between \emph{60-120ms} and 0.5\% link-layer losses.}
+\label{table:hetrc}
+\end{table}
 
 In \citepub{c:eval}, we evaluate the performance of RRTCC in several
 scenarios: by itself on a bottleneck link, competing with other RRTCC flows
-and competing with TCP cross-traffic. Figure~\ref{fig:rrtcc} shows an example
-plot of the performance of RRTCC when increasing latency and fractional loss.
-For example, in Figure~\ref{fig:rrtcc}(a) by increasing the bottleneck link
-latency reduces the sending rate of RRTCC.
+and competing with TCP cross-traffic. Figure~\ref{fig:rrtcc-single} shows an
+example plot of the performance of RRTCC when increasing latency and
+fractional loss. For example, in Figure~\ref{fig:rrtcc-single}(a) by
+increasing the bottleneck link latency reduces the sending rate of RRTCC.
 
 \begin{figure}
   \centerline{
     \subfloat{
-      \includegraphics[width=0.7\textwidth]
+      \includegraphics[width=0.8\textwidth]
       {chap5-graph-rrtcc-latency}
     }
    }
    \centerline{
     \subfloat{
-      \includegraphics[width=0.7\textwidth]
+      \includegraphics[width=0.8\textwidth]
       {chap5-graph-rrtcc-plr}
     }
   }
   \caption{Performance of RRTCC on a link with varying delay and fractional
   loss rate. We observe that by the sending rate decreases when increasing
   link latency or bit-error loss. }
-  \label{fig:rrtcc}
+  \label{fig:rrtcc-single}
 \end{figure}
+
+\begin{table}
+\begin{center}{
+\begin{tabular}{ ccccc }
+\hline
+ & Goodput & Residual  & PLR\\
+ & (Kbps)  & Loss (\%) & (\%)\\
+\hline
+ 0\% & 1949.7$\pm233.62$ & 0.011 & 0.011 \\ 
+ 5\% & 1568.74$\pm178.52$ & 0.23 & 9.77 \\ 
+ 10\% & 1140.82$\pm161.92$ & 0.49 & 19.02 \\ 
+ 20\% & 314.4$\pm61.98$ & 2.43 & 36.01 \\ \hline
+\end{tabular}
+}
+\end{center}
+\caption{RRTCC: Metrics for a bottleneck with different packet loss rates.}
+\label{tab:rrtcc-loss}
+\end{table}
+
+
+Next, we emulate three calls share the bottleneck, in this case the individual
+media rates do not reach their individual maximum rate of 2Mbps.
+Figure~\ref{fig:rrtcc-self-fair}(a) shows three calls ramp-up at about the
+same rate, reach a peak and drop their rate together. Even though the flows
+start from different endpoints using independent WebRTC stacks, the sending
+rates synchronize.
+
+Lastly, three calls share the bottleneck link, but each call starts at 30s
+intervals. We observe that while the media rate per call on average is higher,
+almost 3 times higher compared to the first scenario, the first call has a
+disadvantage and in all the cases, temporarily starves when the new flows
+appear and after a few minutes starts to ramp-up.
+Figure~\ref{fig:rrtcc-self-fair}(b) shows the instantaneous rates of each of
+the calls. The first call temporarily starves because when it starts it is the
+only flow on the bottleneck and does not encounter any queues. When the second
+flow appears, it already observes queues from the existing stream and competes
+with it, while the initial flow observes an increase in queues and reduces the
+sending rate to avoid congestion.
+
+\begin{figure}
+\centerline{
+  \subfloat[Start together]
+    {\includegraphics[width=0.8\textwidth]{chap5_sync_three-calls}}
+  }
+  \centerline{
+  \subfloat[Start 30s apart]
+    {\includegraphics[width=0.8\textwidth]{chap5_async3_three-calls}}
+  }
+   \caption{RRTCC: Variation in receiver rate for 3 parallel calls a) starting
+   together, b) starting 30s apart. The total duration of the call is 5 mins
+   (300s).}
+\label{fig:rrtcc-self-fair}
+\end{figure}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ccccc}
+\hline
+& Rate  & RTT & Residual & PLR\\
+& (Kbps)& (ms) & Loss (\%) & (\%)\\ \hline
+ 3 calls &  809.07$\pm202.38$ &   31.48$\pm24.93$ & 0.21 & 0.23 \\  
+ 3 calls (time shifted) &  1154.32$\pm250.54$ &   35.15$\pm27.88$ & 0.08 & 0.91 \\ \hline
+\end{tabular}
+\end{center}
+    \caption{RRTCC competing with similar cross-traffic on the bottleneck link.}
+    \label{tab:self-fair}
+\end{table}
