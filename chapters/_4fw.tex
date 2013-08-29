@@ -216,19 +216,19 @@ the cues out-of-band, i.e., re-use the signaling path (e.g., SIP, XMPP) or
 setup an alternate signaling path (e.g., HTTP or websockets). Following are
 the examples for each category in the classification:
 
-\textbf{\texttt{a) In-path, In-band}}: TFRC using information in RTCP RR, TFRC
+\textbf{\texttt{A) In-path, In-band}}: TFRC using information in RTCP RR, TFRC
 using additional loss reported by ECN markings, Temporary Maximum Media Stream
 Bit Rate Request (TMMBR), Receiver Estimated Max Bit rate (REMB).
 
-\textbf{\texttt{b) In-path, Out-of-band}}: RTSP implements a SPEED parameter
+\textbf{\texttt{B) In-path, Out-of-band}}: RTSP implements a SPEED parameter
 to vary the transmission rate, or announcing bandwidth in the SDP at the start
 of the session (instead of starting at a low media bit rate) for rudimentary
 congestion control.
 
-\textbf{\texttt{c) Out-of-path, In-band}}: Multipath RTP (congestion on one
+\textbf{\texttt{C) Out-of-path, In-band}}: Multipath RTP (congestion on one
 path causes a change in the fractional distribution of traffic on each path.)
 
-\textbf{\texttt{d) Out-of-path, Out-of-band}}: bandwidth/congestion
+\textbf{\texttt{D) Out-of-path, Out-of-band}}: bandwidth/congestion
 notifications from congestion maps, bandwidth lookup service, super-peers and
 overlays.
 
