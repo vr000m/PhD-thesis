@@ -284,7 +284,14 @@ simulations using 3G traces).}
 In \citepub{c:hetrc}, we show that C-NADU is self-fair with other C-NADU flows
 in both wired and wireless environments~\cite{singh:2010.thesis} and in
 \citepub{c:fecrc} we show that it competes fairly with TCP cross-traffic, both
-long and short (bursty) TCP flows.
+long and short (bursty) TCP flows. Figure~\ref{fig:hetrc} show 5 video calls,
+each sender uses an independent 3G link into a common bottleneck to the
+receivers. The 3G links are based on radio link traces and have different
+capacities. Hence, at some instances of time the 3G link is the constraint and
+at other times the shared bottleneck link. Table~\ref{table:hetrc} shows that
+4 calls have comparable performance (see PSNR and goodput) and 1 call suffers
+due to poor connectivity (the 3G link has insufficient capacity which affects
+the quality).
 
 \begin{figure}
 \centerline{
