@@ -160,10 +160,14 @@ Hence, these I-frames are expected to observe queuing delay. The receiver
 based on the \emph{over-use} and \emph{under-use} events modifies the
 \emph{receiver's capacity estimate}. The receiver sends the TMMBR message to
 the sender indicating the maximum sending rate. Currently, interactive
-multimedia session in 3GPP~\cite{3gpp.26.114} and WebRTC\footnote{TMMBR is
-expected to be used initially, before a congestion control is standardized by
-the IETF for RTP~\cite{rtp-usage}.} use TMMBR messages to notify the sender of
-the expected sending rate.
+multimedia session in 3GPP~\cite{3gpp.26.114} use TMMBR messages to notify the
+sender of the expected sending rate. In WebRTC~\cite{jennings:2013:webrtc},
+TMMBR is expected to be used initially, before RTP congestion control is
+standardized by the IETF~\cite{rtp-usage}. The expectation is that different
+WebRTC clients may develop proprietary receiver-driven algorithms and use
+TMMBR as the standardized mechanism to communicate the capacity estimate to
+the sender, which will blindly follow it.
+
 
 \subsection{Co-operative Congestion Control Schemes}
 \label{cc:co-op}
