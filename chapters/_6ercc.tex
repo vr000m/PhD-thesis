@@ -8,8 +8,8 @@ In \citepub{c:err}, we evaluate the performance of the various
 error-resilience schemes available for use in interactive multimedia
 communication (mainly applicable to H.264). These are: using Negative
 Acknowledgement (NACK) or Packet Loss Indication (PLI), Forward Error
-Correction (FEC) or Unequal Level of Protection (ULP), slice size adaption
-(SSA), and Reference Pictures Selection Indication (RPSI). We evaluate the
+Correction (FEC) or Unequal Level of Protection (ULP), adaptive slice sizes,
+and Reference Pictures Selection Indication (RPSI). We evaluate the
 performance of the proposed mechanisms in diverse scenarios in a simulated
 environment (in ns-2) using real-world 3G loss patterns~\cite{3gppSim}.
 Lastly, based on our observations, we define the applicability of the various
@@ -43,7 +43,7 @@ to methods that combine source-coding and network-coding mechanisms.
 The H.264/AVC codec has several features that support error resilient
 mechanisms for video communication that correspond to the above
 categorization~\cite{310669}. At the codec level, the following are available:
-Slice Size Adaptation (SSA), Reference Picture Selection (RPS), and Flexible
+adaptive slice size, Reference Picture Selection (RPS), and Flexible
 Macroblock Ordering (FMO)~\cite{err_res_h264_std, wenger_ott_jscc}. Similarly,
 at the channel level, the following are available: Selective Retransmission
 (NACK), Packet Loss Indication (PLI). An example of joint source-channel is
@@ -63,7 +63,7 @@ for paths with higher packet loss or higher latency.
 
 \begin{figure}
 \centerline {
-\includegraphics[width=0.75\textwidth]{chap6_slicesize_mot}
+\includegraphics[width=0.66\textwidth]{chap6-graph-slicesize_mot}
 }
 \caption{Effect of different slice sizes on PSNR for links observing bit-error
 corruption.}
@@ -107,27 +107,109 @@ corruption.}
   sender proactively uses a portion of the available capacity to send
   redundant packets (typically, FEC), hoping to recover any lost packet before
   decoding. Hence, by using UEP, the media senders try to strike a balance by
-  protecting only a chosen set of the media packets. In \cite{c:err}, we
-  mainly protect reference frames with UEP.
+  protecting only a chosen set of the media packets. In \citepub{c:err}, we
+  protect the reference frames and not the non-reference frames with UEP.
 
 \end{itemize}
 
-
-% \begin{figure}
-% \centerline {
-% \includegraphics[width=0.9\textwidth]{chap6_ssa_adapt}
-% }
-% \caption{Adapting Slice Sizes due to variable error rates.}
-% \label{fig:ssa_adapt}
-% \end{figure}
-
-The error-resilience mechanisms are modeled as a function of observed packet
-loss and end-to-end delay. For the chosen call scenarios, the applicability of
-the error-resilience mechanisms are represented in figure~\ref{fig:apply_err}.
+In \citepub{c:err}, we observe that 15-30\% of the lost packets are be
+recovered for an end-to-end delay of 60ms (meeting the 150ms playout
+deadline). The number of recovered packets be increased by reducing the RTCP
+reporting interval, in this paper we use \emph{1s} reporting interval, with
+early and immediate reporting as defined in \cite{rfc4585}. Based on these
+experiments, it shows that NACK is an effective mechanism for low end-to-end
+delay scenarios. Similarly, protecting the media flows with UEP incurred a
+15-25\% overhead, and about 21-24\% of the lost packets were recovered.
 
 \begin{figure}
 \centerline {
-\includegraphics[width=0.9\textwidth]{chap6_apply_err}
+\includegraphics[width=0.66\textwidth, 
+    clip=true, trim=0cm 0cm 0cm 2.5cm]{chap6-graph-ssa_adapt}
+}
+\caption{Adapting Slice Sizes due to variable error rates.}
+\label{fig:ssa_adapt}
+\end{figure}
+
+Senders use a moving average of the last three observed fraction loss rate
+reported in the RTCP RR to vary the slice size. The slice size is doubled for
+every period with average loss below 1.0\% until it reaches the MTU size
+(~1500 bytes). Slice sizes remain constant for loss rates between 1\% to 2.5\%
+to provide stability to the receiving system. However, In high loss scenarios,
+if the slice size is larger than 400 bytes, it is halved and for sizes below
+400 bytes, it is reduced in steps of 50 bytes to a minimum of 150 bytes. The
+Figure ~\ref{fig:ssa_adapt} shows variation of slice-size with the
+instantaneous loss rate and the average loss rate. Hence, by adapting the
+slice sizes, the sender is not repairing the stream (or replacing the missing
+packets), rather it is attempting to constrain the area of errors in the
+picture. If an RTP packet containing a small sized slice is lost, a smaller
+area of the decoded picture is affected, alternatively, when a packet
+containing a large sized slice is lost, a large or complete decoded picture is
+affected.
+
+Lastly, using RPS error-resilience mechanism, the receiver indicates the
+decoding correctness; when losses occur, which pictures or slices have been
+decoded correctly or incorrectly. The feedback messages is encapsulated in an
+RTCP packet and are reported to the sender. In our experiments, the receiver
+reports RTCP every 250ms and it approximately consumes 2\% of the session
+media rate. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c) we observe that the
+PSNR drops down when a lost frame is referenced and the PSNR increases
+immediately after the encoder chooses a correct reference picture. When the
+one-way delay is 100 ms and the frame rate is set to 15 frames per second, we
+observe the error propagation is stopped by RPS in about 4 to 7 pictures.
+
+
+\begin{figure}[!t]
+  \centerline{
+  \subfloat [Foreman]{
+    \includegraphics[width=0.33\textwidth]{chap6-graph-rpsi-1}
+  } 
+  \subfloat [News]{
+    \includegraphics[width=0.33\textwidth]{chap6-graph-rpsi-3}
+  }
+  \subfloat [Football]{
+    \includegraphics[width=0.33\textwidth]{chap6-graph-rpsi-5}
+  }
+}
+\caption{PSNR Variation due to RPSI for (a) Foreman, (b) News, and (c)
+Football sequences.}
+\label{fig:rpsi_sim}
+\end{figure}
+
+Table~\ref{tab:err-sch-psnr} presents the average PSNR of the different error
+resilience schemes for links with 0.5\% fractional loss. We observe that the
+RPS performs better than UEP and NACK and is comparable to adaptive slices.
+The UEP underperforms mainly because the media stream is encoded at a lower
+rate to make room for FEC, compared to the media streams of the other
+error-resilience mechanisms.
+
+\begin{table}
+  \centering
+\begin{tabular}{cccc}
+\hline
+ & \multicolumn{3}{l}{PSNR After Simulation} \\
+\hline
+ & Foreman & Football & News  \\
+NACK & 32.1456 & 28.0331 & 35.3867 \\
+RPSI & 33.68 & 28.05 & 37.37 \\
+UEP & 28.33 & 26.86 & 34.47 \\
+Adaptive slices & 32.30 & 28.4 & 37.25 \\
+\hline
+\end{tabular}
+\caption{Comparing the performance (Y-PSNR) of different error-resilience
+schemes on three different types of YUV sequences~\cite{YUV_seq}. The link
+loss rate is 0.5\% at each 3G link.}
+\label{tab:err-sch-psnr}
+\end{table}
+
+
+In \citepub{c:err}, we model the error-resilience mechanisms as a function of
+observed packet loss and end-to-end delay and figure~\ref{fig:apply_err}
+summarizes the applicability of the error-resilience mechanisms based on our
+experiments.
+
+\begin{figure}
+\centerline {
+\includegraphics[width=0.8\textwidth]{chap6-fig-apply-err}
 }
 \caption{Applicability of the error-resilience schemes in heterogeneous
 environment containing both wireless and wired links.}
