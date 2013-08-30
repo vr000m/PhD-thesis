@@ -32,44 +32,56 @@ TEX_GENERATED =
 # static figures which are not removed by "make clean".
 GRAPHICS_GENERATED = 
 
-GRAPHICS_STATIC    = graphs/chap3_fig_hdr_pt_fmt.pdf \
-                     graphs/chap3_fig_hdr_rtcp.pdf \
-                     graphs/chap3_fig_hdr_rtp.pdf \
-                     graphs/chap3-avpf-rtcp.pdf \
-                     graphs/chap3-fig-rtp-stack.pdf \
-                     graphs/chap3-rtp-rtcp.pdf \
-                     graphs/chap3-sig-med.pdf \
-                     graphs/chap4_fig_sim_topology.pdf \
-                     graphs/chap4_graph_20091011-2012-barcode.pdf \
-                     graphs/chap4_graph_cb_20090707-1515-barcode.pdf \
-                     graphs/chap4_graph_cb_bursty.pdf \
-                     graphs/chap4_graph_cb_cmp_trr_2s.pdf \
-                     graphs/chap4_graph_cb_loss_trr.pdf \
-                     graphs/chap4-fw-outline.pdf \
-                     graphs/chap5_graph_3g_cnadu.pdf \
-                     graphs/chap5_graph_3g_tfrc_1.pdf \
-                     graphs/chap5_graph_3g_tmmbr_u.pdf \
-                     graphs/chap5_graph_sl_cnadu.pdf \
-                     graphs/chap5_graph_sl_tfrc.pdf \
-                     graphs/chap5_graph_sl_tmmbr.pdf \
-                     graphs/chap5-fig-cc-scheme-c.pdf \
-                     graphs/chap5-fig-cc-scheme-r.pdf \
-                     graphs/chap5-fig-cc-scheme-s.pdf \
-                     graphs/chap5-graph-rrtcc-latency.pdf \
-                     graphs/chap5-graph-rrtcc-plr.pdf \
-                     graphs/chap6_apply_err.pdf \
-                     graphs/chap7_graph_bb_3g_s17075-2p3-2.pdf \
-                     graphs/chap7-fig_mprtp-1.pdf \
-                     graphs/chap7-fig-mprtp-stack.pdf \
-                     graphs/chap7-graph_variable_bw_13073-2p5-2.pdf \
-                     graphs/chap8_graph_3g_tmmbr_a.pdf \
-                     graphs/chap8_graph_3g_tmmbr_b.pdf \
-                     graphs/chap8-fig-ecv.pdf \
-                     graphs/chap8-fig-glass-oper-05.pdf \
-                     graphs/chap8-fig-ota-tr-net-02.pdf \
-                     graphs/chap8-fig-tmmbr.pdf \
-                     graphs/chap8-graph_route_thin_throughput.pdf \
-                     graphs/chap8-graph-sim7-3.pdf
+GRAPHICS_STATIC    =    graphs/chap8_graph_3g_tmmbr_b.pdf \
+                        graphs/chap8_graph_3g_tmmbr_a.pdf \
+                        graphs/chap8-graph_route_thin_throughput.pdf \
+                        graphs/chap8-graph-sim7-3.pdf \
+                        graphs/chap8-fig-tmmbr.pdf \
+                        graphs/chap8-fig-ota-tr-net-02.pdf \
+                        graphs/chap8-fig-glass-oper-05.pdf \
+                        graphs/chap8-fig-ecv.pdf \
+                        graphs/chap7_graph_bb_3g_s17075-2p3-2.pdf \
+                        graphs/chap7-graph_variable_bw_13073-2p5-2.pdf \
+                        graphs/chap7-fig_mprtp-1.pdf \
+                        graphs/chap7-fig-mprtp-stack.pdf \
+                        graphs/chap6-graph-ssa_adapt.pdf \
+                        graphs/chap6-graph-slicesize_mot.pdf \
+                        graphs/chap6-graph-rpsi-5.pdf \
+                        graphs/chap6-graph-rpsi-3.pdf \
+                        graphs/chap6-graph-rpsi-1.pdf \
+                        graphs/chap6-fig-apply-err.pdf \
+                        graphs/chap5_graph_sl_tmmbr.pdf \
+                        graphs/chap5_graph_sl_tfrc.pdf \
+                        graphs/chap5_graph_sl_cnadu.pdf \
+                        graphs/chap5_graph_3g_tmmbr_u.pdf \
+                        graphs/chap5_graph_3g_tfrc_1.pdf \
+                        graphs/chap5_graph_3g_cnadu.pdf \
+                        graphs/chap5-graph-rrtcc-three-calls-sync.pdf \
+                        graphs/chap5-graph-rrtcc-three-calls-async.pdf \
+                        graphs/chap5-graph-rrtcc-plr.pdf \
+                        graphs/chap5-graph-rrtcc-latency.pdf \
+                        graphs/chap5-graph-5rtp_uc1_15.pdf \
+                        graphs/chap5-graph-5rtp_uc1_14.pdf \
+                        graphs/chap5-graph-5rtp_uc1_13.pdf \
+                        graphs/chap5-graph-5rtp_uc1_12.pdf \
+                        graphs/chap5-fig-cc-scheme-s.pdf \
+                        graphs/chap5-fig-cc-scheme-r.pdf \
+                        graphs/chap5-fig-cc-scheme-c.pdf \
+                        graphs/chap4_graph_cb_loss_trr.pdf \
+                        graphs/chap4_graph_cb_cmp_trr_2s.pdf \
+                        graphs/chap4_graph_cb_bursty.pdf \
+                        graphs/chap4_graph_cb_20090707-1515-barcode.pdf \
+                        graphs/chap4_graph_20091011-2012-barcode.pdf \
+                        graphs/chap4_fig_sim_topology.pdf \
+                        graphs/chap4-fig-knee-cliff.pdf \
+                        graphs/chap4-fig-fw-outline.pdf \
+                        graphs/chap3_fig_hdr_rtp.pdf \
+                        graphs/chap3_fig_hdr_rtcp.pdf \
+                        graphs/chap3_fig_hdr_pt_fmt.pdf \
+                        graphs/chap3-fig-sig-med.pdf \
+                        graphs/chap3-fig-rtp-stack.pdf \
+                        graphs/chap3-fig-rtp-rtcp.pdf \
+                        graphs/chap3-fig-avpf-rtcp.pdf
 
 
 # A list of any other files generated by running this Makefile, that should be
