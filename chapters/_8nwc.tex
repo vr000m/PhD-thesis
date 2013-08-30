@@ -153,15 +153,13 @@ Figure~\ref{fig:glass:map} shows the throughput around the university area in
 Espoo. Second, each endpoint is capable of querying the NCMS for upcoming
 congestion (known as \emph{lookahead}). It can \emph{lookahead} using one of
 the following methods: known travel rote, area lookahead or by subscribing to
-areas with poor coverage. Figure~\ref{fig:glass:map} shows a graphical
+areas with poor coverage\footnote{Areas where the expected channel capacity is
+lower than the media bit rate}. Figure~\ref{fig:glass:map} shows a graphical
 representation of the average throughput for a \emph{area lookahead} and a
 \emph{known travel route}. Third, for each lookahead requests, the NCMS
 responds with an coverage map info, i.e., the expected throughput at every
-geolocation along the route or requested area. The receiver uses these hints
-provided by the NCMS to implement congestion control. For example, the
-receiver sends an estimated capacity vector (a data structure containing a
-time-series of available throughput, thus preserving user's location privacy)
-are sent to the sender, which can alter the sending rate based on it.
+geolocation along the route or requested area.
+
 
 \begin{figure}
   \centerline{
@@ -183,6 +181,24 @@ are sent to the sender, which can alter the sending rate based on it.
   \label{fig:glass:map}
 \end{figure}
 
+The receiver uses these hints provided by the NCMS to implement congestion
+control. It sends an \emph{estimated capacity vector} (a data structure
+containing a time-series of available throughput, thus preserving user's
+location privacy) are sent to the sender, which can alter the sending rate
+based on the received information. The sender has the following techniques to
+change the sending rate: 1) change the encoding rate, 2) perform rate-switch,
+or, 3) pre-buffer. Changing the encoding rate is only possible in interactive
+real-time media, because the RTP sender co-operates with the encoder to modify
+the encoding rate. Rate-switching is only possible for stored content or live
+content where a media stream is encoded at different bit rates and the
+application switches between the stored media files, this performance of the
+congestion control depends on the granularity of the chosen bit rates for the
+media stream. Lastly, pre-buffering provides a more consistent experience to
+the user, because the technique attempts to maintain the same media encoding
+rate by modulating the sending rate. It is only applicable to stored content,
+the application, typically, reads-ahead in the media stream and sends more
+data whenever before it detects poor coverage.
+
 In \citepub{c:glass}, we stream video from a server to mobile clients moving
 around the city, mainly using public transport. The NCMS collected the
 throughput traces, thereafter, we conduct simulated experiments of users
@@ -191,6 +207,7 @@ the NCMS collected over 400,000 updates over a month of operation (about 40-50
 bus-trips). For 6 geographical areas, the NCMS received more than 10,000
 updates (\emph{Otaniemi}, Helsinki City Center) while on average each
 geographical had around 100 updates.
+
 
 \begin{table}
   \begin{center}
@@ -222,6 +239,15 @@ performing \emph{no adaptation}\footnote{Endpoints perform no congestion
 control and stream at a constant bit rate and periods when the link capacity
 falls below the media rate, will cause losses} causes frequent pausing and
 packet loss which is reflected in the low PSNR ($PSNR_{avg}$=27).
+
+\begin{figure}
+\includegraphics[width=\textwidth]{chap8-graph-sim7-3}
+  \caption{Variation of receiver rate to 3G link capacity based on a) no
+  adaptation b) Omniscient c) Rate-switching d) Late scheduling when there are
+  few coverage holes and good connectivity between them.}
+\label{fig:glass:sim7res}
+\end{figure}
+
 \emph{Rate-switching}\footnote{Endpoints perform short \emph{lookahead}
 requests and is only able to detect outage moments before the user arrives at
 the location with poor connectivity. In this case, the receiver sends a TMMBR
@@ -242,14 +268,6 @@ them. In the case of interactive multimedia communication implementing
 network-assisted congestion cues, we expect the performance of the congestion
 control to be at least that of rate-switching because the sender will be able
 to reduce and increase the sending rate preemptively without probing.
-
-\begin{figure}
-\includegraphics[width=\textwidth]{chap8-graph-sim7-3}
-  \caption{Variation of receiver rate to 3G link capacity based on a) no
-  adaptation b) Omniscient c) Rate-switching d) Late scheduling when there are
-  few coverage holes and good connectivity between them.}
-\label{fig:glass:sim7res}
-\end{figure}
 
 We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and pre-buffering and helped in avoiding almost all
