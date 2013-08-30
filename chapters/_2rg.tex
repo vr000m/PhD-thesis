@@ -8,7 +8,8 @@ media packets; thereby, enabling Quality of Service (QoS). Using DSCP poses
 some challenges, which are discussed in Section~\ref{rg.ch.dscp}. \textbf{2)}
 instructs the encoder to modify the encoding rate to a certain target rate. To
 achieve media rate-adaption the endpoint needs to monitor and respond to
-congestion cues.
+congestion cues. The following section provides definitions of common terms
+used within this thesis.
 
 %Additionally, we  discuss requirements for media rate-adaptation.
 
@@ -112,10 +113,9 @@ policy to forward packets, and as a result lose any opportunity of
 differentiated service. Especially with video traffic which can be marked in
 varying ways depending on the type of application (multicast, broadcast,
 streaming, conversational, with each category having its own policy), the ISP
-sometimes choose to ignore these different categories for video and chooses
-just one and marks all video packets with the same DSCP~\cite{rfc5865}. These
-\emph{generic} markings may be contrary to the intended DSCP of the multimedia
-system.
+sometimes choose to ignore these different categories for video and marks all
+video packets with the same DSCP~\cite{rfc5865}. These \emph{generic} markings
+may be contrary to the intended DSCP of the multimedia system.
 
 % generic markings
 
