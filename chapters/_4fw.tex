@@ -199,7 +199,7 @@ cues are reported by devices outside the media path (congestion maps,
 overlays, etc.). The combination forms four cases, they are visualized in
 Figure~\ref{fig:4:fw}.
 
-\begin{figure}[!h]
+\begin{figure}
 \includegraphics[width=0.9\textwidth]{chap4-fig-fw-outline}
 \caption{Classification of Congestion cues~\cite{Singh:PhDFw}}
 \label{fig:4:fw}
@@ -390,11 +390,11 @@ Y) and introduce impairments to the bottleneck link. Lastly, measure and
 analyze the performance of the multimedia system. 
 
 
-\begin{figure}[!h]
+\begin{figure}
 \includegraphics[width=\columnwidth]{chap4_fig_sim_topology}
-\caption{Typical network topology for evaluating congestion control;
-		 it consists of traffic flows (evaluating flow and cross 
-		 traffic), links and routers.}
+\caption{Typical network topology for evaluating congestion control; it
+consists of traffic flows (evaluating flow and cross traffic), links and
+routers.} 
 \label{fig:4:topology}
 \end{figure}
 
@@ -512,9 +512,9 @@ traces with bursty loss, $863$ traces with non-bursty loss.
       {chap4_graph_cb_bursty}
     }
   }
-  \caption{Sample non-bursty and bursty packet loss traces. The bursty packet
-  triggers the circuit breaker even though the overall packet loss ratio is
-  0.6\%.}
+  \caption{The plots show a sample non-bursty and bursty packet loss traces.
+  The bursty packet triggers the circuit breaker even though the overall
+  packet loss ratio is 0.6\%.}
   \label{fig:bursty}
 \end{figure}
 
@@ -555,8 +555,8 @@ longer time to trigger the circuit breaker ($t_{CB}$).
   \centerline{
     {\includegraphics[width=0.9\columnwidth]{chap4_graph_cb_cmp_trr_2s}}
   }
-  \caption{Impact of using a shorter RTCP interval on the circuit breaker. 
-    Each scenario is run 50 times and the error bars represent the $95\%$ 
-    confidence level.}
+  \caption{The plot shows the impact of using a shorter RTCP interval on the
+  circuit breaker. Each scenario is run 50 times and the error bars represent
+  the $95\%$ confidence level.}
   \label{fig:short-rtcp}
 \end{figure}

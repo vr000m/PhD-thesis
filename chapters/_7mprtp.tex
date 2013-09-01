@@ -104,7 +104,7 @@ network to another.
 \centerline {
 \includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
 }
-\caption{Visualizing the RTP and MPRTP communication stack, SSRC $\#1$ uses
+\caption{The RTP and MPRTP stack working alongside each other. SSRC $\#1$ uses
 MPRTP while SSRC $\#2$ and SSRC $\#3$ uses single path RTP.}
 \label{chap7:fig_mprtp_arch}
 \end{figure}
@@ -155,23 +155,24 @@ scheduling algorithm can be extended to include interactive applications.
 
 \begin{table}
   \begin{center}
-	\begin{tabular}{cccc} \hline
-	 & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
-	\multirow {2}{*}{} 
-	1-Path (no loss) & 48.427 & 0.00 & 0.00 \\ 
-	2-Path (no loss) & 48.427 & 0.00 & 0.00 \\
-	3-Path (no loss) & 48.427 & 0.00 & 0.00 \\ \hline
-	\multicolumn{4}{c}{Variable losses per path} \\ \hline	
-	\multirow {2}{*}{} 
-	1-Path (0.5\% loss) & 40.887 & 0.506 & 0.49 \\
-	1-Path (1\% loss) & 36.172 & 0.705 & 1.01 \\ %\hline
-	2-Path (0-0.5\%) & 43.4 & 1.9 & 0.24 \\
-	3-Path (0-1.0\%) & 40.5 & 0.49 & 0.48\\ \hline	
-	\multicolumn{4}{c}{Variable RTT per path} \\ \hline
-	2-Path & 48.303 & 0.278 & 0.004 \\ \hline
-	3-Path & 48.164 & 0.32 & 0.0121\\ \hline
+  \begin{tabular}{cccc} \hline
+   & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
+  \multirow {2}{*}{} 
+  1-Path (no loss) & 48.427 & 0.00 & 0.00 \\ 
+  2-Path (no loss) & 48.427 & 0.00 & 0.00 \\
+  3-Path (no loss) & 48.427 & 0.00 & 0.00 \\ \hline
+  \multicolumn{4}{c}{Variable losses per path} \\ \hline	
+  \multirow {2}{*}{} 
+  1-Path (0.5\% loss) & 40.887 & 0.506 & 0.49 \\
+  1-Path (1\% loss) & 36.172 & 0.705 & 1.01 \\ %\hline
+  2-Path (0-0.5\%) & 43.4 & 1.9 & 0.24 \\
+  3-Path (0-1.0\%) & 40.5 & 0.49 & 0.48\\ \hline	
+  \multicolumn{4}{c}{Variable RTT per path} \\ \hline
+  2-Path & 48.303 & 0.278 & 0.004 \\ \hline
+  3-Path & 48.164 & 0.32 & 0.0121\\ \hline
 \end{tabular}
-\caption{Comparing performance of using a single path with using multiple paths}
+\caption{Comparing performance of using a single path with using multiple
+paths}
 \label{table-var-path}
 \end{center}
 \end{table}
@@ -266,7 +267,8 @@ subflow.
         {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap7-graph_variable_bw_13073-2p5-2}}
     }
-    \caption{MPRTP offloading from a constrained path.}
+    \caption{The plot shows MPRTP offloading media from a path with reducing
+    capacity to another path with more capacity.}
     \label{chap7:fig_sim_var_bw}
 \end{figure}
 
@@ -280,21 +282,6 @@ to the other paths (observe the points where the link rate drops). The
 scheduling algorithm also tries to probe the network, so that an equilibrium
 state of fair sharing can be achieved. However, this is done at long
 time-scales (order of seconds) so that the per-path load does not oscillate.
-
-\begin{table}[!t]%htbp]
-\centering
-% \resizebox{\textwidth}{!}{%\scalebox{0.75}
-{
-\begin{tabular}{ccccc} \hline
-Path Characteristic & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
-Offloading & 42.93 & 2.23 & 0.772 \\
-Multihoming & 46.7173 & 0.21 & 0.33 \\ \hline
-\end{tabular}
-}
-\caption{Performance of multipath scheduling when offloading (from a
-constrained path) and multihoming (with WLAN and 3G paths)}
-\label{table-bb-3g}
-\end{table}
 
 \textbf{\texttt{Multihoming}}: Figure~\ref{chap7:fig_sim_bb_3g} shows the
 bandwidth utilization of a WLAN and 3G path and the overall bandwidth
@@ -314,10 +301,25 @@ close to optimum.
         {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap7_graph_bb_3g_s17075-2p3-2}}
     }
-    \caption{A multihomed endpoint load-balancing a media flow over WLAN and
-    3G paths.}
+    \caption{The plot shows a multihomed endpoint load-balancing a media flow
+    over WLAN and 3G paths.}
     \label{chap7:fig_sim_bb_3g}
 \end{figure}
+
+\begin{table}[!t]%htbp]
+\centering
+% \resizebox{\textwidth}{!}{%\scalebox{0.75}
+{
+\begin{tabular}{ccccc} \hline
+Path Characteristic & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
+Offloading & 42.93 & 2.23 & 0.772 \\
+Multihoming & 46.7173 & 0.21 & 0.33 \\ \hline
+\end{tabular}
+}
+\caption{Performance of multipath scheduling when offloading (from a
+constrained path) and multihoming (with WLAN and 3G paths)}
+\label{table-bb-3g}
+\end{table}
 
 % \textbf{Conclusions}: We have explored the criteria for assigning traffic
 % shares as a function of the diverse path properties and presented
