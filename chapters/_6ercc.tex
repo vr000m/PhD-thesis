@@ -112,14 +112,17 @@ corruption.}
 
 \end{itemize}
 
-In \citepub{c:err}, we observe that 15-30\% of the lost packets are be
-recovered for an end-to-end latency of 60ms (meeting the 150ms playout
-deadline). The number of recovered packets be increased by reducing the RTCP
-reporting interval, in this paper we use \emph{1s} reporting interval, with
-early and immediate reporting as defined in \cite{rfc4585}. Based on these
-experiments, it shows that NACK is an effective mechanism for low end-to-end
-latency scenarios. Similarly, protecting the media flows with UEP incurred a
-15-25\% overhead, and about 21-24\% of the lost packets were recovered.
+In \citepub{c:err}, we stream 3 different YUV sequences~\cite{YUV_seq} over a
+3G link simulated in \emph{ns-2}~\cite{ns2} with varying amount of link layer
+packet loss (0.5\%, 1.0\% and 1.5\%)~\cite{3gppSim}. Our experiments show that
+using NACK, the endpoint is able to correct 15-30\% of the lost packets for an
+end-to-end latency of 60ms (meeting the 150ms playout deadline). The number of
+recovered packets will increase with shorter RTCP reporting intervals; in this
+paper we use \emph{1s} reporting interval, with early and immediate reporting
+as defined in \cite{rfc4585}. Based on these experiments, it shows that NACK
+is an effective mechanism for low end-to-end latency scenarios. Similarly,
+protecting the media flows with UEP incurred a 15-25\% overhead, and about
+21-24\% of the lost packets were recovered.
 
 \begin{figure}
 \centerline {
