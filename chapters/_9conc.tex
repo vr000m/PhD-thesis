@@ -1,4 +1,20 @@
 
+In this thesis, we describe our proposed congestion control framework in
+\ref{fw.fw}. When describing the different parts of the framework, we also
+discuss the related work and our contributions in those areas. In
+Chapter~\ref{chap:rg}, we aimed to classify congestion control cues for
+real-time communication based on: \emph{where they are measured?} (by in-path
+or out-of-path sources) and \emph{how they are reported?} (via in-band or
+out-of-band signaling). In Chapter~\ref{chap:fw}, we describe other
+fundamental choices needed to implement congestion control. Choice of
+congestion cues, reporting frequency and circuit-breakers. Additionally, we
+also describe an evaluation suite for measuring the performance of the
+proposed congestion control algorithms.
 
+In chapter~\ref{chap:cc}, we describe congestion control implemented using
+congestion cues from in-band sources and signaled in path (in RTCP). We
+further categorize the congestion control algorithms based on \emph{where they
+are implemented}: sender-driven, receiver-driven, or co-operative (combination
+of sender and receiver) and compare the performance of each.
 
 \section{Future Work}
