@@ -232,24 +232,77 @@ environment containing both wireless and wired links.}
 
 \section{Using FEC for Congestion Control}
 
+For many years, conversational multimedia flows have used Forward Error
+Correction (FEC) for error protection~\cite{855913, 664283}, i.e., the
+application trades-off additional sending rate for redundant packets to reduce
+the effect of losses. In \citepub{c:err}, we show that 21-24\% of the lost
+packets are recovered using a static amount of FEC. In \citepub{c:fecrc}, we
+investigate the use of FEC packets not only for error-resilience but also as a
+probing mechanism for congestion control.
+
+Zhu~\textit{et al.}\cite{Zhu:2001tu,springerlink:1022865704606} propose using
+Unequal Loss Protection (ULP) for both congestion control and
+error-resilience. Firstly, they estimate the available rate using a variant of
+TFRC, called Multimedia Streaming TCP-Friendly Protocol (MSTFP)~\cite{871542}.
+Secondly, they take packet loss and historical sending rate to smooth out the
+encoding rate. Lastly, they apply FEC while performing congestion control and
+their results show a significant increase in PSNR. MSTFP on the other hand
+does not use RTP/RTCP and acknowledges each packet for calculating the TFRC
+estimate.
+
+Our concept in \citepub{c:err} is similar to that described in
+\cite{Zhu:2001tu} but applied to interactive multimedia. The concept is as
+follows, the sender chooses a high FEC rate to aggressively probe for
+available capacity and conversely chooses a low FEC rate to conservatively
+probe for available capacity. While probing, if a packet is lost and the if
+the FEC packet arrives in time for decoding, the receiver is be able to
+recover the lost packet; if no packet is lost, the sender can increase the
+media encoding rate by swapping out the FEC. Figure~\ref{fig:fecrc-intro}(a)
+shows the endpoint adding FEC and then swapping it for additional media. This
+method can be especially useful when the sending rate is close to the
+bottleneck link rate, because by choosing an appropriate FEC rate the endpoint
+is able to probe for available capacity without affecting the user-experience
+because during the probing interval the media stream rate remains constant.
+
 % Figure with the idea: FEC for CC
 
 \begin{figure}
   \centerline{
   \subfloat [State-machine]{
-    \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-state}
+    \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-concept}
   } 
   \subfloat [Concept]{
-    \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-concept}
+    \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-state}
   }
 }
-\caption{}
+\caption{Shows the a) interaction of FEC and congestion control, b) State
+machine }
 \label{fig:fecrc-intro}
 \end{figure}
 
+Figure~\ref{fig:fecrc-intro}(a) illustrates the state machine of a
+congestion-control algorithm incorporating FEC. The state machine includes 4
+states: \texttt{\textbf{STAY}}, \texttt{\textbf{PROBE}}, \texttt{\textbf{UP}},
+and \texttt{\textbf{DOWN}}. The congestion control monitors the congestion
+cues (such as, RTT, packet loss or discard rate, jitter, frame inter-arrival
+delay variation, ECN, etc.) to stay in the current state, or transit to
+another. The state machine specifies only generic description of path
+conditions for the transition between states and leaves the interpretation to
+the underlying congestion control algorithm.
+
+After enabling FEC the following three conditions may occur: 1) No more
+bandwidth is available, the sender keeps the current sending rate
+(\texttt{\textbf{STAY state}}). 2) Stable conditions are detected, the sender
+increases the sending rate and disables FEC (\texttt{\textbf{UP state}}), and
+3) Unstable conditions are detected, and the sender reduces the sending rate
+\texttt{\textbf{DOWN state}}. If FEC is disabled for the last two intervals
+and no change in path characteristics is observed, FEC is enabled
+(\texttt{\textbf{PROBE state}})
+
+
 % Table of FEC, C-NADU and RRTCC :)
 
-\begin{figure}[!t]
+\begin{figure}
   \centerline{
   \subfloat []{
     \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-50ms-2}
