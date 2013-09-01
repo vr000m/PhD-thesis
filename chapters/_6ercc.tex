@@ -291,35 +291,69 @@ another. The state machine specifies only generic description of path
 conditions for the transition between states and leaves the interpretation to
 the underlying congestion control algorithm.
 
-After enabling FEC the following three conditions may occur: 1) No more
-bandwidth is available, the sender keeps the current sending rate
-(\texttt{\textbf{STAY state}}). 2) Stable conditions are detected, the sender
-increases the sending rate and disables FEC (\texttt{\textbf{UP state}}), and
-3) Unstable conditions are detected, and the sender reduces the sending rate
-\texttt{\textbf{DOWN state}}. If FEC is disabled for the last two intervals
-and no change in path characteristics is observed, FEC is enabled
+After enabling FEC for an interval, one of the following three conditions may
+occur: 1) No more bandwidth is available, the sender keeps the current sending
+rate (\texttt{\textbf{STAY state}}). 2) Stable conditions are detected, the
+sender increases the sending rate and disables FEC (\texttt{\textbf{UP
+state}}), and 3) Unstable conditions are detected, and the sender reduces the
+sending rate \texttt{\textbf{DOWN state}}. If FEC is disabled for the last two
+intervals and no change in path characteristics is observed, FEC is enabled
 (\texttt{\textbf{PROBE state}})
 
+In \citepub{c:fecrc}, we compare the performance of FEC-Based Rate Adaptation
+(FBRA), RRTCC and C-NADU. The bottleneck link capacity varies between 100 and
+256 \emph{kbps}. In the scenario, we evaluate the reactivity and convergence
+of the rate-control algorithm to the available end-to-end capacity for
+different path latencies.
+
+Our simulations in \emph{ns-2}~\cite{ns2} shows that for the 50\emph{ms} and
+100\emph{ms} bottleneck link latency, the goodput achieved by FBRA is
+comparable to RRTCC but with comparatively lower loss rates ($\approx$1.5\%,
+see Table~\ref{table:fecrc-var-res}). Figures~\ref{fig:fecrc-var}(a)--(b) show
+that the FBRA can quite quickly bounce-back after undershooting. The figure
+also shows that the FEC probing rate increases when the FBRA ramps up and the
+FEC rate is low or disabled when the FBRA undershoots. However, FBRA is
+primarily a delay-based control algorithm and for the 240\emph{ms} bottleneck
+delay, it observes that the packets are arriving very close to application
+defined maximum delay ($\approx$400ms) and is therefore, conservative in its
+probing for available bandwidth (this is observed by the low FEC rate in
+Figure~\ref{fig:fecrc-var}(c)). FEC rate is about 10\% of the media rate at
+about 15-20 \emph{kbps} and the packet loss recovery is around 30\%. Compared
+to FBRA, RRTCC tries to achieve high throughput at the cost of incurring
+packet losses (this behavior is also observed in \ref{tab:rrtcc-loss}), while
+C-NADU trades-off throughput for packet loss. Hence, FBRA nicely sits between
+the two trade-offs.
+
+% RRTCC achieves the best goodput ($169$-$180 kbps$) for the three bottleneck
+% link latencies, but has the worst loss rate ($3$-$4\%$). RRTCC is aggressive
+% in its probing for available bandwidth and does not react to losses up to
+% $2\%$. On the other hand, C-NADU achieves excellent reliability
+% ($0.15$-$0.5\%$) results in all the cases, but observes lower goodput (about
+% $10$-$15kbps$ lower than RRTCC). The two algorithms trade-off throughput for
+% packet loss and vice-versa.
 
 % Table of FEC, C-NADU and RRTCC :)
 
 \begin{figure}
   \centerline{
-  \subfloat []{
+  \subfloat [OWD=50ms]{
     \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-50ms-2}
   } 
-  \subfloat []{
+  \subfloat [OWD=100ms]{
     \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-100ms-2}
   }
-  \subfloat []{
+  \subfloat [OWD = 240ms]{
     \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-240ms-2}
   }
 }
-\caption{}
+\caption{The plot shows the performance of a single RTP flow using FBRA in a
+varying link capacity scenario with different bottleneck latencies. The plots
+also show the FEC probing rate. We observe that the FEC rate is low when the
+FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
 \label{fig:fecrc-var}
 \end{figure}
 
-\begin{table}[!htbp]
+\begin{table}
   \scalebox{0.9}{
   \begin{tabular}{c c c c c}
   \hline
@@ -348,6 +382,8 @@ and no change in path characteristics is observed, FEC is enabled
   \caption{Overall metrics for an RTP Flow on a Variable Capacity Link}
   \label{table:fecrc-var-res}
 \end{table}
+
+
 
 
 \begin{figure}
