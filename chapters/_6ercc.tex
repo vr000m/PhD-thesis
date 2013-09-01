@@ -380,22 +380,101 @@ FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
   %& \textbf{FRCC[\%]} & 90.1 & 7.26 & - & -& -& - \\ \hline
   \end{tabular}
   }
-  \caption{Overall metrics for an RTP Flow on a Variable Capacity Link}
+  \caption{Overall metrics for an RTP Flow on a Variable Capacity Link.
+  Results are average of 30 runs.}
   \label{table:fecrc-var-res}
 \end{table}
 
+In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
+competing on a bottleneck link (1Mbps) in a testbed. The difference in the
+goodput of the calls in the two latency scenarios (50ms and 100ms) is about
+30-50 \emph{kbps}, but the PSNR of these calls are similar (see
+Table~\ref{table:fecrc-rw-udp}). Therefore, we conclude that small rate
+variations have little bearing on the quality of the call. The FEC recovery is
+low due to small amount of packet loss and most of the losses occur when FEC
+was disabled. Additionally, 90\% of the times FEC was enabled, resulted in an
+increase in media rate. Low FEC overhead also implies that the FBRA remains
+longer in the \texttt{\emph{STAY}} state, thus avoiding abrupt changes to the
+encoding rate, which is detrimental for user experience
+\cite{Zink03subjectiveimpression}.
 
 
 
 \begin{figure}
   \centerline{
-  \subfloat []{
+  \subfloat [50ms]{
     \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-dummynet-50ms-2}
   } 
-  \subfloat []{
+  \subfloat [100ms]{
     \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-dummynet-100ms-2}
   }
 }
-\caption{}
+\caption{The plots show the goodput of two RTP calls sharing a common
+bottleneck. To illustrate amount of empty link capacity and how two flows push
+one another, we plot one of them on the reverse axis. The end-to-end path
+capacity is \emph{1 Mbps} in both delay scenarios and delays are \emph{50ms}
+and \emph{100ms}. The plot also shows the PSNR variation for the two calls (on
+the minor Y-axis)}
 \label{fig:fecrc-dnet}
 \end{figure}
+
+
+\begin{table}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{cccc}
+  \hline
+  & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
+  & & avg. $\pm \sigma$ & avg. $\pm \sigma$ \\ \hline 
+  \multirow{5}{*}{\begin{sideways} \textbf{50ms delay} \end{sideways}} 
+  & \textbf{Goodput [kb/s]} & 375.39 $\pm$ 88.25 & 348.77 $\pm$ 83.64 \\ 
+  & \textbf{Loss rate [\%]} & 1.21 $\pm$ 0.19 & 1.39 $\pm$ 0.69 \\ 
+  & \textbf{FEC rate [kb/s]} & 12.24 $\pm$ 1.64 & 11.78 $\pm$ 1.39 \\ 
+  & \textbf{No. of FEC protected lost frames} & 15.3 $\pm$ 3.44 & 14.6 $\pm$ 2.73 \\ 
+  & \textbf{No. of recovered frames} & 7.4 $\pm$ 2.83 & 6.9 $\pm$ 3.33 \\ 
+  & \textbf{PSNR [dB]} & 38.08 $\pm$ 2.1 & 37.7 $\pm$ 1.53 \\ \hline
+  %& \textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
+  \multirow{5}{*}{\begin{sideways} \textbf{100ms delay} \end{sideways}} 
+  & \textbf{Goodput [kb/s]} & 295.33 $\pm$ 48.27 & 351.1 $\pm$ 63.4 \\ 
+  & \textbf{Loss rate [\%]} & 3.15 $\pm$ 0.93 & 2.33 $\pm$ 0.87 \\ 
+  & \textbf{FEC rate [kb/s]} & 10.7 $\pm$ 0.68 & 11.69 $\pm$ 1.52 \\ 
+  & \textbf{No. of FEC protected lost frames} & 3.0 $\pm$ 2.1 & 4.1 $\pm$ 3.14 \\ 
+  & \textbf{No. of recovered frames} & 7.3 $\pm$ 3.03 & 4.5 $\pm$ 3.07 \\ 
+  & \textbf{PSNR [dB]} & 35.64 $\pm$ 1.17 & 37.32 $\pm$ 1.65 \\ \hline
+  %& \textbf{Lossless PSNR [dB]} & & & & \\ \hline 
+  \end{tabular}
+}
+  \caption{Two FBRA flows on a bottleneck link in an emulated testbed. Results
+  are average of 10 runs.}
+  \label{table:fecrc-rw-udp}
+\end{table}
+
+The RTP flow competes well against short TCP flows achieving an average
+goodput of 302\,\emph{kbps} and 280\,\emph{kbps} in the 50\,\emph{ms} and
+100\,\emph{ms} latency scenario, respectively (see
+Table~\ref{table:fecrc-rw-tcp}). Additionally, about 85\% of the times FEC was
+enabled, resulted in an increase in media rate. The TCP flow achieves a
+throughput of around 600\,\emph{kbps} on average, the PSNR in both scenarios
+are very similar ($\approx$ 35dB), the PSNR is lower for the $100ms$ delay
+scenario because the average goodput is also a bit lower in this case.
+
+\begin{table}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{ccc}
+  \hline
+  \textbf{Metric} & \textbf{50ms delay} & \textbf{100ms delay} \\ \cline{2-3}
+  & avg. $\pm\,\sigma$ & avg. $\pm\,\sigma$ \\ \hline 
+  \textbf{Goodput [kb/s]} & 302.24 $\pm$ 87.07 & 280.97 $\pm$ 92.15 \\
+  \textbf{Loss rate [\%]} & 4.24 $\pm$ 0.89 & 4.1 $\pm$ 0.58 \\
+  \textbf{FEC rate [kb/s]} & 13.6 $\pm$ 2.15 & 12.58 $\pm$ 2.18 \\
+  \textbf{No. of lost frames} & 154.6 $\pm$ 16.56 & 170.9 $\pm$ 12.38 \\
+  \textbf{No. of FEC protected lost frames} & 38.0 $\pm$ 6.08 & 23.7 $\pm$ 8.99 \\ 
+  \textbf{No. of recovered frames} & 7.4 $\pm$ 2.83 & 6.9 $\pm$ 3.33 \\
+  \textbf{PSNR [dB]} & 35.62 $\pm$ 1.49 & 34.7 $\pm$ 2.26 \\
+  \textbf{TCP throughput [kbit/s]} & 612.22 $\pm$ 48.45 & 575.11 $\pm$ 45.67 \\ \hline
+  %\textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
+  \end{tabular}
+  }
+  \caption{An RTP flow sharing a bottleneck link with short TCP flows in an
+  emulated testbed. Results are average of 10 runs.}
+  \label{table:fecrc-rw-tcp}
+\end{table}
