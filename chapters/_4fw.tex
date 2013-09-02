@@ -141,7 +141,7 @@ of the limits on the timing of the feedback. For example in TCP, the receiver
 sends an \emph{acknowledgement} packet in response to every packet (or every
 few packets) it receives. Whereas, RTCP encourages infrequent feedback and
 specifies an upper-bound on the fraction of the session media bit rate that
-the feedback packets can use\footnote{The specified feedback rate is $5\%$ for
+the feedback packets can use\footnote{The specified feedback rate is 5\,\% for
 each multimedia session}. \cite{draft.rmcat.feedback} discusses three options
 for the short report intervals, they are:
 
@@ -149,7 +149,7 @@ for the short report intervals, they are:
 the endpoint receives a packet. For low bit rate media sessions (e.g., audio
 streams) this would be quite difficult to achieve because the size of the
 feedback packet would be comparable to the size of the media packet, i.e., the
-feedback bit rate would larger than the $5\%$ fraction specified for it. If an
+feedback bit rate would larger than the 5\,\% fraction specified for it. If an
 endpoint receives packets in a burst or at very short time intervals, the
 endpoints will not be able to meet the timing requirements for per-packet
 feedback because the RTCP timing interval calculation has a randomization
@@ -514,7 +514,7 @@ traces with bursty loss, $863$ traces with non-bursty loss.
   }
   \caption{The plots show a sample non-bursty and bursty packet loss traces.
   The bursty packet triggers the circuit breaker even though the overall
-  packet loss ratio is 0.6\%.}
+  packet loss ratio is 0.6\,\%.}
   \label{fig:bursty}
 \end{figure}
 
@@ -557,6 +557,6 @@ longer time to trigger the circuit breaker ($t_{CB}$).
   }
   \caption{The plot shows the impact of using a shorter RTCP interval on the
   circuit breaker. Each scenario is run 50 times and the error bars represent
-  the $95\%$ confidence level.}
+  the 95\,\% confidence level.}
   \label{fig:short-rtcp}
 \end{figure}
