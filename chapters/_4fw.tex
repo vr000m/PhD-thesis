@@ -181,7 +181,7 @@ session bit rate, hence it increases the possibility of applying the same
 congestion control to a larger operating area (in terms of session media
 rates).
 
-\section{Classifying Congestion Cues}
+\section{Framework for Classifying Congestion Control}
 \label{fw.fw}
 
 A rate-control or congestion control algorithm relies on congestion cues to
@@ -201,7 +201,7 @@ Figure~\ref{fig:4:fw}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{chap4-fig-fw-outline}
-\caption{Classification of Congestion cues~\cite{Singh:PhDFw}}
+\caption{Framework for Classifying Congestion Control~\cite{Singh:PhDFw}}
 \label{fig:4:fw}
 \end{figure}
 
@@ -214,7 +214,7 @@ packet) or as RTCP extension blocks (see section~\ref{fw.freq} for details on
 feedback frequency). Or the congestion control algorithm can choose to signal
 the cues out-of-band, i.e., re-use the signaling path (e.g., SIP, XMPP) or
 setup an alternate signaling path (e.g., HTTP or websockets). Following are
-the examples for each category in the classification:
+the examples for each category in the framework:
 
 \textbf{\texttt{A) In-path, In-band}}: TFRC using information in RTCP RR, TFRC
 using additional loss reported by ECN markings, Temporary Maximum Media Stream
