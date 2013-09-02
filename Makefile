@@ -18,7 +18,8 @@ TEX_STATIC    = chapters/_0lists.tex \
                 chapters/_5rtc.tex \
                 chapters/_6ercc.tex \
                 chapters/_7mprtp.tex \
-                chapters/_8nwc.tex
+                chapters/_8nwc.tex \
+                chapters/_9conc.tex
 
 TEX_BIB = bib/diss.bib \
           bib/rfc.bib
@@ -49,6 +50,13 @@ GRAPHICS_STATIC    =    graphs/chap8_graph_3g_tmmbr_b.pdf \
                         graphs/chap6-graph-rpsi-5.pdf \
                         graphs/chap6-graph-rpsi-3.pdf \
                         graphs/chap6-graph-rpsi-1.pdf \
+                        graphs/chap6-fig-fecrc-concept.pdf \
+                        graphs/chap6-fig-fecrc-state.pdf \
+                        graphs/chap6-graph-fecrc-dummynet-50ms-2.pdf \
+                        graphs/chap6-graph-fecrc-dummynet-100ms-2.pdf \
+                        graphs/chap6-graph-fecrc-var-50ms-2.pdf \
+                        graphs/chap6-graph-fecrc-var-100ms-2.pdf \
+                        graphs/chap6-graph-fecrc-var-240ms-2.pdf \
                         graphs/chap6-fig-apply-err.pdf \
                         graphs/chap5_graph_sl_tmmbr.pdf \
                         graphs/chap5_graph_sl_tfrc.pdf \
