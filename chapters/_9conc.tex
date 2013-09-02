@@ -79,11 +79,15 @@ discover areas of poor coverage, based on these notifications the endpoints
 vary their sending rate.
 
 In terms of innovativeness, the congestion control framework provides options
-to look beyond using merely in-path congestion cues. Chapters
-\ref{chap:cc}--\ref{chap:cc.nw} cover the four areas of the framework and
-propose solutions applicable to the area. However, the definitions of each
-area is generalized enough to allow application of a broad-range of
-techniques.
+to look beyond using congestion cues reported by the receiver on a given path.
+The framework offers the congestion control algorithm to use multiple paths to
+either aggregate capacity or for increasing resilience, to use feedback
+notifications from smart middleboxes along the path or to build a coverage or
+map that provides congestion notification as a third party services. Each of
+these techniques apply to one of the four areas described in the framework.
+However, the definitions of each area is generalized enough to allow
+application of a broad-range of techniques not just those proposed in this
+thesis.
 
 
 \section{Future Work}
