@@ -46,7 +46,7 @@ using adaptive FEC for probing, the endpoints are able to recover 15-25\,\% of
 the lost packets and $\approx$90\,\% of the time using FEC subsequently
 results in an increase in the media rate. These results are comparable to our
 earlier experiments using a fixed FEC interval throughput the duration of the
-call for error-resilience, where we were able to 20-24\,\% of the lost
+call for error-resilience, where we were able to 20-24\;\% of the lost
 packets. We believe using FEC for congestion control in interactive multimedia
 has not been explored in depth by the community, partly because interactive
 multimedia flows have very tight delay constraints and FEC may not arrive in
@@ -54,17 +54,38 @@ time for recovering the packet.
 
 In chapter~\ref{chap:mprtp}, we propose using the multiple interfaces of an
 endpoint (e.g., mobile device, tablet, SOHO gateways) for increasing
-throughput and robustness. We design a protocol extension (MPRTP) to RTP that
-is backwards compatible and exploits multipath capabilities. We implement a
-scheduling algorithm that takes application requirements and current path
-characteristics into consideration to send packets over multiple paths. At the
-receiver, we implement a per-path and aggregate de-jitter buffer, which
-interwork to playout packets smoothly even when the path skew is high. We
-evaluate the performance of our scheduling algorithm for networks with maximum
-end-to-end delay is 400\,\%\emph{ms} and maximum path skew is not more than
-200\,\%\emph{ms}. Our experiments show that MPRTP can be used for mobility,
-offloading, multihoming and implementing overlay trees.
+throughput and robustness. It corresponds to using congestion cues from
+out-of-band sources (different paths) and signaled in path (in RTCP). We
+design a protocol extension (MPRTP) to RTP that is backwards compatible and
+exploits multipath capabilities. We implement a scheduling algorithm that
+takes application requirements and current path characteristics into
+consideration to send packets over multiple paths. At the receiver, we
+implement a per-path and aggregate de-jitter buffer, which interwork to
+playout packets smoothly even when the path skew is high. We evaluate the
+performance of our scheduling algorithm for networks with maximum end-to-end
+delay is 400\,\emph{ms} and maximum path skew is not more than 200\,\emph{ms}.
+Our experiments show that the performance of MPRTP is not degraded compared to
+single path RTP and can be used for mobility, offloading, multihoming and
+implementing distribution overlays for large group conferencing.
 
+In chapter~\ref{chap:cc.nw}, we describe two congestion control mechanisms,
+both use out-of-band signaling, but use in-path and out-of-path sources,
+respectively. First, the in-path sources is based on receiving congestion cues
+from middleboxes (e.g., 3G or LTE base-stations) and use standard RTP
+extensions (e.g., TMMBR) for signaling . Second, the out-of-path sources are
+crowd-sourced 3G coverage maps that collect throughput and geo-location
+information from users and then notifies endpoints about the available
+capacity in the region. We propose a system to collect and query coverage
+maps. The endpoints query the coverage server using out-of-band signaling to
+discover areas of poor coverage, based on these notifications the endpoints
+vary their sending rate.
+
+In terms of innovativeness, the congestion control framework provides options
+to look beyond using merely in-path congestion cues. Chapters
+\ref{chap:cc}--\ref{chap:cc.nw} cover the four areas of the framework and
+propose solutions applicable to the area. However, the definitions of each
+area is generalized enough to allow application of a broad-range of
+techniques.
 
 
 \section{Future Work}
