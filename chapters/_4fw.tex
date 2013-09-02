@@ -13,8 +13,8 @@ congestion-controlled transport (TCP or DCCP). While using a congestion
 controlled transport may be safe for the network, it is suboptimal for the
 media quality unless the congestion-controlled transport is designed to carry
 media flows. Unfortunately, TCP is only suitable for interactive multimedia
-for paths with very low RTT ($<100$ms)~\cite{Brosh:tcp-real-time}, and DCCP
-packets has problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
+for paths with very low RTT (<100\,\emph{ms} )~\cite{Brosh:tcp-real-time}, and
+DCCP packets has problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
 encapsulated in UDP~\cite{RFC6773}.
 
 This motivates the need for a UDP congestion control, where the congestion
@@ -125,11 +125,11 @@ with a mix of wired and wireless links) and the application requirements
 
 Another aspect to consider when picking congestion cues is the the monitoring
 duration to identify congestion, i.e., either over a \emph{long-term} (order
-of seconds or minutes) or a \emph{short-term} (order of 100ms or a few
-seconds). For example, jitter is measured on a per-packet basis, but reported
-over a longer measurement interval (to filter for noise and transience).
-Alternatively, packet losses, discards, etc. are measured over a shorter
-interval so that the sender can react to these immediately.
+of seconds or minutes) or a \emph{short-term} (order of 100\,\emph{ms} or a
+few seconds). For example, jitter is measured on a per-packet basis, but
+reported over a longer measurement interval (to filter for noise and
+transience). Alternatively, packet losses, discards, etc. are measured over a
+shorter interval so that the sender can react to these immediately.
 
 \section{Congestion Reporting Frequency}
 \label{fw.freq}
@@ -162,8 +162,8 @@ the frame size exceeds MTU size. Typically, an average size of an RTCP packet
 size in a two-party call is $156$-$176$ bytes\footnote{The packet breakdown in
 bytes is: UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or
 more XR blocks (20 each).}. For a 30 FPS bidirectional video stream, the
-$rtcp\_bw \approx 75$ \emph{kbps}, which requires the media session bit rate
-be set to a value higher than $1.5$ \emph{Mbps} (to calculate assign the above
+$rtcp\_bw \approx$ 75\,\emph{kbps}, which requires the media session bit rate
+be set to a value higher than 1.5\,\emph{Mbps} (to calculate assign the above
 values in equation~\ref{eq:rtcp.int}). Consequently, it would not be possible
 to perform per-frame for sessions with lower media rates. It should be noted
 that the requirements for the media session bit rate needs to be re-calculated
@@ -329,8 +329,8 @@ Next, latency of a link is the propagation and serialization delay. Queuing
 delay is based on the queue-size of the router and hence, a router
 characteristic. Latencies between nodes typically varies between a few
 milliseconds up to 100s of milliseconds. Commonly used values are: LAN (very
-low delay, $<1$ms), Low delay ($<40$ms), trans-continental ($>100$ms), or
-Satellite links ($>500$ms).
+low delay, <1\,\emph{ms} ), Low delay (<40\,\emph{ms} ), trans-continental
+(>100\,\emph{ms} ), or Satellite links (>500\,\emph{ms} ).
 
 Packet losses are modeled using the Gilbert-Elliott
 Model~\cite{gilbert1960capacity, elliott1963estimates} or by packet
@@ -363,9 +363,9 @@ of packets, MTU is typically 1500 bytes) using:
 \end{equation*}
 
 For example, a router with a throughput of 1Mbps and a 1s queue depth would be
-capable of handling 83 packets (queue length). For example, the 100ms queue
-depth may represent a short queue, while the 10s queue depth represents a
-buffer-bloated queue.
+capable of handling 83 packets (queue length). For example, the 100\,\emph{ms}
+queue depth may represent a short queue, while the 10s queue depth represents
+a buffer-bloated queue.
 
 \subsection{Network topology}
 

@@ -116,13 +116,14 @@ In \citepub{c:err}, we stream 3 different YUV sequences~\cite{YUV_seq} over a
 3G link simulated in \emph{ns-2}~\cite{ns2} with varying amount of link layer
 packet loss (0.5\,\%, 1.0\,\% and 1.5\,\%)~\cite{3gppSim}. Our experiments
 show that using NACK, the endpoint is able to correct 15-30\,\% of the lost
-packets for an end-to-end latency of 60ms (meeting the 150ms playout
-deadline). The number of recovered packets will increase with shorter RTCP
-reporting intervals; in this paper we use \emph{1s} reporting interval, with
-early and immediate reporting as defined in \cite{rfc4585}. Based on these
-experiments, it shows that NACK is an effective mechanism for low end-to-end
-latency scenarios. Similarly, protecting the media flows with UEP incurred a
-15-25\,\% overhead, and about 21-24\,\% of the lost packets were recovered.
+packets for an end-to-end latency of 60\,\emph{ms} (meeting the 150\,\emph{ms}
+playout deadline). The number of recovered packets will increase with shorter
+RTCP reporting intervals; in this paper we use \emph{1s} reporting interval,
+with early and immediate reporting as defined in \cite{rfc4585}. Based on
+these experiments, it shows that NACK is an effective mechanism for low
+end-to-end latency scenarios. Similarly, protecting the media flows with UEP
+incurred a 15-25\,\% overhead, and about 21-24\,\% of the lost packets were
+recovered.
 
 \begin{figure}
 \centerline {
@@ -154,12 +155,13 @@ Lastly, using RPS error-resilience mechanism, the receiver indicates the
 decoding correctness; when losses occur, which pictures or slices have been
 decoded correctly or incorrectly. The feedback messages is encapsulated in an
 RTCP packet and are reported to the sender. In our experiments, the receiver
-reports RTCP every 250ms and it approximately consumes 2\,\% of the session
-media rate. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c) we observe that the
-PSNR drops down when a lost frame is referenced and the PSNR increases
-immediately after the encoder chooses a correct reference picture. When the
-one-way latency is 100 ms and the frame rate is set to 15 frames per second,
-we observe the error propagation is stopped by RPS in about 4 to 7 pictures.
+reports RTCP every 250\,\emph{ms} and it approximately consumes 2\,\% of the
+session media rate. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c) we observe
+that the PSNR drops down when a lost frame is referenced and the PSNR
+increases immediately after the encoder chooses a correct reference picture.
+When the one-way latency is 100\,\emph{ms} and the frame rate is set to 15
+frames per second, we observe the error propagation is stopped by RPS in about
+4 to 7 pictures.
 
 
 \begin{figure}[!t]
@@ -301,13 +303,13 @@ intervals and no change in path characteristics is observed, FEC is enabled
 (\texttt{\textbf{PROBE state}})
 
 In \citepub{c:fecrc}, we compare the performance of FEC-Based Rate Adaptation
-(FBRA), RRTCC and C-NADU. The bottleneck link capacity varies between 100 and
-256 \emph{kbps}. In the scenario, we evaluate the reactivity and convergence
-of the rate-control algorithm to the available end-to-end capacity for
-different path latencies.
+(FBRA), RRTCC and C-NADU. The bottleneck link capacity varies between
+100\,\emph{kbps} and 256\,\emph{kbps}. In the scenario, we evaluate the
+reactivity and convergence of the rate-control algorithm to the available
+end-to-end capacity for different path latencies.
 
-Our simulations in \emph{ns-2}~\cite{ns2} shows that for the 50\emph{ms} and
-100\emph{ms} bottleneck link latency, the goodput achieved by FBRA is
+Our simulations in \emph{ns-2}~\cite{ns2} shows that for the 50\,\emph{ms} and
+100\,\emph{ms} bottleneck link latency, the goodput achieved by FBRA is
 comparable to RRTCC but with comparatively lower loss rates ($\approx$1.5\,\%,
 see Table~\ref{table:fecrc-var-res}). Figures~\ref{fig:fecrc-var}(a)--(b) show
 that the FBRA can quite quickly bounce-back after undershooting. The figure
@@ -318,7 +320,7 @@ delay, it observes that the packets are arriving very close to application
 defined maximum delay ($\approx$400ms) and is therefore, conservative in its
 probing for available bandwidth (this is observed by the low FEC rate in
 Figure~\ref{fig:fecrc-var}(c)). FEC rate is about 10\,\% of the media rate at
-about 15-20 \emph{kbps} and the packet loss recovery is around 30\,\%.
+about 15-20\,\emph{kbps} and the packet loss recovery is around 30\,\%.
 Compared to FBRA, RRTCC tries to achieve high throughput at the cost of
 incurring packet losses (this behavior is also observed in
 \ref{tab:rrtcc-loss}), while C-NADU trades-off throughput for packet loss.
@@ -387,15 +389,15 @@ FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
 
 In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
 competing on a bottleneck link (1Mbps) in a testbed. The difference in the
-goodput of the calls in the two latency scenarios (50ms and 100ms) is about
-30-50 \emph{kbps}, but the PSNR of these calls are similar (see
-Table~\ref{table:fecrc-rw-udp}). Therefore, we conclude that small rate
-variations have little bearing on the quality of the call. The FEC recovery is
-low due to small amount of packet loss and most of the losses occur when FEC
-was disabled. Additionally, 90\,\% of the times FEC was enabled, resulted in
-an increase in media rate. Low FEC overhead also implies that the FBRA remains
-longer in the \texttt{\emph{STAY}} state, thus avoiding abrupt changes to the
-encoding rate, which is detrimental for user experience
+goodput of the calls in the two latency scenarios (50\,\emph{ms} and
+100\,\emph{ms}) is about 30-50\,\emph{kbps}, but the PSNR of these calls are
+similar (see Table~\ref{table:fecrc-rw-udp}). Therefore, we conclude that
+small rate variations have little bearing on the quality of the call. The FEC
+recovery is low due to small amount of packet loss and most of the losses
+occur when FEC was disabled. Additionally, 90\,\% of the times FEC was
+enabled, resulted in an increase in media rate. Low FEC overhead also implies
+that the FBRA remains longer in the \texttt{\emph{STAY}} state, thus avoiding
+abrupt changes to the encoding rate, which is detrimental for user experience
 \cite{Zink03subjectiveimpression}.
 
 

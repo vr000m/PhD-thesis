@@ -149,8 +149,8 @@ the available paths for active transmission, c) follows packet scheduling
 rules that can be described by the multimedia application. We do not use
 B-frames and do not discard any packets at the sender. Furthermore, we try to
 maintain optimal playout by choosing paths that meet the latency constraints
-and try to maintain a very short de-jitter buffer ($<500ms$), so that the
-scheduling algorithm can be extended to include interactive applications.
+and try to maintain a very short de-jitter buffer (<500\,\emph{ms}), so that
+the scheduling algorithm can be extended to include interactive applications.
 
 
 \begin{table}
@@ -187,17 +187,17 @@ affected. When none of the paths exhibit any losses, the performance of MPRTP
 was exactly the same, except that MPRTP induces an overhead because it uses
 additional extension for identifying, monitoring and reporting subflows. In
 our experiments in \citepub{c:mprtp} the RTP overhead for a 1 Mbps media flow
-is an additional 1.275 kbps and the Multipath RTCP (MPRTCP) accounted for
-$\approx$70\,\% of the total RTCP bandwdith ($\approx$0.25 kbps). When we
-introduce losses, the PSNR drops for the single path, however, for the
+is an additional 1.275\,\emph{kbps} and the Multipath RTCP (MPRTCP) accounted
+for $\approx$70\,\% of the total RTCP bandwidth ($\approx$0.25\,\emph{kbps}).
+When we introduce losses, the PSNR drops for the single path, however, for the
 multipath case the PSNR is significantly higher because the paths do not
 necessarily exhibit losses at the same instance in time, hence, the MPRTP
 scheduling algorithm is able to redistribute the capacity and preferring the
 path with lower loss rate. Additionally, when the paths have dissimilar RTTs
-(up to 150ms of skew across paths), yet again the receiver is able to playout
-packets across all paths and performs (compare PSNR) at par with the single
-path. The scheduling algorithm and the adaptive dejitter buffer to playout
-packets across different path skews is discussed in detail in
+(up to 150\,\emph{ms} of skew across paths), yet again the receiver is able to
+playout packets across all paths and performs (compare PSNR) at par with the
+single path. The scheduling algorithm and the adaptive dejitter buffer to
+playout packets across different path skews is discussed in detail in
 \citepub{c:mprtp}.
 
 
@@ -247,7 +247,7 @@ Figure~\ref{chap7:fig_mprtp_arch} show the interworking of the MPRTP stack
 with an ICE Agent implementing STUN connectivity checks. Irrespective of the
 presence of a NAT, in \citepub{c:mprtp} we show that advertising the multiple
 interfaces \emph{in-band} leads to a establishing the call (with MPRTP
-capablities) more quickly than when advertising the same interfaces
+capabilities) more quickly than when advertising the same interfaces
 \emph{out-of-band}.
 
 
@@ -257,9 +257,11 @@ In \citepub{c:mprtp}, we focus on spreading a constant bit rate (CBR) media
 stream across multiple paths, for which we present a scheduling algorithm for
 allocating traffic based on path characteristics. We use an adaptive dejitter
 buffer at the receiver so that the endpoint can playback media packets from
-paths with diverse characteristics. However, our work is orthogonal to rate
-adaptation--which would just change the total media rate to spread across each
-subflow.
+paths with diverse characteristics. In our experiments, the application
+configures the scheduling algorithm for maximum end-to-end latency of
+400\,\emph{ms} and maximum path skew set to 200\,\emph{ms}. However, our work
+is orthogonal to rate adaptation--which would just change the total media rate
+to spread across each subflow.
 
 
 \begin{figure}
@@ -353,17 +355,17 @@ participants.
 
 The use of multiple Application Layer Multicast (ALM) trees for media delivery
 minimizes the end-to-end delay and results in asymmetric relationships between
-participants and introduces complex forwarding. Chu et al. show ALM as a
-viable solution for real-time conferencing over the Internet~\cite{Chu2001}.
+participants and introduces complex forwarding. Chu \emph{et al.} show ALM as
+a viable solution for real-time conferencing over the Internet~\cite{Chu2001}.
 Banerjee et al.\cite{Banerjee2002} present an ALM protocol that has a
-hierarchical control structure with low overhead. Noh et al.~\cite{Noh2008}
-use multiple trees to reduce the end-to-end delay and determine the optimal
-number of ALM trees depending on specific network characteristics. They
-conclude that the fan-out of a peer influences the trade-off between the
-propagation delay and the queuing delay. Li et al.~\cite{Li2010a} describes
-the use of multiple trees as a mechanism to scale to more clients by
-introducing multiple focus-mixer structures where each structure is dedicated
-to serving a set of clients in a region.
+hierarchical control structure with low overhead. Noh \emph{et
+al.}~\cite{Noh2008} use multiple trees to reduce the end-to-end delay and
+determine the optimal number of ALM trees depending on specific network
+characteristics. They conclude that the fan-out of a peer influences the
+trade-off between the propagation delay and the queuing delay. Li et
+al.~\cite{Li2010a} describes the use of multiple trees as a mechanism to scale
+to more clients by introducing multiple focus-mixer structures where each
+structure is dedicated to serving a set of clients in a region.
 
 In \cite{draft.rtcp.overlay}, instead of using a centralized conferencing
 server to maintain the media sessions and inserting peers or nodes in the
