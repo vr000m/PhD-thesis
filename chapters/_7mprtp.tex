@@ -146,11 +146,13 @@ cannot read ahead. Our proposed scheduling algorithm in \citepub{c:mprtp}
 calculates the per path rate based on the the following: a) characterize the
 path based on the observed network behavior, b) choosing performant paths from
 the available paths for active transmission, c) follows packet scheduling
-rules that can be described by the multimedia application. We do not use
-B-frames and do not discard any packets at the sender. Furthermore, we try to
-maintain optimal playout by choosing paths that meet the latency constraints
-and try to maintain a very short de-jitter buffer (<500\,\emph{ms}), so that
-the scheduling algorithm can be extended to include interactive applications.
+rules that take the constraints applied by the multimedia application. We do
+not use B-frames and do not discard any packets at the sender. Furthermore, we
+try to maintain optimal playout by choosing paths that meet the latency
+constraints and try to maintain a very short de-jitter buffer
+(<500\,\emph{ms}), so that the scheduling algorithm can be extended to include
+interactive applications.
+
 \subsection{Multipath Scheduling and Adaptive Playout}
 
 The scheduling algorithm at startup assigns equal fractional distributions and
@@ -221,31 +223,7 @@ calculation~\cite{Fober05,Colin03}: $Playout_{delay} = \frac{MAX([SW]) + 124
 \times Playout_{prev}}{125}$.
 
 
-
-
-\begin{table}
-  \begin{center}
-  \begin{tabular}{cccc} \hline
-   & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
-  \multirow {2}{*}{} 
-  1-Path (no loss) & 48.427 & 0.00 & 0.00 \\ 
-  2-Path (no loss) & 48.427 & 0.00 & 0.00 \\
-  3-Path (no loss) & 48.427 & 0.00 & 0.00 \\ \hline
-  \multicolumn{4}{c}{Variable losses per path} \\ \hline	
-  \multirow {2}{*}{} 
-  1-Path (0.5\% loss) & 40.887 & 0.506 & 0.49 \\
-  1-Path (1\% loss) & 36.172 & 0.705 & 1.01 \\ %\hline
-  2-Path (0-0.5\%) & 43.4 & 1.9 & 0.24 \\
-  3-Path (0-1.0\%) & 40.5 & 0.49 & 0.48\\ \hline	
-  \multicolumn{4}{c}{Variable RTT per path} \\ \hline
-  2-Path & 48.303 & 0.278 & 0.004 \\ \hline
-  3-Path & 48.164 & 0.32 & 0.0121\\ \hline
-\end{tabular}
-\caption{Comparing performance of using a single path with using multiple
-paths}
-\label{table-var-path}
-\end{center}
-\end{table}
+\subsection{Comparing MPRTP to single path RTP}
 
 In \citepub{c:mprtp}, we show that by using the performance of an MPRTP
 endpoint does not deteriorate when comparing to the performance of a flow
@@ -270,6 +248,29 @@ single path. The scheduling algorithm and the adaptive dejitter buffer to
 playout packets across different path skews is discussed in detail in
 \citepub{c:mprtp}.
 
+\begin{table}
+  \begin{center}
+  \begin{tabular}{cccc} \hline
+   & Avg. PSNR & $\sigma_{PSNR}$ & PLR\\ \hline
+  \multirow {2}{*}{} 
+  1-Path (no loss) & 48.427 & 0.00 & 0.00 \\ 
+  2-Path (no loss) & 48.427 & 0.00 & 0.00 \\
+  3-Path (no loss) & 48.427 & 0.00 & 0.00 \\ \hline
+  \multicolumn{4}{c}{Variable losses per path} \\ \hline	
+  \multirow {2}{*}{} 
+  1-Path (0.5\% loss) & 40.887 & 0.506 & 0.49 \\
+  1-Path (1\% loss) & 36.172 & 0.705 & 1.01 \\ %\hline
+  2-Path (0-0.5\%) & 43.4 & 1.9 & 0.24 \\
+  3-Path (0-1.0\%) & 40.5 & 0.49 & 0.48\\ \hline	
+  \multicolumn{4}{c}{Variable RTT per path} \\ \hline
+  2-Path & 48.303 & 0.278 & 0.004 \\ \hline
+  3-Path & 48.164 & 0.32 & 0.0121\\ \hline
+\end{tabular}
+\caption{Comparing performance of using a single path with using multiple
+paths}
+\label{table-var-path}
+\end{center}
+\end{table}
 
 \section{Call Establishment and NAT Traversal}
 
