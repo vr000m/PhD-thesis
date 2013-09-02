@@ -1,11 +1,11 @@
 
-In this thesis, we describe our proposed congestion control framework in
-\ref{fw.fw}. When describing the different parts of the framework, we also
-discuss the related work and our contributions in those areas. In
-Chapter~\ref{chap:rg}, we aimed to classify congestion control cues for
-real-time communication based on: \emph{where they are measured?} (by in-path
-or out-of-path sources) and \emph{how they are reported?} (via in-band or
-out-of-band signaling). In Chapter~\ref{chap:fw}, we describe other
+In this thesis, we describe our proposed classification of congestion control
+cues (framework) in \ref{fw.fw}. When describing the different parts of the
+framework, we also discuss the related work and our contributions in those
+areas. In Chapter~\ref{chap:rg}, we aimed to classify congestion control cues
+for real-time communication based on: \emph{where they are measured?} (by
+in-path or out-of-path sources) and \emph{how they are reported?} (via in-band
+or out-of-band signaling). In Chapter~\ref{chap:cc.fw}, we describe other
 fundamental choices needed to implement congestion control. Choice of
 congestion cues, reporting frequency and circuit-breakers. Additionally, we
 also describe an evaluation suite for measuring the performance of the
@@ -14,7 +14,57 @@ proposed congestion control algorithms.
 In chapter~\ref{chap:cc}, we describe congestion control implemented using
 congestion cues from in-band sources and signaled in path (in RTCP). We
 further categorize the congestion control algorithms based on \emph{where they
-are implemented}: sender-driven, receiver-driven, or co-operative (combination
-of sender and receiver) and compare the performance of each.
+are implemented}: sender-driven scheme (e.g., TFRC), receiver-driven scheme
+(e.g., TMMBR), or co-operative scheme (combination of sender and receiver,
+e.g., C-NADU, RRTCC) and compare the performance of an algorithm in each
+scheme. We observe that the performance of TFRC is bursty, which may lead to
+poor user-experience, whilst TMMBR, C-NADU and RRTCC have a more stable
+throughput. Lastly, TMMBR appears to be conservative and RRTCC appears to be
+aggressive. C-NADU attempts to trade-off throughput for losses, but achieves
+slightly higher throughput than TMMBR.
+
+
+In chapter~\ref{chap:er-cc}, we address two problems: applicability of
+error-resilience schemes, and using FEC to probe for available capacity to
+implement congestion control for interactive multimedia flows. To the first
+problem, we show that NACK, Reference Picture Selection, Unequal Error
+Protection and adaptive slice-size can be used for different levels of
+latencies and observed packet loss ratio. To the second problem: we propose a
+congestion control scheme where instead of increasing the rate when network
+conditions seem stable, the sender introduces FEC for one RTCP interval. If
+the FEC and the media packets are received successfully, the sender increases
+the sender rate with the amount of FEC rate. The trade-off is that we get a
+smoother ramp-up and if a packet gets lost, it may be recovered by the FEC
+packet. The sender also implements a variable FEC interval, i.e., it varies
+the number of packet for which FEC is generated. Hence, if the sender thinks
+that it is underutilizing the link by large margin, it introduces a shorter
+FEC interval (up to 33\,\% redundancy) and therefore ramps up quickly.
+Consequently when it thinks that it is closer to the bottleneck link capacity,
+it introduces a longer FEC interval (up to 8\,\% redundancy) and therefore is
+conservative in probing for available capacity. Our experiments show that by
+using adaptive FEC for probing, the endpoints are able to recover 15-25\,\% of
+the lost packets and $\approx$90\,\% of the time using FEC subsequently
+results in an increase in the media rate. These results are comparable to our
+earlier experiments using a fixed FEC interval throughput the duration of the
+call for error-resilience, where we were able to 20-24\,\% of the lost
+packets. We believe using FEC for congestion control in interactive multimedia
+has not been explored in depth by the community, partly because interactive
+multimedia flows have very tight delay constraints and FEC may not arrive in
+time for recovering the packet.
+
+In chapter~\ref{chap:mprtp}, we propose using the multiple interfaces of an
+endpoint (e.g., mobile device, tablet, SOHO gateways) for increasing
+throughput and robustness. We design a protocol extension (MPRTP) to RTP that
+is backwards compatible and exploits multipath capabilities. We implement a
+scheduling algorithm that takes application requirements and current path
+characteristics into consideration to send packets over multiple paths. At the
+receiver, we implement a per-path and aggregate de-jitter buffer, which
+interwork to playout packets smoothly even when the path skew is high. We
+evaluate the performance of our scheduling algorithm for networks with maximum
+end-to-end delay is 400\,\%\emph{ms} and maximum path skew is not more than
+200\,\%\emph{ms}. Our experiments show that MPRTP can be used for mobility,
+offloading, multihoming and implementing overlay trees.
+
+
 
 \section{Future Work}
