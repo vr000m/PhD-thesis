@@ -151,6 +151,76 @@ B-frames and do not discard any packets at the sender. Furthermore, we try to
 maintain optimal playout by choosing paths that meet the latency constraints
 and try to maintain a very short de-jitter buffer (<500\,\emph{ms}), so that
 the scheduling algorithm can be extended to include interactive applications.
+\subsection{Multipath Scheduling and Adaptive Playout}
+
+The scheduling algorithm at startup assigns equal fractional distributions and
+the per-path distribution changes depending on the observed path
+characteristics. Hence, the MPRTP sender first calculates the estimated
+receiver rate for each path based on the Subflow Receiver
+Reports~\cite{draft.mprtp}. Second, the sender characterizes the paths based
+on the observed packet discards and losses. Third, the sender chooses a set of
+\emph{active paths} from the available paths. Forth, the sender follows a set
+of packet scheduling rules. Fifth, the sender calculates the timescales at
+which it will re-calculate the fractional distribution and lastly, it
+calculates the per-path fractional distribution.
+
+A path that reports discards and losses in a single or consecutive intervals
+is considered \emph{mildly congested}. If this behavior is observed over 3
+successive intervals, it is considered \emph{congested}. Furthermore, if a
+path reports only losses and no discards in successive intervals, it is
+considered \emph{lossy}. A path without losses or discards is considered
+\emph{non-congested}.
+
+A multipath sender chooses the paths that meet the capacity and latency
+requirements. Next, it groups the paths based on the path latencies--bandwidth
+is additive for paths with similar latencies~\cite{Wischik:2008:RPP}.
+Subsequently, it sorts the path groups in decreasing order of
+$\frac{bandwidth}{latency}$, so that groups with high bandwidth and low delay
+are preferred. The endpoint chooses the set of paths from the groups that meet
+the capacity requirements and marks these paths as \emph{`active'} and the
+rest are marked \emph{`passive'}and used when the chosen paths fail. Depending
+on the amount of packet loss (caused due to bit-error corruption) may affect
+the quality of experience. Therefore, an MPRTP sender should avoid scheduling
+packets on paths with losses. The scheduler observes the following rules:
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+
+  \item If the next scheduled frame is an I-frame then the resulting RTP
+  packets are assigned to the path with the highest $\frac{bandwidth}{delay}$,
+  bandwidth and lowest loss rate.
+
+  \item On receiving a NACK, transmit the requested packet on the path with
+  the highest $\frac{bandwidth}{delay}$, least RTT and lowest loss rate.
+
+  \item Reduce the fractional traffic distribution on the \emph{mildly
+  congested} and \emph{congested} paths in an attempt to reduce congestion on
+  those paths.
+
+\end{itemize}
+
+To compensate for the difference in path latencies, the receiver calculates:
+1) Packet skew based on the path jitter, 2) the Path Skew, based on media
+value of packet skew on each path, and 3) the Playout Delay, based on the per
+Path Skew. First, the endpoint calculates the packet skew of each packet
+received on a path by subtracting the difference between reception timestamps
+($TR$) and RTP timestamps ($TS$), $Packet\ Skew = (TR_j - TR_i) - (TS_j -
+TS_i)$, where `i' and `j' are consecutive packets received on a path.
+
+For each path the receiver maintains a Drift Window (DW), which is a sliding
+window of 2 seconds of media packets or 100 packets, whichever is lower. We
+chose a relatively small window size to avoid the receiver from under-flowing
+by changing the playout very late. Every time the endpoint receives a packet
+on a path it calculates the drift and inserts it in to the window. The
+receiver then sorts the window and chooses the median ($\widetilde{DW}$) value
+for calculating the path skew: $Path\ Skew = 0.01 \times \widetilde{DW} + 0.99
+\times PathSkew_{prev}$. 
+
+The path skew values are fed into the regular playout delay
+calculation~\cite{Fober05,Colin03}: $Playout_{delay} = \frac{MAX([SW]) + 124
+\times Playout_{prev}}{125}$.
+
+
 
 
 \begin{table}
