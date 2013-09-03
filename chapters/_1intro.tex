@@ -3,29 +3,34 @@ In recent years, video has emerged as the dominant traffic\footnote{In 2012,
 partly due to the success of YouTube and other over-the-top media streaming
 services (e.g., Netflix, Vimeo, Dailymotion, etc.). Video streaming emerged as
 the dominant traffic only after it was easily accessible to Internet users in
-the web-browser (initially, attributed to the availability of Adobe Flash
-Video plugin and later, due to the inclusion of the HTML5 video tag).
-Currently, the same trend can be observed with web-based conversational
-multimedia, i.e., web services can use Adobe's Real-time Media Flow Protocol
-(RTMFP)~\cite{draft.rtmfp}\footnote{There are other plugin-based services:
-Facebook Video, Skype, Google Talk/Hangout, etc.} or HTML5's Web-based
-Real-Time Communication (WebRTC) stack~\cite{draft.webrtc}.
+the web-browser. The initial growth for video streaming is attributed to the
+availability of Adobe Flash Video plugin and it became ubiquitous with the
+inclusion of the video tag in HTML5. Currently, the same trend is apparent in
+web-based real-time multimedia communication; web services either use Adobe's
+Real-time Media Flow Protocol (RTMFP)~\cite{draft.rtmfp}\footnote{There are
+other plugin-based services: Facebook Video based on Skype SDK, Google Talk,
+Google's Hangout/Helpout services, etc.} or HTML5's Web-based Real-Time
+Communication (WebRTC) stack~\cite{draft.webrtc}.
 
 
-Real-time communication on the Internet is subject to the unpredictability of
-the best-effort IP network. This uncertainty is mainly due to packet loss,
-packet re-ordering, variable queuing delay. Additionally,
+Real-time multimedia communication on the Internet is subject to the
+unpredictability of the best-effort IP network. This uncertainty is mainly due
+to packet loss, packet re-ordering, variable queuing delay. Additionally,
 Buffer-bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router may
 cause long delays and bursty losses. Video streaming overcomes most of these
-challenges by having larger playout buffers, but some over-the-top streaming
-applications now use TCP instead of UDP for delivering media data.
-Unfortunately, TCP is at best suitable for interactive multimedia for paths
-with very low end-to-end delay ($<100$ms)~\cite{Brosh:tcp-real-time}.
-Furthermore, in video streaming, if the path characteristics change, the
-client can switch between files with the same media content pre-encoded at
-different quality levels. However, this strategy is not applicable to
-interactive multimedia, where the sending endpoint needs to immediately adapt
-the media encoding rate to the available path capacity.
+challenges by having larger playout buffers, this behavior is independent of
+streaming over UDP (e.g., RTSP or SIP) or TCP (e.g., DASH). However, real-time
+communication uses very small buffers and hence, endpoints modify the sending
+rate to best match the available capacity and not cause excessive delay. For
+real-time communication, TCP is at best suitable for paths with very low path
+latencies (<100\,\emph{ms})~\cite{Brosh:tcp-real-time}, hence, UDP carries
+real-time media flows.
+
+% Furthermore, in video streaming, when the path characteristics change, the
+% client switches between files with the same media content pre-encoded at
+% different quality levels (\emph{rate-switching}). However, this strategy is
+% not applicable to real-time communication, where the sending endpoint needs 
+% to immediately adapt the media encoding rate to the available path capacity.
 
 % While video communication has existed for the last decade (via Skype, etc.),
 % there is no standardized congestion-control, but many have been proposed in
@@ -54,7 +59,7 @@ congestion control cues and lastly, propose congestion control algorithms
 that work in diverse situations.
 
 
-We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry media data,
+We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry media flows,
 the congestion control algorithm is therefore built within the design
 constraints of RTP. Consequently, wherever possible we have attempted to fix
 these deficiencies by proposing extensions to RTP. This thesis is a bundle of
@@ -90,20 +95,20 @@ emphasize more on the former.
 
 \section{Structure of the Thesis}
 
-This thesis describes techniques to adapt media data to changing network
-characteristics for different types of multimedia systems. The work is mainly
-a summary of scientific-papers, but is also supported by additional body of
-work. We have co-authored a number of Internet Drafts\footnote{at the time of
-writing this thesis, several of these documents are still in the Internet
-Draft state, but will be published as RFCs shortly} that complement the
-scientific results discussed in the thesis. The chapters describing the
+This thesis describes techniques to modify the sending rate to changing
+network characteristics for different types of multimedia systems. The work is
+mainly a summary of scientific-papers, but is also supported by additional
+body of work. We have co-authored a number of Internet Drafts\footnote{at the
+time of writing this thesis, several of these documents are still in the
+Internet Draft state, but will be published as RFCs shortly} that complement
+the scientific results discussed in the thesis. The chapters describing the
 various parts of the congestion control framework discuss both our scientific
 and engineering work, while associating it with the relevant related work in
 the area. The remainder of the thesis is organized as follows.
 
 Chapter~\ref{chap:rg} describes the research goal of the thesis, which
-consists of creating a framework for congestion control that meets the
-requirements for multimedia systems. This section is based on our contribution
+consists of discussing terminology, challenges with DSCP markings,
+requirements for congestion control. This chapter is based on our contribution
 \cite{Singh:control.loops.api} and~\cite{draft.rmcat.evaluate}.
 
 %\chapter{RTP: Real-time Transport Protocol}
@@ -112,21 +117,21 @@ requirements for multimedia systems. This section is based on our contribution
 Chapter~\ref{chap:rtp} provides the necessary background information to Real-
 time Transport Protocol (RTP). RTP together with RTP Control Protocol (RTCP)
 forms the control loop that adapts media to the reported path characteristics.
-This section is based on the RTP protocol suite~\cite{rfc3550, rfc4585,
+This chapter is based on the RTP protocol suite~\cite{rfc3550, rfc4585,
 rfc3611, rfc5104, rfc5506} and our contributions to
 it~\cite{draft.xr.discard.rle, draft.xr.jb, draft.xr.bytes.discarded}.
 
 % \chapter{Rate-control Framework}
 
-Chapter~\ref{chap:cc.fw} provide an high-level overview to our proposed
-`Congestion Cues Framework' and discuss criteria for evaluating congestion
-control for multimedia systems. We also discuss the circuit breaker--a minimal
-congestion control--conditions under which a multimedia stream will be
-terminated. The circuit breaker is applicable to applications that do not
-currently implement congestion control, are about to be deployed on the wide
-Internet and do not want to cause a congestion collapse. This section is based
-on our contributions, which is documented in~\cite{draft.rmcat.evaluate,
-Singh:PhDFw, draft.rtp.cb}, \citepub{c:cb}.
+Chapter~\ref{chap:cc.fw} provides an high-level overview to our proposed
+`Congestion Cues Framework', discusses congestion cues, options for reporting
+intervals, criteria for evaluating congestion control. We also discuss the
+circuit breaker--a minimal congestion control--conditions under which a
+multimedia stream will be terminated. The circuit breaker is applicable to
+applications that do not currently implement congestion control, are about to
+be deployed on the wide Internet and do not want to cause a congestion
+collapse. This chapter is based on our contributions, which is documented
+in~\cite{draft.rmcat.evaluate, Singh:PhDFw, draft.rtp.cb}, \citepub{c:cb}.
 
 
 % \chapter{Rate-control for Interactive Multimedia}
@@ -134,15 +139,15 @@ Singh:PhDFw, draft.rtp.cb}, \citepub{c:cb}.
 
 Chapter~\ref{chap:cc} discusses the mechanisms available for congestion
 control in interactive multimedia. We consider sender-driven, receiver-driven
-and hybrid congestion control algorithms. The chapter is based on our
+and co-operative congestion control algorithms. The chapter is based on our
 contributions, which is documented in \citepub{c:3grc}, \citepub{c:hetrc},
 \cite{singh:2010.thesis} and \citepub{c:eval}.
 
 % \chapter{Adaptive Error-Resilience and Congestion Control}
 % +ECN
 
-Chapter~\ref{chap:er-cc} discusses the mechanisms available for
-error-resilience of interactive video. We also discuss using these
+Chapter~\ref{chap:er-cc} discusses the applicability of error-resilience
+mechanisms for real-time communication. We also discuss using these
 error-resilience techniques for congestion control. The chapter is based on
 our contributions, which is documented in \citepub{c:err}, and
 \citepub{c:fecrc}.
@@ -165,5 +170,5 @@ is based on our contributions, which is documented in \citepub{c:3grc},
 
 % \chapter{Conclusions}
 
-Chapter~\ref{chap:conc} concludes the thesis and we analyze if the framework
-meets the requirements.
+Chapter~\ref{chap:conc} concludes the thesis and we analyze the proposed
+congestion control algorithms with the areas in the framework.
