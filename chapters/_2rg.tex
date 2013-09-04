@@ -1,14 +1,15 @@
 %Enabling adaptive multimedia applications/systems.
 
-The research goal of this thesis is to discuss congestion control for real-
-time media. To achieve a suitable end-user experience, a multimedia
-system\footnote{the transmitting endpoint or a classifier in the network}:
-\textbf{1)} associates a DiffServ Code Point (DSCP)~\cite{rfc2474} to the
-media packets; thereby, enabling Quality of Service (QoS). Using DSCP poses
-some challenges, which are discussed in Section~\ref{rg.ch.dscp}. \textbf{2)}
-instructs the encoder to modify the encoding rate to a certain target rate. To
-achieve media rate-adaption the endpoint needs to monitor and respond to
-congestion cues. The following section provides definitions of common terms
+The research goal of this thesis is to discuss congestion control for
+real-time media communication. The application needs to provide a suitable
+user-experience even when the available capacity varies or competes with
+similar cross-traffic. A multimedia system associates a DiffServ Code Point
+(DSCP)~\cite{rfc2474} to the media packets; thereby, enabling Quality of
+Service (QoS). Using DSCP poses some challenges, which are discussed in
+Section~\ref{rg.ch.dscp}. Apart from expecting preferential treatment, the
+endpoint instructs the encoder to modify the encoding rate to a certain target
+rate. To achieve media rate-adaption the endpoint needs to monitor and respond
+to congestion cues. The following section provides definitions of common terms
 used within this thesis.
 
 %Additionally, we  discuss requirements for media rate-adaptation.
@@ -37,11 +38,12 @@ as a software library (e.g., \texttt{x264}, \texttt{libvpx}).
 \textbf{\texttt{Multimedia Application}}: is a software program running on an
 endpoint that contains the logic for rendering the received multimedia
 streams, discovering, configuring, enabling and disabling the multimedia
-device(s). It also stores the user's preferences and application settings
-(typically, set by the developer or the multimedia service provider), it uses
-these stored settings to adjust the encoder settings (frame rate, frame size),
-adjust the network parameters (size of de-jitter buffer, enable or disable RTP
-flows, congestion control, etc).
+device(s). It also stores the user's preferences and application settings. The
+applications are typically set by the developer or the multimedia service
+provider and the application uses these stored settings to adjust the encoder
+settings (frame rate, frame size, packetization time), or adjust its network
+parameters (size of de-jitter buffer, enable or disable RTP flows, congestion
+control, etc).
 
 % \textbf{\texttt{Multimedia System}}: is the combination of a multimedia
 % application, controlling one or more multimedia device on an endpoint.
@@ -56,13 +58,13 @@ firewalls, Session Border Controller (SBC), routers with limited capacity or
 queues.
 
 \textbf{\texttt{Multipoint Control Unit (MCU)}}: is an endpoint that acts as a
-bridge in many to many conferencing system. This is an alternative network
+bridge in many-to-many conferencing system. This is an alternative network
 architecture to a full-mesh system in which an endpoint sends its media stream
-to every other endpoint in the conference. Alternatively, the MCU acts as the
-terminating endpoint and each endpoint solely sends its media stream to the
-MCU instead of every participant. The MCU on receiving the individual streams
-can behave like an RTP Mixer and output a single stream (e.g., audio or
-composited video).
+to every other endpoint in the conference. The MCU behaves either as a
+translator or a mixer. In a mixer topology, each endpoint sends its media
+stream to the mixer instead of the other participants. The Mixer on receiving
+the individual streams, outputs a single stream (e.g., audio and video of the
+speaker or a composited video).
 
 \textbf{\texttt{Operating Environment}}: real-time multimedia traffic is
 transmitted using best-effort IP networks that consists of paths with varying
@@ -75,16 +77,17 @@ In this thesis, we mainly examine \emph{endpoints} that are connected to the
 Internet by one or more network interfaces, potentially having more than one
 identifiable IP address. These endpoints run a \emph{multimedia system} which
 is a combination of a \emph{multimedia application} controlling one or more
-\emph{multimedia device}. Typically, we use only video sources with standard
-video sequences (instead of a live camera). The main reason for this is to be
-able to create comparable results in repeatable experiments. Furthermore, the
-video calls are mainly \emph{point-to-point} communication between endpoints
-in our testbed. Our testbed emulates the real-world by controlling the
-transport characteristics of the \emph{intermediaries} or by introducing
-impairments. Lastly, for limited number of cases, we run our evaluation setup
-over real-world networks that cover different \emph{operating environments}.
-For example, a call may be initiated by an endpoint connected via Ethernet to
-a terminating endpoint connected over 3G wireless.
+\emph{multimedia devices}. Typically, in our experiments, we use only video
+sources with standard video sequences (instead of a live camera). The main
+reason for this is to be able to create comparable results from repeatable
+experiments. Furthermore, the video calls are mainly \emph{point-to-point}
+communication between endpoints in our testbed. Our testbed emulates the
+real-world by controlling the transport characteristics of the
+\emph{intermediaries} or by introducing impairments. Lastly, for limited
+number of cases, we run our evaluation setup over real-world networks that
+cover different \emph{operating environments}. For example, a call may be
+initiated by an endpoint connected via Ethernet to a terminating endpoint
+connected over 3G or WLAN.
 
 % \fxnote{{\color{red} TODO: why or put these terminologies in context of the
 % \thesis?}}
@@ -102,36 +105,36 @@ classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
 same traffic class the router discards packets using \emph{tail drop} or
 \emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
 
+% generic markings
+
 Consequently, DiffServ needs to be implemented on every router along the data
 path and configured to have the same forwarding policy, i.e., the routers have
 to belong to the same DiffServ administrative domain for the packets to be
-treated in exactly the same way at each hop. However, if packets traverses
-across DiffServ domains, typically between Internet Service Providers (ISPs),
-it is quite possible that the ISPs do not implement a policy for each
+treated in exactly the same way at each hop. However, if the packets traverse
+DiffServ domains, normally between Internet Service Providers (ISPs), it is
+quite possible that the receiving ISP does not implement a policy for each
 corresponding traffic class; when this happens the routers use the default
 policy to forward packets, and as a result lose any opportunity of
 differentiated service. Especially with video traffic which can be marked in
-varying ways depending on the type of application (multicast, broadcast,
-streaming, conversational, with each category having its own policy), the ISP
-sometimes choose to ignore these different categories for video and marks all
-video packets with the same DSCP~\cite{rfc5865}. These \emph{generic} markings
-may be contrary to the intended DSCP of the multimedia system.
-
-% generic markings
-
-% cases where it might work
-
+varying ways depending on the type of application. Multicast, broadcast,
+streaming, conversational, each category has its own policy, the ISP sometimes
+choose to ignore these different categories for video and marks all (or a
+subset of) the video packets with the same DSCP~\cite{rfc5865}. These
+\emph{generic} markings may be contrary to the intended DSCP of the multimedia
+system. Again DSCP does not guarantee the intended behavior for the endpoint.
 Despite the above listed challenges, marking packets with a DSCP code point
 helps in some environments~\cite{draft.rtcweb.qos}:
 
+% cases where it might work
+
 \begin{itemize}
 
- \item If the bottleneck link is the broadband router that often connects a
-residential or Small Office/Home Office (SOHO) then the DSCP markings helps in
-prioritizing the data traffic at this bottleneck.
+  \item If the bottleneck link is the broadband router that often connects a
+  residential or Small Office/Home Office (SOHO) to the ISP, the DSCP markings
+  helps in prioritizing the data traffic at this bottleneck.
 
-	\item If the packets traverse a congested wireless link and the service 
-	provider did not scrub out the DSCP markings, the markings may help.
+  \item If the packets traverse a congested wireless link and the service
+  provider did not scrub out the DSCP markings, the markings may help.
 
 \end{itemize}
 
@@ -141,12 +144,12 @@ prioritizing the data traffic at this bottleneck.
 In this thesis, we do not rely on the use of DSCP by any entity (endpoint or
 intermediary) along the path. We assume that the presence of these markings
 will only make the performance of our algorithms better. Consequently, the
-endpoints need to implement rate-control (or, congestion control), i.e., the
-endpoint needs to monitor the media flows and observe for congestion cues.
-Based on these cues, the endpoint may increase or decrease the media encoding
-rate\footnote{For the moment the rate-controller can be placed at either the
-sender or the receiver.}. We identify three control loops
-in~\cite{Singh:control.loops.api}, they are:
+endpoints need to implement congestion control, i.e., the endpoint monitors
+the media flows for congestion. Based on the observed congestion cues, the
+endpoint vary (increase or decrease) the media encoding rate\footnote{For the
+moment the rate-controller can be placed at either the sender or the
+receiver.}. In~\cite{Singh:control.loops.api}, we identify three control loops
+to implement congestion control, they are:
 
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
@@ -174,15 +177,15 @@ sender to act upon.
 
 \end{enumerate}
 
-If an endpoint detects congestion rapidly, and a the end-to-end path has a
-sufficiently low RTT, it is possible to change the encoding rate quickly to
-meet the requirements of the end-to-end path capacity. However in practice,
-this not always possible because \textbf{a)} it may take multiple reports or
-data packets to detect congestion, \textbf{b)} after detecting a congestion
-cue at the receiver it takes at least one-way delay (OWD) amount of time to
-report it. To deploy a congestion control algorithm, we need to evaluate and
-discuss the performance in various application, network and flow settings. We
-consider the following requirements for implementing congestion
+If an endpoint detects congestion rapidly, and the end-to-end path latency is
+sufficiently low, it is possible to change the encoding rate quickly to meet
+the variation in the end-to-end path capacity. However in practice, this not
+always possible because \textbf{a)} it may take multiple reports or data
+packets to detect congestion, \textbf{b)} after detecting congestion, it takes
+at least one-way delay (OWD) amount of time for the receiver to report it. To
+deploy a congestion control algorithm, we need to evaluate and discuss the
+performance in various application, network and flow settings. We consider the
+following requirements for implementing congestion
 control~\cite{draft.rmcat.evaluate}.
 
 \begin{itemize}
@@ -191,9 +194,9 @@ control~\cite{draft.rmcat.evaluate}.
 \item Avoid congestion collapse, i.e., do not starve background traffic.
 
 \item If the channel conditions or background traffic are relatively stable
-over time, the media rate should be stable too. Changing the media encoding
-rate too often or by too much may adversely affect the users' quality of
-experience~\cite{Zink03subjectiveimpression}.
+over time, the media sending rate should be stable too. Changing the media
+encoding rate too often or by too much may adversely affect the users' quality
+of experience~\cite{Zink03subjectiveimpression}.
 
 \item Measure performance for a range of network characteristics. Namely,
 varying end-to-end capacity, latency, and router queue-sizes. Also evaluate
@@ -205,7 +208,10 @@ performance with varying amount of cross-traffic.
 
 These guidelines lead to identifying building blocks for creating evaluation
 scenarios, the building blocks are discussed in more detail in
-Section~\ref{fw.cc.eval}.
+Section~\ref{fw.cc.eval}. To summarize, the goal of this thesis is to discuss
+about the available congestion cues, propose new congestion control algorithms
+for real-time communication, and lastly, show that these algorithms are
+performant in various usage scenarios.
 
 
 \section{Contribution to Knowledge}
@@ -218,31 +224,34 @@ The following are the main contributions to knowledge of this dissertation:
 \item A criteria to evaluate multimedia congestion control algorithms in
 diverse usage scenarios and network topologies. These standardized scenarios
 form the basis of the performance evaluation in all our papers and improves
-the process of comparing our proposed solutions. We also evaluate the
-performance of the congestion control currently implemented by the Chrome Web-
-browser.
+the process of comparing our proposed solutions.
 
 \item A mechanism to implement a rudimentary congestion control (circuit-
 breaker) that aborts communication when it encounters congestion. By
 implementing such a mechanism the endpoints limit the impact of a non-adaptive
 media flow on other elastic traffic.
 
-\item A study on implementing the congestion controller for interactive
-multimedia at the sender, or receiver.  Additionally, we also look at the
-possibility of reacting to congestion cues sent by network elements in the
-media path.
+\item A study on implementing the congestion controller for real-time media
+communication at the sender, receiver, or both. Additionally, we look at the
+possibility of reacting to congestion cues sent by the network elements on the
+media path. We also evaluate the performance of the congestion control
+currently implemented by the Chrome Web-browser.
 
-\item A method to choose the best error-resilience scheme from a suite of
-error-resilience mechanisms. Consequently, we also propose a method to perform
-congestion control using Forward Error Correction (FEC) or redundant packets.
+\item Applicability of an error-resilience scheme from a suite of
+error-resilience mechanisms based on latency and loss rate. Consequently, we
+also propose using Forward Error Correction (FEC) to perform congestion
+control instead of just using it for error-resilience.
 
-\item A mechanism to use multiple interfaces to send and receive multimedia
-data. We also propose a scheduling algorithm that takes into account the
-variability in path characteristics and availability of diverse paths. 
+\item A mechanism to use multiple interfaces to send and receive real-time
+multimedia. We also propose a scheduling and an adaptive playout algorithm
+that takes into account the variability in path characteristics across diverse
+paths.
 
-\item A mechanism to create congestion maps, i.e., associate throughput to 
-geo-location. In order to detect areas of good and poor connectivity, to 
-enable adaptive media delivery in mobile wireless (LTE) networks.
+\item A mechanism to create coverage maps, i.e., associate throughput to a
+geo-location. So that endpoints detect areas of good and poor coverage, and
+when passing through these areas adapt their sending rate to best fit the
+network conditions.
+
 \end{itemize}
 
 % \vspace{-1cm}
@@ -250,9 +259,9 @@ enable adaptive media delivery in mobile wireless (LTE) networks.
 
 This thesis consists of an introductory part and eight original publications.
 In~\citepub{c:cb}, we propose a set of circuit-breaker conditions which are
-applied to non-adaptive media streams. At the moment, these media streams do
-not implement congestion control and if deployed on the Internet, are expected
-to cause congestion.
+applied to non-adaptive media flows. At the moment, these media flows do not
+implement congestion control and if deployed on the Internet, are expected to
+cause congestion.
 
 \citepub{c:3grc}, \citepub{c:hetrc}, \citepub{c:eval}, and \citepub{c:fecrc}
 discuss about congestion control for interactive multimedia communication.
@@ -260,42 +269,45 @@ discuss about congestion control for interactive multimedia communication.
 this paper, we introduce three algorithms for implementing congestion control:
 sender-driven, the sender decides the new sending rate; receiver-driven, the
 receiver decides the new sending rate; and network-assisted, the network
-notifies the endpoints about the available rate. \citepub{c:hetrc} extends the
-sender-driven algorithm in \citepub{c:3grc} for deployment in heterogeneous
-environments. \citepub{c:eval} evaluates the performance of the congestion
-control algorithm proposed by Google for WebRTC and remarks on the
-deployability on the Internet.
+notifies the endpoints about the available rate (for e.g., by an in-path
+device, a 3G base station). \citepub{c:hetrc} extends the sender-driven
+algorithm in \citepub{c:3grc} for deployment in heterogeneous environments.
+\citepub{c:eval} evaluates the performance of Google's congestion control
+algorithm proposed for WebRTC and remarks on the deployability on the
+Internet.
 
 \citepub{c:err} discusses about error resilience for interactive multimedia
 communication in a mobile (3G) environment. In this paper, we experiment with
 using different types of error resilience schemes, namely, Negative
 Acknowledgement (NACK) or Packet Loss Indication (PLI), Forward Error
 Correction (FEC) or Unequal Level of Protection (ULP), adaptive video slice
-sizes, and Reference Pictures Selection Indication (RPSI). In
-\citepub{c:fecrc}, we propose unifying the concept of error-resilience and
+sizes, and Reference Pictures Selection Indication (RPSI). Lastly it
+discusses, the applicability of these schemes based on observed packet loss
+ratio and delay.
+
+In \citepub{c:fecrc}, we propose unifying the concept of error-resilience and
 congestion control. This new congestion control algorithm uses FEC to probe
 for available capacity and would replace the two separate algorithms currently
 implemented by existing interactive multimedia applications (e.g., Skype,
 Google Hangouts, FaceTime).
 
 
-In \citepub{c:mprtp}, we enable multihoming and extend the current RTP system
-to be able to send media over multiple paths. In this paper, we propose a
-scheduling algorithm for Multipath RTP (MPRTP) that sends media over paths
-with widely different path characteristics and also propose a de-jitter buffer
-algorithm that plays out packets smoothly when the path skew is large. The
-paper also discuss system and implementation related issues involved in
-implementing MPRTP.
+In \citepub{c:mprtp}, we enable multihoming for real-time flows and extend the
+current RTP system to be able to send media over multiple paths. In this
+paper, we propose a scheduling algorithm for Multipath RTP (MPRTP) that sends
+media over paths with widely different path characteristics and also propose a
+de-jitter buffer algorithm that plays out packets smoothly when the path skew
+is large. The paper also discuss system and implementation related issues
+involved in implementing MPRTP.
 
 In \citepub{c:glass}, we propose a system to enable network-assisted
-congestion control for mobile clients by building network coverage maps
+congestion control for mobile clients by building a network coverage maps
 (mainly, measuring throughput). This paper builds on the initial results
 presented in \citepub{c:3grc}, where the middleboxes in the media path assist
 in congestion control. However, in \citepub{c:glass}, mobile clients report
-the media throughput and geolocation to a \emph{coverage service}, which
-collects this information to recommend available throughput at each
-geolocation. The mobile clients can then query the coverage service for
-available capacity at future geolocations and make appropriate congestion
-control decisions.
+their media throughput and geolocation to a \emph{coverage map service}, which
+collects, stores and summarizes this information per geo-location. The mobile
+clients query the coverage map service for available capacity at future
+geo-locations and make appropriate congestion control decisions.
 
 
