@@ -8,13 +8,13 @@ broadcast. RTP's design is based on the fundamental principles of \textit
 processing}~\cite{clark:alf}, i.e., it provides the following mechanisms:
 source and payload type identification, packet playout time, stream
 synchronization, packet loss and re-ordering, media stream monitoring. RTP
-utilizes RTP Control Protocol (RTCP) to monitor the performance of the media
+utilizes RTP Control Protocol (RTCP) to report the performance of the media
 stream. Figure~\ref{fig:3:rtp:model} describes the features provided by RTP
 and RTCP.
 
 \begin{figure}[!h]
 \centerline{
-  \includegraphics[width=\columnwidth]{chap3-fig-rtp-rtcp}
+  \includegraphics[width=\textwidth]{chap3-fig-rtp-rtcp}
 }
 \caption{RTP and RTCP for adaptive real-time applications {\scriptsize Source:
 J\"org Ott, ``Networked Multimedia Protocols and Systems''}.}
@@ -34,13 +34,13 @@ carrying. Consequently, each codec needs to specify its corresponding payload
 format.
 
 \begin{figure}[!h]
-\centerline{\includegraphics[width=\columnwidth]{chap3_fig_hdr_rtp}}
+\centerline{\includegraphics[width=\textwidth]{chap3_fig_hdr_rtp}}
 \caption{shows the RTP packet format that encapsulates the media data.}
 \label{fig:3:rtp.hdr}
 \end{figure}
 
 \begin{figure}[!h]
-\centering{\includegraphics[width=\columnwidth]{chap3_fig_hdr_rtcp}}
+\centering{\includegraphics[width=\textwidth]{chap3_fig_hdr_rtcp}}
 \caption{shows the RTCP packet format for carrying the Sender Report (SR) and
 the Receiver Report (RR). The SR carries transport statistics and enables 
 stream synchronization, while the RR carries the receiver transport 
@@ -73,7 +73,7 @@ receiver (i.e., be able to decode individual packets without relying on
 receiving other packets).
 
 \begin{figure}[!h]
-\centerline{\includegraphics[width=\columnwidth]{chap3_fig_hdr_pt_fmt}}
+\centerline{\includegraphics[width=\textwidth]{chap3_fig_hdr_pt_fmt}}
 \caption{shows the packet structure of an RTP packet encapsulating the
 payload-specific header and the associated media data.}
 \label{fig:3:pt.fmt}
@@ -134,7 +134,7 @@ interval on average remains the same. Figure~\ref{fig:3:avpf.interval} shows
 the dynamics of the AVPF-enabled RTCP reporting interval.
 
 \begin{figure}[!h]
-\centerline{\includegraphics[width=\columnwidth]{chap3-fig-avpf-rtcp}}
+\centerline{\includegraphics[width=\textwidth]{chap3-fig-avpf-rtcp}}
 \caption{shows the RTCP reporting interval as defined in a) AVP, b) AVPF.}
 \label{fig:3:avpf.interval}
 \end{figure}
@@ -245,7 +245,7 @@ single multimedia session, i.e., an association between a set of participants.
 It may however, carry multiple media stream in the session.
 
 \begin{figure}[!h]
-\centerline{\includegraphics[width=\columnwidth]{chap3-fig-sig-med}}
+\centerline{\includegraphics[width=\textwidth]{chap3-fig-sig-med}}
 \caption{shows the signaling and media paths between two endpoints engaging in
 a video call.}
 \label{fig:3:sig.media}
