@@ -445,3 +445,19 @@ nodes re-arrange themselves based on their pairwise connectivity, i.e.,
 reconstructing the tree by preferring links with better network
 characteristics.
 
+
+\section{Summary}
+
+In this chapter we propose using the multiple interfaces of an
+endpoint (e.g., mobile device, tablet, SOHO gateways) for increasing
+throughput and robustness. It corresponds to using congestion cues from out-
+of-band sources (different paths) and signaled in path (in RTCP). We design a
+protocol extension (MPRTP) to RTP that is backwards compatible and exploits
+multipath capabilities. We implement a scheduling algorithm that takes
+application requirements and current path characteristics into consideration
+to send packets over multiple paths. At the receiver, we implement a per-path
+and aggregate de-jitter buffer, which interwork to playout packets smoothly
+even when the path skew is high. Our experiments show that the performance of
+MPRTP is not degraded compared to single path RTP, so that it is safe to
+deploy. It enables load distribution and capacity aggregation, which enables
+features like mobility, offloading, multihoming.

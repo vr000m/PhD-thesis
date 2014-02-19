@@ -441,3 +441,17 @@ any queues, it observes a certain RTT and uses that as the baseline. When the
 second flow appears, the second flow already observes queues from the existing
 stream and competes with it, while the initial flow observes an increase in
 queues and reduces the sending rate to avoid congestion.
+
+\section{Summary}
+
+In this chapter we describe congestion control implemented using congestion
+cues from in-band sources and signaled in path (in RTCP). We further
+categorize the congestion control algorithms based on \emph{where they are
+implemented}: sender-driven scheme (e.g., TFRC), receiver-driven scheme (e.g.,
+TMMBR), or co-operative scheme (combination of sender and receiver, e.g.,
+C-NADU, RRTCC) and compare the performance of an algorithm in each scheme. We
+observe that the performance of TFRC is bursty, which may lead to poor user-
+experience, whilst TMMBR, C-NADU and RRTCC have a more stable throughput.
+Lastly, TMMBR appears to be conservative and RRTCC appears to be aggressive.
+C-NADU attempts to trade-off throughput for losses, but achieves slightly
+higher throughput than TMMBR.

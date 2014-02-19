@@ -480,3 +480,32 @@ scenario because the average goodput is also a bit lower in this case.
   emulated testbed. Results are average of 10 runs.}
   \label{table:fecrc-rw-tcp}
 \end{table}
+
+\section{Summary}
+
+In this chapter we address two problems: applicability of error-resilience
+schemes, and using FEC to probe for available capacity to implement congestion
+control for interactive multimedia flows. To the first problem, we show that
+NACK, Reference Picture Selection, Unequal Error Protection and adaptive
+slice-size can be used for different levels of latencies and observed packet
+loss ratio. To the second problem: we propose a congestion control scheme
+where instead of increasing the rate when network conditions seem stable, the
+sender introduces FEC for one RTCP interval. If the FEC and the media packets
+are received successfully, the sender increases the sender rate with the
+amount of FEC rate. The trade-off is that we get a smoother ramp-up and if a
+packet gets lost, it may be recovered by the FEC packet. The sender also
+implements a variable FEC interval, i.e., it varies the number of packet for
+which FEC is generated. Hence, if the sender thinks that it is underutilizing
+the link by large margin, it introduces a shorter FEC interval (up to 33\,\%
+redundancy) and therefore ramps up quickly. Consequently when it thinks that
+it is closer to the bottleneck link capacity, it introduces a longer FEC
+interval (up to 8\,\% redundancy) and therefore is conservative in probing for
+available capacity. Our experiments show that by using adaptive FEC for
+probing, the endpoints are able to recover 15-25\,\% of the lost packets and
+$\approx$90\,\% of the time using FEC subsequently results in an increase in
+the media rate. These results are comparable to our earlier experiments using
+a fixed FEC interval throughput the duration of the call for error-resilience,
+where we were able to 20-24\;\% of the lost packets. We believe using FEC for
+congestion control in interactive multimedia has not been explored in depth by
+the community, partly because interactive multimedia flows have very tight
+delay constraints and FEC may not arrive in time for recovering the packet.
