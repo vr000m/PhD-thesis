@@ -48,15 +48,22 @@ real-time media flows.
 %packets; therby, enabling Quality of Service (QoS). Additionally, it should be
 %able to adapt the media quality to the end-to-end path characteristics.
 
-This thesis is about enabling congestion control for real-time communication.
-The idea was to build congestion control algorithms that takes into account
-the network conditions, media codec capabilities and the demands of the
-multimedia application. Additionally, the congestion control can adjust to the
-user's preferences, changes in application policy/settings and by monitoring
-the user's Quality of Experience (QoE). In this thesis, we discuss the
-requirements for congestion control, define a framework and categorize
-congestion control cues and lastly, propose congestion control algorithms
-that work in diverse situations.
+This thesis is about enabling congestion control for real-time communication;
+any congestion control also faces further challenges such as, variability in
+the captured motion, variability in the size of the frames produced by the
+media codec (I or P frames), the responsiveness of the codec to produce the
+media stream for a new bit rate. Additionally, the congestion control needs to
+adjust based on user's preferences, changes in application policy/settings and
+by measuring the user's Quality of Experience (QoE). In this thesis, we
+discuss the requirements for congestion control, define a framework and
+categorize congestion control cues and lastly, propose congestion control
+algorithms that work in diverse situations.
+
+% video codecs routinely produce an I-frame (a full frame compressed picture)
+% due to high motion (zooming, panning or the captured view itself contains
+% motion) which causes a temporary burst on the network because these I-frames
+% may be an order of magnitude larger than the other video packets (e.g.,
+% P-frames are dependent frames).
 
 
 We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry media flows,
