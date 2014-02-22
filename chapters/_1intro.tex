@@ -146,7 +146,101 @@ performance analysis is discussed in the scientific papers. To summarize, in
 this thesis, we discuss both our research work and our engineering work, but
 emphasize more on the former.
 
+\section{Contribution to Knowledge}
 
+The following are the main contributions to knowledge of this dissertation:
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+
+% \item A criteria to evaluate multimedia congestion control algorithms in
+% diverse usage scenarios and network topologies. These standardized scenarios
+% form the basis of the performance evaluation in all our papers and improves
+% the process of comparing our proposed solutions.
+
+\item A mechanism to implement a rudimentary congestion control (circuit-
+breaker) that aborts communication when it encounters congestion. By
+implementing such a mechanism the endpoints limit the impact of a non-adaptive
+media flow on other elastic traffic.
+
+\item A study on implementing the congestion controller for real-time media
+communication at the sender, receiver, or both. Additionally, we look at the
+possibility of reacting to congestion cues sent by the network elements on the
+media path. We also evaluate the performance of the congestion control
+currently implemented by the Chrome Web-browser.
+
+\item Applicability of an error-resilience scheme from a suite of
+error-resilience mechanisms based on latency and loss rate. Consequently, we
+also propose using Forward Error Correction (FEC) to perform congestion
+control instead of just using it for error-resilience.
+
+\item A mechanism to use multiple interfaces to send and receive real-time
+multimedia. We also propose a scheduling and an adaptive playout algorithm
+that takes into account the variability in path characteristics across diverse
+paths.
+
+\item A mechanism to create coverage maps, i.e., associate throughput to a
+geo-location. So that endpoints detect areas of good and poor coverage, and
+when passing through these areas adapt their sending rate to best fit the
+network conditions.
+
+\end{itemize}
+
+% \vspace{-1cm}
+\section{Summary of the Publications}
+
+This thesis consists of an introductory part and eight original publications.
+In~\citepub{c:cb}, we propose a set of circuit-breaker conditions which are
+applied to non-adaptive media flows. At the moment, these media flows do not
+implement congestion control and if deployed on the Internet, are expected to
+cause congestion.
+
+\citepub{c:3grc}, \citepub{c:hetrc}, \citepub{c:eval}, and \citepub{c:fecrc}
+discuss about congestion control for interactive multimedia communication.
+\citepub{c:3grc} performs congestion control in a wireless environment. In
+this paper, we introduce three algorithms for implementing congestion control:
+sender-driven, the sender decides the new sending rate; receiver-driven, the
+receiver decides the new sending rate; and network-assisted, the network
+notifies the endpoints about the available rate (for e.g., by an in-path
+device, a 3G base station). \citepub{c:hetrc} extends the sender-driven
+algorithm in \citepub{c:3grc} for deployment in heterogeneous environments.
+\citepub{c:eval} evaluates the performance of Google's congestion control
+algorithm proposed for WebRTC and remarks on the deployability on the
+Internet.
+
+\citepub{c:err} discusses about error resilience for interactive multimedia
+communication in a mobile (3G) environment. In this paper, we experiment with
+using different types of error resilience schemes, namely, Negative
+Acknowledgment (NACK) or Packet Loss Indication (PLI), Forward Error
+Correction (FEC) or Unequal Level of Protection (ULP), adaptive video slice
+sizes, and Reference Pictures Selection Indication (RPSI). Lastly it
+discusses, the applicability of these schemes based on observed packet loss
+ratio and delay.
+
+In \citepub{c:fecrc}, we propose unifying the concept of error-resilience and
+congestion control. This new congestion control algorithm uses FEC to probe
+for available capacity and would replace the two separate algorithms currently
+implemented by existing interactive multimedia applications (e.g., Skype,
+Google Hangouts, FaceTime).
+
+
+In \citepub{c:mprtp}, we enable multihoming for real-time flows and extend the
+current RTP system to be able to send media over multiple paths. In this
+paper, we propose a scheduling algorithm for Multipath RTP (MPRTP) that sends
+media over paths with widely different path characteristics and also propose a
+de-jitter buffer algorithm that plays out packets smoothly when the path skew
+is large. The paper also discuss system and implementation related issues
+involved in implementing MPRTP.
+
+In \citepub{c:glass}, we propose a system to enable network-assisted
+congestion control for mobile clients by building a network coverage maps
+(mainly, measuring throughput). This paper builds on the initial results
+presented in \citepub{c:3grc}, where the middleboxes in the media path assist
+in congestion control. However, in \citepub{c:glass}, mobile clients report
+their media throughput and geolocation to a \emph{coverage map service}, which
+collects, stores and summarizes this information per geo-location. The mobile
+clients query the coverage map service for available capacity at future
+geo-locations and make appropriate congestion control decisions.
 
 \section{Structure of the Thesis}
 
