@@ -2,8 +2,8 @@ In the forthcoming deployment of WebRTC systems, we speculate that high
 quality\footnote{normally, corresponds to increase in required bandwidth}
 video conferencing will see wide adoption. Normally, to assure stability of
 the network (and avoid congestion collapse), these real-time communication
-systems need to implement some kind of congestion control for their RTP-based
-media traffic.
+systems are required to implement some kind of congestion control for their
+RTP-based media traffic.
 
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
@@ -14,7 +14,7 @@ controlled transport may be safe for the network, it is suboptimal for the
 media quality unless the congestion-controlled transport is designed to carry
 media flows. Unfortunately, TCP is only suitable for interactive multimedia
 for paths with very low RTT (<100\,\emph{ms} )~\cite{Brosh:tcp-real-time}, and
-DCCP packets has problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
+DCCP packets have problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
 encapsulated in UDP~\cite{RFC6773}.
 
 This motivates the need for a UDP congestion control, where the congestion
@@ -298,7 +298,7 @@ loss and adapt the media rate over a fairly large range.
 \cite{draft.rmcat.req} lists a set of requirements for RTP-based interactive
 multimedia sessions, these requirements form the basis of the guidelines
 described in~\cite{draft.rmcat.evaluate}. In~\cite{draft.rmcat.evaluate}, we
-define a catalogue of \emph{traffic flows} traversing through a \emph{network
+define a catalog of \emph{traffic flows} traversing through a \emph{network
 topology} with varying \emph{link characteristics} and diverse \emph{queuing}
 strategies. By picking one feature from each category in the category, we
 construct scenarios to evaluate the performance of the congestion control. The
