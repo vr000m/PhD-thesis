@@ -36,6 +36,45 @@ the feedback reporting frequency, the classification of cues, requirements of
 congestion control and lastly, criteria to evaluate congestion control
 proposals.
 
+\section{Adaptive Multimedia Systems}
+\label{fw.amusys}
+
+In~\cite{Singh:control.loops.api}, we identify three control loops
+to implement congestion control, they are:
+
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+
+\item \textbf{\texttt{Codec-Sender}}: the codec adapts its encoding rate based
+on the feedback from the sender. Unlike elastic traffic, the codec is unable
+to produce the expected media rate immediately. Therefore, the rate-controller
+needs to take into account the timeline in which the codec produces the new
+rate. Typically, the codec adapts to a lower rate immediately but is unable to
+ramp-up very quickly.
+
+\item \textbf{\texttt{Sender-Network}}: the sender packetizes media frames and
+sends (it may concatenate small audio frames to form a larger packet, or
+fragment large video frames into small packets) them over the network to the
+receiver. It also collects feedback messages from the receiver that may
+contain congestion cues (i.e., variation in RTT, indication for lost or
+discarded packets, goodput, jitter, variation in inter-packet interval, etc).
+
+\item \textbf{\texttt{Network-Receiver}}: it has a playout buffer of media
+data waiting to be decoded and rendered; discarding packets that arrive late
+for playout, and attempting to conceal the missing packets from the observer.
+It is  also monitoring the media flow for loss packets, variation in jitter,
+receiver rate, goodput, calculate expected rate, etc. and reports these to the
+sender to act upon.
+
+\end{enumerate}
+
+If an endpoint detects congestion rapidly, and the end-to-end path latency is
+sufficiently low, it is possible to change the encoding rate quickly to meet
+the variation in the end-to-end path capacity. However in practice, this not
+always possible because \textbf{a)} it may take multiple reports or data
+packets to detect congestion, \textbf{b)} after detecting congestion, it takes
+at least one-way delay (OWD) amount of time for the receiver to report it.
+
 \section{Congestion Cues}
 \label{fw.cues}
 
