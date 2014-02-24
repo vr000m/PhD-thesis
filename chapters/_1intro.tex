@@ -6,30 +6,42 @@ the most prominent traffic only after it was easily accessible to Internet
 users in the web-browser. The initial growth for video streaming is attributed
 to the availability of Adobe Flash Video plugin and thereafter video became
 ubiquitous when the video tag was included into the HTML5
-standard~\cite{html5-spec}. Currently, the same trend is observable in real-
-time multimedia communication; web services either use Adobe's Real-time Media
-Flow Protocol (RTMFP)~\cite{draft.rtmfp}\footnote{There are other plugin-based
-services: Facebook Video based on Skype SDK, Google Talk, Google's
+standard~\cite{html5-spec}. Currently, the same trend is observable for real-time 
+multimedia communication; present day web services either use Adobe's 
+Real-time Media Flow Protocol (RTMFP)~\cite{draft.rtmfp}\footnote{There are other 
+plugin-based services: Facebook Video based on Skype SDK, Google Talk, Google's
 Hangout/Helpout services, etc.} or HTML5's Web-based Real-Time Communication
-(WebRTC) stack~\cite{draft.webrtc}.
+(WebRTC) stack~\cite{draft.webrtc}. Consequently, the forthcoming deployments
+of WebRTC and telepresence systems is going to kickstart the growth of 
+real-time multimedia on the Internet.
 
 
 Real-time multimedia communication on the Internet is subject to the
 unpredictability of the best-effort IP network. This uncertainty is mainly due
-to packet loss, packet re-ordering, variable queuing delay. Additionally,
-Buffer-bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router may
-cause long delays and bursty losses. Video streaming endpoints overcome most
-of these challenges by using a larger playout buffers, which allows the
-endpoint to prebuffer the video in case there is an interruption in
-transmission, request retransmissions of lost packets and therefore provide
-consistent video quality. These features exist independent of streaming over
-UDP (e.g., RTSP or SIP) or TCP (e.g., DASH). However, real-time communication
-uses very small buffers to avoid excessive buffering and provide low-delay;
-hence, sending endpoints modify the sending rate to best match the available
-capacity and not cause excessive delay. For real-time communication, TCP is at
-best suitable for paths with very low path latencies
-(<100\,\emph{ms})~\cite{Brosh:tcp-real- time}, hence, UDP carries real-time
-media flows.
+to packet loss, packet re-ordering, and variable queuing delay. 
+Buffer-bloat~\cite{gettys:bufferbloat} and drop-tail queues in the router 
+can cause long delays and bursty losses. Furthermore, in mobile networks 
+the capacity available to a user in a cell varies due to mobility, cell-loading,
+interference, fading, and handovers. Similarly, the presence of cross-traffic on
+the bottleneck requires the real-time multimedia stream to compete for the 
+available capacity. Coupling the variability in the available capacity to 
+the intrinsic variability in the captured media (either due to motion or due 
+to voice activity detection), variability in the size of the frames produced 
+by the video codec (I or P frames), the responsiveness of the codec to produce 
+the media stream at the requested bit rate makes multimedia congestion control
+very challenging. 
+
+Video streaming endpoints overcome most of these challenges by using a larger
+playout buffers, which allows the endpoint to prebuffer the video in case
+there is an interruption in transmission, request retransmissions of lost
+packets and therefore provide consistent video quality. These features exist
+independent of streaming over UDP (e.g., RTSP or SIP) or TCP (e.g., DASH).
+However, real-time communication uses very small buffers to avoid excessive
+buffering and provide low-delay; hence, sending endpoints modify the sending
+rate to best match the available capacity and not cause excessive delay. For
+real-time communication, TCP is at best suitable for paths with very low path
+latencies (<100\,\emph{ms})~\cite{Brosh:tcp-real-time}, hence, UDP carries
+real-time media flows.
 
 % Furthermore, in video streaming, when the path characteristics change, the
 % client switches between files with the same media content pre-encoded at
@@ -53,39 +65,31 @@ media flows.
 %packets; therby, enabling Quality of Service (QoS). Additionally, it should be
 %able to adapt the media quality to the end-to-end path characteristics.
 
-This thesis is about enabling congestion control for real-time communication;
-any proposal for multimedia congestion control faces further challenges such
-as, variability in the captured media (either due to motion or due to voice
-activity detection), variability in the size of the frames produced by the
-media codec (I or P frames), the responsiveness of the codec to produce the
-media stream at the requested bit rate, and the variability in the available
-capacity due to cross-traffic or mobile networks. Furthermore, the congestion
-control needs to adjust based on user's preferences, changes in application
-policy/settings and by measuring the user's Quality of Experience (QoE). In
-this thesis, we briefly discuss the interaction between the congestion control
-and the application, define a congestion control framework and categorize the
-observed congestion cues and lastly, propose congestion control algorithms
-that work in diverse situations.
-
 % video codecs routinely produce an I-frame (a full frame compressed picture)
 % due to high motion (zooming, panning or the captured view itself contains
 % motion) which causes a temporary burst on the network because these I-frames
 % may be an order of magnitude larger than the other video packets (e.g.,
 % P-frames are dependent frames).
 
-
-We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry media flows,
-the congestion control algorithm is therefore built within the design
-constraints of RTP. Consequently, wherever possible we have attempted to fix
-these deficiencies by proposing extensions to RTP. This thesis is a bundle of
-scientific papers that discuss various parts of the framework and this summary
-puts them in context.
+This thesis is about enabling congestion control for real-time communication,
+deploying it in heterogeneous networking environments containing a mixture of
+wireless and wired links. We also briefly discuss the interaction between the
+congestion control and the application, define a congestion control framework
+and categorize the observed congestion cues and lastly, propose congestion
+control algorithms that work in diverse situations. We use Real-time Transport
+Protocol (RTP)~\cite{rfc3550} to carry media flows, the congestion control
+algorithm is therefore built within the design constraints of RTP.
+Consequently, wherever possible we have attempted to fix these deficiencies by
+proposing extensions to RTP. This thesis is a bundle of scientific papers that
+discuss various parts of the framework and this summary puts them in context.
 
 % classification of cues 
 % is a summary of papers
 
 \section{Multimedia Congestion Control}
-% \label{rg.ch.dscp}
+% \label{rg.ch.mcc}
+
+
 
 \subsection{Challenges with DSCP Markings}
 % \label{rg.ch.dscp}
