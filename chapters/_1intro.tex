@@ -89,6 +89,14 @@ discuss various parts of the framework and this summary puts them in context.
 \section{Multimedia Congestion Control}
 % \label{rg.ch.mcc}
 
+Interactive real-time media applications use RTP~\cite{rfc3550} to encapsulate
+multimedia content. RTP is capable of using TCP, UDP and DCCP for delivering
+multimedia.  While TCP~\cite{rfc793} is extensively used to deliver video via
+HTTP streaming, it is not very suitable for real-time media when the path
+latencies  are greater than 100 \emph{ms}~\cite{Brosh:tcp-real-time}, hence,
+UDP~\cite{rfc768} carries real-time media flows. Since UDP provides no form of
+congestion control, which is essential for deployment on the Internet,
+multimedia applications have to implement their own. 
 
 
 \subsection{Challenges with DSCP Markings}
@@ -102,26 +110,63 @@ classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
 \emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for congestion within the
 same traffic class the router discards packets using \emph{tail drop} or
 \emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
+Real-time multimedia communication on the Internet is subject to the
+unpredictability of the best-effort IP network. The uncertainty is mainly due
+to packet loss, packet re-ordering, and variable queuing delay.  Buffer-bloat
+\cite{gettys:bufferbloat} and drop-tail queues in the router  can cause long
+delays and bursty losses. The video is able to tolerate some amount of loss
+either by concealing it or using some form of error-resilience technique but
+bursty loss causes visual impairments which adversely affect the user's
+quality of experience~\cite{Zink03subjectiveimpression}.
+
+Additionally, in mobile networks  the capacity available to a user in a cell
+varies due to mobility, cell-loading, interference, fading, and handovers.
+Similarly, the presence of cross-traffic on the bottleneck requires the real-time 
+multimedia stream to compete for the available capacity, which may also
+vary depending on the amount of cross-traffic.  Coupling the variability in
+the available capacity to  the intrinsic variability in the captured media
+(either due to motion or due  to voice activity detection), variability in the
+size of the frames produced  by the video codec (I or P frames), the
+responsiveness of the codec to produce the media stream at the requested bit
+rate makes multimedia congestion control very challenging.
+
+Instead of performing congestion control, the application may reserve capacity
+for multimedia traffic, oftentimes this is done in IPTV deployments to
+separate the operators generated traffic from the user-generated traffic,
+thereby guaranteeing good performance for the IPTV media. Similarly, it is
+possible to for other video services within an administrative domain to use
+Differentiated Services Code Points (DSCP). DiffServ assigns each data packet
+to a traffic class and the routers manage each traffic class differently,
+thereby some traffic classes receive preferential treatment (e.g., lower
+delay, lower losses) in the network~\cite{rfc2475}. The routers overcome
+congestion between traffic classes by implementing \emph{priority queuing},
+\emph{fair queuing}, or \emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for
+congestion within the same traffic class the router discards packets using
+\emph{tail drop} or \emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
 
 % generic markings
 
 Consequently, DiffServ needs to be implemented on every router along the data
 path and configured to have the same forwarding policy, i.e., the routers have
 to belong to the same DiffServ administrative domain for the packets to be
-treated in exactly the same way at each hop. However, if the packets traverse
-DiffServ domains, normally between Internet Service Providers (ISPs), it is
-quite possible that the receiving ISP does not implement a policy for each
-corresponding traffic class; when this happens the routers use the default
-policy to forward packets, and as a result lose any opportunity of
-differentiated service. Especially with video traffic which can be marked in
-varying ways depending on the type of application. Multicast, broadcast,
-streaming, conversational, each category has its own policy, the ISP sometimes
-choose to ignore these different categories for video and marks all (or a
-subset of) the video packets with the same DSCP~\cite{rfc5865}. These
-\emph{generic} markings may be contrary to the intended DSCP of the multimedia
-system. Again DSCP does not guarantee the intended behavior for the endpoint.
-Despite the above listed challenges, marking packets with a DSCP code point
-helps in some environments~\cite{draft.rtcweb.qos}:
+treated in exactly the same way at each hop. In the case of interactive video,
+it is likely that the media packets are sent to users attached not only to
+different ISPs but also in different geographical locations. The packets
+therefore traverse DiffServ domains, it is quite possible that the receiving
+ISP to not implement a corresponding policy for each  traffic class; when this
+happens the routers use the default policy to forward packets, and as a result
+lose any opportunity of differentiated service.
+
+
+Especially with video traffic which can be marked in varying ways depending on
+the type of application. Multicast, broadcast, streaming, conversational, each
+category has its own policy, the ISP sometimes choose to ignore these
+different categories for video and marks all (or a subset of) the video
+packets with the same DSCP~\cite{rfc5865}. These \emph{generic} markings may
+be contrary to the intended DSCP of the multimedia system. Again DSCP does not
+guarantee the intended behavior for the endpoint. Despite the above listed
+challenges, marking packets with a DSCP code point helps in some
+environments~\cite{draft.rtcweb.qos}:
 
 % cases where it might work
 
@@ -136,6 +181,17 @@ helps in some environments~\cite{draft.rtcweb.qos}:
 
 \end{itemize}
 
+In this thesis, we do not rely on the use of DSCP by any entity (endpoint or
+middleboxes) along the path. The principal reason is that we would need to
+implement congestion control anyway if there is insufficient capacity in the
+service level agreement for the specific traffic class. Further, we assume
+that the presence of these markings will make the performance of our
+algorithms better. Consequently, the multimedia endpoints need to implement
+congestion control, i.e., the endpoint monitors the media flows for congestion
+and vary (increase or decrease) the media encoding rate based on the observed
+congestion cues.
+
+
 \section{Research Methodology}
 
 This thesis aimed to produce original scientific work that would be widely
@@ -148,14 +204,17 @@ process helped us make better design and implementation decisions.
 
 In order to make significant impact in the Internet community, researchers not
 only have to produce significant results to motivate deployment but also solve
-engineering issues. These engineering solutions may not fulfill the
-requirements of being described in scientific papers, but are instead
-described in standards documents, which facilitates interoperability and
-enthuses deployment. For example, the protocol extensions to enable congestion
-control (i.e., to signal the congestion cues) are discussed mainly in the
-standards document, while the associated congestion control algorithm and the
-performance analysis is discussed in the scientific papers. To summarize, in
-this thesis, we discuss both our research work and our engineering work, but
+engineering issues. These engineering solutions may not be adequately
+described in scientific papers, but are instead described in standards
+documents, which facilitates interoperability and enthuses deployment. In our
+research,  for example, the protocol extensions to enable congestion control
+(i.e., to signal the congestion cues) are discussed mainly in the standards
+document, while the associated congestion control algorithm and the
+performance analysis is discussed in the scientific papers. Another example is
+Multipath RTP (MPRTP), the protocol extensions are defined in the appropriate
+standards document, but the performance of the scheduling algorithm using
+those extensions is a described in a scientific contribution. To summarize, in
+this thesis, we discuss both our research work and our standards work, but
 emphasize more on the former.
 
 \section{Contribution to Knowledge}

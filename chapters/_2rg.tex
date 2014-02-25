@@ -93,50 +93,50 @@ connected over 3G or WLAN.
 % \thesis?}}
 
 
-\section{Challenges with DSCP Markings}
-\label{rg.ch.dscp}
+% \section{Challenges with DSCP Markings}
+% \label{rg.ch.dscp}
 
-DiffServ assigns each data packet to a traffic class on a hop-by-hop basis and
-the routers manage each traffic class differently, thereby some traffic
-classes receive preferential treatment (e.g., lower delay, lower losses) in
-the network~\cite{rfc2475}. The routers overcome congestion between traffic
-classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
-\emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for congestion within the
-same traffic class the router discards packets using \emph{tail drop} or
-\emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
+% DiffServ assigns each data packet to a traffic class on a hop-by-hop basis and
+% the routers manage each traffic class differently, thereby some traffic
+% classes receive preferential treatment (e.g., lower delay, lower losses) in
+% the network~\cite{rfc2475}. The routers overcome congestion between traffic
+% classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
+% \emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for congestion within the
+% same traffic class the router discards packets using \emph{tail drop} or
+% \emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
 
-% generic markings
+% % generic markings
 
-Consequently, DiffServ needs to be implemented on every router along the data
-path and configured to have the same forwarding policy, i.e., the routers have
-to belong to the same DiffServ administrative domain for the packets to be
-treated in exactly the same way at each hop. However, if the packets traverse
-DiffServ domains, normally between Internet Service Providers (ISPs), it is
-quite possible that the receiving ISP does not implement a policy for each
-corresponding traffic class; when this happens the routers use the default
-policy to forward packets, and as a result lose any opportunity of
-differentiated service. Especially with video traffic which can be marked in
-varying ways depending on the type of application. Multicast, broadcast,
-streaming, conversational, each category has its own policy, the ISP sometimes
-choose to ignore these different categories for video and marks all (or a
-subset of) the video packets with the same DSCP~\cite{rfc5865}. These
-\emph{generic} markings may be contrary to the intended DSCP of the multimedia
-system. Again DSCP does not guarantee the intended behavior for the endpoint.
-Despite the above listed challenges, marking packets with a DSCP code point
-helps in some environments~\cite{draft.rtcweb.qos}:
+% Consequently, DiffServ needs to be implemented on every router along the data
+% path and configured to have the same forwarding policy, i.e., the routers have
+% to belong to the same DiffServ administrative domain for the packets to be
+% treated in exactly the same way at each hop. However, if the packets traverse
+% DiffServ domains, normally between Internet Service Providers (ISPs), it is
+% quite possible that the receiving ISP does not implement a policy for each
+% corresponding traffic class; when this happens the routers use the default
+% policy to forward packets, and as a result lose any opportunity of
+% differentiated service. Especially with video traffic which can be marked in
+% varying ways depending on the type of application. Multicast, broadcast,
+% streaming, conversational, each category has its own policy, the ISP sometimes
+% choose to ignore these different categories for video and marks all (or a
+% subset of) the video packets with the same DSCP~\cite{rfc5865}. These
+% \emph{generic} markings may be contrary to the intended DSCP of the multimedia
+% system. Again DSCP does not guarantee the intended behavior for the endpoint.
+% Despite the above listed challenges, marking packets with a DSCP code point
+% helps in some environments~\cite{draft.rtcweb.qos}:
 
-% cases where it might work
+% % cases where it might work
 
-\begin{itemize}
+% \begin{itemize}
 
-  \item If the bottleneck link is the broadband router that often connects a
-  residential or Small Office/Home Office (SOHO) to the ISP, the DSCP markings
-  helps in prioritizing the data traffic at this bottleneck.
+%   \item If the bottleneck link is the broadband router that often connects a
+%   residential or Small Office/Home Office (SOHO) to the ISP, the DSCP markings
+%   helps in prioritizing the data traffic at this bottleneck.
 
-  \item If the packets traverse a congested wireless link and the service
-  provider did not scrub out the DSCP markings, the markings may help.
+%   \item If the packets traverse a congested wireless link and the service
+%   provider did not scrub out the DSCP markings, the markings may help.
 
-\end{itemize}
+% \end{itemize}
 
 \section{Enabling Adaptive Multimedia Systems}
 \label{rg.title}
