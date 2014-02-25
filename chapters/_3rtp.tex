@@ -199,15 +199,20 @@ payload-specific header and the associated media data.}
 
 \section{RTP Header Extensions}
 
-These extensions carry media-independent information, i.e., data that may be
-repeated in multiple payload formats (e.g., timing information), and cannot be
-reported in an RTCP report because RTCP is sent infrequently and unreliably.
-The advantage of using header extensions is that they are 1) backwards
-compatible, 2) can be ignored by an endpoint that does not understand them,
-and 3) the sender is able to add multiple header extensions to an RTP packet.
-Some current use-cases for RTP header extensions are: reporting the network
-send timestamp (this allows the sender to pace large frames on to the network,
-so not to cause temporary bandwidth overuse), client's audio levels (to
+RTP header extensions carry media-independent information, i.e., data that may
+be generically applicable to multiple payload formats (e.g., timing
+information), and needs to be reported more frequently than RTCP reports are
+emitted. A commonly cited example is sending NACKs for interactive video,
+where media flows in both directions and RTP packets are generated every tens
+of milliseconds, the RTP header extension can indicate which sequence numbers
+were correctly received or lost, thereby not completely relying on the RTCP
+receiver reports for sending NACKs or ACKs.
+
+The advantage of using header extensions is that they are backwards
+compatible, i.e., an endpoint that does not understand them is able ignore
+them. Some current use-cases for RTP header extensions are: reporting the
+network send timestamp, instead of bursting packets from a large frame on to
+the network, the sender paces these packets, client's audio levels (to
 equalize audio levels across multiple streams in a video conference).
 
 \section{RTCP Reporting Interval}
