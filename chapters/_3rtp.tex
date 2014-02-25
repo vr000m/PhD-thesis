@@ -1,16 +1,24 @@
 % intro
 
-Real-time Transport Protocol (RTP)~\cite{rfc3550} is suitable for multimedia
-telephony (voice-over-IP, video conferencing, telepresence systems),
-multimedia streaming (video-on-demand, live streaming), and multimedia
-broadcast. RTP's design is based on the fundamental principles of \textit
-{application-layer framing} and \textit{integrated layer
-processing}~\cite{clark:alf}, i.e., it provides the following mechanisms:
-source and payload type identification, packet playout time, stream
-synchronization, packet loss and re-ordering, media stream monitoring. RTP
-utilizes RTP Control Protocol (RTCP) to report the performance of the media
-stream. Figure~\ref{fig:3:rtp:model} describes the features provided by RTP
-and RTCP.
+The Real-time Transport Protocol (RTP)~\cite{rfc3550} is designed for
+multimedia telephony (voice-over-IP, video conferencing, telepresence
+systems), multimedia streaming (video-on-demand, live streaming), and
+multimedia broadcast. RTP's design is based on the fundamental principles of
+\textit {application-layer framing} and \textit{integrated layer
+processing}~\cite{clark:alf}, to this end, RTP provides the following
+mechanisms: source and payload type identification, stream synchronization,
+packet loss and re-ordering, media stream monitoring. RTP utilizes the RTP
+Control Protocol (RTCP) to report the performance of the media stream.
+Figure~\ref{fig:3:rtp:model} describes the features provided by RTP and RTCP.
+The media sender transmits encoded media encapsulated in RTP, in addition it
+also sends RTCP Sender Reports (SR) to facilitate playback synchronization of
+different media streams (typically audio and video). The receiver maintains a
+dejitter buffer to reorder media packets and play them out as per the timing
+information encoded in the packet. If a packet missing the receiver attempts
+to either recover the lost packet or conceal the error. Lastly, the receiving
+endpoint reports rough or detailed statistics that enables the media sender to
+adapt its media encoding rate, change to a better codec, or vary the amount of
+forward error correction.
 
 \begin{figure}[!h]
 \centerline{
