@@ -137,29 +137,65 @@ facilitates in calculating the RTT. The sender uses RTCP Sender Reports (SRs)
 to assist in synchronizing the media streams (audio and video) by relating the
 RTP timestamps of the individual media streams to the wall clock time (NTP)
 and to notify the receiver about the current packet rate and bit rate.
-Figure~\ref{fig:3:rtcp.hdr} describes the RTCP packet header format for a
+Figure~\ref{fig:3:rtcp.hdr} shows the RTCP packet header format for a
 interactive unicast media stream (i.e., both sending and receiving media).
 
 \section{RTP Payload Formats}
 
-The general principle for defining payload formats/types are to be able to
-identify the encoding of the media packets. These encodings are either
-codec-specific (e.g., H.264, H.263, H.261, MPEG-1, MPEG-2, JPEG, G.711, G.722,
-AMR, etc.), or generic (e.g., Forward Error Correction (FEC), Unequal Level of
-Protection (ULP), NACK, multiplexed streams). Typically the payload format
-specifies a well-defined packet format and packetization procedure. Hence, the
-RTP header is immediately followed by payload-specific header (payload format)
-and then by the media data. This allows the sending endpoint to enable
-semantic-based fragmentation, which simplifies processing and decoding at the
-receiver (i.e., be able to decode individual packets without relying on
-receiving other packets).
+The general principle for defining payload formats/types is to be able to
+identify the encoding of the media packets. These encodings are either  
+codec-specific (e.g., H.264, H.263, H.261, MPEG-2, JPEG, G.711, G.722, AMR, etc.),
+or generic (e.g., Forward Error Correction (FEC), NACK, multiplexed streams).
+Typically a payload document specifies a well-defined packet format for media
+codecs; it also defines \emph{aggregation rules} for codecs that produce
+several small frames (e.g., audio) compared to the IP Maximum Transmission
+Unit (MTU) and \emph{fragmentation rules} for codecs that produce large frames
+(e.g., I-frames by video codecs). The main reason to provide fragment large
+frames  into smaller packets and not rely on IP fragmentation is, IP
+fragmented packets are commonly discarded in the network, especially by NATs
+or Firewalls.
+
+% Usually the RTP header is immediately followed by
+% payload-specific header (payload format) and then by the media data. This
+% allows the sending endpoint to semantically fragment large packets, which
+% simplifies processing and decoding at the receiver (i.e., be able to decode
+% individual packets without relying on receiving other packets).
 
 \begin{figure}[!h]
-\centerline{\includegraphics[width=\textwidth]{chap3_fig_hdr_pt_fmt}}
+\begin{spacing}{0.5}
+{\footnotesize
+\begin{verbatim}
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |V=2|P|X|  CC   |M|     PT      |       sequence number         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                           timestamp                           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |           synchronization source (SSRC) identifier            |
+   +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+   |                        Payload Format                         |
+   +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |               |                                               |
+   +-+-+-+-+-+-+-+-+                                               +
+   |                           Media Data                          |
+   +                                                               +
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+\end{verbatim}
+}
+\end{spacing}
 \caption{shows the packet structure of an RTP packet encapsulating the
 payload-specific header and the associated media data.}
 \label{fig:3:pt.fmt}
 \end{figure}
+
+% \begin{figure}[!t]
+% \centerline{\includegraphics[width=\textwidth]{chap3_fig_hdr_pt_fmt}}
+% \caption{shows the packet structure of an RTP packet encapsulating the
+% payload-specific header and the associated media data.}
+% \label{fig:3:pt.fmt}
+% \end{figure}
 
 \section{RTP Header Extensions}
 
