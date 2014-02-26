@@ -219,27 +219,39 @@ equalize audio levels across multiple streams in a video conference).
 % timing
 
 A closed control loop is formed by sending RTP media packets and receiving
-RTCP feedback packets. The RTCP reporting interval is determined by the number
-of SSRCs in the session, and the chosen session bandwidth. Typically, in a
-unicast session there are two SSRCs, one for each participant, but the number
-of SSRCs can be higher if each endpoint sends multiple media streams. The
-interval between reports tends to be on the order of a few seconds, and is
-randomized to avoid synchronization of reports from multiple endpoints.
-Formally, to ensure that the RTCP reports are not sent too frequently, the
-endpoints limit the feedback rate to 5\,\% of the session \textit{media rate},
-shared equally by each participant in a video conference. Formally, the RTCP
-reporting interval is calculated as follows:
+RTCP feedback packets. The RTCP feedback interval is typically limited to a
+small fraction, so not to affect the media traffic. The RTCP reporting
+interval is determined by the number of SSRCs in the session (denoting the
+session size), and the chosen session bandwidth. The session bandwidth is
+expected to be divided amongst the participants, but oftentimes it is
+calculated as the sum of the average throughput of the senders expected to be
+concurrently active. In the case of an audio conference the session bandwidth
+would be one sender's bandwidth, but for a video conference it would vary
+depending on the number of participants displayed on the user interface.
+Therefore, the session bandwidth is supplied by the session management
+application so that each participants calculates the same value for the RTCP
+interval.
 
-\begin{align}
-rtcp\_interval = & \frac{n \times avg\_rtcp\_size}{rtcp\_bw}
-\label{eq:rtcp.int}
-\end{align}
-\hspace{35mm}$where,$
-\begin{align*}
-n &=  number\ of\ senders \\
-rtcp\_bw &=  \frac{5}{100} \times media\_rate
-\end{align*}
 
+The recommended fraction of the session bandwidth allocated for control
+traffic is 5\,\%. For many scenarios, including large conferences, where there
+are a large number of receivers but a small number of senders, it is
+recommended that $\frac{1}{4}^{th}$ of the reporting bandwidth
+(\emph{rtcp\_bw}) be shared equally by senders and the rest $\frac{3}{4}^{th}$
+by the receivers. The main reason is to allow newly joining participants to
+quickly receive the CNAME and synchronization timestamps (from the Sender
+Reports) for the sending endpoints. For new participants (even if they are
+just receivers) the RTCP interval is halved to quickly declare the presence of
+a new participant. Lastly, the recommended value for a fixed minimum RTCP
+interval is 5 seconds, while the value for reduced minimum is
+$\frac{360}{session\_bw}$.  The fixed minimum RTCP interval of \emph{5\,s} is
+suitable for unidirectional links or for sessions that do not require
+monitoring the reception quality statistics (e.g., IPTV), while the reduced
+minimum RTCP interval is suitable for participants in a unicast bidirectional
+multimedia sessions. The reduced minimum RTCP interval is suitable for sending
+timely feedback messages to either perform congestion control or error repair,
+the interval is shorter than \emph{5\,s} for session bandwidths greater than
+\emph{72\,kbps}.
 
 % avpf
 
