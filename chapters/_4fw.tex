@@ -38,7 +38,7 @@ criteria to evaluate congestion control proposals, and lastly, we discuss the
 RTP circuit breaker which stops transmission permanently after observing
 prolonged congestion.
 
-\section{Adaptive Multimedia Systems}
+\section{Enabling Adaptive Multimedia Systems}
 \label{fw.amusys}
 
 
@@ -50,22 +50,22 @@ implement congestion control, they are:
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
 
-\item \textbf{\texttt{Codec-Sender}}: the codec adapts its encoding rate based
+\item \textbf{\texttt{Codec-Sender}}: The codec adapts its encoding rate based
 on the feedback from the sender. Unlike elastic traffic, the codec is unable
 to produce the expected media rate immediately. Therefore, the rate-controller
 needs to take into account the timeline in which the codec produces the new
-rate. Typically, the codec adapts to a lower rate immediately but is unable to
-ramp-up very quickly.
+rate.
 
-\item \textbf{\texttt{Sender-Network}}: the sender packetizes media frames and
-sends (it may concatenate small audio frames to form a larger packet, or
-fragment large video frames into small packets) them over the network to the
-receiver. It also collects feedback messages from the receiver that may
-contain congestion cues (i.e., variation in RTT, indication for lost or
-discarded packets, goodput, jitter, variation in inter-packet interval, etc).
+\item \textbf{\texttt{Sender-Network}}: The sender packetizes media frames and
+sends them over the network to the receiver. It also collects feedback
+messages from the receiver that may contain congestion cues (i.e., variation
+in RTT, indication for lost or discarded packets, goodput, jitter, etc.). It
+may concatenate small audio frames to form a larger packet, or fragment large
+video frames into small packets. Furthermore it may pace the fragmented frames
+on to the network instead of sending them in a burst.
 
-\item \textbf{\texttt{Network-Receiver}}: it has a playout buffer of media
-data waiting to be decoded and rendered; discarding packets that arrive late
+\item \textbf{\texttt{Network-Receiver}}: It has a playout buffer of media
+data waiting to be decoded and rendered, discarding packets that arrive late
 for playout, and attempting to conceal the missing packets from the observer.
 It is  also monitoring the media flow for loss packets, variation in jitter,
 receiver rate, goodput, calculate expected rate, etc. and reports these to the
@@ -74,11 +74,34 @@ sender to act upon.
 \end{enumerate}
 
 If an endpoint detects congestion rapidly, and the end-to-end path latency is
-sufficiently low, it is possible to change the encoding rate quickly to meet
-the variation in the end-to-end path capacity. However in practice, this not
-always possible because \textbf{a)} it may take multiple reports or data
-packets to detect congestion, \textbf{b)} after detecting congestion, it takes
-at least one-way delay (OWD) amount of time for the receiver to report it.
+sufficiently low so that this information can be communicated quickly, it is
+possible to change the encoding rate quickly to meet the variation in the 
+end-to-end path capacity. However in practice, this not always possible because
+\textbf{a)} it may take multiple reports or data packets to detect congestion,
+\textbf{b)} after detecting congestion, it takes at least one-way delay (OWD)
+amount of time for the receiver to report it.
+
+
+Figure~\ref{amusys-descr} illustrates the integration of the application,
+codec, and the network components. Application developers, who may not be
+multimedia communication experts, need to just specifying the desired
+application preferences by calling the \texttt{setPreferences()} method. The
+typical preferences are:
+ 
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+\item[(1)] codec type,
+\item[(2)] expected frame rate,
+\item[(3)] signal source device,
+\item[(4)] expected display resolution.
+\end{enumerate}
+
+These preference may also be a result of capability negotiation during session
+setup between the endpoints. The codec interface allows the congestion control
+algorithm to modify the codec settings during an ongoing multimedia session,
+namely the target bit rate, expected frame rate and the frame resolution.
+
+
 
 \section{Congestion Cues}
 \label{fw.cues}
