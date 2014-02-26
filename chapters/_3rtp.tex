@@ -376,15 +376,15 @@ when link conditions are poor.
 % SDP O/A, declarative SDP, RTCP notify
 
 There are several ways to setup an interactive or conversational multimedia
-session, for example by implementing one of the following:
-H.323~\cite{H.323}, Session Initiation Protocol (SIP)~\cite{rfc3261},
-Jingle~\cite{XEP-0166} an extension to Extensible Messaging and Presence
-Protocol (XMPP)~\cite{rfc6120}. 
+session, for example by implementing one of the following: H.323~\cite{H.323},
+Session Initiation Protocol (SIP)~\cite{rfc3261}, Jingle~\cite{XEP-0166} an
+extension to the Extensible Messaging and Presence Protocol
+(XMPP)~\cite{rfc6120}.
 
-SIP uses Session Description Protocol (SDP)~\cite{rfc4566} to describe the
+SIP uses the Session Description Protocol (SDP)~\cite{rfc4566} to describe the
 endpoint's transport and media capabilities. An SDP description defines a
 single multimedia session, i.e., an association between a set of participants.
-It may however, carry multiple media stream in the session.
+It may however, carry multiple media streams in the session.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\textwidth]{chap3-fig-sig-med}}
@@ -398,19 +398,26 @@ The transport details in the SDP are mainly split into two parts: the protocol
 for delivering media packets (currently, TCP, UDP, or SCTP) and the outgoing
 IP address of the endpoint. The protocol to deliver the media packets is
 chosen by the application, but identifying the outgoing IP address of an
-endpoint is a bit complex. This is due to the presence of NAT devices in the
-network, which may change the IP address of the outgoing packets. Since,
-interactive media calls are between endpoints and media streams may have to
-traverse through a NAT at both ends, in some cases, the only way to deliver
-media packets between the two endpoints would be by accessing a relay on the
-public Internet. Hence, the endpoint needs to discover its 2-tuple [IP
-address:port] on the host, public address if behind a NAT~\cite{rfc5389} and
-the address allocated by the relay~\cite{rfc5766} before it notifies the other
-endpoints about its transport details. This collection of 2-tuples is known as
-\emph{candidates} and both endpoints exchange their candidate addresses in the
-SDP. On receiving the candidates, the endpoint performs a probe between each
-combination of addresses in the two candidate lists and chooses the first one
-that is successfully received (\emph{aggressive nomination}). This process of
+endpoint is a bit complex and first requires gathering the endpoint's multiple
+IP addresses and later exchanging them with the other endpoints to establish
+connectivity.
+
+Multiple IP addresses arise not only from multiple interfaces but also due to
+the presence of NAT devices in the network, which may change the IP address of
+the outgoing packets. Since, interactive media calls are between endpoints and
+media streams may eventually traverse through a NAT at both ends, in some
+cases, the only way to deliver media packets between the two endpoints would
+be by using a relay\footnote{Traversal Using Relays around NAT (TURN)} on the
+public Internet. Hence, the endpoint needs to discover its 2-tuple \texttt{[IP
+address:port]} on the host, the public address if behind a NAT~\cite{rfc5389}
+and the address allocated by the TURN relay~\cite{rfc5766} before it notifies
+the other endpoints about its transport details. This collection of 2-tuples
+is known as \emph{candidates}, at first the endpoints sort the candidates in
+the decreasing order of the candidate's priority and later exchange their
+candidate addresses in the SDP with the other endpoint. On receiving the
+candidates, the endpoint performs a probe between each combination of
+addresses in the two candidate lists and chooses the first one that is
+successfully received (\emph{aggressive nomination}). This process of
 performing pair-wise \emph{connectivity checks} is called Interactive
 Connectivity Establishment (ICE)~\cite{rfc5245, rfc6544} and it relies on
 \emph{Session Traversal Utilities for NAT} (STUN) protocol~\cite{rfc5389} to
@@ -443,16 +450,17 @@ media packets.
 \label{fig:3:sdp}
 \end{figure}
 
-The second part of SDP carries the media capabilities, which binds the SDP to
-the Offer/Answer (O/A) model. In the O/A model, the sending endpoint sends to
-the receiver a set of media capabilities (\emph{offer}) in decreasing order of
-preference, typically, multiple options of audio codecs and video codecs. On
-receiving the sender's capabilities, the receiver compares its media
-capabilities with the sender's and responds with the one that best fits the
-receiver's requirements (\emph{answer}). The \emph{offer is rejected} in the
-case where the receiver is unable to pick any of the options provided by the
-sender. Hence, the application at the sender needs to pick a minimum number of
-widely available audio and video codecs to avoid negotiation failure. If the
+The second part of SDP carries the media capabilities, together with the
+transport parameters binds the SDP to the Offer/Answer (O/A) model. In the O/A
+model, the sending endpoint \emph{offers} to the receiver a set of media
+capabilities in decreasing order of preference, typically, multiple options of
+audio/video codecs and ICE candidates. On receiving the sender's capabilities,
+the receiver compares its media capabilities with the sender's and responds
+with the one that best fits the receiver's requirements (\emph{answer}). The
+\emph{offer is rejected} in the case where the receiver is unable to pick any
+of the options provided by the sender or if ICE connectivity checks fail.
+Hence, the application at the sender needs to pick a minimum number of widely
+available audio and video codecs to avoid negotiation failure. If the
 \emph{offer is accepted}, both endpoints then know the following: 1) which
 audio and/or video codecs to use, 2) the payload types of the encoded media
 streams (possibly even their respective SSRCs), 3) to which IP address and
@@ -460,7 +468,7 @@ port number to send the media stream, 4) the media session bandwidth, if
 indicated and 5) the encryption keys, if encrypting traffic.
 
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{chap3-fig-rtp-stack}
+\centering{\includegraphics[width=0.9\textwidth]{chap3-fig-rtp-stack}}
 \caption{Relationship of RTP with STUN, TURN, DTLS and the signaling protocol.}
 \label{fig:3:rtp-stack}
 \end{figure}
@@ -470,9 +478,9 @@ rest of the IP stack. RTP is usually transmitted over UDP, but under some
 constrained situations (e.g., restrictive firewalls or NATs) it may be
 encapsulated in TCP~\cite{rfc3550}. STUN~\cite{rfc5389} is used by ICE to
 discover the presence of a NAT device and obtain the mapped (public) IP
-address. When using a TURN server (in the presence of symmetric NATs or not to
-reveal the host address of the caller for privacy reasons), the RTP packets
-are encapsulated inside the TURN's \texttt{ChannelData}
+address. When using a TURN relay server (in the presence of symmetric NATs or
+not to reveal the host address of the caller for privacy reasons), the RTP
+packets are encapsulated inside the TURN's \texttt{ChannelData}
 message~\cite{rfc5766}. In the Figure~\ref{fig:3:rtp-stack} four media streams
 (SSRC \#1-4) are transmitted by RTP over UDP, but two streams (SSRC \#1-2) are
 relayed through a TURN server. Secure RTP (SRTP)~\cite{rfc3611} is a security
@@ -483,5 +491,4 @@ applicable, especially to voice telephony and group communication. However,
 the main challenge for SRTP is key management~\cite{draft.sec-opts}, here too
 many options exist (e.g., SRTP over DTLS in WebRTC~\cite{rfc5763}, MIKEY in
 SIP~\cite{rfc3830}, Security Description in SDP~\cite{rfc4566},
-ZRTP~\cite{RFC6189}, etc.) and largely depends on the signaling protocol
-chosen for session establishment (e.g., SIP, Jingle, etc.).
+ZRTP~\cite{RFC6189}, etc.).
