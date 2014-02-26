@@ -315,14 +315,19 @@ measured and reported to the other endpoints.
 
 Sometimes an endpoint needs to configure or notify the other endpoint's codec.
 These messages are broadly classified as \emph{Transport Layer} and \emph
-{Payload-specific} feedback messages~\cite{rfc5104}. The transport layer
-messages are: Temporary Maximum Media Stream Bit Rate Request (TMMBR) and
-Temporary Maximum Media Stream Bit Rate Notification (TMMBN). The receiving
-endpoint uses the TMMBR message to configure the maximum encoding bit rate of
-the media stream, while the sending endpoint uses the TMMBN to inform the
-receiver of the updated bit rate. On the other hand, the payload-specific
-messages are: Full Intra Request (FIR), temporal-spatial tradeoff, frame
-rate, frame size, maximum packet size or packet rate,
+{Payload-specific} feedback messages~\cite{rfc4585, rfc5104}. The transport
+layer messages are: Temporary Maximum Media Stream Bit Rate Request (TMMBR)
+and Temporary Maximum Media Stream Bit Rate Notification (TMMBN). The
+receiving endpoint uses the TMMBR message to configure the maximum encoding
+bit rate of the media stream, while the sending endpoint uses the TMMBN to
+inform the receiver of the updated bit rate. Therefore, transport layer
+feedback messages are intended to transmit general purpose feedback messages,
+independent of any particular codec or application.
+
+On the other hand, the payload-specific feedback messages carry information
+specific to a certain payload type and is acted upon by the codec layer, some
+examples of these type of messages are: Full Intra Request (FIR), temporal-
+spatial tradeoff, frame rate, frame size, maximum packet size or packet rate,
 etc~\cite{draft.avt.cop}.
 
 \section{Reduced-Size RTCP Reports}
