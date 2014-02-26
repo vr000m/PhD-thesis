@@ -1,9 +1,9 @@
 In the forthcoming deployment of WebRTC systems, we speculate that high
-quality\footnote{normally, corresponds to increase in required bandwidth}
-video conferencing will see wide adoption. Normally, to assure stability of
-the network (and avoid congestion collapse), these real-time communication
-systems are required to implement some kind of congestion control for their
-RTP-based media traffic.
+quality\footnote{normally, high quality corresponds to an increase in required
+bandwidth} video conferencing will see wide-scale adoption. To assure
+stability of the network (and avoid congestion collapse), these real-time
+communication systems are required to implement some kind of congestion
+control for their RTP-based media traffic.
 
 RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
@@ -17,24 +17,26 @@ for paths with very low RTT (<100\,\emph{ms} )~\cite{Brosh:tcp-real-time}, and
 DCCP packets have problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
 encapsulated in UDP~\cite{RFC6773}.
 
-This motivates the need for a UDP congestion control, where the congestion
-control is implemented in-between the application and the underlying
-transport. Thereby the congestion control algorithm takes into account both
-the application's and the transport's requirements/constraints and make the
-appropriate trade-off. In this thesis, we consider congestion control for
-unicast RTP traffic running over best-effort IP network.
+This motivates the need for a UDP congestion control algorithm, where the
+congestion control is implemented in-between the application and the
+underlying transport. Thereby the congestion control algorithm can take into
+account both the application's and the transport's requirements/constraints
+and make the appropriate trade-off. In this thesis, we consider congestion
+control for unicast RTP traffic running over the best-effort IP network.
 
 % CC should not cause queuing delay. Or define low-latency operation of
 % multimedia cc.
 
 Endpoints rely on RTCP feedback from the receiver to implement congestion
 control. Hence, the congestion control should consider the following 3 aspects
-into its design: congestion cues to report, block size of each report or the
+in its design: congestion cues to report, block size of each report or the
 overhead incurred by reporting a cue, and the frequency of these feedback
-reports. In the following subsections, we list common congestion cues, discuss
-the feedback reporting frequency, the classification of cues, requirements of
-congestion control and lastly, criteria to evaluate congestion control
-proposals.
+reports. In the following subsections, we describe the interaction between the
+application and the congestion control, list common congestion cues, discuss
+the feedback reporting frequency, the classification of cues, requirements and
+criteria to evaluate congestion control proposals, and lastly, we discuss the
+RTP circuit breaker which stops transmission permanently after observing
+prolonged congestion.
 
 \section{Adaptive Multimedia Systems}
 \label{fw.amusys}
