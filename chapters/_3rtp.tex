@@ -344,20 +344,21 @@ user. Of the SDES items (username, email, phone, geo-location, etc.) CNAME is
 compulsory to include in every RTCP packet.}. Hence, every compound RTCP
 packet is a minimal RTCP packet with additional report blocks.
 
-Consequently, including any of the additional SDES items or adding XR blocks
-makes the compound RTCP packet very large. On a low bit rate links, during
-transmission these large compound RTCP packets may introduce more delay.
-Therefore, it may be desirable to logically fragment the report blocks in a
-compound RTCP packet and send them independently. These fragmented report
-blocks are called \emph{reduced-size RTCP packet}~\cite{rfc5506}. Unlike
-compound RTCP packets, to transmit a reduced-size RTCP packet an endpoint does
-not need to include the minimal RTCP report.
+Including any of the additional SDES items or adding XR blocks makes the
+compound RTCP packet very large. On low bit rate links, these large compound
+RTCP packets may introduce more delay. Therefore, it may be desirable to
+logically fragment the report blocks in a compound RTCP packet and send them
+independently. These fragmented report blocks are called \emph {reduced-size
+RTCP packet}~\cite{rfc5506}. Unlike compound RTCP packets, to transmit a
+reduced-size RTCP packet an endpoint does not need to include the minimal RTCP
+report. However, when using reduced-size RTCP packets, minimal packets need to
+be sent once in a while, to keep alive the CNAME-SSRC binding.
 
 Reduced-size RTCP reports are beneficial in wireless networks where the packet
 loss rate increases with the packet size, i.e., larger sized packets are more
-likely to  be dropped compared to smaller sized packets. Additionally, smaller
+susceptible to be dropped compared to smaller sized packets. Additionally, smaller
 packets have shorter serialization time, i.e., the amount of time it takes for
-the endpoint to put the data packet on to the link.
+the endpoint to put the data packet on to the link is short.
 
 The main reasons for the application to use the reduced-size RTCP reports are:
 1) notify the other endpoint of events, using the signaling channel would
