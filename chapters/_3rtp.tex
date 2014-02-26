@@ -255,9 +255,9 @@ the interval is shorter than \emph{5\,s} for session bandwidths greater than
 
 % avpf
 
-If the endpoint detects packet loss or onset of congestion midway through a
+If an endpoint detects packet loss or onset of congestion midway through a
 reporting interval, the base RTP specification~\cite{rfc3550} (AVP profile)
-does not allow sending the RTCP report early and the endpoint has to wait for
+does not allow sending the RTCP reports early and the endpoint has to wait for
 the next scheduled RTCP report. In this case, the slow control loop causes
 instability and oscillation in the media bit rate. To overcome this
 shortcoming, endpoints implement the Extended RTP Profile for RTCP-Based
@@ -266,19 +266,21 @@ rules to enable rapid feedback. This profile allows the endpoint to adjust the
 RTCP reporting interval to send the RTCP feedback reports earlier than the
 next scheduled RTCP report, sometimes even immediately. As long as reporting
 interval on average remains the same. Figure~\ref{fig:3:avpf.interval} shows
-the dynamics of the AVPF-enabled RTCP reporting interval.
+that in AVP profile the endpoint reports at regular intervals, whereas in AVPF
+it gets the opportunity to send feedback early in every other reporting
+interval. Along with the possibility of providing timely feedback, the AVPF
+profile also defines a suite of error-resilience feedback messages, namely,
+Negative Acknowledgements (NACK), Picture Loss Indication (PLI), Slice Loss
+Indication (SLI), Reference Picture Selection Indication (RPSI).
 
-\begin{figure}[!h]
-\centerline{\includegraphics[width=\textwidth]{chap3-fig-avpf-rtcp}}
+\begin{figure}[!t]
+\centering{\includegraphics[width=\textwidth]{chap3-fig-avpf-rtcp}}
 \caption{shows the RTCP reporting interval as defined in a) AVP, b) AVPF.}
 \label{fig:3:avpf.interval}
 \end{figure}
 
 
-Along with the possibility of providing timely feedback, the AVPF profile also
-defines a suite of error-resilience feedback messages, namely, Negative
-Acknowledgements (NACK), Picture Loss Indication (PLI), Slice Loss Indication
-(SLI), Reference Picture Selection Indication (RPSI).
+
 
 \section{RTCP Extended Reports (XRs) for Performance Monitoring}
 
