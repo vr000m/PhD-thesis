@@ -243,46 +243,45 @@ investigate the use of FEC packets not only for error-resilience but also as a
 probing mechanism for congestion control.
 
 Zhu~\textit{et al.}\cite{Zhu:2001tu,springerlink:1022865704606} propose using
-Unequal Loss Protection (ULP) for both congestion control and
-error-resilience. Firstly, they estimate the available rate using a variant of
-TFRC, called Multimedia Streaming TCP-Friendly Protocol (MSTFP)~\cite{871542}.
+Unequal Loss Protection (ULP) for both congestion control and error-
+resilience. Firstly, they estimate the available rate using a variant of TFRC,
+called Multimedia Streaming TCP-Friendly Protocol (MSTFP)~\cite{871542}.
 Secondly, they take packet loss and historical sending rate to smooth out the
 encoding rate. Lastly, they apply FEC while performing congestion control and
-their results show a significant increase in PSNR. MSTFP on the other hand
-does not use RTP/RTCP and acknowledges each packet for calculating the TFRC
-estimate.
+their results show a significant increase in media quality. MSTFP on the other
+hand does not use RTP/RTCP and acknowledges each packet for calculating the
+TFRC estimate.
 
 Our concept in \citepub{c:err} is similar to that described in
 \cite{Zhu:2001tu} but applied to interactive multimedia. The concept is as
 follows, the sender chooses a high FEC rate to aggressively probe for
 available capacity and conversely chooses a low FEC rate to conservatively
-probe for available capacity. While probing, if a packet is lost and the if
-the FEC packet arrives in time for decoding, the receiver is be able to
-recover the lost packet; if no packet is lost, the sender can increase the
-media encoding rate by swapping out the FEC. Figure~\ref{fig:fecrc-intro}(a)
-shows the endpoint adding FEC and then swapping it for additional media. This
-method can be especially useful when the sending rate is close to the
-bottleneck link rate, because by choosing an appropriate FEC rate the endpoint
-is able to probe for available capacity without affecting the user-experience
-because during the probing interval the media stream rate remains constant.
+probe for available capacity. While probing, if a packet is lost and the FEC
+packet arrives in time for decoding, the receiver is be able to recover the
+lost packet; if no packet is lost, the sender is able to increase the media
+encoding rate by swapping out the FEC. Figure~\ref{fig:fecrc-intro}(a) shows
+the endpoint adding FEC and then swapping it for additional media. This method
+can be especially useful when the sending rate is close to the bottleneck link
+rate, by choosing an appropriate FEC rate the endpoint is able to probe for
+available capacity without affecting the user-experience because the media
+encoding rate remains constant.
 
 % Figure with the idea: FEC for CC
 
 \begin{figure}
-  \centerline{
+  \centering
   \subfloat [Concept]{
     \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-concept}
   } 
   \subfloat [State-machine]{
     \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-state}
   }
-}
 \caption{a) Interaction of FEC and congestion control, b) FEC-Based Rate
 Adaptation (FBRA) state machine }
 \label{fig:fecrc-intro}
 \end{figure}
 
-Figure~\ref{fig:fecrc-intro}(a) illustrates the state machine of a
+Figure~\ref{fig:fecrc-intro}(b) illustrates the state machine of a
 congestion-control algorithm incorporating FEC. The state machine includes 4
 states: \texttt{\textbf{STAY}}, \texttt{\textbf{PROBE}}, \texttt{\textbf{UP}},
 and \texttt{\textbf{DOWN}}. The congestion control monitors the congestion
@@ -304,13 +303,12 @@ intervals and no change in path characteristics is observed, FEC is enabled
 In \citepub{c:fecrc}, we compare the performance of FEC-Based Rate Adaptation
 (FBRA), RRTCC and C-NADU. The bottleneck link capacity varies between
 100\,\emph{kbps} and 256\,\emph{kbps}. In the scenario, we evaluate the
-reactivity and convergence of the rate-control algorithm to the available
-end-to-end capacity for different path latencies.
-
-Our simulations in \emph{ns-2}~\cite{ns2} shows that for the 50\,\emph{ms} and
-100\,\emph{ms} bottleneck link latency, the goodput achieved by FBRA is
-comparable to RRTCC but with comparatively lower loss rates ($\approx$1.5\,\%,
-see Table~\ref{table:fecrc-var-res}). Figures~\ref{fig:fecrc-var}(a)--(b) show
+reactivity and convergence of the rate-control algorithm to the available 
+end-to-end capacity for different path latencies. Our simulations in
+\emph{ns-2}~\cite{ns2} shows that for the 50\,\emph{ms} and 100\,\emph{ms}
+bottleneck link latency, the goodput achieved by FBRA is comparable to RRTCC
+but with comparatively lower loss rates ($\approx$1.5\,\%, see
+Table~\ref{table:fecrc-var-res}). Figures~\ref{fig:fecrc-var}(a)--(b) show
 that the FBRA can quite quickly bounce-back after undershooting. The figure
 also shows that the FEC probing rate increases when the FBRA ramps up and the
 FEC rate is low or disabled when the FBRA undershoots. However, FBRA is
@@ -321,10 +319,10 @@ probing for available bandwidth (this is observed by the low FEC rate in
 Figure~\ref{fig:fecrc-var}(c)). FEC rate is about 10\,\% of the media rate at
 about 15-20\,\emph{kbps} and the packet loss recovery is around 30\,\%.
 Compared to FBRA, RRTCC tries to achieve high throughput at the cost of
-incurring packet losses (this behavior is also observed in
-\ref{tab:rrtcc-loss}), while C-NADU trades-off throughput for packet loss.
-Hence in our experiments, FBRA's performance sits between the two trade-offs,
-better through than C-NADU and better loss ratio than RRTCC.
+incurring packet losses (this behavior is also observed in \ref{tab:rrtcc-loss}), 
+while C-NADU trades-off packet loss for throughput. In our
+experiments, FBRA's performance is placed between the two trade-offs, better
+through than C-NADU and lower loss ratio than RRTCC.
 
 % RRTCC achieves the best goodput ($169$-$180 kbps$) for the three bottleneck
 % link latencies, but has the worst loss rate ($3$-$4\%$). RRTCC is aggressive
@@ -390,14 +388,14 @@ In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
 competing on a bottleneck link (1Mbps) in a testbed. The difference in the
 goodput of the calls in the two latency scenarios (50\,\emph{ms} and
 100\,\emph{ms}) is about 30-50\,\emph{kbps}, but the PSNR of these calls are
-similar (see Table~\ref{table:fecrc-rw-udp}). Therefore, we conclude that
-small rate variations have little bearing on the quality of the call. The FEC
-recovery is low due to small amount of packet loss and most of the losses
-occur when FEC was disabled. Additionally, 90\,\% of the times FEC was
-enabled, resulted in an increase in media rate. Low FEC overhead also implies
-that the FBRA remains longer in the \texttt{\emph{STAY}} state, thus avoiding
-abrupt changes to the encoding rate, which is detrimental for user experience
-\cite{Zink03subjectiveimpression}.
+similar (see Table~\ref{table:fecrc-rw-udp}). Therefore as far as we tell from
+PSNR, the small rate variations have little bearing on the quality of the
+call. The FEC recovery is low due to small amount of packet loss and most of
+the losses occur when FEC was disabled. Additionally, 90\,\% of the times FEC
+was enabled, resulted in an increase in media rate. Low FEC overhead also
+implies that the FBRA remains longer in the \texttt{\emph{STAY}} state, thus
+avoiding abrupt changes to the encoding rate, which is detrimental for user
+experience \cite{Zink03subjectiveimpression}.
 
 
 
@@ -449,14 +447,23 @@ the minor Y-axis)}
   \label{table:fecrc-rw-udp}
 \end{table}
 
-The RTP flow competes well against short TCP flows achieving an average
-goodput of 302\,\emph{kbps} and 280\,\emph{kbps} in the 50\,\emph{ms} and
-100\,\emph{ms} latency scenario, respectively (see
-Table~\ref{table:fecrc-rw-tcp}). Additionally, about 85\,\% of the times FEC
-was enabled, resulted in an increase in media rate. The TCP flow achieves a
-throughput of around 600\,\emph{kbps} on average, the PSNR in both scenarios
-are very similar ($\approx$ 35dB), the PSNR is lower for the $100ms$ delay
-scenario because the average goodput is also a bit lower in this case.
+When competing with short TCP flows, the FBRA achieves an average goodput of
+302\,\emph{kbps} and 280\,\emph{kbps} in the 50\,\emph{ms} and 100\,\emph{ms}
+latency scenario, respectively (see Table~\ref{table:fecrc-rw-tcp}).
+Additionally, about 85\,\% of the times FEC was enabled, resulted in an
+increase in media rate. The TCP flow achieves a throughput of around
+600\,\emph{kbps} on average, the PSNR in both scenarios are very similar
+($\approx$ 35dB), the PSNR is lower for the 100\,ms delay scenario because the
+average goodput is also a bit lower in this case.
+
+
+% Lastly, we measure the performance of the FBRA on the public Internet, between
+% a host on Amazon EC2 instance in Ireland and a machine at Aalto University. We
+% observe varying results between each successive run, as the public Internet
+% has varying amount of cross traffic. The goodput ranges between $100$-$700$
+% \emph{kbps}, the maximum loss rate does not exceed $1.5\%$, the PSNR of the
+% calls varies between $35$-$40$ \emph{dB}. Despite the diversity in results, it
+% show that FBRA may work in the public Internet.
 
 \begin{table}
   \resizebox{\textwidth}{!}{%
@@ -503,8 +510,8 @@ available capacity. Our experiments show that by using adaptive FEC for
 probing, the endpoints are able to recover 15-25\,\% of the lost packets and
 $\approx$90\,\% of the time using FEC subsequently results in an increase in
 the media rate. These results are comparable to our earlier experiments using
-a fixed FEC interval throughput the duration of the call for error-resilience,
-where we were able to 20-24\;\% of the lost packets. We believe using FEC for
-congestion control in interactive multimedia has not been explored in depth by
-the community, partly because interactive multimedia flows have very tight
-delay constraints and FEC may not arrive in time for recovering the packet.
+a fixed FEC interval for error-resilience, where we were able to recover
+20-24\;\% of the lost packets. We believe using FEC for congestion control in
+interactive multimedia has not been explored in depth by the community, partly
+because interactive multimedia flows have very tight delay constraints and FEC
+may not arrive in time for recovering the packet.
