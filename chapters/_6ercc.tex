@@ -1,5 +1,5 @@
 Error-resilience is typically a topic discussed orthogonally to congestion
-control and the main reason is that, error-resilience caters to handling
+control and the main reason is that error-resilience caters to handling
 packet loss while congestion control caters to the amount of information sent
 over the network. This chapter is based on our work on unifying
 error-resilience and congestion control.
@@ -16,14 +16,14 @@ Lastly, based on our observations, we define the applicability of the various
 error-resilience with respect to end-to-end latency and packet loss.
 
 In \citepub{c:fecrc}, we propose using FEC not only for error-resilience but
-also for congestion control. Instead of probing for available capacity by
-increasing the sending rate of the media flow, we propose introducing
-redundancy. If a packet gets lost and the added FEC packet arrives in time the
-receiving endpoint would recover the lost packet. However, if the packet is
-not lost, by introducing the FEC packet the sender not only discovers that
-there is additional available capacity, but also has a sense of the magnitude
-(at minimum) of the available capacity. We compare our proposal with our
-previous work in \citepub{c:3grc} and \citepub{c:hetrc}, and Google's
+also for congestion control, i.e., instead of probing for available capacity
+by increasing the sending rate of the media stream, the endpoint sends
+redundant packets. If a packet gets lost and the added FEC packet arrives in
+time, the receiving endpoint would recover the lost packet. However, if the
+packet is not lost, by introducing the FEC packet the sender not only
+discovers that there is additional available capacity, but also has a sense of
+the magnitude (at minimum) of the available capacity. We compare our proposal
+with our previous work in \citepub{c:3grc} and \citepub{c:hetrc}, and Google's
 congestion control~\cite{draft.rrtcc}. We evaluate the performance of the
 mechanisms in diverse scenarios implemented in a simulation environment (in
 ns-2) and in our testbed.
@@ -32,13 +32,13 @@ ns-2) and in our testbed.
 % explain all 4 and the adaptivity
 
 H.264~\cite{h264} uses various error-control methods~\cite{err_res_h264_std,
-wang98error, wang00review, 310669} to overcome loss due to bit-error
-corruption (e.g., in wireless) and non-bursty packet loss (e.g., due to
-congestion). These methods are classified into three categories: source
-coding, channel coding, and joint source and channel methods. Source coding
-refers to the methods implemented by the video codec. Channel coding refers to
-the methods implemented by the networking layer. Joint source-channel refers
-to methods that combine source-coding and network-coding mechanisms.
+wang98error, wang00review, 310669} to overcome loss due to corruption (e.g.,
+in wireless) and non-bursty packet loss (e.g., due to congestion). These
+methods are classified into three categories: source coding, channel coding,
+and joint source and channel methods. Source coding refers to the methods
+implemented by the video codec. Channel coding refers to the methods
+implemented by the networking layer. Joint source-channel refers to methods
+that combine source-coding and network-coding mechanisms.
 
 The H.264/AVC codec has several features that support error resilient
 mechanisms for video communication that correspond to the above
@@ -88,11 +88,11 @@ observing bit-error corruption.}
   Larger slice sizes improve encoding efficiency, but are more vulnerable to
   frame losses. Figure~\ref{fig:slicesize_mot} shows the variation of average
   PSNR with respect to different slice-sizes in varying loss scenarios. We
-  observe, that there is direct correlation between packet loss and slice
-  size.
+  observe, that there is direct correlation between packet loss, slice
+  size and media quality.
 
   \item \textbf{\texttt{Reference Picture Selection}}: Instead of
-  retransmitting the lost packet, the encoder finds the list of correctly
+  retransmitting a lost packet, the encoder finds the list of correctly
   received pictures by the decoder. Hence, for subsequent encodings, the
   encoder uses a different decoded picture for inter prediction reference.
   This method stops the temporal error propagation caused by an earlier packet
@@ -116,14 +116,14 @@ In \citepub{c:err}, we stream 3 different YUV sequences~\cite{YUV_seq} over a
 3G link simulated in \emph{ns-2}~\cite{ns2} with varying amount of link layer
 packet loss (0.5\,\%, 1.0\,\% and 1.5\,\%)~\cite{3gppSim}. Our experiments
 show that using NACK, the endpoint is able to correct 15-30\,\% of the lost
-packets for an end-to-end latency of 60\,\emph{ms} (meeting the 150\,\emph{ms}
-playout deadline). The number of recovered packets will increase with shorter
-RTCP reporting intervals; in this paper we use \emph{1s} reporting interval,
-with early and immediate reporting as defined in \cite{rfc4585}. Based on
-these experiments, it shows that NACK is an effective mechanism for low
-end-to-end latency scenarios. Similarly, protecting the media flows with UEP
-incurred a 15-25\,\% overhead, and about 21-24\,\% of the lost packets were
-recovered.
+packets for an end-to-end path latency of 60\,\emph{ms}, which meets the
+preferred  packet latency of 150\,\emph{ms} specified by ETSI~\cite{etsi.qoe}.
+The number of recovered packets will increase with shorter RTCP reporting
+intervals; in this paper we use \emph{1s} reporting interval, with early and
+immediate reporting as defined in \cite{rfc4585}. Our experiments show that
+NACK is an effective mechanism for low delay scenarios. Similarly, protecting
+the media flows with UEP incurred a 15-25\,\% overhead, and about 21-24\,\% of
+the lost packets were recovered.
 
 \begin{figure}
 \centerline {
@@ -151,13 +151,12 @@ area of the decoded picture is affected, alternatively, when a packet
 containing a large sized slice is lost, a large or complete decoded picture is
 affected.
 
-Lastly, using RPS error-resilience mechanism, the receiver indicates the
-decoding correctness; when losses occur, which pictures or slices have been
-decoded correctly or incorrectly. The feedback messages is encapsulated in an
-RTCP packet and are reported to the sender. In our experiments, the receiver
-reports RTCP every 250\,\emph{ms} and it approximately consumes 2\,\% of the
-session media rate. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c) we observe
-that the PSNR drops down when a lost frame is referenced and the PSNR
+Lastly, using the RPS error-resilience mechanism, the receiver indicates the
+decoding correctness when losses occur, i.e., which pictures or slices have
+been decoded correctly or incorrectly.  In our experiments, the receiver sends
+RTCP RR every 250\,\emph{ms}, which increases the reporting overhead to 2\,\%
+of the session bandwidth. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c) we
+observe that the PSNR drops down when a lost frame is referenced and the PSNR
 increases immediately after the encoder chooses a correct reference picture.
 When the one-way latency is 100\,\emph{ms} and the frame rate is set to 15
 frames per second, we observe the error propagation is stopped by RPS in about
