@@ -452,8 +452,9 @@ categorize the congestion control algorithms based on \emph{where they are
 implemented}: sender-driven scheme (e.g., TFRC), receiver-driven scheme (e.g.,
 TMMBR), or co-operative scheme (combination of sender and receiver, e.g.,
 C-NADU, RRTCC) and compare the performance of an algorithm in each scheme. We
-observe that the performance of TFRC is bursty, which may lead to poor 
-user-experience, whilst TMMBR, C-NADU and RRTCC have a more stable throughput.
-Lastly, TMMBR appears to be conservative and RRTCC appears to be aggressive.
-C-NADU attempts to trade-off throughput for losses, but achieves higher
-throughput than TMMBR.
+observe that the performance of TFRC is bursty, which may lead to poor  user-
+experience, whilst TMMBR, C-NADU and RRTCC have a more stable throughput.
+Lastly, TMMBR appears to be conservative with very low packet loss, while
+RRTCC appears to be aggressive with a lot more packet loss. C-NADU appears to
+be in between the two schemes with higher throughput than TMMBR and much lower
+packet loss compared to RRTCC.
