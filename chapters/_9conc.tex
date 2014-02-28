@@ -1,8 +1,20 @@
 
-In this thesis, we describe our proposed classification of congestion control
-cues (framework) in \ref{chap:cc.fw}. When describing the different parts of the
-framework, we also discuss the related work and our contributions in those
-areas. 
+In this thesis, we have described our proposed classification of congestion
+control cues (framework) in \ref{chap:cc.fw}. When discussing the different
+parts of the framework, we highlight our contributions in those areas along
+with the related work. In terms of innovativeness, the congestion control
+framework provides options to look beyond using congestion cues reported by
+the receiver on a given path. The framework offers the congestion control
+algorithm to use multiple paths to either aggregate capacity or for increasing
+resilience, to use feedback notifications from intelligent middleboxes along
+the path or to build a coverage or map that provides congestion notification
+as a third party services. Each of these techniques apply to one of the four
+areas described in the framework. However, the definitions of each area is
+generalized enough to allow application of a broad-range of techniques not
+just those proposed in this thesis. We believe using FEC for congestion
+control in interactive multimedia has not been explored in depth by the
+community, partly because interactive multimedia flows have very tight delay
+constraints and FEC may not arrive in time for recovering the lost packet.
 
 % In chapter~\ref{chap:cc}, we describe congestion control implemented using
 % congestion cues from in-band sources and signaled in path (in RTCP). We
@@ -71,17 +83,9 @@ areas.
 % discover areas of poor coverage, based on these notifications the endpoints
 % vary their sending rate.
 
-In terms of innovativeness, the congestion control framework provides options
-to look beyond using congestion cues reported by the receiver on a given path.
-The framework offers the congestion control algorithm to use multiple paths to
-either aggregate capacity or for increasing resilience, to use feedback
-notifications from smart middleboxes along the path or to build a coverage or
-map that provides congestion notification as a third party services. Each of
-these techniques apply to one of the four areas described in the framework.
-However, the definitions of each area is generalized enough to allow
-application of a broad-range of techniques not just those proposed in this
-thesis.
 
+
+% insights and criticism
 
 % \section{Future Work}
 
