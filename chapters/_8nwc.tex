@@ -124,8 +124,8 @@ based on signal strength alone is insufficient. Yet, their results indicate
 that past information can be used to predict future network characteristics.
 
 To overcome these challenges, in \citepub{c:glass}, we implement a bandwidth
-coverage map that collects connectivity information from the users
-(\emph{crowd-sourcing}) and calculates the available capacity at the reported
+coverage map that collects connectivity information from the users (\emph
+{crowd-sourcing}) and calculates the available capacity at the reported
 geographical locations. \cite{6012045} also proposes a similar architecture
 (\emph{bandwidth lookup service}) to the one in \citepub{c:glass} and uses
 different types of averaging algorithms to predict future network
@@ -137,10 +137,11 @@ similar bandwidth. Details of the averaging algorithms employed by our
 coverage map server are discussed in~\cite{sharmistha-thesis}. Additionally,
 \cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
 route in steps of 100 meters, which we find limiting. Instead we propose
-multiple methods for discovering areas with poor connectivity and show that
-not only looking up future bandwidth but also when to vary the sending rate
-affects the usefulness of the service. A preliminary analysis using
-simulations of our system is done in~\cite{Curcio:glass}.
+multiple methods for discovering areas with poor connectivity (e.g., known
+travel route, area look ahead, geo-fencing/subscribing to coverage holes.) and
+show that not only looking up future bandwidth but also when to vary the
+sending rate affects the usefulness of the service. A preliminary analysis
+using simulations of our system is done in~\cite{Curcio:glass}.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-fig-ecv}
@@ -159,13 +160,14 @@ stream monitors the throughput and its geolocation and reports it to the NCMS.
 Figure~\ref{fig:glass:map} shows the throughput around the university area in
 Espoo. Second, each endpoint is capable of querying the NCMS for upcoming
 congestion (known as \emph{lookahead}). It can \emph{lookahead} using one of
-the following methods: known travel rote, area lookahead or by subscribing to
-areas with poor coverage\footnote{Areas where the expected channel capacity is
-lower than the media bit rate}. Figure~\ref{fig:glass:map} shows a graphical
-representation of the average throughput for a \emph{area lookahead} and a
-\emph{known travel route}. Third, for each lookahead requests, the NCMS
-responds with an coverage map info, i.e., the expected throughput at every
-geolocation along the route or requested area.
+the following methods: known travel route, area lookahead or by subscribing to
+areas with poor coverage, typically using geo-fencing\footnote{Areas where the
+expected channel capacity is lower than the media bit rate}.
+Figure~\ref{fig:glass:map} shows a graphical representation of the average
+throughput for a \emph{area lookahead} and a \emph{known travel route}. Third,
+for each lookahead requests, the NCMS responds with an coverage map info,
+i.e., the expected throughput at every geolocation along the route or
+requested area.
 
 
 \begin{figure}
@@ -189,31 +191,35 @@ geolocation along the route or requested area.
 \end{figure}
 
 The receiver uses these hints provided by the NCMS to implement congestion
-control. It sends an \emph{estimated capacity vector} (a data structure
+control and sends an \emph{estimated capacity vector} (a data structure
 containing a time-series of available throughput, thus preserving user's
-location privacy) are sent to the sender, which can alter the sending rate
-based on the received information. The sender has the following techniques to
-change the sending rate: 1) change the encoding rate, 2) perform rate-switch,
-or, 3) pre-buffer. Changing the encoding rate is only possible in interactive
-real-time media, because the RTP sender co-operates with the encoder to modify
-the encoding rate. Rate-switching is only possible for stored content or live
-content where a media stream is encoded at different bit rates and the
-application switches between the stored media files, this performance of the
-congestion control depends on the granularity of the chosen bit rates for the
-media stream. Lastly, pre-buffering provides a more consistent experience to
-the user, because the technique attempts to maintain the same media encoding
-rate by modulating the sending rate. It is only applicable to stored content,
-the application, typically, reads-ahead in the media stream and sends more
-data whenever before it detects poor coverage.
+location privacy) to the sender, which can alter the sending rate based on the
+received information. The sender has the following techniques to change the
+sending rate: 1) adapt the encoding rate, 2) perform a rate-switch, or, 3)
+pre-buffer. Changing the encoding rate is only possible in interactive 
+real-time media, because the RTP sender co-operates with the encoder to  modify the
+encoding rate. Rate-switching is possible for streaming content  encoded at
+different bit rates. It is also possible to use rate-switching  for
+interactive real-time media involving scalable video codecs or simulcast
+media, wherein a media stream is encoded at different bit rates and the
+application switches between the stored media files. The performance of the
+congestion control in this case depends on the granularity of the chosen bit
+rates for the individual media streams. Lastly, varying the amount of  pre-
+buffered video provides a more consistent experience to the user,  because the
+technique attempts to maintain multimedia play back at a constant  media
+encoding rate. It is only applicable to stored content, the application,
+typically, reads-ahead in the media stream and sends more data whenever before
+it detects poor coverage.
 
-In \citepub{c:glass}, we stream video from a server to mobile clients moving
-around the city, mainly using public transport. The NCMS collected the
-throughput traces, thereafter, we conduct simulated experiments of users
-traveling at different vehicular speeds through the Helsinki region. In total,
-the NCMS collected over 400,000 updates over a month of operation (about 40-50
-bus-trips). For 6 geographical areas, the NCMS received more than 10,000
-updates (\emph{Otaniemi}, Helsinki City Center) while on average each
-geographical had around 100 updates.
+In \citepub{c:glass}, video is sent from a server to mobile clients. The user
+in the experiments mainly commute around the city of Helsinki and Espoo using
+public transport. The NCMS collects the measured throughput for each client,
+thereafter, we conduct simulated experiments of users traveling at different
+vehicular speeds through the Helsinki region. In total, the NCMS collected
+over 400,000 updates over a month of operation (about 40-50 bus-trips). The
+NCMS received more than 10,000 updates for 6 geographical areas
+(\emph{Otaniemi}, Helsinki City Center) while on average each geographical
+location had around 100 updates.
 
 
 \begin{table}
@@ -231,21 +237,52 @@ Late scheduling & 1014  & 48.43 & 0.18 & 0.0  \\ \hline
 \end{center}
 \end{table}
 
+In \citepub{c:glass} we describe a scenario where a user moves smoothly
+through a set of locations along a route and the receiver performs
+\emph{lookahead} queries to fetch coverage information for surrounding areas.
+In this scenario, there are gaps in coverage but overall the throughput at
+most locations is above the required media rate. We analyse the performance of
+4 different algorithms, they are: 1) the \emph{omniscient algorithm}, the
+endpoint is aware of the exact end-to-end channel capacity and is expected to
+perform the perfect rate-adaptation. 2) \emph{no adaptation}, the endpoints
+perform no congestion control and the stream are received at a constant bit
+rate. For periods when the link capacity falls below the media rate, will
+cause an increase in losses/discards, which may cause frequent pausing of the
+video. 3) \emph{Rate-switching}, the endpoints perform short
+\emph{lookaheads}, which enables the endpoints to detect outages a few moments
+before the user enters a location with poor connectivity. In this case, the
+receiver sends a TMMBR message (with lowest available bit rate in the area)
+before entering the area and another one after the exiting the area (to reset
+the bit rate). The sender reacts by switching the media stream to the closest
+available media rate. 4) \emph{Late scheduling}, the receiving endpoint
+searches for areas with poor coverage much before the user arrives at those
+locations, so that it can pre-buffer the content equivalent to the duration of
+the disruption. To reduce the impact of changing routes, the streaming client
+uses the congestion control algorithm proposed in \citepub{c:glass}.
+
 Table~\ref{table-glass-sim7res} compares the results for the different schemes
 and Figure~\ref{fig:glass:sim7res} shows the sending/receiver rate variation
-to channel throughput for one out of 10 simulation runs. In this scenario the
-user moves smoothly through the locations along the route and the receiver
-performs \emph{lookahead} queries to fetch coverage information. In this
-scenario, there are intermittent gaps in coverage but overall the throughput
-at most locations is above the required media rate. The \emph{omniscient
-algorithm}\footnote{The endpoint is aware of the exact end-to-end channel
-capacity and performs the perfect rate-adaptation.} provides the best
-rate-adaptation but since it is unable pre-buffer, the PSNR ($PSNR_{avg}$=43)
-is lower than that of late scheduling ($PSNR_{avg}$=48). Alternatively,
-performing \emph{no adaptation}\footnote{Endpoints perform no congestion
-control and stream at a constant bit rate and periods when the link capacity
-falls below the media rate, will cause losses} causes frequent pausing and
-packet loss which is reflected in the low PSNR ($PSNR_{avg}$=27).
+to channel throughput for one out of 10 simulation runs. The \emph{omniscient
+algorithm}  provides the best rate-adaptation but since it is unable to 
+pre-buffer, the PSNR ($PSNR_{avg}$=43) is lower than that of late scheduling
+($PSNR_{avg}$=48). Alternatively, performing \emph{no adaptation} causes
+frequent pausing when the capacity is lower than the media rate, additionally
+packet loss too affects the media quality and is reflected in the low PSNR
+($PSNR_{avg}$=27). \emph{Rate-switching} has comparable results to the
+\emph{omniscient} case because it avoids congestion by switching to bit rates
+lower than the minimum reported throughput. There are no losses  and average
+PSNR is 42.75, which is comparable to the \emph{omniscient} case. \emph{Late
+scheduling} outperforms the rest of the schemes in terms of media quality
+(measured in terms of average PSNR, $PSNR_{avg}$=48.43) mainly because it
+attempts to stream media at a single quality level, it relies heavily on 
+pre-buffering, constantly updating the size of the pre-buffer to compensate for
+the longest disruption it finds along the travel-route or in the viscinity of
+the user. Another reason is that in our measurements we found low density of
+poor coverage areas and good connectivity in areas in between allowing the
+client to pre-buffer content. However, when it is not possible to pre-buffer,
+the client will perform a rate-switch. Finally, we expect the performance of
+the congestion control to be at least that of rate-switching because the
+sender will be able to vary the sending rate preemptively without probing.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-graph-sim7-3}
@@ -255,37 +292,17 @@ packet loss which is reflected in the low PSNR ($PSNR_{avg}$=27).
 \label{fig:glass:sim7res}
 \end{figure}
 
-\emph{Rate-switching}\footnote{Endpoints perform short \emph{lookahead}
-requests and is only able to detect outage moments before the user arrives at
-the location with poor connectivity. In this case, the receiver sends a TMMBR
-message (with lowest available bit rate in the area) before entering the area
-and another one after the exiting the area (to reset the bit rate). The sender
-reacts by switching the media stream to the closest available media rate.} has
-comparable PSNR ($PSNR_{avg}$=42.75) to \emph{Omniscient} and has no packet
-losses. \emph{Rate-switching} avoids all drops by switching to values lower
-than the average or minimum reported throughput. \emph{Late
-scheduling}\footnote{The receiving endpoint performs lookahead requests and
-tries to detect areas with poor coverage much before the user arrives at those
-locations. To reduce the impact of changing routes, the streaming client uses
-the congestion control algorithm proposed in \citepub{c:glass}.} outperforms
-the rest of the schemes in terms of PSNR ($PSNR_{avg}$=48.43) because it
-predictively pre-buffers content and does not have to rate-switch. This is
-largely due to the low density of coverage holes and good connectivity between
-them. In the case of interactive multimedia communication implementing
-network-assisted congestion cues, we expect the performance of the congestion
-control to be at least that of rate-switching because the sender will be able
-to reduce and increase the sending rate preemptively without probing.
 
 We find that the information provided by the NCMS is suitable for both
-predictive rate-switching and pre-buffering and helped in avoiding almost all
+predictive rate-switching and  pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality. This system can be adapted for interactive media communication,
-wherein the sender employs a co-operative congestion control scheme, i.e., the
-sender receives the \emph{estimated capacity vector} from the receiver and
-\emph{coverage map information} for itself from the NCMS, it then picks the
-minimum of the two rates and any additional rate recommended by the congestion
-control (one of the algorithms discussed in Chapter~\ref{chap:cc}) it
-implements.
+quality. This system wprks for video streaming and can be adapted for
+interactive media communication, wherein the sender employs a co-operative
+congestion control scheme, i.e., the sender receives the \emph{estimated
+capacity vector} from the receiver and \emph{coverage map information} for
+itself from the NCMS, it then picks the minimum of the two rates and any
+additional rate recommended by the congestion control (one of the algorithms
+discussed in Chapter~\ref{chap:cc}) it implements.
 
 \section{Summary}
 
@@ -293,8 +310,8 @@ In this chapter we describe two congestion control mechanisms, both use out-
 of-band signaling, but use in-path and out-of-path sources, respectively.
 First, the in-path sources is based on receiving congestion cues from
 middleboxes (e.g., 3G or LTE base-stations) and use standard RTP extensions
-(e.g., TMMBR) for signaling . Second, the out-of-path sources are crowd-
-sourced 3G coverage maps that collect throughput and geo-location information
+(e.g., TMMBR) for signaling . Second, the out-of-path sources are 
+crowd-sourced 3G coverage maps that collect throughput and geo-location information
 from users and then notifies endpoints about the available capacity in the
 region. We propose a system to collect and query coverage maps. The endpoints
 query the coverage server using out-of-band signaling to discover areas of
