@@ -17,30 +17,34 @@ real-time multimedia on the Internet.
 
 
 There are some fundamental differences between video streaming and real-time
-communication; video streaming is used in video on demand, IP television (IPTV)
-services wherein the content is pre-encoded and played back directly from
-storage, the challenge is to be able to simultaneously serve multiple
-customers (\emph{scaling}) and consistently provide high quality multimedia
-experience. The receiving endpoint in this case is mainly required to avoid
-pausing the playback midstream, which it does by pre-buffering several seconds
-of content. A larger pre-buffer not only removes the effect of packet jitter
-but also helps in requesting lost packets (\emph{retransmissions}), therefore
-providing consistent video quality. However, real-time communication uses very
-small buffers to avoid excessive buffering and provide low-delay; hence,
-sending endpoints modify the sending rate to best match the available capacity
-and not cause excessive delay.
+communication; video streaming is used in video on demand, IP television
+(IPTV) services wherein the content is pre-encoded and played back directly
+from storage, there the challenge is to be able to simultaneously serve
+multiple customers (\emph{scaling}) and consistently provide high quality
+multimedia experience. The receiving endpoint in this case is mainly required
+to avoid pausing the playback midstream, which it does by pre-buffering
+several seconds of content. A larger pre-buffer not only removes the effect of
+packet jitter but also helps in requesting lost packets (via
+\emph{retransmissions}), therefore providing consistent video quality.
+However, real-time communication uses very small buffers to avoid long
+buffering duration and provide low-delay; hence, sending endpoints modify the
+sending rate to best match the available capacity and not cause excessive
+delay.
 
 This thesis is about enabling congestion control for real-time communication,
 deploying it in heterogeneous networking environments containing a mixture of
-wireless and wired links. We also briefly discuss the interaction between the
-congestion control and the application, define a congestion control framework
-and categorize the observed congestion cues and lastly, propose congestion
-control algorithms that work in diverse situations. We use Real-time Transport
-Protocol (RTP)~\cite{rfc3550} to carry media flows, the congestion control
-algorithm is therefore built within the design constraints of RTP.
-Consequently, wherever possible we have attempted to fix these deficiencies by
-proposing extensions to RTP. This thesis is a bundle of scientific papers that
-discuss various parts of the framework and this summary puts them in context.
+wireless and wired links. Furthermore, the multimedia system running on an
+endpoint may be connected to the Internet by one or more network interfaces,
+having more than one IP address, thus enabling the multimedia application to
+use multiple interfaces for increasing throughput or error-resilience. We
+define a congestion control framework and categorize the observed congestion
+cues and lastly, propose congestion control algorithms that work in diverse
+situations. We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry
+media flows, the congestion control algorithm is therefore built within the
+design constraints of RTP. Consequently, wherever possible we have attempted
+to fix these deficiencies by proposing extensions to RTP. This thesis is a
+bundle of scientific papers that discuss various parts of the framework and
+this summary puts them in context.
 
 % Video streaming endpoints overcome most of these challenges by using a larger
 % playout buffers, which allows the endpoint to prebuffer the video in case
