@@ -2,34 +2,37 @@ In recent years, video has emerged as the dominant traffic\footnote{In 2012,
 51\,\% of mobile traffic was video.} on the Internet~\cite{cvni.13,dawn.zb},
 partly due to the success of YouTube and other over-the-top media streaming
 services (e.g., Netflix, Vimeo, Dailymotion, etc.). Video streaming emerged as
-the most prominent traffic only after it was easily accessible to Internet
-users in the web-browser. The initial growth for video streaming is attributed
-to the availability of Adobe Flash Video plugin and thereafter video became
-ubiquitous when the video tag was included into the HTML5
-standard~\cite{html5-spec}. Currently, the same trend is observable for real-time 
-multimedia communication; present day web services either use Adobe's 
-Real-time Media Flow Protocol (RTMFP)~\cite{draft.rtmfp}\footnote{There are other 
-plugin-based services: Facebook Video based on Skype SDK, Google Talk, Google's
-Hangout/Helpout services, etc.} or HTML5's Web-based Real-Time Communication
-(WebRTC) stack~\cite{draft.webrtc}. Consequently, the forthcoming deployments
-of WebRTC and telepresence systems is going to kick start the growth of 
-real-time multimedia on the Internet.
+the most prominent traffic on the network only after it was easily accessible
+to Internet users in the web-browser. The initial growth for media streaming
+is attributed to the Adobe Flash Video plugin, but it became ubiquitous when
+the video tag was introduced into the HTML5 standard~\cite{html5-spec} and the
+browsers natively supported rendering media streams. Currently, the same trend
+is observable for real-time communication; present day web services either use
+Adobe's Real-time Media Flow Protocol (RTMFP)
+\cite{draft.rtmfp}\footnote{There are other  plugin-based services: Facebook
+Video based on Skype SDK, Google Talk, Google's Hangout/Helpout services,
+etc.}. Like before the browsers are implementing the Web-based Real-Time
+Communication (WebRTC) stack, and along with the forthcoming deployments of
+telepresence systems are going to kick start the growth of real-time
+communication on the Internet.
 
 
-There are some fundamental differences between video streaming and real-time
-communication; video streaming is used in video on demand, IP television
+There are some fundamental differences between media streaming and real-time
+communication; media streaming is used in video on demand and IP television
 (IPTV) services wherein the content is pre-encoded and played back directly
-from storage, there the challenge is to be able to simultaneously serve
+from storage, in streaming the challenge is to be able to simultaneously serve
 multiple customers (\emph{scaling}) and consistently provide high quality
 multimedia experience. The receiving endpoint in this case is mainly required
 to avoid pausing the playback midstream, which it does by pre-buffering
 several seconds of content. A larger pre-buffer not only removes the effect of
 packet jitter but also helps in requesting lost packets (via
-\emph{retransmissions}), therefore providing consistent video quality.
-However, real-time communication uses very small buffers to avoid long
-buffering duration and provide low-delay; hence, sending endpoints modify the
-sending rate to best match the available capacity and not cause excessive
-delay.
+\emph{retransmissions}), therefore using a large playout buffer provides the
+opportunity to deliver consistent video quality.
+On the other hand, in real-time communication, there is no pre-stored content
+and endpoints use small buffers. The small buffering duration maintains
+interactivity by maintaining as low a delay as possible (limited only by the
+network delay); hence, endpoints modify the sending rate to best match the
+available capacity and not cause excessive delay.
 
 This thesis is about enabling congestion control for real-time communication,
 deploying it in heterogeneous networking environments containing a mixture of
@@ -90,11 +93,11 @@ this summary puts them in context.
 Interactive real-time media applications use RTP~\cite{rfc3550} to encapsulate
 multimedia content. RTP is capable of using TCP, UDP and DCCP for delivering
 multimedia.  While TCP~\cite{rfc793} is extensively used to deliver video via
-HTTP streaming, it is not very suitable for real-time media when the path
-latencies  are greater than 100 \emph{ms}~\cite{Brosh:tcp-real-time}, hence,
-UDP~\cite{rfc768} carries real-time media flows. Since UDP provides no form of
-congestion control, which is essential for deployment on the Internet,
-multimedia applications have to implement their own. 
+HTTP streaming, it is not very suitable for real-time communication;
+especially when the path latencies are greater than 100 \emph{ms} \cite{Brosh:tcp-real-time}, 
+hence, UDP~\cite{rfc768} carries real-time multimedia traffic. Since
+UDP provides no form of congestion control, which is essential for deployment
+on the Internet, multimedia applications have to implement their own congestion control.
 
 Real-time multimedia communication on the Internet is subject to the
 unpredictability of the best-effort IP network. The uncertainty is mainly due
@@ -106,7 +109,7 @@ bursty loss causes visual impairments which adversely affect the user's
 quality of experience~\cite{Zink03subjectiveimpression}.
 
 Additionally, in mobile networks  the capacity available to a user in a cell
-varies due to mobility, cell-loading, interference, fading, and handovers.
+varies due to mobility, cell-loading, interference, fading, and handover.
 Similarly, the presence of cross-traffic on the bottleneck requires the real-time 
 multimedia stream to compete for the available capacity, which may also
 vary depending on the amount of cross-traffic.  Coupling the variability in
@@ -118,17 +121,19 @@ rate makes multimedia congestion control very challenging.
 
 Instead of performing congestion control, the application may reserve capacity
 for multimedia traffic, oftentimes this is done in IPTV deployments to
-separate the operators generated traffic from the user-generated traffic,
-thereby guaranteeing good performance for the IPTV media. Similarly, it is
-possible to for other video services within an administrative domain to use
-Differentiated Services Code Points (DSCP). DiffServ assigns each data packet
-to a traffic class and the routers manage each traffic class differently,
-thereby some traffic classes receive preferential treatment (e.g., lower
-delay, lower losses) in the network~\cite{rfc2475}. The routers overcome
-congestion between traffic classes by implementing \emph{priority queuing},
-\emph{fair queuing}, or \emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for
-congestion within the same traffic class the router discards packets using
-\emph{tail drop} or \emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
+separate the operators' content from the customer's traffic, thereby
+guaranteeing good performance for the IPTV media. Similarly, it is possible
+for other multimedia services to attempt to reserve within an administrative
+domain using Differentiated Services Code Points (DSCP). 
+
+DiffServ assigns each data packet to a traffic class and the routers manage
+each traffic class differently, thereby some traffic classes receive
+preferential treatment (e.g., lower delay, lower losses) in the
+network~\cite{rfc2475}. The routers overcome congestion between traffic
+classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
+\emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for congestion within the
+same traffic class the router discards packets using \emph{tail drop} or
+\emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
 
 % generic markings
 
@@ -181,27 +186,33 @@ congestion cues.
 \section{Research Methodology}
 
 This thesis aimed to produce original scientific work that would be widely
-applicable in the Internet community. Based on the cultural styles defined by
-ACM~\cite{Denning:CS.Method}, we use the \textit{abstraction} and
-\textit{design} paradigms to conduct our scientific research. To elaborate,
-the results that make up the core of the thesis were implemented as
-simulations, proof-of-concept prototypes and in test-beds. Consequently, this
-process helped us make better design and implementation decisions.
+applicable in the Internet community. Association for Computing Machinery
+(ACM) defines several cultural styles for conducting scientific
+research~\cite{Denning:CS.Method}, from those our methodology falls into the
+\textit{abstraction} and \textit{design} paradigms. In the \emph{abstraction}
+paradigm the researcher iterates through ``modeling'' or ``experimentation''
+to construct a model and make a prediction, then design an experiment and
+collect data, lastly analyze the results. The \emph{design} paradigm is
+related to  engineering and consists of the following steps: state the
+requirements, write a specification, build and test the system. Our research
+covers both these aspects, the results that make up the core of the thesis
+were implemented as simulations, proof-of-concept prototypes and in test-beds. 
 
 In order to make significant impact in the Internet community, researchers not
 only have to produce significant results to motivate deployment but also solve
-engineering issues. These engineering solutions may not be adequately
-described in scientific papers, but are instead described in standards
-documents, which facilitates interoperability and enthuses deployment. In our
-research,  for example, the protocol extensions to enable congestion control
-(i.e., to signal the congestion cues) are discussed mainly in the standards
-document, while the associated congestion control algorithm and the
-performance analysis is discussed in the scientific papers. Another example is
-Multipath RTP (MPRTP), the protocol extensions are defined in the appropriate
-standards document, but the performance of the scheduling algorithm using
-those extensions is a described in a scientific contribution. To summarize, in
-this thesis, we discuss both our research work and our standards work, but
-emphasize more on the former.
+engineering issues. These engineering solutions are instead typically
+described in standards documents, which facilitates interoperability and
+enthuses deployment. In our research, wherever possible, we have contributed
+back to the relevant standards body. To summarize, this thesis is made up
+of both our research work and our standards work.
+
+% For example, the protocol extensions to enable congestion control (i.e., to
+% signal the congestion cues) are discussed mainly in the standards document,
+% while the associated congestion control algorithm and the performance analysis
+% is discussed in the corresponding scientific papers. Another example is
+% Multipath RTP (MPRTP), the protocol extensions are defined in the appropriate
+% standards document, but the performance of the scheduling algorithm using
+% those extensions is a described in a scientific contribution.
 
 \section{Contributions}
 
@@ -250,7 +261,8 @@ This thesis consists of an introductory part and eight original publications.
 In~\citepub{c:cb}, we propose a set of circuit-breaker conditions which are
 applied to non-adaptive media flows. At the moment, these media flows do not
 implement congestion control and if deployed on the Internet, are expected to
-cause congestion.
+cause congestion. The circuit breaker triggers when the application appears to
+be causing congestion.
 
 \citepub{c:3grc}, \citepub{c:hetrc}, \citepub{c:eval}, and \citepub{c:fecrc}
 discuss congestion control for interactive multimedia communication. The
@@ -278,16 +290,20 @@ In \citepub{c:fecrc}, we propose unifying the concept of error-resilience and
 congestion control. This new congestion control algorithm uses FEC to probe
 for available capacity and would replace the two separate algorithms currently
 implemented by existing interactive multimedia applications (e.g., Skype,
-Google Hangout, FaceTime).
+Google Hangout, FaceTime). We compare the performance of the FEC and
+Congestion Control with the algorithms discussed in \citepub{c:3grc},
+\citepub{c:hetrc}, and \citepub{c:eval}. The paper also discusses the
+interaction between the multimedia application, the RTP stack and the codec
+for implementing congestion control.
 
 
 In \citepub{c:mprtp}, we enable multihoming for real-time flows and extend the
-current RTP system to be able to send media over multiple paths. In this
-paper, we propose a scheduling algorithm for Multipath RTP (MPRTP) that sends
-media over paths with widely different path characteristics and also propose a
-de-jitter buffer algorithm that plays out packets smoothly when the path skew
-is large. The paper also discuss system and implementation related issues
-involved in implementing MPRTP.
+capability of the current RTP system to send media over multiple paths. In
+this paper, we propose a scheduling algorithm for Multipath RTP (MPRTP) that
+sends media over paths with widely different path characteristics and also
+propose a de-jitter buffer algorithm that plays out packets smoothly when the
+path skew is large. The paper also discusses system and implementation related
+issues involved in implementing MPRTP.
 
 In \citepub{c:glass}, we propose a system to enable network-assisted
 congestion control for mobile clients by building a network coverage maps
