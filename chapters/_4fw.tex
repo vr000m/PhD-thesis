@@ -466,6 +466,100 @@ routers.}
 \end{figure}
 
 
+\section{Metrics for Çongestion Control}
+\label{subsec.metrics}
+
+In this section, we introduce metrics for evaluating congestion control
+algorithms. Multimedia application observe the congestion cues, and react to
+the changes in the cues, by modifying the encoding/sending rate to match the
+available end-to-end bit rate. The sender's goal is to minimize losses at the
+receiver while maintaining a stable throughput. Losses are caused by
+congestion or by  bit-errors and are detrimental to video quality. Although,
+real-time communication is tolerant to small amount of losses, bursty loss
+should be avoided.  
+
+% Bit-errors are due to the physical properties of the network and cannot be
+% predicted ahead of time. Congestion losses are due to over-utilization of the
+% links and may cause long delays or congestion-induced drops at the router.
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{chap4_fig-perf-metrics}
+\caption{Metrics for Rate Adaptation}
+\label{fig:4:rc_model}
+\end{figure}
+
+Figure~\ref{fig:4:rc_model} schematically shows the instant per-packet delay
+over time observed at the receiver. The sender reacts to the changes in the
+available path bit rate. Exceeding the available path bit rate may lead to a
+temporary increase in per-packet delay until the rate adaptation measures take
+effect and, optionally, to packet losses if the queue capacity is exceeded.
+
+For the delay, we define three values:
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+
+\item Threshold 1 refers to the mean one-way delay observed under normal
+operating conditions; this value may be defined statically according to
+expectations for a certain environment, or determined dynamically. This
+reflects the mouth-to-ear or camera-to-eye delay.
+
+\item Threshold 2 defines the maximum acceptable one-way delay for a certain
+scenario after which rendering of the received video packets is no longer
+meaningful and packets arriving later than threshold 2 will be considered
+lost. Threshold 2 may be, e.g., 100-500ms for video, since the human eye is
+more tolerant to video glitches~\cite{s4.eval.fw}.
+
+\item The short-term delay peak reflects the maximum delay peak encountered
+during a rate adaptation operation.
+
+\end{itemize}
+
+For losses, we consider two values:
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+
+\item Packets lost in the network due to bit errors and/or increased queue
+lengths or overflows (e.g., caused by drop-tail or RED queue management).
+
+\item Packets discarded at the receiver because their arrival delay violated
+threshold 2.
+
+\end{itemize}
+
+Additionally, we measure the instantaneous and average encoder rate, receiver
+rate and goodput. The instantaneous rate is calculated at 1s intervals and the
+goodput is calculated after discarding the late packets and before passing the
+packets to the decoder.
+
+
+The Average Bandwidth Utilization (ABU) is the ratio between the instantaneous
+goodput (or encoding, receiving bit rate) and the instantaneous channel
+capacity. Ratios over ($>100\%$) represent over-utilization and therefore
+congestion losses.
+
+
+Peak Signal-to-Noise Ratio (PSNR) is the ratio between the maximum possible
+power of a signal and the power of a noisy signal. The maximum power signal is
+presumed to be the original signal while the noisy signal is the received data
+signal that has undergone the cycle of compression-transmission-decompression.
+While PSNR is the most widely used objective video quality metric, it does not
+perfectly correlate with perceived visual quality due to the non-linear
+behavior of the human visual system~\cite{itu-t-j247}. Another criticism
+against PSNR is that it does not incorporate time in its calculation. Despite
+its shortcomings we use it as a yet another indicator for measuring the
+performance of congestion control.
+
+% It has been observed that the pictorial quality perceived by the human visual
+% system is also affected by the overall general impression of the viewed video
+% stream. In addition, recent studies have shown that human visual system awards
+% higher response to more salient image locations and
+% features~\cite{Li02asaliency, Ong:2006p3066}.
+
 
 \section{Circuit Breakers for Unicast RTP Sessions}
 
