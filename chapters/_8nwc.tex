@@ -6,7 +6,7 @@ signaling for implementing congestion control (corresponds to
 work on network assisted congestion control, which is documented in
 \citepub{c:3grc}, \citepub{c:glass} and \cite{glass:patent}.
 
-In a 3G network, mobility, cell loading, handovers and other factors can
+In a 3G network, mobility, cell loading, handover and other factors can
 affect the throughput available to each user and the varying network capacity
 affects the video quality~\cite{diaz2007evaluating}. Deployments of GPRS, 3G
 and LTE show that there are still geographical areas where capacity or
@@ -133,7 +133,7 @@ characteristics in Dynamic Adaptive Streaming over HTTP (DASH). While the
 averaging algorithm is not a focus of this thesis, we use
 K-means~\cite{Kanungo:2002:LSA:513400.513402} and K-nearest neighbor
 (K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to form regions with
-similar bandwidth. Details of the averaging algorithms employed by our
+similar bandwidth. Details of the averaging algorithms employed by the
 coverage map server are discussed in~\cite{sharmistha-thesis}. Additionally,
 \cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
 route in steps of 100 meters, which we find limiting. Instead we propose
@@ -245,10 +245,10 @@ most locations is above the required media rate. We analyse the performance of
 4 different algorithms, they are: 1) the \emph{omniscient algorithm}, the
 endpoint is aware of the exact end-to-end channel capacity and is expected to
 perform the perfect rate-adaptation. 2) \emph{no adaptation}, the endpoints
-perform no congestion control and the stream are received at a constant bit
-rate. For periods when the link capacity falls below the media rate, will
-cause an increase in losses/discards, which may cause frequent pausing of the
-video. 3) \emph{Rate-switching}, the endpoints perform short
+perform no congestion control and the stream is transmitted at a constant bit
+rate. In the periods when the link capacity falls below the media rate, the 
+receiver will observe an increase in losses/discards, which may result in 
+frequent pausing of the video. 3) \emph{Rate-switching}, the endpoints perform short
 \emph{lookaheads}, which enables the endpoints to detect outages a few moments
 before the user enters a location with poor connectivity. In this case, the
 receiver sends a TMMBR message (with lowest available bit rate in the area)
