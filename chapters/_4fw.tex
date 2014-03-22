@@ -371,7 +371,7 @@ real-time communication systems are able to tolerate some amount of packet
 loss and adapt the media rate over a fairly large range.
 \cite{draft.rmcat.req} lists a set of requirements for RTP-based interactive
 multimedia sessions, these requirements form the basis of the guidelines
-described in~\cite{draft.rmcat.evaluate}. In~\cite{draft.rmcat.evaluate}, we
+described in~\cite{draft.rmcat.evaluate}. In~\cite{draft.rmcat.eval.test}, we
 define a catalog of \emph{traffic flows} traversing through a \emph{network
 topology} with varying \emph{link characteristics} and diverse \emph{queuing}
 strategies. By picking one feature from each category in the category, we
@@ -399,7 +399,9 @@ collapse).
 
 \subsection{Network flows}
 
-In this section, we describe typical test scenarios. They are:
+In this section, we describe typical test scenarios for evaluating congestion
+control algorithms. These test scenarios are not supposed to be exhaustive
+but show the applicability range of the algorithm. The test scenarios are:
 
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
@@ -490,6 +492,16 @@ another in the network. Also the bottleneck in each direction may be different
 due to the asymmetry of access links. Additionally, the varying capacity of
 the access link (e.g., in wireless environments) may be the bottleneck.
 
+
+\begin{figure}
+\includegraphics[width=\textwidth]{chap4_fig_sim_topology}
+\caption{Typical network topology for evaluating congestion control; it
+consists of traffic flows (evaluating flow and cross traffic), links and
+routers.} 
+\label{fig:4:topology}
+\end{figure}
+
+
 Figure~\ref{fig:4:topology} shows an example of the evaluation setup. This
 topology is commonly called the \emph{dumb-bell} topology. Another common
 topology is \emph{parking lot}, which uses multiple bottleneck instead of a
@@ -501,16 +513,6 @@ define the characteristics of the cross traffic (self-similar, short- or
 long-lived TCP). Define the characteristics of the edge routers (Router X and
 Y) and introduce impairments to the bottleneck link. Lastly, measure and
 analyze the performance of the multimedia system. 
-
-
-\begin{figure}
-\includegraphics[width=\textwidth]{chap4_fig_sim_topology}
-\caption{Typical network topology for evaluating congestion control; it
-consists of traffic flows (evaluating flow and cross traffic), links and
-routers.} 
-\label{fig:4:topology}
-\end{figure}
-
 
 \subsection{Metrics for Çongestion Control}
 \label{subsec.metrics}
