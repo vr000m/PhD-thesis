@@ -35,8 +35,8 @@ endpoint, typically useful when an endpoint sends multiple media streams that
 need to be synchronized (e.g., Audio/Video lip-sync). The \textit{`RTP
 timestamp'} assists in playing out the received packets at the appropriate
 instance of time and recomposing the media frame from RTP packets. The
-\textit{`RTP sequence number'} assists in identifying the lost packets and re-
-ordering packets in case of out-of-order packet arrival. Lastly, RTP uses
+\textit{`RTP sequence number'} assists in identifying the lost packets and 
+re-ordering packets in case of out-of-order packet arrival. Lastly, RTP uses
 \textit{`payload type'} (PT) to describe the encoding of the media data it is
 carrying. Consequently, each codec needs to specify its corresponding payload
 format.
@@ -326,8 +326,8 @@ independent of any particular codec or application.
 
 On the other hand, the payload-specific feedback messages carry information
 specific to a certain payload type and is acted upon by the codec layer, some
-examples of these type of messages are: Full Intra Request (FIR), temporal-
-spatial tradeoff, frame rate, frame size, maximum packet size or packet rate,
+examples of these type of messages are: Full Intra Request (FIR), 
+temporal-spatial tradeoff, frame rate, frame size, maximum packet size or packet rate,
 etc~\cite{draft.avt.cop}.
 
 \section{Reduced-Size RTCP Reports}
