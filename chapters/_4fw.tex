@@ -632,6 +632,7 @@ be ready for inclusion in the initial roll out of the WebRTC (Web-based
 Real-time Communication) framework~\cite{jennings:2013:webrtc} in web browsers.
 
 \subsection{Circuit Breaker Design}
+\label{fw.cb.design}
 
 The RTP circuit breaker algorithm relies on the basic feedback mechanisms
 defined in the RTP Control Protocol (RTCP)~\cite{rfc3550}. That is, it solely
@@ -685,24 +686,13 @@ standard reporting interval, deployment of Explicit Congestion Notification
 (ECN), etc.
 
 In \citepub{c:cb}, we apply these circuit breaker conditions to non-adaptive
-RTP media flows. Such flows typically do not implement congestion control at
-this time, and are likely to cause congestion if deployed on the Internet. We
-carried out a series of experiments based on real-world traces and on a
-test-bed emulating real-world conditions. Our results show that the proposed
-RTP circuit breaker performs well, triggering in cases of bursty loss and in
-sessions that are congesting the links, and does not trigger in low-loss and
-non-bursty scenarios. 
-
-We simulated RTP circuit breaker performance on $3833$ generated RTCP traces
-corresponding to the measurements collected in \emph{dataset-A} and
-\emph{dataset-B} of~\cite{ellis:2011:dataset}. Of these, $1626$ traces have no
-packet loss, and hence cannot trigger the RTP circuit breaker. The remaining
-traces each include at least one lost packet. We categorize the remaining
-traces into two categories: those that have non-bursty packet loss; and those
-that exhibit bursty loss using the definition of bursty loss
-from~\cite{rfc3611} (Figure~\ref{fig:bursty} shows representative samples of
-the non-bursty and bursty packet loss patterns). The data comprises $1344$
-traces with bursty loss, $863$ traces with non-bursty loss.
+RTP media flows deployed on ADSL and cable modem links.  Such flows typically
+do not implement congestion control at this time, and are likely to cause
+congestion if deployed on the Internet. We carried out a series of experiments
+based on real-world traces and on a test-bed emulating real-world conditions.
+Our results show that the proposed RTP circuit breaker performs well,
+triggering in cases of bursty loss and in sessions that are congesting the
+links, and does not trigger in low-loss and non-bursty scenarios.
 
 \begin{figure}
   \centerline{
@@ -720,8 +710,19 @@ traces with bursty loss, $863$ traces with non-bursty loss.
   \caption{The plots show a sample non-bursty and bursty packet loss traces.
   The bursty packet triggers the circuit breaker even though the overall
   packet loss ratio is 0.6\,\%.}
-  \label{fig:bursty}
+  \label{fig:4:bursty}
 \end{figure}
+
+We simulated the RTP circuit breaker performance on $3833$ generated RTCP traces
+corresponding to the measurements collected in \emph{dataset-A} and
+\emph{dataset-B} of~\cite{ellis:2011:dataset}. Of these, $1626$ traces have no
+packet loss, and hence cannot trigger the RTP circuit breaker. The remaining
+traces each include at least one lost packet. We categorize the remaining
+traces into two categories: those that have non-bursty packet loss; and those
+that exhibit bursty loss using the definition of bursty loss
+from~\cite{rfc3611} (Figure~\ref{fig:4:bursty} shows representative samples of
+the non-bursty and bursty packet loss patterns). The data comprises $1344$
+traces with bursty loss, $863$ traces with non-bursty loss.
 
 \begin{table}
   \begin{center}
@@ -735,26 +736,18 @@ traces with bursty loss, $863$ traces with non-bursty loss.
     \bottomrule
     \end{tabular}
     \caption{Sessions triggering circuit breaker by loss pattern}
-    \label{tab:cb_bursty}
+    \label{tab:4:cb_bursty}
   \end{center}
 \end{table}
 
 
 
-Table~\ref{tab:cb_bursty} shows the fraction of sessions that triggered the
+Table~\ref{tab:4:cb_bursty} shows the fraction of sessions that triggered the
 RTP circuit breaker for each of the categories of packet loss. The RTP circuit
 breaker did not trigger for sessions without loss; it also did not trigger for
 any of the sessions with non-bursty packet loss. However, we observe that the
 RTP circuit breaker is triggered more often in sessions that contain bursty
 packet loss. 
-
-The circuit breaker conditions trigger mainly due to loss,
-Figure~\ref{fig:short-rtcp} shows the percentage of sessions triggering the
-circuit breaker increases with the increase in loss rate. The figure also
-shows the impact of the RTCP reporting interval, i.e., by reducing the RTCP
-interval from 5s to 2.5s, fewer sessions are terminated. The endpoints become
-robust to loss of feedback packets by sending feedback often and we observe a
-longer time to trigger the circuit breaker ($t_{CB}$).
 
 \begin{figure}[!t]
   \centerline{
@@ -763,8 +756,74 @@ longer time to trigger the circuit breaker ($t_{CB}$).
   \caption{The plot shows the impact of using a shorter RTCP interval on the
   circuit breaker. Each scenario is run 50 times and the error bars represent
   the 95\,\% confidence level.}
-  \label{fig:short-rtcp}
+  \label{fig:4:short-rtcp}
 \end{figure}
+
+The circuit breaker conditions trigger mainly due to loss, Figure~\ref{fig:4:short-rtcp} 
+shows the percentage of sessions triggering the circuit breaker
+increases with the increase in loss rate. The figure also shows the impact of
+the RTCP reporting interval, i.e., by reducing the RTCP interval from 5s to
+2.5s, fewer sessions are terminated. The endpoints become robust to loss of
+feedback packets by sending feedback often and we observe a longer time to
+trigger the circuit breaker ($t_{CB}$).
+
+\subsection{Discussion about TCP throughput equations}
+
+In Section~\ref{fw.cb.design}, we described the circuit breaker triggers when
+the sending rate exceeds the estimated TCP throughput by a factor of 10. We
+can estimate the TCP throughput either using Padhye's full TCP throughput
+equation~\cite{padhye1998modeling} or using Mathis's simplified TCP throughput
+equation~\cite{mathis1997macroscopic}.
+
+In~\cite{padhye1998modeling}, Padhye \emph{et al.} show that the TCP
+throughput For a long-lived TCP Reno connection can be estimated using the
+following equation:
+\begin{align*}
+X_{kbps} = &\frac{8 \times s}{R \times \sqrt{\frac{2*b*p}{3}}+t_{RTO} \times (3 \times \sqrt{\frac{3*b*p}{8}})\times p \times (1+32 \times p^2)}\\
+\end{align*}
+While Mathis \emph{et al.} in \cite{mathis1997macroscopic} show that under
+conditions of low packet loss, Padhye's equation can be simplified to:
+\begin{align*}
+    X_{kbps} = & \frac{8 \times s}{R \times \sqrt{\frac{p \times 2}{3})}}
+\end{align*}
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+{\footnotesize
+\item[] \texttt{X is the transmit rate in kbps.}
+\item[] \texttt{s is the average packet size in bytes.} 
+\item[] \texttt{R is the round trip time in seconds. }
+\item[] \texttt{p is the loss event rate, $\forall p \in [0.0, \cdots ,1.0]$.}
+\item[] \texttt{$t_{RTO}$ is the TCP retransmission timeout value in seconds, usually set to $\mathbf{4 \times R}$.}
+\item[] \texttt{b is the number of acknoweldged packets in TCP; typically set $\mathbf{b=1}$.}
+}
+\end{itemize}
+Mathis \emph{et al.} also show that the simplified TCP equation approximates
+Padhye's full equation with reasonable accuracy~\cite{mathis1997macroscopic} .
+
+
+In \citepub{c:cb}, our experiments on residential networks shows that the
+simplified TCP throughput equation performs effectively, while using Padhye's
+full TCP equation triggers the circuit breaker earlier. The data shows that
+the full TCP equation tends to be more sensitive to packet loss. In LTE
+networks where the combination of a low RTT and high packet loss rate (due to
+AQM) causes the circuit breaker using the simplified TCP throughput equation
+not to trigger~\cite{Sarker:CB.lte}. However, using the Padhye's full TCP
+throughput equation in these cases gives better
+performance~\cite{Sarker:CB.lte}. We believe some of this over-sensitivity is
+due to averaging packet loss events over long RTCP reporting intervals and the
+fact that the RTT is estimated only once in that interval.
+
+Overall, our preliminary results derived from experiments in a test-bed
+emulating the real-world and simulations based on real-world traces show that
+the proposed RTP circuit breaker performs as intended, triggering in the case
+of bursty  packet loss and does not trigger in the low-loss and non-bursty
+scenarios. 
+% The current analysis is based on measurements done in the UK and
+% Finland, while these measurements may be representative of residential links
+% in Europe, the infrastructure is likely to differ significantly in other parts
+% of the world. Therefore, a wider measurement study of the RTP circuit breakers
+% would be desirable.
+
 
 \section{Summary}
 
@@ -772,7 +831,7 @@ In this chapter we aimed to classify congestion control cues for real-time
 communication based on: \emph{where they are measured?} (by in-path or 
 out-of-path sources) and \emph{how they are reported?} (via in-band or out-of-band
 signaling). We also describe other fundamental choices needed to implement 
-congestion control: Choice of congestion cues, reporting frequency and 
-circuit-breaker conditions. Additionally, we also describe an evaluation
-suite for measuring the performance of the proposed congestion control
-algorithms.
+congestion control: congestion cues, reporting frequency and 
+circuit-breaker conditions. Additionally, we also describe a basic evaluation
+suite for measuring the performance of any proposed multimedia congestion control
+algorithm.
