@@ -1,21 +1,61 @@
 
 In this thesis, we have described our proposed classification of congestion
-control cues (framework) in \ref{chap:cc.fw}. When discussing the different
-parts of the framework, we highlight the existing related work to our
-contributions in those areas. In terms of innovativeness, the congestion
-control framework provides options to look beyond using congestion cues
-reported by the receiver on a given path. The framework offers the congestion
-control algorithm to use multiple paths to either aggregate capacity or for
-increasing resilience, to use feedback notifications from intelligent
-middleboxes along the path or to build a coverage or map that provides
-congestion notification as a third party services. Each of these techniques
-apply to one of the four areas described in the framework. However, the
-definitions of each area is generalized enough to allow application of a
-broad-range of techniques not just those proposed in this thesis. We believe
-using FEC for congestion control in interactive multimedia has not been
-explored in depth by the community, partly because interactive multimedia
-flows have very tight delay constraints and FEC may not arrive in time for
-recovering the lost packet.
+control cues (framework) in Chapter \ref{chap:cc.fw}. When discussing the
+different parts of the framework, we highlight the existing related work to
+our contributions in those areas. In terms of innovativeness, the congestion
+control framework provides options to look at congestion cues beyond those
+reported by the receiver in an RTCP Receiver Report. The framework offers the
+congestion control algorithm to use multiple paths for either aggregating
+capacity or for increasing resilience, to use feedback notifications from
+intelligent middleboxes along the path or to build a coverage map that
+provides congestion notification as a third party services. Each of these
+techniques apply to one of the four areas described in the framework; however,
+the definitions of each area is generalized enough to allow the application of
+a broad-range of techniques not just those proposed in this thesis.
+
+
+We discuss and compare the performance of sender- and receiver-driven
+congestion control algorithms; additionally define a hybrid class of
+congestion control algorithms in which the multimedia application chooses the
+new target media bit rate by comparing the bandwidth estimated by both the
+sending and receiving endpoint. We believe that the hybrid algorithms are
+possibly the best way forward; they provide a method to be backwards
+compatible, i.e., interoperate with receivers that do not send receiver’s
+estimate and in cases where the receiver co-operates the results are more
+performant. We already see an uptake of this idea, with Google’s proposal for
+congestion control for WebRTC.
+
+Another observation that we made early on in our research was that the error-
+resilience feedback and congestion control feedback are implemented
+separately. Furthermore, we believe the community has not explored using FEC
+for congestion control in interactive multimedia in depth, partly because
+interactive multimedia flows have very tight delay constraints and FEC may not
+arrive in time for recovering the lost packet. The results outlined in this
+thesis show that FEC can be used for congestion control and perform suitably
+when no bursty loss occurs.
+
+Another idea presented in the thesis is that the network provides notification
+to endpoints to perform congestion control. We show that notification from
+middleboxes such as, by base stations would help endpoints better congestion
+control for example in mobile networks, for example when an LTE cell is
+experiencing extreme load\footnote{Extreme load occurs when an LTE cell has
+about 10x more users than when it is busy.}. Furthermore, we also show that
+using congestion maps also aids in performing congestion control. Congestion
+maps is a measurement service that aggregates throughput information from
+multiple users and sends notification of areas with poor coverage to its
+subscribers. We expect these notifications to be used as congestion cues and
+not as a replacement to in-band, in-path congestion control. The main reason
+for restricting the use of such a service to notify congestion cues is that
+such a service is vulnerable to data pollution, i.e., the clients may report
+incorrect measurements, not necessarily intentionally but because of
+programming errors. Another reason is that the reported notifications may
+depend on the way the aggregation is performed and how quickly it converges to
+the prevailing conditions.
+
+Lastly, we developed MPRTP, it allows multimedia applications and services to
+offload to another path or aggregate traffic across  multiple paths. Using
+MPRTP allows
+
 
 % In chapter~\ref{chap:cc}, we describe congestion control implemented using
 % congestion cues from in-band sources and signaled in path (in RTCP). We
