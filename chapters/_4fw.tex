@@ -94,7 +94,7 @@ algorithm calculates the  new target encoding rate. The codec attempts to
 compress the media stream to meet the new target encoding rate in a reasonable
 timeframe. Figure~\ref{fig:4:appint} (b) describes the features of the
 receiving-side RTP stack. The received RTP packet is put in a dejitter buffer
-to reorder out-of-order packets, the dejitter buffer may discard late arriving
+to reassemble out-of-order packets, the dejitter buffer may discard late arriving
 packets and it also detects packet loss. Furthermore, the packet sequence
 number,  size of the packet, RTP timestamp and the reception timestamp are
 passed to RTCP feedback subsystem, which routinely generates an RTCP RR packet
