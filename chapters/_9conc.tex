@@ -156,28 +156,26 @@ several ISPs.
 
 For each of the proposed congestion control techniques in this thesis, we make
 deployment recommendations and for some of these techniques the deployment
-considerations overlap. Whereas the techniques in this thesis are only shown
-to work independently and not interwork with each another. Therefore making
-them interwork together deserves further investigation. For example, the
-sending endpoint receiving congestion cues from a network coverage map service
-and from the receiving endpoint can complement the capacity estimated by the
-sender, hence, performing better congestion control.
-
-
+considerations overlap. The techniques proposed in this thesis are only shown
+to work independently. While nothing prevents them to interwork, the
+interworking is not discussed in the thesis, therefore, making them interwork
+together deserves further investigation. For example, the sending endpoint
+receiving congestion cues from a network coverage map service and from the
+receiving endpoint can complement the capacity estimated by the sender, hence,
+performing better congestion control.
 
 Individually, each technique associated with the particular area of the
 framework requires further work. First, emergence of WebRTC requires
 standardized congestion control, chapters~\ref{chap:cc} and~\ref{chap:er-cc}
 make some proposals that may fit the purpose, but require more extensive
-evaluations to be deployment ready. Additionally, there are still some
-proposals that are yet to be evaluated (e.g., D-FLow, NADA, etc). Second,
-using FEC for congestion control needs to be generalized to work with other
-congestion control algorithms. Third, multipath scheduling needs to be
-reconsidered for low-delay scenarios. Fourth, the scalability and robustness
-of the network coverage map service needs to studied, furthermore, the
-location-throughput matching algorithm needs to also studied in more detail to
-be able to respond to flash-crowds, diverse reporting from various mobile
-devices, etc. Lastly, use these congestion cues for implementing congestion
-control for interactive multimedia.
+evaluations to be deployment ready. Second, using FEC for congestion control
+needs to be generalized to work with any other congestion control algorithms.
+Third, multipath scheduling needs to be reconsidered for interactive
+multimedia communication. Fourth, the scalability and robustness of the
+network coverage map service needs to studied, furthermore, the 
+location-throughput matching algorithm needs to be also studied in more 
+detail to be able to respond to diverse reporting from various mobile 
+devices, etc. Lastly, combine all these techniques for implementing 
+congestion control for interactive multimedia.
 
 
