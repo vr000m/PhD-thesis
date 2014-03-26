@@ -8,13 +8,15 @@ is attributed to the Adobe Flash Video plugin, but it became ubiquitous when
 the video tag was introduced into the HTML5 standard~\cite{html5-spec} and the
 browsers natively supported rendering media streams. Currently, the same trend
 is observable for real-time communication; present day web services either use
-Adobe's Real-time Media Flow Protocol (RTMFP)
-\cite{draft.rtmfp}\footnote{There are other  plugin-based services: Facebook
+Adobe's Real-time Media Flow Protocol (RTMFP) \cite{draft.rtmfp} or write
+their own plugins\footnote{There are other  plugin-based services: Facebook
 Video based on Skype SDK, Google Talk, Google's Hangout/Helpout services,
-etc.}. Like before the browsers are implementing the Web-based Real-Time
-Communication (WebRTC) stack, and along with the forthcoming deployments of
-telepresence systems are going to kick start the growth of real-time
-communication on the Internet.
+etc.}. Like before with media streaming, the community is currently working
+towards standardizing the Web-based Real-Time Communication (WebRTC) stack,
+which will enable any web-service in need of providing real-time communication
+with a few lines of code and without expecting the user to install a plugin.
+Therefore, these forthcoming deployments of WebRTC services are going to kick
+start the growth of real-time communication on the Internet.
 
 
 There are some fundamental differences between media streaming and real-time
@@ -149,28 +151,28 @@ happens the routers use the default policy to forward packets, and as a result
 lose any opportunity of differentiated service.
 
 
-Especially with video traffic which can be marked in varying ways depending on
-the type of application. Multicast, broadcast, streaming, conversational, each
-category has its own policy, the ISP sometimes choose to ignore these
-different categories for video and marks all (or a subset of) the video
-packets with the same DSCP~\cite{rfc5865}. These \emph{generic} markings may
-be contrary to the intended DSCP of the multimedia system. Again DSCP does not
-guarantee the intended behavior for the endpoint. Despite the above listed
-challenges, marking packets with a DSCP code point helps in some
-environments~\cite{draft.rtcweb.qos}:
+% Especially with video traffic which can be marked in varying ways depending on
+% the type of application. Multicast, broadcast, streaming, conversational, each
+% category has its own policy, the ISP sometimes choose to ignore these
+% different categories for video and marks all (or a subset of) the video
+% packets with the same DSCP~\cite{rfc5865}. These \emph{generic} markings may
+% be contrary to the intended DSCP of the multimedia system. Again DSCP does not
+% guarantee the intended behavior for the endpoint. Despite the above listed
+% challenges, marking packets with a DSCP code point helps in some
+% environments~\cite{draft.rtcweb.qos}:
 
-% cases where it might work
+% % cases where it might work
 
-\begin{itemize}
+% \begin{itemize}
 
-  \item If the bottleneck link is the broadband router that often connects a
-  residential or Small Office/Home Office (SOHO) to the ISP, the DSCP markings
-  helps in prioritizing the data traffic at this bottleneck.
+%   \item If the bottleneck link is the broadband router that often connects a
+%   residential or Small Office/Home Office (SOHO) to the ISP, the DSCP markings
+%   helps in prioritizing the data traffic at this bottleneck.
 
-  \item If the packets traverse a congested wireless link and the service
-  provider did not scrub out the DSCP markings, the markings may help.
+%   \item If the packets traverse a congested wireless link and the service
+%   provider did not scrub out the DSCP markings, the markings may help.
 
-\end{itemize}
+% \end{itemize}
 
 In this thesis, we do not rely on the use of DSCP by any entity (endpoint or
 middleboxes) along the path. The principal reason is that we would need to
@@ -185,8 +187,8 @@ congestion cues.
 
 \section{Research Methodology}
 
-This thesis aimed to produce original scientific work that would be widely
-applicable in the Internet community. Association for Computing Machinery
+This thesis aimed to produce original scientific work that is widely
+applicable in the Internet community. The Association for Computing Machinery
 (ACM) defines several cultural styles for conducting scientific
 research~\cite{Denning:CS.Method}, from those our methodology falls into the
 \textit{abstraction} and \textit{design} paradigms. In the \emph{abstraction}
@@ -322,7 +324,7 @@ network characteristics for different types of multimedia systems. The work is
 mainly a summary of scientific-papers, but is also supported by additional
 body of work. We have co-authored a number of Internet Drafts\footnote{at the
 time of writing this thesis, several of these documents are still in the
-Internet Draft state, but will be published as RFCs shortly} that complement
+Internet Draft state, but will be published as RFCs shortly.} that complement
 the scientific results discussed in the thesis. The chapters describing the
 various parts of the congestion control framework discuss both our scientific
 and engineering work, while associating it with the relevant related work in
