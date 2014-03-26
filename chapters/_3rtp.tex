@@ -37,7 +37,7 @@ timestamp'} assists in playing out the received packets at the appropriate
 instance of time and recomposing the media frame from RTP packets. The
 \textit{`RTP sequence number'} assists in identifying the lost packets and 
 re-ordering packets in case of out-of-order packet arrival. Lastly, RTP uses
-\textit{`payload type'} (PT) to describe the encoding of the media data it is
+the \textit{`payload type'} (PT) to describe the encoding of the media data it is
 carrying. Consequently, each codec needs to specify its corresponding payload
 format.
 
@@ -174,7 +174,7 @@ or Firewalls.
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |           synchronization source (SSRC) identifier            |
    +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-   |                        Payload Format                         |
+   |                 Payload Format-Specific Header                |
    +               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |               |                                               |
    +-+-+-+-+-+-+-+-+                                               +
@@ -213,24 +213,26 @@ compatible, i.e., an endpoint that does not understand them is able ignore
 them. Some current use-cases for RTP header extensions are: reporting the
 network send timestamp, instead of bursting packets from a large frame on to
 the network, the sender paces these packets, client's audio levels (to
-equalize audio levels across multiple streams in a video conference).
+equalize audio levels across multiple streams in a video conference) and they
+are generic, i.e.,tThere is no need to redefine the same extension for each
+codec.
 
 \section{RTCP Reporting Interval}
 % timing
 
 A closed control loop is formed by sending RTP media packets and receiving
 RTCP feedback packets. The RTCP feedback interval is typically limited to a
-small fraction, so not to affect the media traffic. The RTCP reporting
-interval is determined by the number of SSRCs in the session (denoting the
-session size), and the chosen session bandwidth. The session bandwidth is
-expected to be divided amongst the participants, but oftentimes it is
-calculated as the sum of the average throughput of the senders expected to be
-concurrently active. In the case of an audio conference the session bandwidth
-would be one sender's bandwidth, but for a video conference it would vary
-depending on the number of participants displayed on the user interface.
-Therefore, the session bandwidth is supplied by the session management
-application so that each participants calculates the same value for the RTCP
-interval.
+small fraction of the session bandwidth, so not to affect the media traffic.
+The RTCP reporting interval is determined by the number of SSRCs in the
+session (denoting the session size), and the chosen session bandwidth. The
+session bandwidth is expected to be divided amongst the participants, but
+oftentimes it is calculated as the sum of the average throughput of the
+senders expected to be concurrently active. In the case of an audio conference
+the session bandwidth would be one sender's bandwidth, but for a video
+conference it would vary depending on the number of participants displayed on
+the user interface. Therefore, the session bandwidth is supplied by the
+session management application so that each participants calculates the same
+value for the RTCP interval.
 
 
 The recommended fraction of the session bandwidth allocated for control
@@ -244,7 +246,7 @@ Reports) for the sending endpoints. For new participants (even if they are
 just receivers) the RTCP interval is halved to quickly declare their presence. 
 Lastly, the recommended value for a fixed minimum RTCP
 interval is 5 seconds, while the value for reduced minimum is
-$\frac{360}{session\_bw}$.  The fixed minimum RTCP interval of \emph{5\,s} is
+$\frac{360}{session\_bw}s$.  The fixed minimum RTCP interval of \emph{5\,s} is
 suitable for unidirectional links or for sessions that do not require
 monitoring the reception quality statistics (e.g., IPTV), while the reduced
 minimum RTCP interval is suitable for participants in a unicast bidirectional
@@ -349,7 +351,7 @@ compound RTCP packet very large. On low bit rate links, these large compound
 RTCP packets may introduce more delay. Therefore, it may be desirable to
 logically fragment the report blocks in a compound RTCP packet and send them
 independently. These fragmented report blocks are called \emph {reduced-size
-RTCP packet}~\cite{rfc5506}. Unlike compound RTCP packets, to transmit a
+RTCP packets}~\cite{rfc5506}. Unlike compound RTCP packets, to transmit a
 reduced-size RTCP packet an endpoint does not need to include the minimal RTCP
 report. However, when using reduced-size RTCP packets, minimal packets need to
 be sent once in a while, to keep alive the CNAME-SSRC binding.
@@ -360,14 +362,14 @@ susceptible to be dropped compared to smaller sized packets. Additionally, small
 packets have shorter serialization time, i.e., the amount of time it takes for
 the endpoint to put the data packet on to the link is short.
 
-The main reasons for the application to use the reduced-size RTCP reports are:
+The main reasons for the application to use an reduced-size RTCP reports are:
 1) notify the other endpoint of events, using the signaling channel would
 incur at least one RTT while implementing it as an RTCP extension would merely
 incur a one-way delay. 2) send codec control (e.g., TMMBR) or feedback (e.g.,
 NACK, RPSI) messages, these messages as reduced-size are more likely to be
-transmitted compared to the compound packets and with as little delay as
-possible. Especially since these types of messages are more likely to be sent
-when link conditions are poor.
+transmitted more often and with as little delay as possible. Especially since
+these types of messages are more likely to be sent when link conditions are
+poor.
 
 
 % relationship with SDP
@@ -395,36 +397,41 @@ a video call.}
 
 
 The transport details in the SDP are mainly split into two parts: the protocol
-for delivering media packets (currently, TCP, UDP, or SCTP) and the outgoing
+for delivering media packets (currently, TCP, UDP, or SCTP) and the 
 IP address of the endpoint. The protocol to deliver the media packets is
-chosen by the application, but identifying the outgoing IP address of an
-endpoint is a bit complex and first requires gathering the endpoint's multiple
+chosen by the application, but identifying the IP address and port of an
+endpoint is a bit complex. It first requires gathering the endpoint's multiple
 IP addresses and later exchanging them with the other endpoints to establish
 connectivity.
 
 Multiple IP addresses arise not only from multiple interfaces but also due to
 the presence of NAT devices in the network, which may change the IP address of
-the outgoing packets. Since, interactive media calls are between endpoints and
-media streams may eventually traverse through a NAT at both ends, in some
-cases, the only way to deliver media packets between the two endpoints would
-be by using a relay\footnote{Traversal Using Relays around NAT (TURN)} on the
-public Internet. Hence, the endpoint needs to discover its 2-tuple \texttt{[IP
-address:port]} on the host, the public address if behind a NAT~\cite{rfc5389}
-and the address allocated by the TURN relay~\cite{rfc5766} before it notifies
+the outgoing packets. Since interactive media calls are between endpoints and
+media streams may eventually traverse a NAT at both ends, in some cases, the
+only way to deliver media packets between the two endpoints would be by using
+a relay\footnote{Traversal Using Relays around NAT (TURN)} on the public
+Internet. Hence, the endpoint needs to discover its 2-tuple \texttt{[IP
+address:port]} on the host, which is relatively easy. Next, the public address
+if behind a NAT~\cite{rfc5389}. Discovering an endpoint's public address
+requires contacting a publicly hosted STUN server and comparing the endpoint's
+host addresses with the one observed by the STUN server. Lastly, the endpoint
+discovers the address allocated by the TURN relay~\cite{rfc5766} and notifies
 the other endpoints about its transport details. This collection of 2-tuples
-is known as \emph{candidates}, at first the endpoints sort the candidates in
-the decreasing order of the candidate's priority and later exchange their
-candidate addresses in the SDP with the other endpoint. On receiving the
-candidates, the endpoint performs a probe between each combination of
-addresses in the two candidate lists and chooses the first one that is
-successfully received (\emph{aggressive nomination}). This process of
-performing pair-wise \emph{connectivity checks} is called Interactive
-Connectivity Establishment (ICE)~\cite{rfc5245, rfc6544} and it relies on
-\emph{Session Traversal Utilities for NAT} (STUN) protocol~\cite{rfc5389} to
-establish connectivity across a NAT and in case it fails to establish
-connectivity, it uses \emph{Traversal Using Relays around NAT} (TURN)
-protocol~\cite{rfc5766} to use a relay on the public Internet to deliver the
-media packets.
+is known as \emph{candidates}, at first each endpoint sorts their candidates
+in decreasing order of priority and exchanges these candidate addresses in the
+SDP with the other endpoint. On receiving the candidates, the endpoint
+performs a probe between each combination of addresses  in the two candidate
+lists; the pair of addresses is called a \emph{candidate pair}. The endpoint
+chooses the first candidate pair that successfully establishes connectivity
+(\emph{aggressive nomination}). This process of performing pair-wise
+\emph{connectivity checks} is called Interactive Connectivity Establishment
+(ICE)~\cite{rfc5245, rfc6544} and it relies on \emph{Session Traversal
+Utilities for NAT} (STUN) protocol~\cite{rfc5389} to establish connectivity
+across a NAT. In case it fails to establish direct connectivity between the
+two endpoints, the individual endpoints use the \emph{Traversal Using Relays
+around NAT} (TURN) server and the associated protocol~\cite{rfc5766} to relay
+media packets between the endpoints. Similar to the STUN server, the TURN
+server is hosted on the public Internet.
 
 % Depending on the type of NAT device (full-cone, address- or port-restricted
 % cone, symmetric).
