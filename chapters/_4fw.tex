@@ -301,7 +301,7 @@ these congestion cues as a combination of \emph{where are they
 measured/observed?}, and \emph{how is the sender notified?} For each there are
 two options; In-path and Out-of-path \emph{sources} and In-band and Out-of-band 
 \emph{signaling}~\cite{Singh:PhDFw}. In-path congestion cues are measured
-by the receiver or by intermediaries along the path. Out-of-path congestion
+by the receiver or by intermediaries along the path. Off-path congestion
 cues are reported by devices outside the media path (congestion maps,
 overlays, etc.). The combination forms four cases, they are visualized in
 Figure~\ref{fig:4:fw}.
@@ -335,7 +335,7 @@ a SPEED parameter to vary the transmission rate, or announcing bandwidth in
 the SDP at the start of the session (instead of starting at a low media bit
 rate) for rudimentary congestion control.
 
-\textbf{\texttt{C) Out-of-path, In-band}}: The congestion control algorithm
+\textbf{\texttt{C) Off-path, In-band}}: The congestion control algorithm
 relies on reports from multiple in-band sources, for example, in Multipath
 RTP, congestion on one path causes a change in the fractional distribution of
 traffic on each path.
@@ -829,7 +829,7 @@ scenarios.
 
 In this chapter we aimed to classify congestion control cues for real-time
 communication based on: \emph{where they are measured?} (by in-path or 
-out-of-path sources) and \emph{how they are reported?} (via in-band or out-of-band
+off-path sources) and \emph{how they are reported?} (via in-band or out-of-band
 signaling). We also describe other fundamental choices needed to implement 
 congestion control: congestion cues, reporting frequency and 
 circuit-breaker conditions. Additionally, we also describe a basic evaluation

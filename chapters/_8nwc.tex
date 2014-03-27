@@ -1,6 +1,6 @@
 Figure~\ref{fig:4:fw} in Chapter~\ref{chap:cc.fw} shows the structure of the
 congestion control framework described in this thesis. The framework
-categorizes \emph{In-path} and \emph{Out-of-path} sources and \emph{out-of-band}
+categorizes \emph{In-path} and \emph{Off-path} sources and \emph{out-of-band}
 signaling for implementing congestion control (corresponds to
 \emph{Block B and D} of Figure~\ref{fig:4:fw}). This chapter is based on our
 work on network assisted congestion control, which is documented in
@@ -28,7 +28,7 @@ control. The map server collects throughput information from the mobile
 clients, which also add geo-location information along with the throughput
 information. This assists the map server to build a bandwidth and coverage
 map. The server may be queried by mobile clients to predict coverage outage.
-This paper covers the \emph{out-of-path} sources (e.g., coverage map)
+This paper covers the \emph{off-path} sources (e.g., coverage map)
 signaling congestion cues \emph{out-of-band} to the endpoints. The paper also
 discusses the protocol and implementation aspects of such a service. Lastly,
 we evaluate the performance of using a coverage map for congestion control by
@@ -111,7 +111,7 @@ comparable throughput 178\,kbps but with a 2\% loss ratio.
 \end{figure}
 
 
-\section{Out-of-path Congestion Cues}
+\section{Off-path Congestion Cues}
 
 % Congestion map
 
@@ -307,10 +307,10 @@ discussed in Chapter~\ref{chap:cc}) it implements.
 \section{Summary}
 
 In this chapter we describe two congestion control mechanisms, both 
-use out-of-band signaling, but use in-path and out-of-path sources, respectively.
+use out-of-band signaling, but use in-path and off-path sources, respectively.
 First, the in-path sources is based on receiving congestion cues from
 middleboxes (e.g., 3G or LTE base-stations) and use standard RTP extensions
-(e.g., TMMBR) for signaling . Second, the out-of-path sources are 
+(e.g., TMMBR) for signaling . Second, the off-path sources are 
 crowd-sourced 3G coverage maps that collect throughput and geo-location information
 from users and then notifies endpoints about the available capacity in the
 region. We propose a system to collect and query coverage maps. The endpoints
