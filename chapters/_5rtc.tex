@@ -21,20 +21,20 @@ control, and evaluate the performance of the proposed congestion control
 algorithm in a simulated environment (in ns-2) using real-world 3G
 traces~\cite{s4.eval.bitrate, 3gppSim}. In \citepub{c:hetrc}, we extend the
 approach in \citepub{c:3grc} for deployment on the Internet and show that the
-congestion control scheme is deployable. In \cite{rfc7097} and
+congestion control scheme is deployable there as well. In \cite{rfc7097} and
 \cite{draft.xr.bytes.discarded}, we propose RTCP XR block extensions that
 indicate the number of bytes discarded and run-length encoding of discarded
 packets, respectively. These packets are discarded by the receiver because
 they arrived too early or too late to be played out by the receiver. This
 information is used as a congestion cue by the sender.
 
-\cite{Singh:control.loops.api} discusses the application and API requirements
-for interactive multimedia congestion control. It describes the two control
-loops: a) between the receiver and the sender, and b) between the media
-encoder and the sending agent. In the first loop, the receiver notifies the
-sender about the current network characteristics. In the second loop, the
-sending agent requests a new media bit rate, and the encoder tries at best to
-meet it, sometimes under-shooting or over-shooting the requested rate.
+% \cite{Singh:control.loops.api} discusses the application and API requirements
+% for interactive multimedia congestion control. It describes the two control
+% loops: a) between the receiver and the sender, and b) between the media
+% encoder and the sending agent. In the first loop, the receiver notifies the
+% sender about the current network characteristics. In the second loop, the
+% sending agent requests a new media bit rate, and the encoder tries at best to
+% meet it, sometimes under-shooting or over-shooting the requested rate.
 
 Lastly, in \citepub{c:eval} we evaluate the performance of a congestion
 control algorithm proposed by Google for WebRTC. We evaluate the performance
@@ -93,12 +93,12 @@ and c) co-operative.}
   \label{fig:cc:scheme}
 \end{figure}
 
-TCP Friendly Rate Control (TFRC) is an equation based congestion control
+TCP Friendly Rate Control (TFRC) is an equation-based congestion control
 algorithm implemented at the sender~\cite{tfrc_347397} and is also implemented
 as a profile~\cite{rfc4342} in the Datagram Congestion Control Protocol
 (DCCP)~\cite{rfc4340}. TFRC uses the average packet size, round trip time
 ($RTT$), loss ratio ($p$)~\cite{rfc3448} to calculate the new sending rate.
-Formally, the TFRC is calculated as follows:
+Formally, the sending rate in TFRC is calculated as follows:
 
 \begin{align*}
  TFRC = &\; \frac{8 \times avg\_packet\_size}
@@ -444,6 +444,14 @@ second flow appears, the second flow already observes queues from the existing
 stream and competes with it, while the initial flow observes an increase in
 queues and reduces the sending rate to avoid congestion.
 
+
+To summarize, we observe that the performance of TFRC is bursty, which may
+lead to poor user-experience, whilst TMMBR, C-NADU and RRTCC have a more
+stable throughput. Lastly, TMMBR appears to be conservative with very low
+packet loss, while RRTCC appears to be aggressive with a lot more packet loss.
+C-NADU appears to be in between the two schemes with higher throughput than
+TMMBR and much lower packet loss compared to RRTCC. 
+
 \section{Summary}
 
 In this chapter we describe congestion control implemented using congestion
@@ -451,10 +459,11 @@ cues from in-band sources and signaled in path (in RTCP). We further
 categorize the congestion control algorithms based on \emph{where they are
 implemented}: sender-driven scheme (e.g., TFRC), receiver-driven scheme (e.g.,
 TMMBR), or co-operative scheme (combination of sender and receiver, e.g.,
-C-NADU, RRTCC) and compare the performance of an algorithm in each scheme. We
-observe that the performance of TFRC is bursty, which may lead to poor  
-user-experience, whilst TMMBR, C-NADU and RRTCC have a more stable throughput.
-Lastly, TMMBR appears to be conservative with very low packet loss, while
-RRTCC appears to be aggressive with a lot more packet loss. C-NADU appears to
-be in between the two schemes with higher throughput than TMMBR and much lower
-packet loss compared to RRTCC.
+C-NADU, RRTCC) and compare the performance of an algorithm in each scheme. Our
+initial experiments show that that C-NADU or TMMBR would be preferred, but
+requires further investigation with more complex aggregate flows (mainly short
+or bursty TCP flows).
+
+In the next chapter we discuss the interaction between the error-resilience
+algorithm and the congestion control algorithm and evaluate if FEC can be used
+as a probing mechanism by a multimedia congestion control algorithm.
