@@ -34,29 +34,7 @@ outlined in this thesis show that FEC can be used for congestion control and
 perform suitably when no bursty loss occurs. 
 
 Another idea presented in the thesis is that the network provides notification
-to endpoints to perform congestion control. We show that notification from
-middleboxes such as, by base stations would help endpoints better congestion
-control for example in mobile networks, for example when an LTE cell is
-experiencing extreme load\footnote{Extreme load occurs when an LTE cell has
-about 10x more users than when it is busy.}. Furthermore, we also show that
-using congestion maps also aids in performing congestion control. Congestion
-maps is a measurement service that aggregates throughput information from
-multiple users and sends notification of areas with poor coverage to its
-subscribers. We expect these notifications to be used as congestion cues and
-not as a replacement to in-band, in-path congestion control. The main reason
-for restricting the use of such a service to notify congestion cues is that
-such a service is vulnerable to data pollution, i.e., the clients may report
-incorrect measurements, not necessarily intentionally but because of
-programming errors. Another reason is that the reported notifications may
-depend on the way the aggregation is performed and how quickly the aggregation
-converges to the prevailing network conditions in a region. A fast convergence
-may be susceptible to misreporting leading to false positives and make the
-user experience fluctuate when in reality there would be no reason for it to
-fluctuate. A slow convergence would ignore minor spikes in load and endpoints
-would experience poor quality of experience for a brief period until the
-values converge. A slow convergence may also lead to inefficiency because once
-an aggregation value in a region drops; it would stay there unless the
-endpoints probe for additional capacity.
+to endpoints to perform congestion control. 
 
 
 The advent of multi-view multi-party telepresence systems, these systems

@@ -84,8 +84,8 @@ one described in~\ref{cc:co-op}) and chooses the minimum of the sender's
 estimate and the receiver's bit rate request. 
 
 
-Figure~\ref{fig:tmmbn} shows the performance of TMMBR-A and TMMBR-B, where
-both endpoints are sending media over a 3G network. TMMBR-A due to its
+Figure~\ref{fig:tmmbn} shows the sample performance of TMMBR-A and TMMBR-B,
+where both endpoints are sending media over a 3G network. TMMBR-A due to its
 knowledge about the network conditions at the uplink and the downlink provides
 an average througput of 180\,kbps and 0\% loss, while TMMBR-B provides
 comparable throughput 178\,kbps but with a 2\% loss ratio.
@@ -115,6 +115,17 @@ comparable throughput 178\,kbps but with a 2\% loss ratio.
 
 % Congestion map
 
+Modern mobile networks have been designed to carry multimedia streams with QoS
+traffic classes~\cite{3gpp.23.107}, but deployments of GPRS, 3G and HSDPA
+networks show that there are still geographical areas where best-effort
+traffic classes are used~\cite{Curcio:glass, 6012045}. These constrained
+geographical may occur due to fading and interference from large building
+structures or closed or inaccessible areas (e.g., tunnels, boats on lakes or
+in the archipelago, rural areas). To overcome these challenges, in
+\citepub{c:glass}, we implement a bandwidth coverage map that collects
+connectivity information from the users (\emph {crowd-sourcing}) and
+calculates the available capacity at the reported geographical locations.
+
 Service Maps are presented in~\cite{1630563} and the measurement based
 approach is proposed in~\cite{Aravinda:2008p14}. GPS-based congestion control
 is introduced in~\cite{Yao:2008p21}, and evaluated in different
@@ -123,25 +134,24 @@ strength as an influential factor for rate-control and show that predicting
 based on signal strength alone is insufficient. Yet, their results indicate
 that past information can be used to predict future network characteristics.
 
-To overcome these challenges, in \citepub{c:glass}, we implement a bandwidth
-coverage map that collects connectivity information from the users (\emph
-{crowd-sourcing}) and calculates the available capacity at the reported
-geographical locations. \cite{6012045} also proposes a similar architecture
-(\emph{bandwidth lookup service}) to the one in \citepub{c:glass} and uses
-different types of averaging algorithms to predict future network
-characteristics in Dynamic Adaptive Streaming over HTTP (DASH). While the
-averaging algorithm is not a focus of this thesis, we use
-K-means~\cite{Kanungo:2002:LSA:513400.513402} and K-nearest neighbor
-(K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to form regions with
-similar bandwidth. Details of the averaging algorithms employed by the
-coverage map server are discussed in~\cite{sharmistha-thesis}. Additionally,
-\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
-route in steps of 100 meters, which we find limiting. Instead we propose
-multiple methods for discovering areas with poor connectivity (e.g., known
-travel route, area look ahead, geo-fencing/subscribing to coverage holes.) and
-show that not only looking up future bandwidth but also when to vary the
-sending rate affects the usefulness of the service. A preliminary analysis
-using simulations of our system is done in~\cite{Curcio:glass}.
+\cite{6012045} proposes a similar architecture (\emph{bandwidth lookup
+service}) to the one in \citepub{c:glass}, but uses different types of
+averaging algorithms to predict future network characteristics in Dynamic
+Adaptive Streaming over HTTP (DASH). While the averaging algorithm is not a
+focus of this thesis, we use K-means~\cite{Kanungo:2002:LSA:513400.513402} and
+K-nearest neighbor (K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to
+form regions with similar bandwidth. Details of the averaging algorithms
+employed by our coverage map server are discussed in~\cite{sharmistha-thesis}.
+A contrary approach is employed by \emph{Netradar.org}~\cite{6576402}, which
+divides the geographic map into 100m\,x\,100m squares, all measurements in a
+specific area are averaged. Additionally, \cite{Riiser:2012:2240136} proposes
+fetching the bandwidth along a travel route in steps of 100 meters, which we
+find limiting. Instead we propose multiple methods for discovering areas with
+poor connectivity (e.g., known travel route, area look ahead, geo-fencing or
+subscribing to coverage holes.) and show that not only looking up future
+bandwidth but also when to vary the sending rate affects the usefulness of the
+service. A preliminary analysis using simulations of our system is done
+in~\cite{Curcio:glass}.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-fig-ecv}
@@ -149,26 +159,6 @@ using simulations of our system is done in~\cite{Curcio:glass}.
   updates, query for upcoming congestion and receive coverage updates.}
 \label{fig:cc:ecv}
 \end{figure}
-
-
-In \citepub{c:glass}, we present a mechanism enabling an endpoint (usually a
-receiver) to proactively react to upcoming capacity limitations in wireless
-access networks. We enable this by implementing three steps,
-Figure~\ref{fig:cc:ecv} shows the interaction between the endpoints and the
-Network Coverage Map Server (NCMS). First, each endpoint receiving a media
-stream monitors the throughput and its geolocation and reports it to the NCMS.
-Figure~\ref{fig:glass:map} shows the throughput around the university area in
-Espoo. Second, each endpoint is capable of querying the NCMS for upcoming
-congestion (known as \emph{lookahead}). It can \emph{lookahead} using one of
-the following methods: known travel route, area lookahead or by subscribing to
-areas with poor coverage, typically using geo-fencing\footnote{Areas where the
-expected channel capacity is lower than the media bit rate}.
-Figure~\ref{fig:glass:map} shows a graphical representation of the average
-throughput for a \emph{area lookahead} and a \emph{known travel route}. Third,
-for each lookahead requests, the NCMS responds with an coverage map info,
-i.e., the expected throughput at every geolocation along the route or
-requested area.
-
 
 \begin{figure}
   \centerline{
@@ -189,6 +179,24 @@ requested area.
   representations are captured over several days.}
   \label{fig:glass:map}
 \end{figure}
+
+In \citepub{c:glass}, we present a mechanism enabling an endpoint (usually a
+receiver) to proactively react to upcoming capacity limitations in wireless
+access networks. We enable this by implementing three steps,
+Figure~\ref{fig:cc:ecv} shows the interaction between the endpoints and the
+Network Coverage Map Server (NCMS). First, each endpoint receiving a media
+stream monitors the throughput and its geolocation and reports it to the NCMS.
+Figure~\ref{fig:glass:map} shows the throughput around the university area in
+Espoo. Second, each endpoint is capable of querying the NCMS for upcoming
+congestion (known as \emph{lookahead}). It can \emph{lookahead} using one of
+the following methods: known travel route, area lookahead or by subscribing to
+areas with poor coverage, typically using geo-fencing\footnote{Areas where the
+expected channel capacity is lower than the media bit rate}.
+Figure~\ref{fig:glass:map} shows a graphical representation of the average
+throughput for a \emph{area lookahead} and a \emph{known travel route}. Third,
+for each lookahead requests, the NCMS responds with an coverage map info,
+i.e., the expected throughput at every geolocation along the route or
+requested area.
 
 The receiver uses these hints provided by the NCMS to implement congestion
 control and sends an \emph{estimated capacity vector} (a data structure
@@ -221,22 +229,6 @@ NCMS received more than 10,000 updates for 6 geographical areas
 (\emph{Otaniemi}, Helsinki City Center) while on average each geographical
 location had around 100 updates.
 
-
-\begin{table}
-  \begin{center}
-\begin{tabular}{ccccccc} \hline
-Method & $SR_{avg}$ & $PSNR_{avg}$ & $\sigma_{PSNR}$ & PLR \\ \hline
-% & $buffer_{max}$\\ \hline
-No adaptation   & 865   & 27.48 & 4.55  & 6.6 \\
-Omniscient      & 929   & 43.12 & 1.9   & 0.33 \\ 
-Rate-switching  & 881   & 42.75 & 2.21  & 0.0  \\ 
-Late scheduling & 1014  & 48.43 & 0.18 & 0.0  \\ \hline
-\end{tabular}
-\caption{A bus ride with good 3G coverage.}
-\label{table-glass-sim7res}
-\end{center}
-\end{table}
-
 In \citepub{c:glass} we describe a scenario where a user moves smoothly
 through a set of locations along a route and the receiver performs
 \emph{lookahead} queries to fetch coverage information for surrounding areas.
@@ -259,6 +251,22 @@ searches for areas with poor coverage much before the user arrives at those
 locations, so that it can pre-buffer the content equivalent to the duration of
 the disruption. To reduce the impact of changing routes, the streaming client
 uses the congestion control algorithm proposed in \citepub{c:glass}.
+
+\begin{table}
+  \begin{center}
+\begin{tabular}{ccccccc} \hline
+Method & $SR_{avg}$ & $PSNR_{avg}$ & $\sigma_{PSNR}$ & PLR \\ \hline
+% & $buffer_{max}$\\ \hline
+No adaptation   & 865   & 27.48 & 4.55  & 6.6 \\
+Omniscient      & 929   & 43.12 & 1.9   & 0.33 \\ 
+Rate-switching  & 881   & 42.75 & 2.21  & 0.0  \\ 
+Late scheduling & 1014  & 48.43 & 0.18 & 0.0  \\ \hline
+\end{tabular}
+\caption{A bus ride with good 3G coverage.}
+\label{table-glass-sim7res}
+\end{center}
+\end{table}
+
 
 Table~\ref{table-glass-sim7res} compares the results for the different schemes
 and Figure~\ref{fig:glass:sim7res} shows the sending/receiver rate variation
@@ -306,14 +314,39 @@ discussed in Chapter~\ref{chap:cc}) it implements.
 
 \section{Summary}
 
-In this chapter we describe two congestion control mechanisms, both 
-use out-of-band signaling, but use in-path and off-path sources, respectively.
-First, the in-path sources is based on receiving congestion cues from
-middleboxes (e.g., 3G or LTE base-stations) and use standard RTP extensions
-(e.g., TMMBR) for signaling . Second, the off-path sources are 
-crowd-sourced 3G coverage maps that collect throughput and geo-location information
-from users and then notifies endpoints about the available capacity in the
-region. We propose a system to collect and query coverage maps. The endpoints
-query the coverage server using out-of-band signaling to discover areas of
-poor coverage, based on these notifications the endpoints vary their sending
-rate.
+In this chapter we describe two congestion control mechanisms, both  use out-
+of-band signaling, but use in-path and off-path sources, respectively. First,
+the in-path sources is based on receiving congestion cues from middleboxes
+(e.g., 3G or LTE base-stations) and use standard RTP extensions (e.g., TMMBR)
+for signaling . Second, the off-path source is a crowd-sourced 3G coverage
+map that collect throughput and geo-location information from users and then
+notifies the subscribed endpoints about the available capacity in their
+respective neighborhoods. We propose a system to collect and query coverage
+maps. The endpoints query the coverage server using out-of-band signaling to
+discover areas of poor coverage, based on these notifications the endpoints
+vary their sending rate.
+
+We show that notification from middleboxes such as, by base stations would
+help endpoints better congestion control for example in mobile networks, for
+example when an LTE cell is experiencing extreme load\footnote{Extreme load
+occurs when an LTE cell has about 10x more users than when it is busy.}.
+Furthermore, we also show that using congestion maps also aids in performing
+congestion control. Congestion maps is a measurement service that aggregates
+throughput information from multiple users and sends notification of areas
+with poor coverage to its subscribers. We expect these notifications to be
+used as congestion cues and not as a replacement to in-band, in-path
+congestion control. The main reason for restricting the use of such a service
+to notify congestion cues is that such a service is vulnerable to data
+pollution, i.e., the clients may report incorrect measurements, not
+necessarily intentionally but because of programming errors. Another reason is
+that the reported notifications may depend on the way the aggregation is
+performed and how quickly the aggregation converges to the prevailing network
+conditions in a region. A fast convergence may be susceptible to misreporting
+leading to false positives and make the user experience fluctuate when in
+reality there would be no reason for it to fluctuate. A slow convergence would
+ignore minor spikes in load and endpoints would experience poor quality of
+experience for a brief period until the values converge. A slow convergence
+may also lead to inefficiency because once an aggregation value in a region
+drops; it would stay there unless the endpoints probe for additional capacity.
+
+
