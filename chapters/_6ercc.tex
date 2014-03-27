@@ -165,15 +165,15 @@ frames per second, we observe the error propagation is stopped by RPS in about
 
 
 \begin{figure}[!t]
-  \centerline{
+  \centering{
   \subfloat [Foreman]{
-    \includegraphics[width=0.33\textwidth]{chap6-graph-rpsi-1}
-  } 
+    \includegraphics[width=0.5\textwidth]{chap6-graph-rpsi-1}
+  } \\
   \subfloat [News]{
-    \includegraphics[width=0.33\textwidth]{chap6-graph-rpsi-3}
-  }
+    \includegraphics[width=0.5\textwidth]{chap6-graph-rpsi-3}
+  } \\
   \subfloat [Football]{
-    \includegraphics[width=0.33\textwidth]{chap6-graph-rpsi-5}
+    \includegraphics[width=0.5\textwidth]{chap6-graph-rpsi-5}
   }
 }
 \caption{The plots show the PSNR variation when using RPSI to stop decoding
@@ -190,7 +190,7 @@ error-resilience mechanisms.
 
 \begin{table}
   \centering{
-  \scalebox{0.9}{
+  \scalebox{0.75}{
 \begin{tabular}{cccc}
 \hline
  & \multicolumn{3}{l}{Y-PSNR, 0.5\,\% PLR} \\
@@ -253,6 +253,20 @@ their results show a significant increase in media quality. MSTFP on the other
 hand does not use RTP/RTCP and acknowledges each packet for calculating the
 TFRC estimate.
 
+
+\begin{figure}
+  \centering
+  \subfloat [Concept]{
+    \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-concept}
+  } \\
+  \subfloat [State-machine]{
+    \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-state}
+  }
+\caption{a) Interaction of FEC and congestion control, b) FEC-Based Rate
+Adaptation (FBRA) state machine.}
+\label{fig:fecrc-intro}
+\end{figure}
+
 Our concept in \citepub{c:err} is similar to that described in
 \cite{Zhu:2001tu} but applied to interactive multimedia. The concept is as
 follows: the sender chooses a high FEC rate to aggressively probe for
@@ -268,19 +282,6 @@ available capacity without affecting the user-experience because the media
 encoding rate remains constant.
 
 % Figure with the idea: FEC for CC
-
-\begin{figure}
-  \centering
-  \subfloat [Concept]{
-    \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-concept}
-  } 
-  \subfloat [State-machine]{
-    \includegraphics[width=0.5\textwidth]{chap6-fig-fecrc-state}
-  }
-\caption{a) Interaction of FEC and congestion control, b) FEC-Based Rate
-Adaptation (FBRA) state machine }
-\label{fig:fecrc-intro}
-\end{figure}
 
 Figure~\ref{fig:fecrc-intro}(b) illustrates the state machine of a
 congestion-control algorithm incorporating FEC. The state machine includes 4
@@ -300,6 +301,26 @@ state}}), and 3) Unstable conditions are detected, and the sender reduces the
 sending rate \texttt{\textbf{DOWN state}}. If FEC is disabled for the last two
 intervals and no change in path characteristics is observed, FEC is enabled
 (\texttt{\textbf{PROBE state}})
+
+
+\begin{figure}
+  \centering{
+  \subfloat [OWD=50ms]{
+    \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-var-50ms-2}
+  } 
+  \subfloat [OWD=100ms]{
+    \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-var-100ms-2}
+  } \\
+  \subfloat [OWD = 240ms]{
+    \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-var-240ms-2}
+  }
+}
+\caption{The plot shows the performance of a single RTP flow using FBRA in a
+varying link capacity scenario with different bottleneck latencies. The plots
+also show the FEC probing rate. We observe that the FEC rate is low when the
+FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
+\label{fig:fecrc-var}
+\end{figure}
 
 In \citepub{c:fecrc}, we compare the performance of FEC-Based Rate Adaptation
 (FBRA), RRTCC and C-NADU. The bottleneck link capacity varies between
@@ -325,37 +346,10 @@ while C-NADU trades-off packet loss for throughput. In our
 experiments, FBRA's performance is placed between the two trade-offs, better
 through than C-NADU and lower loss ratio than RRTCC.
 
-% RRTCC achieves the best goodput ($169$-$180 kbps$) for the three bottleneck
-% link latencies, but has the worst loss rate ($3$-$4\%$). RRTCC is aggressive
-% in its probing for available bandwidth and does not react to losses up to
-% $2\%$. On the other hand, C-NADU achieves excellent reliability
-% ($0.15$-$0.5\%$) results in all the cases, but observes lower goodput (about
-% $10$-$15kbps$ lower than RRTCC). The two algorithms trade-off throughput for
-% packet loss and vice-versa.
-
-% Table of FEC, C-NADU and RRTCC :)
-
-\begin{figure}
-  \centerline{
-  \subfloat [OWD=50ms]{
-    \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-50ms-2}
-  } 
-  \subfloat [OWD=100ms]{
-    \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-100ms-2}
-  }
-  \subfloat [OWD = 240ms]{
-    \includegraphics[width=0.33\textwidth]{chap6-graph-fecrc-var-240ms-2}
-  }
-}
-\caption{The plot shows the performance of a single RTP flow using FBRA in a
-varying link capacity scenario with different bottleneck latencies. The plots
-also show the FEC probing rate. We observe that the FEC rate is low when the
-FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
-\label{fig:fecrc-var}
-\end{figure}
 
 \begin{table}
-  \scalebox{0.9}{
+  \centering{
+  \scalebox{0.75}{
   \begin{tabular}{c c c c c}
   \hline
   \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{FBRA} & \textbf{RRTCC} & \textbf{C-NADU} \\ \cline{3-5}
@@ -379,48 +373,28 @@ FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
   %& \textbf{No. of FEC protected lost frames} & 178.07 & 69.92 & - & -& -& - \\ \cline{2-8}
   %& \textbf{FRCC[\%]} & 90.1 & 7.26 & - & -& -& - \\ \hline
   \end{tabular}
-  }
+  }}
   \caption{Overall metrics for an RTP Flow on a Variable Capacity Link.
   Results are average of 30 runs.}
   \label{table:fecrc-var-res}
 \end{table}
 
-In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
-competing on a bottleneck link (1Mbps) in a testbed. The difference in the
-goodput of the calls in the two latency scenarios (50\,\emph{ms} and
-100\,\emph{ms}) is about 30-50\,\emph{kbps}, but the PSNR of these calls are
-similar (see Table~\ref{table:fecrc-rw-udp}). Therefore as far as we tell from
-PSNR, the small rate variations have little bearing on the quality of the
-call. The FEC recovery is low due to small amount of packet loss and most of
-the losses occur when FEC was disabled. Additionally, 90\,\% of the times FEC
-was enabled, resulted in an increase in media rate. Low FEC overhead also
-implies that the FBRA remains longer in the \texttt{\emph{STAY}} state, thus
-avoiding abrupt changes to the encoding rate, which is detrimental for user
-experience \cite{Zink03subjectiveimpression}.
 
+% RRTCC achieves the best goodput ($169$-$180 kbps$) for the three bottleneck
+% link latencies, but has the worst loss rate ($3$-$4\%$). RRTCC is aggressive
+% in its probing for available bandwidth and does not react to losses up to
+% $2\%$. On the other hand, C-NADU achieves excellent reliability
+% ($0.15$-$0.5\%$) results in all the cases, but observes lower goodput (about
+% $10$-$15kbps$ lower than RRTCC). The two algorithms trade-off throughput for
+% packet loss and vice-versa.
 
-
-\begin{figure}
-  \centerline{
-  \subfloat [50ms]{
-    \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-dummynet-50ms-2}
-  } 
-  \subfloat [100ms]{
-    \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-dummynet-100ms-2}
-  }
-}
-\caption{The plots show the goodput of two RTP calls sharing a common
-bottleneck. To illustrate amount of empty link capacity and how two flows push
-one another, we plot one of them on the reverse axis. The end-to-end path
-capacity is \emph{1 Mbps} in both delay scenarios and delays are \emph{50ms}
-and \emph{100ms}. The plot also shows the PSNR variation for the two calls (on
-the minor Y-axis)}
-\label{fig:fecrc-dnet}
-\end{figure}
+% Table of FEC, C-NADU and RRTCC :)
 
 
 \begin{table}
-  \resizebox{\textwidth}{!}{%
+  % \resizebox{\textwidth}{!}{%
+  \centering{
+  \scalebox{0.75}{
   \begin{tabular}{cccc}
   \hline
   & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
@@ -442,32 +416,29 @@ the minor Y-axis)}
   & \textbf{PSNR [dB]} & 35.64 $\pm$ 1.17 & 37.32 $\pm$ 1.65 \\ \hline
   %& \textbf{Lossless PSNR [dB]} & & & & \\ \hline 
   \end{tabular}
-}
+  }}
   \caption{Two FBRA flows on a bottleneck link in an emulated testbed. Results
   are average of 10 runs.}
   \label{table:fecrc-rw-udp}
 \end{table}
 
-When competing with short TCP flows, the FBRA achieves an average goodput of
-302\,\emph{kbps} and 280\,\emph{kbps} in the 50\,\emph{ms} and 100\,\emph{ms}
-latency scenario, respectively (see Table~\ref{table:fecrc-rw-tcp}).
-Additionally, about 85\,\% of the times FEC was enabled, resulted in an
-increase in media rate. The TCP flow achieves a throughput of around
-600\,\emph{kbps} on average, the PSNR in both scenarios are very similar
-($\approx$ 35dB), the PSNR is lower for the 100\,ms delay scenario because the
-average goodput is also a bit lower in this case.
-
-
-% Lastly, we measure the performance of the FBRA on the public Internet, between
-% a host on Amazon EC2 instance in Ireland and a machine at Aalto University. We
-% observe varying results between each successive run, as the public Internet
-% has varying amount of cross traffic. The goodput ranges between $100$-$700$
-% \emph{kbps}, the maximum loss rate does not exceed $1.5\%$, the PSNR of the
-% calls varies between $35$-$40$ \emph{dB}. Despite the diversity in results, it
-% show that FBRA may work in the public Internet.
+In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
+competing on a bottleneck link (1Mbps) in a testbed. The difference in the
+goodput of the calls in the two latency scenarios (50\,\emph{ms} and
+100\,\emph{ms}) is about 30-50\,\emph{kbps}, but the PSNR of these calls are
+similar (see Table~\ref{table:fecrc-rw-udp}). Therefore as far as we tell from
+PSNR, the small rate variations have little bearing on the quality of the
+call. The FEC recovery is low due to small amount of packet loss and most of
+the losses occur when FEC was disabled. Additionally, 90\,\% of the times FEC
+was enabled, resulted in an increase in media rate. Low FEC overhead also
+implies that the FBRA remains longer in the \texttt{\emph{STAY}} state, thus
+avoiding abrupt changes to the encoding rate, which is detrimental for user
+experience \cite{Zink03subjectiveimpression}.
 
 \begin{table}
-  \resizebox{\textwidth}{!}{%
+  % \resizebox{\textwidth}{!}{%
+  \centering{
+  \scalebox{0.75}{
   \begin{tabular}{ccc}
   \hline
   \textbf{Metric} & \textbf{50ms delay} & \textbf{100ms delay} \\ \cline{2-3}
@@ -482,11 +453,48 @@ average goodput is also a bit lower in this case.
   \textbf{TCP throughput [kbit/s]} & 612.22 $\pm$ 48.45 & 575.11 $\pm$ 45.67 \\ \hline
   %\textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
   \end{tabular}
-  }
+  }}
   \caption{An RTP flow sharing a bottleneck link with short TCP flows in an
   emulated testbed. Results are average of 10 runs.}
   \label{table:fecrc-rw-tcp}
 \end{table}
+
+
+When competing with short TCP flows, the FBRA achieves an average goodput of
+302\,\emph{kbps} and 280\,\emph{kbps} in the 50\,\emph{ms} and 100\,\emph{ms}
+latency scenario, respectively (see Table~\ref{table:fecrc-rw-tcp}).
+Additionally, about 85\,\% of the times FEC was enabled, resulted in an
+increase in media rate. The TCP flow achieves a throughput of around
+600\,\emph{kbps} on average, the PSNR in both scenarios are very similar
+($\approx$ 35dB), the PSNR is lower for the 100\,ms delay scenario because the
+average goodput is also a bit lower in this case (see Figure~\ref{fig:fecrc-dnet}).
+
+
+\begin{figure}
+  \centering{
+  \subfloat [50ms]{
+    \includegraphics[width=0.66\textwidth]{chap6-graph-fecrc-dummynet-50ms-2}
+  } \\
+  \subfloat [100ms]{
+    \includegraphics[width=0.66\textwidth]{chap6-graph-fecrc-dummynet-100ms-2}
+  }
+}
+\caption{The plots show the goodput of two RTP calls sharing a common
+bottleneck. To illustrate amount of empty link capacity and how two flows push
+one another, we plot one of them on the reverse axis. The end-to-end path
+capacity is \emph{1 Mbps} in both delay scenarios and delays are \emph{50ms}
+and \emph{100ms}. The plot also shows the PSNR variation for the two calls (on
+the minor Y-axis)}
+\label{fig:fecrc-dnet}
+\end{figure}
+
+% Lastly, we measure the performance of the FBRA on the public Internet, between
+% a host on Amazon EC2 instance in Ireland and a machine at Aalto University. We
+% observe varying results between each successive run, as the public Internet
+% has varying amount of cross traffic. The goodput ranges between $100$-$700$
+% \emph{kbps}, the maximum loss rate does not exceed $1.5\%$, the PSNR of the
+% calls varies between $35$-$40$ \emph{dB}. Despite the diversity in results, it
+% show that FBRA may work in the public Internet.
 
 \section{Summary}
 
