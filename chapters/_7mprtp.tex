@@ -225,7 +225,7 @@ calculation~\cite{Fober05,Colin03}: $Playout_{delay} = \frac{MAX([SW]) + 124
 
 Depending on the fractional traffic distribution and RTT per path, our
 experiments show that our proposed method performs better in adapting the
-playout quickly. It takes $\approx 3s$ to adapt the playout while the one
+playout quickly. It takes some 3s to adapt the playout while the one
 implemented in~\cite{Fober05,Colin03} takes $15$-$20$s. Also our algorithm
 converges more quickly than the receiver can report the RTT to the sender, the
 typical RTCP interval is $5\pm2.5$s.
@@ -331,6 +331,8 @@ In practice, however, it would depend on the specific application to decide
 which method it prefers. Applications may prefer the \emph{in-band} mechanism
 for real-time communication where low latency is expected mainly because it
 follows a declarative model as opposed to the offer-answer model.
+Alternatively, the applications may prefer to use the \emph{out-of-band}
+mechanism when they have to use ICE and SDP anyway.
 
 
 \section{Offloading and Multihoming}
@@ -356,14 +358,14 @@ rate to spread across each subflow.
     \label{chap7:fig_sim_var_bw}
 \end{figure}
 
-\textbf{\texttt{Offloading}}: In this scenario, the e2e capacity on one path
-is variable, it demonstrates the sensitivity of the scheduling algorithm to
-the changes in network capacity, which may be caused by \emph{cross-traffic}.
-In Figure~\ref{chap7:fig_sim_var_bw} the Path B's capacity varies while Path
-A's capacity remains constant. The figure also shows the instantaneous
-bandwidth utilization for each MPRTP subflow. In this case on observing
-congestion on Path B, the scheduling algorithm reallocate the media on to the
-other paths (observe the points where the link rate drops).  
+\textbf{\texttt{Offloading}}: In this scenario, the end-to-end capacity on one
+path is variable, it demonstrates the sensitivity of the scheduling algorithm
+to the changes in network capacity, which may be caused by \emph{cross-
+traffic}. In Figure~\ref{chap7:fig_sim_var_bw} the Path B's capacity varies
+while Path A's capacity remains constant. The figure also shows the
+instantaneous bandwidth utilization for each MPRTP subflow. In this case on
+observing congestion on Path B, the scheduling algorithm reallocate the media
+on to the other paths (observe the points where the link rate drops).
 
 \textbf{\texttt{Multihoming}}: Figure~\ref{chap7:fig_sim_bb_3g} shows the
 bandwidth utilization of a WLAN and 3G path and the overall bandwidth
@@ -470,3 +472,23 @@ when the path skew is high. Our experiments show that the performance of MPRTP
 is not degraded compared to single path RTP, so that it is safe to deploy. It
 enables load distribution and capacity aggregation, which enables features
 like mobility, offloading, multihoming.
+
+In this thesis, we did not apply using MPRTP for interactive real-time
+communication, however we do use a fairly small playout buffer size order of
+hundreds of ms, which is more apt for live streaming. However, the scheduling
+algorithm could be made to work with interactive real-time multimedia by
+coupling the scheduling algorithm with a congestion control algorithm. The
+congestion control algorithm would decide the aggregate path capacity and the
+scheduling algorithm proposed in this thesis would send the appropriate number
+of packets on each of the paths.
+
+Energy usage is another aspect that was not considered explicitly in the
+evaluation and it is possible that using multiple interfaces may drain the
+mobile device's battery more quickly. A way to include the energy implications
+is to add energy awareness to the system policy; the multimedia application
+can then control the access to the particular interface depending on the
+battery level. This is similar to exposing any capacity or download
+restriction a user may have from their mobile operator. However, any further
+optimization would require a deeper study in the energy consumption by a
+particular type of network interface (e.g., WLAN or 3G/LTE) and is left as
+possible direction for future work.
