@@ -15,26 +15,31 @@ a broad-range of techniques not just those proposed in this thesis.
 
 We discuss and compare the performance of sender- and receiver-driven
 congestion control algorithms; additionally define a hybrid class of
-congestion control algorithms in which the multimedia application chooses the
-new target media bit rate by comparing the bandwidth estimated by both the
-sending and receiving endpoint. We believe that the hybrid algorithms are
-possibly the best way forward; they provide a method to be backwards
-compatible, i.e., interoperate with receivers that do not send receiver’s
-estimate and in cases where the receiver co-operates the results are more
-performant. We already see an uptake of this idea, with Google’s proposal for
-congestion control for WebRTC.
+congestion control algorithms in which the sender and receiver independently
+propose a new target media bit rate and the sending endpoint chooses between
+them. We believe that these co-operative algorithms are the best way forward.
+It lets the receiver measure congestion and assess the quality of experience
+to decide on the receiver's estimate; the sender estimates the congestion
+based on the reported cues and its sending rate, finally choosing a new target
+bit rate taking all estimates into account. We already see an uptake of this
+idea, with Google’s proposal for congestion control for WebRTC.
 
-Another observation that we made early on in our research was that many
-multimedia systems implement the error-resilience and congestion control
-algorithms independently. Furthermore, we believe the community has not
-explored using FEC for congestion control in interactive multimedia in depth,
-partly because interactive multimedia flows have very tight delay constraints
-and FEC may not arrive in time for recovering the lost packet. The results
-outlined in this thesis show that FEC can be used for congestion control and
-perform suitably when no bursty loss occurs. 
+Another observation that we made during our research was that many multimedia
+systems implement the error-resilience and congestion control algorithms
+separately. We believe the community has not explored using FEC for congestion
+control in depth, partly because interactive multimedia flows have very tight
+delay constraints and FEC may not arrive in time for recovering the lost
+packet. The results outlined in this thesis show that FEC can be used for
+congestion control and perform suitably when no bursty loss occurs.
 
-Another idea presented in the thesis is that the network provides notification
-to endpoints to perform congestion control. 
+Another idea presented in the thesis is the use of in-path or off-path sources
+to provide notifications of the prevailing network conditions in the region
+around the endpoint. This feature can either be provided by the base stations
+or by using a network congestion map service that aggregates measurements. Our
+experiments showed that the performance of the congestion control improved
+when the endpoints received timely feedback from the base stations. We showed
+that the performance was comparable when using a network congestion map
+service.
 
 
 The advent of multi-view multi-party telepresence systems, these systems
@@ -121,6 +126,14 @@ several ISPs.
 % discover areas of poor coverage, based on these notifications the endpoints
 % vary their sending rate.
 
+\begin{figure}
+    \centerline{
+        {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
+        {chap9-fig-all-tech}}
+    }
+    \caption{.}
+    \label{chap9:all-tech}
+\end{figure}
 
 
 % insights and criticism
