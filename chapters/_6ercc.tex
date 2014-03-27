@@ -195,7 +195,7 @@ error-resilience mechanisms.
 \hline
  & \multicolumn{3}{l}{Y-PSNR, 0.5\,\% PLR} \\
 \hline
- & Foreman & Football & News  \\
+ & Foreman & Football & News  \\ \hline
 NACK & 32.1456 & 28.0331 & 35.3867 \\
 RPSI & 33.68 & 28.05 & 37.37 \\
 UEP & 28.33 & 26.86 & 34.47 \\
@@ -397,9 +397,9 @@ through than C-NADU and lower loss ratio than RRTCC.
   \scalebox{0.75}{
   \begin{tabular}{cccc}
   \hline
-  & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
+  \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
   & & avg. $\pm \sigma$ & avg. $\pm \sigma$ \\ \hline 
-  \multirow{5}{*}{\begin{sideways} 50ms delay \end{sideways}} 
+  \multirow{5}{*}{\begin{sideways} 50ms \end{sideways}} 
   & Goodput [kb/s] & 375.39 $\pm$ 88.25 & 348.77 $\pm$ 83.64 \\ 
   & Loss rate [\%] & 1.21 $\pm$ 0.19 & 1.39 $\pm$ 0.69 \\ 
   & FEC rate [kb/s] & 12.24 $\pm$ 1.64 & 11.78 $\pm$ 1.39 \\ 
@@ -407,7 +407,7 @@ through than C-NADU and lower loss ratio than RRTCC.
   & No. of recovered frames & 7.4 $\pm$ 2.83 & 6.9 $\pm$ 3.33 \\ 
   & PSNR [dB] & 38.08 $\pm$ 2.1 & 37.7 $\pm$ 1.53 \\ \hline
   %& \textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
-  \multirow{5}{*}{\begin{sideways} 100ms delay \end{sideways}} 
+  \multirow{5}{*}{\begin{sideways} 100ms \end{sideways}} 
   & Goodput [kb/s] & 295.33 $\pm$ 48.27 & 351.1 $\pm$ 63.4 \\ 
   & Loss rate [\%] & 3.15 $\pm$ 0.93 & 2.33 $\pm$ 0.87 \\ 
   & FEC rate [kb/s] & 10.7 $\pm$ 0.68 & 11.69 $\pm$ 1.52 \\ 
