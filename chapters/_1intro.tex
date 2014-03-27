@@ -125,30 +125,44 @@ Instead of performing congestion control, the application may reserve capacity
 for multimedia traffic, oftentimes this is done in IPTV deployments to
 separate the operators' content from the customer's traffic, thereby
 guaranteeing good performance for the IPTV media. Similarly, it is possible
-for other multimedia services to attempt to reserve within an administrative
-domain using Differentiated Services Code Points (DSCP). 
+for other multimedia services to attempt to reserve capacity. There are two
+ways to do it: IntServ (Integrated Services)~\cite{rfc1633} and DiffServ
+(Differentiated Services)~\cite{rfc2474}. In IntServ the application requests
+each QoS- capable router along the end-to-end path to reserve capacity by
+using the Resource Reservation Protocol (RSVP)~\cite{rfc2205}. The routers
+that agree to the reservation, keep tabs on the nature of the expected flow
+and actively police it. These routers maintain soft-state, which is removed
+when timeout occurs, but it is difficult to maintain the volume of updates
+when deployed on the Internet. In contrast, DiffServ was designed to not
+require setting up the end-to-end reservation beforehand, it relies on the
+endpoint labeling each packet before sending with a Differentiated Services
+Code Point (DSCP)~\cite{rfc2475}. The labeled packets are then subjected to
+classification and policing by the intermediate routers~\cite{rfc5865}. The
+sending endpoint can only hope that the packets get the appropriate treatment,
+which cannot be guaranteed once the packet passes from one DiffServ
+administrative domain to another~\cite{draft.rtcweb.qos}.
 
-DiffServ assigns each data packet to a traffic class and the routers manage
-each traffic class differently, thereby some traffic classes receive
-preferential treatment (e.g., lower delay, lower losses) in the
-network~\cite{rfc2475}. The routers overcome congestion between traffic
-classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
-\emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for congestion within the
-same traffic class the router discards packets using \emph{tail drop} or
-\emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
+% DiffServ assigns each data packet to a traffic class and the routers manage
+% each traffic class differently, thereby some traffic classes receive
+% preferential treatment (e.g., lower delay, lower losses) in the
+% network~\cite{rfc2475}. The routers overcome congestion between traffic
+% classes by implementing \emph{priority queuing}, \emph{fair queuing}, or
+% \emph{weighted fair queuing (WFQ)}~\cite{rfc4594}; for congestion within the
+% same traffic class the router discards packets using \emph{tail drop} or
+% \emph{Random Early Detection (RED)}~\cite{Floyd:RED}.
 
-% generic markings
+% % generic markings
 
-Consequently, DiffServ needs to be implemented on every router along the data
-path and configured to have the same forwarding policy, i.e., the routers have
-to belong to the same DiffServ administrative domain for the packets to be
-treated in exactly the same way at each hop. In the case of interactive video,
-it is likely that the media packets are sent to users attached not only to
-different ISPs but also in different geographical locations. The packets
-therefore traverse DiffServ domains, it is quite possible that the receiving
-ISP to not implement a corresponding policy for each  traffic class; when this
-happens the routers use the default policy to forward packets, and as a result
-lose any opportunity of differentiated service.
+% Consequently, DiffServ needs to be implemented on every router along the data
+% path and configured to have the same forwarding policy, i.e., the routers have
+% to belong to the same DiffServ administrative domain for the packets to be
+% treated in exactly the same way at each hop. In the case of interactive video,
+% it is likely that the media packets are sent to users attached not only to
+% different ISPs but also in different geographical locations. The packets
+% therefore traverse DiffServ domains, it is quite possible that the receiving
+% ISP to not implement a corresponding policy for each  traffic class; when this
+% happens the routers use the default policy to forward packets, and as a result
+% lose any opportunity of differentiated service.
 
 
 % Especially with video traffic which can be marked in varying ways depending on
@@ -174,15 +188,16 @@ lose any opportunity of differentiated service.
 
 % \end{itemize}
 
-In this thesis, we do not rely on the use of DSCP by any entity (endpoint or
-middleboxes) along the path. The principal reason is that we would need to
-implement congestion control anyway if there is insufficient capacity in the
-service level agreement for the specific traffic class. Further, we assume
-that the presence of these markings will make the performance of our
-algorithms better. Consequently, the multimedia endpoints need to implement
-congestion control, i.e., the endpoint monitors the media flows for congestion
-and vary (increase or decrease) the media encoding rate based on the observed
+In this thesis, we do not rely on the use of DiffServ or RSVP. The principal
+reason is that we would need to implement congestion control anyway if there
+is insufficient capacity in the service level agreement for a specific traffic
+class. Consequently, the multimedia endpoints need to implement congestion
+control, i.e., the endpoint monitors the media flows for congestion and vary
+(increase or decrease) the media encoding rate based on the observed
 congestion cues.
+
+% Further, we assume that the presence of DSCP markings will make the
+% performance of our algorithms better.
 
 
 \section{Research Methodology}
