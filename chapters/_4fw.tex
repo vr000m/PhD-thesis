@@ -309,7 +309,7 @@ Figure~\ref{fig:4:fw}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{chap4-fig-fw-outline}
-\caption{Framework for Classifying Congestion Control~\cite{Singh:PhDFw}}
+\caption{Framework for Classifying Congestion Control~\cite{Singh:PhDFw}.}
 \label{fig:4:fw}
 \end{figure}
 
@@ -354,7 +354,7 @@ super-peers and overlays.
 
 % \begin{figure}[!h]
 % \includegraphics[width=\columnwidth]{chap4-knee-cliff}
-% \caption{Shows the variation throughput and delay with increasing network load}
+% \caption{Shows the variation throughput and delay with increasing network load.}
 % \label{fig:4:knee}
 % \end{figure}
 
@@ -552,8 +552,8 @@ should be avoided.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{chap4_fig-perf-metrics}
-\caption{Metrics for Rate Adaptation}
+\includegraphics[width=0.75\textwidth]{chap4_fig-perf-metrics}
+\caption{Metrics for Congestion Control.}
 \label{fig:4:rc_model}
 \end{figure}
 
@@ -715,15 +715,13 @@ triggering in cases of bursty loss and in sessions that are congesting the
 links, and does not trigger in low-loss and non-bursty scenarios.
 
 \begin{figure}
-  \centerline{
+  \centering{
     \subfloat[Non-bursty]{
-      \includegraphics[width=0.5\textwidth]
+      \includegraphics[width=0.66\textwidth]
       {chap4_graph_cb_20090707-1515-barcode}
-    }
-  % }
-  % \centerline{
+    } \\
     \subfloat[Bursty]{
-      \includegraphics[width=0.5\textwidth]
+      \includegraphics[width=0.66\textwidth]
       {chap4_graph_cb_bursty}
     }
   }
@@ -755,7 +753,7 @@ traces with bursty loss, $863$ traces with non-bursty loss.
           Bursty loss  &  11.9\% &  88.1\% \\
     \bottomrule
     \end{tabular}
-    \caption{Sessions triggering circuit breaker by loss pattern}
+    \caption{Sessions triggering circuit breaker by loss pattern.}
     \label{tab:4:cb_bursty}
   \end{center}
 \end{table}
@@ -771,7 +769,7 @@ packet loss.
 
 \begin{figure}[!t]
   \centerline{
-    {\includegraphics[width=0.9\textwidth]{chap4_graph_cb_cmp_trr_2s}}
+    {\includegraphics[width=\textwidth]{chap4_graph_cb_cmp_trr_2s}}
   }
   \caption{The plot shows the impact of using a shorter RTCP interval on the
   circuit breaker. Each scenario is run 50 times and the error bars represent
