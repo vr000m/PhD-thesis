@@ -564,38 +564,39 @@ temporary increase in per-packet delay until the rate adaptation measures take
 effect and, optionally, to packet losses if the queue capacity is exceeded.
 
 For the delay, we define three values:
-
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 
-\item Threshold 1 refers to the mean one-way delay observed under normal
-operating conditions; this value may be defined statically according to
-expectations for a certain environment, or determined dynamically. This
-reflects the mouth-to-ear or camera-to-eye delay.
+\item \textbf{\texttt{Threshold 1}} refers to the mean one-way delay observed
+under normal operating conditions; this value may be defined statically
+according to expectations for a certain environment, or determined
+dynamically. This reflects the mouth-to-ear or camera-to-eye delay.
 
-\item Threshold 2 defines the maximum acceptable one-way delay for a certain
-scenario after which rendering of the received video packets is no longer
-meaningful and packets arriving later than threshold 2 will be considered
-lost. Threshold 2 may be, e.g., 100-500ms for video, since the human eye is
-more tolerant to video glitches~\cite{s4.eval.fw}.
+\item \textbf{\texttt{Threshold 2}} defines the maximum acceptable one-way
+delay for a packet after which the rendering of the received media packet is
+no longer meaningful. Packets arriving later than threshold 2 will be
+discarded.
 
-\item The short-term delay peak reflects the maximum delay peak encountered
-during a rate adaptation operation, this may be either caused by the
-appearance of cross-traffic on the bottleneck link or due to congestion
-resulting in self-inflicted delay.
+% Threshold 2 may be, e.g., 100-500ms for video, since the human eye
+% is more tolerant to video glitches~\cite{s4.eval.fw}.
+
+\item The \textbf{\texttt{short-term delay peak}} reflects the maximum delay
+peak encountered during a congestion control operation, this may be either
+caused by the appearance of cross-traffic on the bottleneck link or due to
+congestion resulting in self-inflicted delay.
 
 \end{itemize}
 
 For losses, we consider two values:
-
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 
-\item Packets lost in the network due to bit errors and/or increased queue
-lengths or overflows (e.g., caused by drop-tail or RED queue management).
+\item \textbf{\texttt{Packets lost}} in the network due to bit errors and/or
+increased queue lengths or overflows (e.g., caused by drop-tail or RED queue
+management).
 
-\item Packets discarded at the receiver because their arrival delay violated
-threshold 2.
+\item \textbf{\texttt{Packets discarded}} at the receiver because their
+arrival delay violated threshold 2.
 
 \end{itemize}
 
@@ -714,6 +715,7 @@ Our results show that the proposed RTP circuit breaker performs well,
 triggering in cases of bursty loss and in sessions that are congesting the
 links, and does not trigger in low-loss and non-bursty scenarios.
 
+
 \begin{figure}
   \centering{
     \subfloat[Non-bursty]{
@@ -731,17 +733,6 @@ links, and does not trigger in low-loss and non-bursty scenarios.
   \label{fig:4:bursty}
 \end{figure}
 
-We simulated the RTP circuit breaker performance on $3833$ generated RTCP traces
-corresponding to the measurements collected in \emph{dataset-A} and
-\emph{dataset-B} of~\cite{ellis:2011:dataset}. Of these, $1626$ traces have no
-packet loss, and hence cannot trigger the RTP circuit breaker. The remaining
-traces each include at least one lost packet. We categorize the remaining
-traces into two categories: those that have non-bursty packet loss; and those
-that exhibit bursty loss using the definition of bursty loss
-from~\cite{rfc3611} (Figure~\ref{fig:4:bursty} shows representative samples of
-the non-bursty and bursty packet loss patterns). The data comprises $1344$
-traces with bursty loss, $863$ traces with non-bursty loss.
-
 \begin{table}
   \begin{center}
     \begin{tabular}{rcc}
@@ -757,6 +748,17 @@ traces with bursty loss, $863$ traces with non-bursty loss.
     \label{tab:4:cb_bursty}
   \end{center}
 \end{table}
+
+We simulated the RTP circuit breaker performance on $3833$ generated RTCP traces
+corresponding to the measurements collected in \emph{dataset-A} and
+\emph{dataset-B} of~\cite{ellis:2011:dataset}. Of these, $1626$ traces have no
+packet loss, and hence cannot trigger the RTP circuit breaker. The remaining
+traces each include at least one lost packet. We categorize the remaining
+traces into two categories: those that have non-bursty packet loss; and those
+that exhibit bursty loss using the definition of bursty loss
+from~\cite{rfc3611} (Figure~\ref{fig:4:bursty} shows representative samples of
+the non-bursty and bursty packet loss patterns). The data comprises $1344$
+traces with bursty loss, $863$ traces with non-bursty loss.
 
 
 
