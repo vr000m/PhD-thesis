@@ -140,18 +140,20 @@ averaging algorithms to predict future network characteristics in Dynamic
 Adaptive Streaming over HTTP (DASH). While the averaging algorithm is not a
 focus of this thesis, we use K-means~\cite{Kanungo:2002:LSA:513400.513402} and
 K-nearest neighbor (K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to
-form regions with similar bandwidth. Details of the averaging algorithms
+form regions with similar capacity. Details of the averaging algorithms
 employed by our coverage map server are discussed in~\cite{sharmistha-thesis}.
 A contrary approach is employed by \emph{Netradar.org}~\cite{6576402}, which
-divides the geographic map into 100m\,x\,100m squares, all measurements in a
-specific area are averaged. Additionally, \cite{Riiser:2012:2240136} proposes
-fetching the bandwidth along a travel route in steps of 100 meters, which we
-find limiting. Instead we propose multiple methods for discovering areas with
-poor connectivity (e.g., known travel route, area look ahead, geo-fencing or
-subscribing to coverage holes.) and show that not only looking up future
-bandwidth but also when to vary the sending rate affects the usefulness of the
-service. A preliminary analysis using simulations of our system is done
-in~\cite{Curcio:glass}.
+divides the Earth's geographic map into 100m\,x\,100m squares, all measurements in a
+specific area are averaged; the maximum, minimum and mean values for 
+each operator in that area is reported. 
+
+\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
+route in steps of 100 meters, which we find limiting. Instead we propose
+multiple methods for discovering areas with poor connectivity (e.g., known
+travel route, area look ahead, geo-fencing or subscribing to coverage holes.)
+and show that not only looking up future bandwidth but also when to vary the
+sending rate affects the usefulness of the service. A preliminary analysis
+using simulations of our system is done in~\cite{Curcio:glass}.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap8-fig-ecv}
