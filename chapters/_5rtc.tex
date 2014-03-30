@@ -252,7 +252,7 @@ Google are documented in an Internet-Draft~\cite{draft.rrtcc}.
 \begin{tabular}{cccc}
 \hline
  & $Goodput_{avg}$ & PLR & $PSNR_{avg}$\\
- & (kbps)  &(\%) & (dB)\\
+ & (Kbps)  &(\%) & (dB)\\
 \hline
 TFRC & 84.1 & 6.9\%& 29.3 \\ %
 TMMBR & 89.8 & 3.7\% & 30.5 \\ %
@@ -317,7 +317,7 @@ bottleneck link.}
 \begin{tabular}{cccccc}
 \hline
  & 3G Capacity & $Goodput_{avg}$ & PLR & $PSNR_{avg}$ & ABU \\
- & Pattern & (kbps) & (\%) & (dB) & (\%) \\ 
+ & Pattern & (Kbps) & (\%) & (dB) & (\%) \\ 
 \hline
 Call 1 & Excellent-Poor-Elevator & 140.10 & 2.15\% & 31.4 ($\sigma=0.39$) & 70.1\% \\ 
 Call 2 & Good-Good-Poor & 133.55 & 1.61\% & 31.9 ($\sigma=0.62$)& 66.8\% \\ 
@@ -369,7 +369,7 @@ the quality).
 \begin{tabular}{ ccccc }
 \hline
  & $Goodput_{avg}$ & Residual  & PLR\\
- & (kbps)  & Loss (\%) & (\%)\\
+ & (Kbps)  & Loss (\%) & (\%)\\
 \hline
  0\% & 1949.7$\pm233.62$ & 0.011 & 0.011 \\ 
  5\% & 1568.74$\pm178.52$ & 0.23 & 9.77 \\ 
@@ -416,7 +416,7 @@ that even though the link has a high loss rate, the residual loss rate is low
 \begin{tabular}{ccccc}
 \hline
 & $Goodput_{avg}$  & RTT & Residual & PLR\\
-& (kbps)& (ms) & Loss (\%) & (\%)\\ \hline
+& (Kbps)& (ms) & Loss (\%) & (\%)\\ \hline
  3 calls &  809.07$\pm202.38$ &   31.48$\pm24.93$ & 0.21 & 0.23 \\  
  3 calls (time shifted) &  1154.32$\pm250.54$ &   35.15$\pm27.88$ & 0.08 & 0.91 \\ \hline
 \end{tabular}
@@ -427,7 +427,7 @@ that even though the link has a high loss rate, the residual loss rate is low
 \end{table}
 
 Next, we emulate three calls sharing a common bottleneck. In this case, the
-individual media rates do not reach their individual maximum rate of 2Mbps.
+individual media rates do not reach their individual maximum rate of 2\,\emph{Mbps}.
 Figure~\ref{fig:rrtcc-self-fair}(a) shows that the three calls ramp up at about the
 same rate, reach a peak and drop their rate simultaneously. The sending rates
 synchronize, even though the flows originate from different endpoints using
