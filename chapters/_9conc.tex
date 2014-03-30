@@ -3,31 +3,32 @@ control cues (framework) in Chapter \ref{chap:cc.fw}. When discussing the
 different parts of the framework, we highlighted the existing related work and
 our contributions in those areas. In terms of innovativeness, the congestion
 control framework provides options to look at congestion cues beyond those
-reported by the receiver in an RTCP Receiver Report. The framework offers the
+reported by the receiver in an RTCP Receiver Report. The framework allows the
 congestion control algorithm to use multiple paths for either aggregating
 capacity or for increasing resilience, or to use capacity notifications from
 middleboxes along the path, or to build a coverage map that provides
-congestion notification as a third party services. Each of these techniques
+congestion notification as a third-party services. Each of these techniques
 apply to one of the four areas described in the framework; however, the
-definitions of each area is generalized enough to allow the application of a
-broad-range of techniques not just those proposed in this thesis.
+definitions of each area are generalized enough to allow the application of a
+broad range of techniques, not just those proposed in this thesis.
 
 % insights and criticism
 
 We defined a new class of co-operative congestion control algorithms and
 believe that these algorithms will replace the purely sender-driven
-mechanisms. The reason is that the co-operative algorithm lets the receiver
+mechanisms currently in use. 
+The reason is that the co-operative algorithm lets the receiver
 not only measure the end-to-end capacity but assess the quality of experience
-(rendering quality) to decide on the its rate estimate. As with the sender-
-driven approach, the sender estimates the congestion based on the reported
+(rendering quality) to decide its rate estimate. As with the 
+sender-driven approach, the sender estimates the congestion based on the reported
 cues and its current sending rate, but the sender can then factor in the
 receiver's estimate before finally choosing a new target bit rate. We already
-see an uptake in this general idea, with Google’s proposal for multimedia
+see an uptake of this general idea, with Google’s proposal for multimedia
 congestion control in WebRTC~\cite{draft.rrtcc}.
 
 Another observation that we made during our research was that many multimedia
 systems implement the error-resilience and congestion control algorithms
-separately. We believe the community has not explored using FEC for congestion
+separately. We believe the community has not explored the use of FEC for congestion
 control in depth, partly because interactive multimedia flows have very tight
 delay constraints and FEC may not arrive in time for recovering the lost
 packet. The results outlined in this thesis show that FEC can be used for
@@ -38,33 +39,33 @@ congestion control and perform suitably when no bursty loss occurs.
         {\includegraphics[width=\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap9-fig-all-tech}}
     }
-    \caption{Inter working of all the ideas presented in this thesis.}
+    \caption{Interworking of all the ideas presented in this thesis.}
     \label{chap9:all_in}
 \end{figure}
 
 \section{Synthesis}
 
-While the techniques proposed in this thesis are only shown to work
-independently, nothing prevents them from inter working. The
+While the techniques proposed in this thesis were only shown to work
+independently, nothing prevents them from interworking.
 Figure~\ref{chap9:all_in} depicts an example for a comprehensive architecture
 wherein an endpoint will be able to use cues from all the above sources to
 perform multimedia congestion control and packet scheduling. Endpoints will
-always use the multipath extensions for RTP (MPRTP) even when using a single
-path, this will allow the opportunity to offload or aggregate capacity when
-new interfaces (or paths) appear (Block A of the Figure~\ref{chap9:all_in}).
+always use the multipath extensions for RTP (MPRTP), even when using a single
+path; this will allow the opportunity to offload or aggregate capacity when
+new interfaces (or paths) appear (Block A of Figure~\ref{chap9:all_in}).
 
 Since the circuit breaker algorithm relies on basic congestion cues (RTT and
 loss) and periodic reception of RTP and RTCP, the circuit breaker sets the
 boundary condition under which all future multimedia application will operate.
 The congestion control will not just rely on the cues reported in an RTCP
-RR/XRs, but gather hints from additional sources. For instance mobile base
+RR/XRs, but gather hints from additional sources. For instance, mobile base
 stations can help provide information whenever capacity allocation changes due
-to mobility or an increase in active users or due to handovers (Block B of the
+to mobility, an increase in active users, or handovers (Block B of
 Figure~\ref{chap9:all_in}). Enabling Explicit Congestion Notification (ECN) in
-the network and getting ECN marked packets is another way of enabling
+the network and getting ECN-marked packets is another way of enabling
 collaboration between the network and the endpoints. Lastly, using network
 coverage maps to get information about prevailing network conditions would
-also assist in congestion control (Block C of the Figure~\ref{chap9:all_in}).
+also assist in congestion control (Block C of Figure~\ref{chap9:all_in}).
 The main concern in this case is to ascertain the trustworthiness and
 reliability of the indicated measurement values. Since the additional
 congestion cues are just hints and part of a larger set of cues, an endpoint
@@ -76,45 +77,45 @@ cues.
 % Activating encryption means that middleboxes, which peeked into the traffic to
 % provide differentiated quality of service, are now unable to do that anymore.
 
-These additional cues that form the hints are also essential at session
+These additional hints are also essential at session
 startup, because currently a media application typically starts sending media
 at a pre-configured value (either set very low or set to the maximum media
 rate). Receiving notifications from a NCMS server at the beginning of the
 session may help the endpoint pick a better start rate.
 
 
-Block D of the Figure~\ref{chap9:all_in} shows that the receiver sends an RTCP
+Block D of Figure~\ref{chap9:all_in} shows that the receiver sends an RTCP
 RR and XR containing typical congestion cues. It also sends any estimate made
 by a receiver-side congestion control algorithm (e.g., using TMMNR, REMB).
 Furthermore, it adds any throughput notifications it may have received from an
 in-path middlebox (RTCP XR containing ECN markings or capacity changes
 indicated by a base station) or from a NCMS server. The sender decides the new
-target bit rate based on the congestion cues reported by the receiver, the
+target bit rate based on the congestion cues reported by the receiver, and the
 notifications it has also been receiving from an in-path middlebox or from the
-NCMS (Block E of the Figure~\ref{chap9:all_in}).
+NCMS (Block E of Figure~\ref{chap9:all_in}).
 
 
 Finally, depending on the multimedia application, the new target rate may
-result in: a change in the encoding rate of an audio and/or video stream, or a
-change in the number of layers produced by a scalable video codec, or
-packetization time (ptime) of an audio stream or a change in the number of
-simulcast multimedia streams (typically of audio).
+result in: a change in the encoding rate of an audio and/or video stream, a
+change in the number of layers produced by a scalable video codec,
+packetization time (ptime) of an audio stream, or a change in the number of
+simulcast multimedia streams (typically video streams).
 
 \section{Future Directions}
 
-Another aspect of MPRTP that is not discussed in detail in this thesis, is the
-role of in overlay networks or for processing media in data centers. Very
-large conferences, containing hundreds of participants can be arranged in complex
+Another aspect of MPRTP that is not discussed in detail in this thesis is the
+role of MPRTP in overlay networks, or for processing media in data centers. Very
+large conferences, with hundreds of participants can be arranged in complex
 topologies containing combinations of cascaded meshes and trees. Such very
 large video conferences (e.g., massive open online courses, serminars or
 conferences), usually have a low peer churn because all participants arrive
 and leave roughly at the same time. Also, the active participants produce the
-media flows, while the dormant/passive participant consume it and occasionally
-chiming in with question and comments. Instead of broadcasting to all the
+media flows, while the dormant/passive participants consume it and occasionally
+chime in with questions and comments. Instead of broadcasting to all the
 participants, which may create load on a centralized server and require
 scaling, we can exploit the asymmetric relationship between the participants
 by using them as overlays. This would require participants to forward at least
-as much as they receive if not more, while using multiple paths eases this
+as much as they receive, if not more, and using multiple paths eases this
 requirement~\cite{Noh2008,Li2010a,Globisch:AsymGrpComm}.
 
 
@@ -124,22 +125,22 @@ requirement~\cite{Noh2008,Li2010a,Globisch:AsymGrpComm}.
 % deployment recommendations and for some of these techniques the deployment
 % considerations overlap. 
 
-In the near-term, we see the following elements of future work emerge. First,
-the emergence of WebRTC requires standardized congestion control,
+In the near-term, we see the following elements of emerging. First,
+the emergence of WebRTC requires standardized congestion control.
 Chapters~\ref{chap:cc} and~\ref{chap:er-cc} make some proposals that may fit
-the purpose, but require more extensive evaluations to be deployment ready.
+this purpose, but it requires more extensive evaluations to be deployment-ready.
 Second, using FEC for congestion control needs to be generalized to work with
-any other multimedia congestion control algorithm, i.e., enhance its
-applicability. Third, multipath scheduling needs to be reconsidered for
+any other multimedia congestion control algorithm, to enhance the
+applicability of the congestion control. Third, multipath scheduling needs to be reconsidered for
 interactive multimedia communication. One way of achieving this would require
 implementing a coupled congestion control that synthesizes all the subflow
 cues to arrive at an overall rate that would fit the combined paths and then
 let the current scheduling algorithm allocate the bits per subflow. Fourth,
 the scalability and robustness of the network coverage map service needs to
-studied, furthermore, the location-throughput matching algorithm needs to be
-also studied in more detail to respond to diverse reporting from
-various mobile devices, etc. Lastly, combining all these techniques for
-implementing a unified congestion control for interactive multimedia.
+studied; furthermore, the location-throughput matching algorithm needs to be
+studied in more detail to respond to diverse reporting from
+various mobile devices, etc. Lastly, all these techniques for
+implementing a unified congestion control for interactive multimedia need to be combined.
 
 
 
