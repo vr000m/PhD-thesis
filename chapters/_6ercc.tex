@@ -1,5 +1,5 @@
 Error-resilience is typically a topic discussed orthogonally to congestion
-control and the main reason is that error-resilience caters to handling
+control, mainly because error-resilience caters to handling
 packet loss while congestion control caters to the amount of information sent
 over the network. This chapter is based on our work on unifying
 error-resilience and congestion control.
@@ -22,9 +22,9 @@ redundant packets. If a packet gets lost and the added FEC packet arrives in
 time, the receiving endpoint would recover the lost packet. However, if the
 packet is not lost, by introducing the FEC packet the sender not only
 discovers that there is additional available capacity, but also has a sense of
-the magnitude (at minimum) of the available capacity. We compare our proposal
-with our previous work in \citepub{c:3grc} and \citepub{c:hetrc}, and Google's
-congestion control~\cite{draft.rrtcc}. We evaluate the performance of the
+the (minimum) magnitude of the available capacity. We compare our proposal
+with our previous work in \citepub{c:3grc} and \citepub{c:hetrc}, and 
+RRTCC~\cite{draft.rrtcc}. We evaluate the performance of the
 mechanisms in diverse scenarios implemented in a simulation environment (in
 ns-2) and in our testbed.
 
@@ -40,16 +40,16 @@ implemented by the video codec. Channel coding refers to the methods
 implemented by the networking layer. Joint source-channel refers to methods
 that combine source-coding and network-coding mechanisms.
 
-The H.264/AVC codec has several features that support error resilient
+The H.264/AVC codec has several features that support error-resilient
 mechanisms for video communication that correspond to the above
 categorization~\cite{310669}. At the codec level, the following are available:
 adaptive slice size, Reference Picture Selection (RPS), and Flexible
 Macroblock Ordering (FMO)~\cite{err_res_h264_std, wenger_ott_jscc}. Similarly,
 at the channel level, the following are available: Selective Retransmission
-(NACK), Packet Loss Indication (PLI). An example of joint source-channel is
-Unequal Error Protection (UEP) with FEC~\cite{wang00review}, the sender
-attempts to selectively protect important parts of the bitstream or by
-encoding redundant frames differently than other frames~\cite{ervcuupkp}.
+(NACK), and PLI. An example of joint source-channel is UEP with 
+FEC~\cite{wang00review}, in which the sender
+attempts to selectively protect important parts of the bitstream or 
+encodes redundant frames differently than other frames~\cite{ervcuupkp}.
 % pictures -> frames
 
 The performance of the available error-resilience mechanisms vary with the
@@ -66,8 +66,7 @@ for paths with higher packet loss or higher latency.
 \centerline {
 \includegraphics[width=0.66\textwidth]{chap6-graph-slicesize_mot}
 }
-\caption{The plot shows the effect of different slice sizes on PSNR for links
-observing bit-error corruption.}
+\caption{Effect of different slice sizes on PSNR for links experiencing different amounts of bit-error corruption.}
 \label{fig:slicesize_mot}
 \end{figure}
 
@@ -84,26 +83,26 @@ observing bit-error corruption.}
 
   \item \textbf{\texttt{Adapting Slice Sizes}}: the encoder adapts the size of
   the picture slice based on the link characteristics; when the channel is
-  lossless there can be one picture per slice or be the MTU size and when the
+  lossless there can be one picture per slice (up to the MTU size) and when
   high losses are reported, the slices are reduced in size (up to 100 bytes).
   Larger slice sizes improve encoding efficiency, but are more vulnerable to
   frame losses. Figure~\ref{fig:slicesize_mot} shows the variation of average
-  PSNR with respect to different slice-sizes in varying loss scenarios. We
-  observe, that there is direct correlation between packet loss, slice
+  PSNR with respect to different slice sizes in varying loss scenarios. We
+  observe that there is a direct correlation between packet loss, slice
   size and media quality.
 
   \item \textbf{\texttt{Reference Picture Selection}}: Instead of
   retransmitting a lost packet, the encoder finds the list of correctly
   received pictures (or frames) by the decoder. Hence, for subsequent encodings, the
-  encoder uses a different decoded picture for inter prediction reference.
+  encoder uses a different decoded picture for inter-prediction reference.
   This method stops the temporal error propagation caused by an earlier packet
-  loss. In the RPS message, the decoder either reports the list of pictures (or frames)
+  loss. In the RPS message, the decoder reports the list of pictures (or frames)
   that were correctly received or lost. Hence, the encoder is able to retrieve
-  the required picture loss data. The mode of operation can be decided
+  the lost picture data. The mode of operation can be decided
   depending on the observed packet loss rate.
 
   \item \textbf{\texttt{Unequal Error Protection}}: When the link latency is
-  high, retransmissions cannot be used. In high latency networks, the
+  high, retransmissions cannot be used because the
   retransmitted packets arrive too late to be played back. In these cases, the
   sender proactively uses a portion of the available capacity to send
   redundant packets (typically, FEC), hoping to recover any lost packet before
@@ -113,14 +112,14 @@ observing bit-error corruption.}
 
 \end{itemize}
 
-In \citepub{c:err}, we stream 3 different YUV sequences~\cite{YUV_seq} over a
+In \citepub{c:err}, we stream three different YUV sequences~\cite{YUV_seq} over a
 3G link simulated in \emph{ns-2}~\cite{ns2} with varying amount of link layer
 packet loss (0.5\,\%, 1.0\,\% and 1.5\,\%)~\cite{3gppSim}. Our experiments
 show that using NACK, the endpoint is able to correct 15-30\,\% of the lost
 packets for an end-to-end path latency of 60\,\emph{ms}, which meets the
 preferred  packet latency of 150\,\emph{ms} specified by ETSI~\cite{etsi.qoe}.
 The number of recovered packets will increase with shorter RTCP reporting
-intervals; in this paper we use 1\,\emph{s} reporting interval, with early and
+intervals; in this paper, we use a 1\,\emph{s} reporting interval, with early and
 immediate reporting as defined in \cite{rfc4585}. Our experiments show that
 NACK is an effective mechanism for low delay scenarios. Similarly, protecting
 the media flows with UEP incurred a 15-25\,\% overhead, and about 21-24\,\% of
@@ -136,31 +135,31 @@ rates.}
 \label{fig:ssa_adapt}
 \end{figure}
 
-Senders use a moving average of the last three observed fraction loss rate
+Senders use a moving average of the last three observed fraction loss rates
 reported in the RTCP RR to vary the slice size. The slice size is doubled for
 every period with average loss below 1.0\,\% until it reaches the MTU size
 (1500 bytes). Slice sizes remain constant for loss rates between 1\,\% to
-2.5\,\% to provide stability to the receiving system. However, In high loss
-scenarios, if the slice size is larger than 400 bytes, it is halved and for
+2.5\,\% to provide stability to the receiving system. However, in high loss
+scenarios, if the slice size is larger than 400 bytes, it is halved, and for
 sizes below 400 bytes, it is reduced in steps of 50 bytes to a minimum of 150
-bytes. The Figure ~\ref{fig:ssa_adapt} shows variation of slice-size with the
+bytes. Figure ~\ref{fig:ssa_adapt} shows variation of slice-size with the
 instantaneous loss rate and the average loss rate. Hence, by adapting the
 slice sizes, the sender is not repairing the stream (or replacing the missing
-packets), rather it is attempting to constrain the area of errors in the
-picture. If an RTP packet containing a small sized slice is lost, a smaller
+packets), rather, it is attempting to constrain the area of errors in the
+picture. If an RTP packet containing a small-sized slice is lost, a smaller
 area of the decoded picture is affected, alternatively, when a packet
-containing a large sized slice is lost, a large or complete decoded picture is
-affected.
+containing a large-sized slice is lost, a large part of the decoded picture 
+or the complete picture is affected.
 
 Lastly, using the RPS error-resilience mechanism, the receiver indicates the
 decoding correctness when losses occur, i.e., which pictures or slices have
 been decoded correctly or incorrectly.  In our experiments, the receiver sends
 RTCP RR every 250\,\emph{ms}, which increases the reporting overhead to 2\,\%
-of the session bandwidth. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c) we
+of the session bandwidth. In Figure ~\ref{fig:rpsi_sim} (a), (b) and (c), we
 observe that the PSNR drops down when a lost frame is referenced and the PSNR
 increases immediately after the encoder chooses a correct reference picture.
 When the one-way latency is 100\,\emph{ms} and the frame rate is set to 15
-frames per second, we observe the error propagation is stopped by RPS in about
+frames per second, we observe that the error propagation is stopped by RPS in about
 4 to 7 picture frames.
 
 
@@ -181,8 +180,8 @@ error propagation for (a) Foreman, (b) News, and (c) Football sequences.}
 \label{fig:rpsi_sim}
 \end{figure}
 
-Table~\ref{tab:err-sch-psnr} presents the average PSNR of the different error
-resilience schemes for links with 0.5\,\% fractional loss. We observe that the
+Table~\ref{tab:err-sch-psnr} presents the average PSNR of the different 
+error-resilience schemes for links with 0.5\,\% fractional loss. We observe that the
 RPS performs better than UEP and NACK and is comparable to adaptive slices.
 The UEP underperforms mainly because the media stream is encoded at a lower
 rate to make room for FEC, compared to the media streams of the other
@@ -210,7 +209,7 @@ loss rate is 0.5\,\% at each 3G link.}
 \end{table}
 
 In \citepub{c:err}, we model the error-resilience mechanisms as a function of
-observed packet loss and end-to-end delay (or latency) and
+observed packet loss and end-to-end delay (or latency), and
 Figure~\ref{fig:apply_err} summarizes the applicability of the
 error-resilience mechanisms based on our experiments. NACK is useful when loss
 rates are low and the end-to-end delay is also low. Adaptive slice size (SSA)
@@ -218,7 +217,7 @@ is applicable to the whole operational region because it attempts to scale the
 packet size based on the observed loss rate, but does not help in packet
 repair. RPS works better on links with bursty packet loss, where NACK would
 not be effective. By correctly choosing a new reference picture, the sender is
-more effective when network latency is higher. UEP/FEC is mainly useful when
+more effective when network latency is higher. UEP/FEC schemes are mainly useful when
 the sender and receiver cannot effectively co-operate to repair the stream and
 the fractional loss is within the FEC's chosen protection range.
 
@@ -227,7 +226,7 @@ the fractional loss is within the FEC's chosen protection range.
 \includegraphics[width=0.75\textwidth, 
     clip=true, trim=0cm 1cm 0cm 1cm]{chap6-fig-apply-err}
 }
-\caption{Applicability of the error-resilience schemes in heterogeneous
+\caption{Applicability of the error-resilience schemes in a heterogeneous
 environment containing both wireless and wired links.}
 \label{fig:apply_err}
 \end{figure}
@@ -235,22 +234,22 @@ environment containing both wireless and wired links.}
 
 \section{Using FEC for Congestion Control}
 
-For many years, conversational multimedia flows have used Forward Error
-Correction (FEC) for error protection~\cite{855913, 664283}, i.e., the
-application trades-off additional sending rate for redundant packets to reduce
+For many years, conversational multimedia flows have used FEC for error 
+protection~\cite{855913, 664283}, i.e., the
+application trades off additional sending rate for redundant packets to reduce
 the effect of losses. In \citepub{c:err}, we show that 21-24\,\% of the lost
 packets are recovered using a static amount of FEC. In \citepub{c:fecrc}, we
 investigate the use of FEC packets not only for error-resilience but also as a
 probing mechanism for congestion control.
 
 Zhu~\textit{et al.}\cite{Zhu:2001tu,springerlink:1022865704606} propose using
-Unequal Loss Protection (ULP) for both congestion control and error-resilience. 
+ULP for both congestion control and error-resilience. 
 Firstly, they estimate the available rate using a variant of TFRC,
 called Multimedia Streaming TCP-Friendly Protocol (MSTFP)~\cite{871542}.
 Secondly, they take packet loss and historical sending rate to smooth out the
 encoding rate. Lastly, they apply FEC while performing congestion control and
-their results show a significant increase in media quality. MSTFP on the other
-hand does not use RTP/RTCP and acknowledges each packet for calculating the
+their results show a significant increase in media quality. MSTFP, on the other
+hand, does not use RTP/RTCP and acknowledges each packet for calculating the
 TFRC estimate.
 
 
@@ -277,7 +276,7 @@ lost packet; if no packet is lost, the sender is able to increase the media
 encoding rate by swapping out the FEC. Figure~\ref{fig:fecrc-intro}(a) shows
 the endpoint adding FEC and then swapping it for additional media. This method
 can be especially useful when the sending rate is close to the bottleneck link
-rate, by choosing an appropriate FEC rate the endpoint is able to probe for
+rate: by choosing an appropriate FEC rate, the endpoint is able to probe for
 available capacity without affecting the user-experience because the media
 encoding rate remains constant.
 
@@ -289,18 +288,18 @@ states: \texttt{\textbf{STAY}}, \texttt{\textbf{PROBE}}, \texttt{\textbf{UP}},
 and \texttt{\textbf{DOWN}}. The congestion control monitors the congestion
 cues (such as, RTT, packet loss or discard rate~\cite{rfc7002, rfc7097, draft.xr.bytes.discarded}, jitter, frame inter-arrival
 delay variation, post-repair~\cite{rfc5725, draft.xr.post.repair} etc.) to stay in the current state, or transit to
-another. The state machine specifies only generic description of path
+another. The state machine specifies only a generic description of path
 conditions for the transition between states and leaves the interpretation to
 the underlying congestion control algorithm.
 
 After enabling FEC for an interval, one of the following three conditions may
-occur: 1) No more bandwidth is available, the sender keeps the current sending
-rate (\texttt{\textbf{STAY state}}). 2) Stable conditions are detected, the
+occur: 1) No more bandwidth is available and the sender keeps the current sending
+rate (\texttt{\textbf{STAY state}}), 2) Stable conditions are detected and the
 sender increases the sending rate and disables FEC (\texttt{\textbf{UP
 state}}), and 3) Unstable conditions are detected, and the sender reduces the
 sending rate \texttt{\textbf{DOWN state}}. If FEC is disabled for the last two
 intervals and no change in path characteristics is observed, FEC is enabled
-(\texttt{\textbf{PROBE state}})
+(\texttt{\textbf{PROBE state}}).
 
 
 \begin{figure}
@@ -315,7 +314,7 @@ intervals and no change in path characteristics is observed, FEC is enabled
     \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-var-240ms-2}
   }
 }
-\caption{The plot shows the performance of a single RTP flow using FBRA in a
+\caption{Performance of a single RTP flow using FBRA in a
 varying link capacity scenario with different bottleneck latencies. The plots
 also show the FEC probing rate. We observe that the FEC rate is low when the
 FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
@@ -327,24 +326,24 @@ In \citepub{c:fecrc}, we compare the performance of FEC-Based Rate Adaptation
 100\,\emph{kbps} and 256\,\emph{kbps}. In the scenario, we evaluate the
 reactivity and convergence of the rate-control algorithm to the available 
 end-to-end capacity for different path latencies. Our simulations in
-\emph{ns-2}~\cite{ns2} shows that for the 50\,\emph{ms} and 100\,\emph{ms}
+\emph{ns-2}~\cite{ns2} shows that, for the 50\,\emph{ms} and 100\,\emph{ms}
 bottleneck link latency, the goodput achieved by FBRA is comparable to RRTCC
 but with comparatively lower loss rates ($\approx$1.5\,\%, see
 Table~\ref{table:fecrc-var-res}). Figures~\ref{fig:fecrc-var}(a)--(b) show
 that the FBRA can quite quickly bounce-back after undershooting. The figure
 also shows that the FEC probing rate increases when the FBRA ramps up and the
 FEC rate is low or disabled when the FBRA undershoots. However, FBRA is
-primarily a delay-based control algorithm and for the 240\emph{ms} bottleneck
-delay, it observes that the packets are arriving very close to application
-defined maximum delay ($\approx$400ms) and is therefore, conservative in its
+primarily a delay-based control algorithm, and for the 240\emph{ms} bottleneck
+delay, it observes that the packets are arriving very close to the 
+application-defined maximum delay ($\approx$400ms) and is therefore, conservative in its
 probing for available bandwidth (this is observed by the low FEC rate in
-Figure~\ref{fig:fecrc-var}(c)). FEC rate is about 10\,\% of the media rate at
+Figure~\ref{fig:fecrc-var}(c)). The FEC rate is about 10\,\% of the media rate at
 about 15-20\,\emph{kbps} and the packet loss recovery is around 30\,\%.
 Compared to FBRA, RRTCC tries to achieve high throughput at the cost of
 incurring packet losses (this behavior is also observed in \ref{tab:rrtcc-loss}), 
-while C-NADU trades-off packet loss for throughput. In our
-experiments, FBRA's performance is placed between the two trade-offs, better
-through than C-NADU and lower loss ratio than RRTCC.
+while C-NADU trades off packet loss for throughput. In our
+experiments, FBRA's performance is placed between the two trade-offs: better
+throughput than C-NADU and lower loss ratio than RRTCC.
 
 
 \begin{table}
@@ -374,8 +373,8 @@ through than C-NADU and lower loss ratio than RRTCC.
   %& \textbf{FRCC[\%]} & 90.1 & 7.26 & - & -& -& - \\ \hline
   \end{tabular}
   }}
-  \caption{Overall metrics for an RTP Flow on a Variable Capacity Link.
-  Results are average of 30 runs.}
+  \caption{Overall metrics for an RTP flow on a variable capacity link.
+  Results are the average of 30 runs.}
   \label{table:fecrc-var-res}
 \end{table}
 
@@ -418,19 +417,19 @@ through than C-NADU and lower loss ratio than RRTCC.
   \end{tabular}
   }}
   \caption{Two FBRA flows on a bottleneck link in an emulated testbed. Results
-  are average of 10 runs.}
+  are the average of 10 runs.}
   \label{table:fecrc-rw-udp}
 \end{table}
 
 In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
-competing on a bottleneck link (1Mbps) in a testbed. The difference in the
+competing on a bottleneck link (1\,\emph{Mbps}) in a testbed. The difference in the
 goodput of the calls in the two latency scenarios (50\,\emph{ms} and
-100\,\emph{ms}) is about 30-50\,\emph{kbps}, but the PSNR of these calls are
-similar (see Table~\ref{table:fecrc-rw-udp}). Therefore as far as we tell from
+100\,\emph{ms}) is about 30-50\,\emph{Kbps}, but the PSNR of these calls is
+similar (see Table~\ref{table:fecrc-rw-udp}). Therefore, as far as we can tell from
 PSNR, the small rate variations have little bearing on the quality of the
-call. The FEC recovery is low due to small amount of packet loss and most of
+call. The FEC recovery is low due to the small amount of packet loss, and most of
 the losses occur when FEC was disabled. Additionally, 90\,\% of the times FEC
-was enabled, resulted in an increase in media rate. Low FEC overhead also
+was enabled resulted in an increase in media rate. Low FEC overhead also
 implies that the FBRA remains longer in the \texttt{\emph{STAY}} state, thus
 avoiding abrupt changes to the encoding rate, which is detrimental for user
 experience \cite{Zink03subjectiveimpression}.
@@ -465,8 +464,8 @@ When competing with short TCP flows, the FBRA achieves an average goodput of
 latency scenario, respectively (see Table~\ref{table:fecrc-rw-tcp}).
 Additionally, about 85\,\% of the times FEC was enabled, resulted in an
 increase in media rate. The TCP flow achieves a throughput of around
-600\,\emph{kbps} on average, the PSNR in both scenarios are very similar
-($\approx$ 35dB), the PSNR is lower for the 100\,ms delay scenario because the
+600\,\emph{kbps} on average. The PSNR in both scenarios are very similar
+($\approx$ 35dB), but the PSNR is lower for the 100\,\emph{ms} delay scenario because the
 average goodput is also a bit lower in this case (see Figure~\ref{fig:fecrc-dnet}).
 
 
@@ -498,31 +497,30 @@ the minor Y-axis).}
 
 \section{Summary}
 
-In this chapter we address two problems: applicability of error-resilience
-schemes, and using FEC to probe for available capacity to implement congestion
-control for interactive multimedia flows. To the first problem, we show that
-NACK, Reference Picture Selection, Unequal Error Protection and adaptive
+In this chapter, we address two problems: applicability of error-resilience
+schemes and the use of FEC to probe for available capacity in a multimedia congestion
+control algorithm. In the first case, we show that NACK, RPS, UEP/FEC and adaptive 
 slice-size can be used for different levels of latencies and observed packet
 loss ratio. We also observed that sending smaller packets in mobile networks
-performed better than sending MTU sized ($\approx$ 1500 bytes) packets.
+performed better than sending MTU-sized ($\approx$ 1500 bytes) packets.
 Alternatively, the MTU sized packets were better suited for wired or fixed
 networks where bit errors occurred less often.
 
-To the second problem: we propose a congestion control scheme where instead of
+In the second case, we propose a congestion control scheme where instead of
 increasing the rate when network conditions seem stable, the sender introduces
 FEC for one RTCP interval. If the FEC and the media packets are received
-successfully, the sender increases the sender rate with the amount of FEC
-rate. The trade-off is that we get a smoother ramp-up and if a packet gets
+successfully, sender rate increases by the amount of the FEC rate. 
+The trade-off is that we get a smoother ramp-up and, if a packet gets
 lost, it may be recovered by the FEC packet. The sender also implements a
-variable FEC interval, i.e., it varies the number of packet for which FEC is
-generated. Hence, if the sender thinks that it is underutilizing the link by
+variable FEC interval, i.e., it varies the number of packets for which FEC is
+generated. Hence, if the sender thinks that it is under utilizing the link by a
 large margin, it introduces a shorter FEC interval (up to 33\,\% redundancy)
-and therefore ramps up quickly. Consequently when it thinks that it is closer
+and therefore ramps up quickly. Consequently, when the sender thinks that it is closer
 to the bottleneck link capacity, it introduces a longer FEC interval (up to
 8\,\% redundancy) and therefore is conservative in probing for available
 capacity. Our experiments show that by using adaptive FEC for probing, the
-endpoints are able to recover 15-25\,\% of the lost packets and
-$\approx$90\,\% of the time using FEC subsequently results in an increase in
+endpoints are able to recover 15-25\,\% of the lost packets, and,
+$\approx$90\,\% of the time, using FEC subsequently results in an increase in
 the media rate. These results are comparable to our earlier experiments using
 a fixed FEC interval for error-resilience, where we were able to recover
 20-24\;\% of the lost packets. We believe using FEC for congestion control in
@@ -530,6 +528,6 @@ interactive multimedia has not been explored in depth by the community, partly
 because interactive multimedia flows have very tight delay constraints and FEC
 may not arrive in time for recovering the packet.
 
-This chapter concludes the discussion of in-path congestion control, in the
-next two chapters we will discuss about using congestion cues from off-path
+This chapter concludes the discussion of in-path in-band congestion control. In the
+next two chapters, we will discuss the use of congestion cues from off-path
 sources to perform congestion control.
