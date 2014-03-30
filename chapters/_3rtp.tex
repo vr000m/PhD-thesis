@@ -5,16 +5,16 @@ multimedia telephony (voice-over-IP, video conferencing, telepresence
 systems), multimedia streaming (video-on-demand, live streaming), and
 multimedia broadcast. RTP's design is based on the fundamental principles of
 \textit {application-layer framing} and \textit{integrated layer
-processing}~\cite{clark:alf}, to this end, RTP provides the following
+processing}~\cite{clark:alf}. To this end, RTP provides the following
 mechanisms: source and payload type identification, stream synchronization,
-packet loss and re-ordering, media stream monitoring. RTP utilizes the RTP
+packet loss and re-ordering, and media stream monitoring. RTP utilizes the RTP
 Control Protocol (RTCP) to report the performance of the media stream.
 Figure~\ref{fig:3:rtp:model} describes the features provided by RTP and RTCP.
-The media sender transmits encoded media encapsulated in RTP, in addition it
+The media sender transmits encoded media encapsulated in RTP; in addition it
 also sends RTCP Sender Reports (SR) to facilitate playback synchronization of
 different media streams (typically audio and video). The receiver maintains a
 dejitter buffer to reorder media packets and play them out as per the timing
-information encoded in the packet. If a packet missing the receiver attempts
+information encoded in the packet. If a packet is missing the receiver attempts
 to either recover the lost packet or conceal the error. Lastly, the receiving
 endpoint reports rough or detailed statistics that enables the media sender to
 adapt its media encoding rate, change to a better codec, or vary the amount of
@@ -24,19 +24,19 @@ forward error correction.
 \centering{
   \includegraphics[width=\textwidth]{chap3-fig-rtp-rtcp}
 }
-\caption{RTP and RTCP for adaptive real-time applications {\scriptsize Source:
+\caption{RTP and RTCP for adaptive real-time applications.{\scriptsize Source:
 J\"org Ott, ``Networked Multimedia Protocols and Systems''}.}
 \label{fig:3:rtp:model}
 \end{figure}
 
-Figure~\ref{fig:3:rtp.hdr} describes the RTP packet header format, the
-\textit{`synchronization source'} (SSRC) assists in determining the source
+Figure~\ref{fig:3:rtp.hdr} describes the RTP packet header format. The
+\textit{synchronization source} (SSRC) assists in determining the source
 endpoint, typically useful when an endpoint sends multiple media streams that
-need to be synchronized (e.g., Audio/Video lip-sync). The \textit{`RTP
-timestamp'} assists in playing out the received packets at the appropriate
+need to be synchronized (e.g., audio and video lip-sync). The \textit{RTP
+timestamp} assists in playing out the received packets at the appropriate
 instance of time and recomposing the media frame from RTP packets. The
-\textit{`RTP sequence number'} assists in identifying the lost packets and 
-re-ordering packets in case of out-of-order packet arrival. Lastly, RTP uses
+\textit{RTP sequence number} assists in identifying the lost packets and 
+re-ordering packets in the case of out-of-order packet arrival. Lastly, RTP uses
 the \textit{`payload type'} (PT) to describe the encoding of the media data it is
 carrying. Consequently, each codec needs to specify its corresponding payload
 format.
@@ -67,7 +67,7 @@ format.
 \end{verbatim}
 }
 \end{spacing}
-\caption{shows the RTP packet format that encapsulates the media data.}
+\caption{The RTP packet format that encapsulates the media data.}
 \label{fig:3:rtp.hdr}
 \end{figure}
 
@@ -114,7 +114,7 @@ format.
 \end{verbatim}
 }
 \end{spacing}
-\caption{shows the RTCP packet format for carrying the Sender Report (SR) and
+\caption{The RTCP packet format for carrying the Sender Report (SR) and
 the Receiver Report (RR). The SR carries transport statistics and enables 
 stream synchronization, while the RR carries the receiver transport 
 characteristics.}
@@ -132,28 +132,28 @@ characteristics.}
 
 The receiver measures the incoming streams and reports the coarse-grained
 transport statistics in an RTCP Receiver Report (RR). The RTCP RR contains the
-current loss fraction, jitter, highest sequence number received, and
-facilitates in calculating the RTT. The sender uses RTCP Sender Reports (SRs)
+current loss fraction, jitter, and the highest sequence number received, and it
+facilitates in calculating the round-trip time (RTT). The sender uses RTCP Sender Reports (SRs)
 to assist in synchronizing the media streams (audio and video) by relating the
 RTP timestamps of the individual media streams to the wall clock time (NTP)
-and to notify the receiver about the current packet rate and bit rate.
+and notifying the receiver about the current packet rate and bit rate.
 Figure~\ref{fig:3:rtcp.hdr} shows the RTCP packet header format for a
 interactive unicast media stream (i.e., both sending and receiving media).
 
 \section{RTP Payload Formats}
 
-The general principle for defining payload formats/types is to be able to
+The general principle for defining payload formats/types is to 
 identify the encoding of the media packets. These encodings are either  
 codec-specific (e.g., H.264, H.263, H.261, MPEG-2, JPEG, G.711, G.722, AMR, etc.),
 or generic (e.g., Forward Error Correction (FEC), NACK, multiplexed streams).
-Typically a payload document specifies a well-defined packet format for media
+Typically, a payload document specifies a well-defined packet format for media
 codecs; it also defines \emph{aggregation rules} for codecs that produce
 several small frames (e.g., audio) compared to the IP Maximum Transmission
-Unit (MTU) and \emph{fragmentation rules} for codecs that produce large frames
-(e.g., I-frames by video codecs). The main reason to provide fragment large
-frames  into smaller packets and not rely on IP fragmentation is, IP
+Unit (MTU), and \emph{fragmentation rules} for codecs that produce large frames
+(e.g., I-frames by video codecs). The main reason for fragmenting large
+frames into smaller packets and not rely on IP fragmentation is that IP
 fragmented packets are commonly discarded in the network, especially by NATs
-or Firewalls.
+or firewalls.
 
 % Usually the RTP header is immediately followed by
 % payload-specific header (payload format) and then by the media data. This
@@ -185,7 +185,7 @@ or Firewalls.
 \end{verbatim}
 }
 \end{spacing}
-\caption{shows the packet structure of an RTP packet encapsulating the
+\caption{Packet structure of an RTP packet encapsulating the
 payload-specific header and the associated media data.}
 \label{fig:3:pt.fmt}
 \end{figure}
@@ -202,81 +202,80 @@ payload-specific header and the associated media data.}
 RTP header extensions carry media-independent information, i.e., data that may
 be generically applicable to multiple payload formats (e.g., timing
 information), and needs to be reported more frequently than RTCP reports are
-emitted. A commonly cited example is sending NACKs for interactive video,
+emitted. A commonly-cited example is the sending of NACK packets for interactive video,
 where media flows in both directions and RTP packets are generated every tens
-of milliseconds, the RTP header extension can indicate which sequence numbers
+of milliseconds. In this case, the RTP header extension can indicate which sequence numbers
 were correctly received or lost, thereby not completely relying on the RTCP
-receiver reports for sending NACKs or ACKs.
+receiver reports to send NACKs or ACKs.
 
 The advantage of using header extensions is that they are backwards
 compatible, i.e., an endpoint that does not understand them is able ignore
-them. Some current use-cases for RTP header extensions are: reporting the
-network send timestamp, instead of bursting packets from a large frame on to
-the network, the sender paces these packets, client's audio levels (to
-equalize audio levels across multiple streams in a video conference) and they
-are generic, i.e.,tThere is no need to redefine the same extension for each
-codec.
+them. Some current use-cases for RTP header extensions include reporting the
+network send timestamp: instead of bursting packets from a large frame on to
+the network, the sender paces these packets.  Another example is equalizing a
+client's audio levels across multiple streams in a video conference. Lastly,
+RTP header extensions are generic, there is no need to redefine the same extension
+for each media codec.
 
 \section{RTCP Reporting Interval}
 % timing
 
 A closed control loop is formed by sending RTP media packets and receiving
 RTCP feedback packets. The RTCP feedback interval is typically limited to a
-small fraction of the session bandwidth, so not to affect the media traffic.
+small fraction of the session bandwidth (\emph{session\_bw}) as not to affect the media traffic.
 The RTCP reporting interval is determined by the number of SSRCs in the
 session (denoting the session size), and the chosen session bandwidth. The
-session bandwidth is expected to be divided amongst the participants, but
+session bandwidth (\emph{session\_bw}) is expected to be divided amongst the participants, but
 oftentimes it is calculated as the sum of the average throughput of the
-senders expected to be concurrently active. In the case of an audio conference
+senders expected to be concurrently active. In the case of an audio conference,
 the session bandwidth would be one sender's bandwidth, but for a video
-conference it would vary depending on the number of participants displayed on
-the user interface. Therefore, the session bandwidth is supplied by the
-session management application so that each participants calculates the same
-value for the RTCP interval.
+conference, the session bandwidth would vary depending on the number of participants displayed on
+the user interface. Consequently, the session bandwidth is supplied by the
+session management layer so that the same value for the RTCP interval is calculated for each participant.
 
 
 The recommended fraction of the session bandwidth allocated for control
 traffic is 5\,\%. For many scenarios, including large conferences, where there
 are a large number of receivers but a small number of senders, it is
-recommended that quarter of the reporting bandwidth (\emph{rtcp\_bw}) be
-shared equally by senders and the rest three-quarters by the receivers. The
-main reason is to allow newly joining participants to quickly receive the
-CNAME and synchronization timestamps (from the Sender Reports) for the sending
-endpoints. For new participants (even if they are just receivers) the RTCP
+recommended that a quarter of the reporting bandwidth (\emph{rtcp\_bw}) be
+shared equally by the senders and the remaining three-quarters by the receivers. The
+main reason for this allocation ratio is to allow newly-joining participants to quickly receive the
+CNAME and synchronization timestamps from the Sender Reports (SRs). 
+For new participants (even if they are just receivers), the RTCP
 interval is halved to quickly declare their presence.  Lastly, the recommended
-value for a fixed minimum RTCP interval is 5 seconds, while the value for
+value for a fixed minimum RTCP interval is 5 seconds, while the value for a
 reduced minimum is $\frac{360}{session\_bw}s$.  The fixed minimum RTCP
 interval of \emph{5\,s} is suitable for unidirectional links or for sessions
-that do not require monitoring the reception quality statistics (e.g., IPTV),
-while the reduced minimum RTCP interval is suitable for participants in a
-unicast bidirectional multimedia sessions. The reduced minimum RTCP interval
+that do not require monitoring of the reception quality statistics (e.g., IPTV),
+while the reduced minimum RTCP interval is also suitable for participants in a
+unicast bidirectional multimedia session. The reduced minimum RTCP interval
 is suitable for sending timely feedback messages to either perform congestion
-control or error repair, the interval is shorter than \emph{5\,s} for session
+control or error repair; the interval is shorter than \emph{5\,s} for session
 bandwidths greater than \emph{72\,kbps}.
 
 % avpf
 
-If an endpoint detects packet loss or onset of congestion midway through a
+If an endpoint detects packet loss or the onset of congestion midway through a
 reporting interval, the base RTP specification~\cite{rfc3550} (AVP profile)
-does not allow sending the RTCP reports early and the endpoint has to wait for
+does not allow the RTCP reports to be sent early and the endpoint has to wait for
 the next scheduled RTCP report. In this case, the slow control loop causes
 instability and oscillation in the media bit rate. To overcome this
 shortcoming, endpoints implement the Extended RTP Profile for RTCP-Based
 Feedback (AVPF profile)~\cite{rfc4585}, an extension to RTP's default timing
-rules to enable rapid feedback. This profile allows the endpoint to adjust the
+rules, to enable rapid feedback. This profile allows the endpoint to adjust the
 RTCP reporting interval to send the RTCP feedback reports earlier than the
-next scheduled RTCP report, sometimes even immediately. As long as reporting
+next scheduled RTCP report, sometimes even immediately, as long as the reporting
 interval on average remains the same. Figure~\ref{fig:3:avpf.interval} shows
-that in AVP profile the endpoint reports at regular intervals, whereas in AVPF
-it gets the opportunity to send feedback early in every other reporting
+that with AVP profile, the endpoint reports at regular intervals, whereas with AVPF
+the endpoint it gets the opportunity to send feedback early in every other reporting
 interval. Along with the possibility of providing timely feedback, the AVPF
 profile also defines a suite of error-resilience feedback messages, namely,
-Negative Acknowledgements (NACK), Picture Loss Indication (PLI), Slice Loss
-Indication (SLI), Reference Picture Selection Indication (RPSI).
+Negative Acknowledgments (NACK), Picture Loss Indication (PLI), Slice Loss
+Indication (SLI), and the Reference Picture Selection Indication (RPSI).
 
 \begin{figure}[!t]
 \centering{\includegraphics[width=\textwidth]{chap3-fig-avpf-rtcp}}
-\caption{shows the RTCP reporting interval as defined in a) AVP, b) AVPF.}
+\caption{The RTCP reporting interval as defined in a) AVP, b) AVPF.}
 \label{fig:3:avpf.interval}
 \end{figure}
 
@@ -289,14 +288,14 @@ Endpoints use RTCP Extended Reports (XRs)~\cite{rfc3611} to describe complex
 metrics that are not exposed by the RTCP Receiver Report (RR). Some examples of
 XRs relevant to performance monitoring and congestion control are: de-jitter
 buffer metrics~\cite{rfc7005}, Packet Delay Variation (PDV)~\cite{rfc6798},
-delay metric~\cite{rfc6843}, burst-gap discard~\cite{rfc7003}, burst-gap
-loss~\cite{rfc6958}, loss Run-Length Encoded (RLE)~\cite{rfc3611}, discard
-RLE~\cite{rfc7097}, number of discarded packets~\cite{rfc7002} and
+delay metrics~\cite{rfc6843}, burst-gap discard~\cite{rfc7003}, burst-gap
+loss~\cite{rfc6958}, Run-Length Encoded (RLE) loss~\cite{rfc3611}, discard
+RLE~\cite{rfc7097}, the number of discarded packets~\cite{rfc7002} and
 bytes~\cite{draft.xr.bytes.discarded}, summary statistics~\cite{rfc7004},
 Quality of Experience (QoE)~\cite{draft.xr.qoe}, and loss
 concealment~\cite{draft.xr.conceal}, etc. RTP allows for new metrics to be
-defined, the main requirement is to document what is measured, how it is
-measured and reported to the other endpoints.
+defined; the main requirement is to document what is measured, how it is
+measured and how it is reported to the other endpoints.
 
 
 % The RTCP Extended Reports (XR) [RFC3611] allow reporting of more
@@ -326,23 +325,23 @@ feedback messages are intended to transmit general purpose feedback messages,
 independent of any particular codec or application.
 
 On the other hand, the payload-specific feedback messages carry information
-specific to a certain payload type and is acted upon by the codec layer, some
+specific to a certain payload type and are acted upon by the codec layer. Some
 examples of these type of messages are: Full Intra Request (FIR), 
 temporal-spatial tradeoff, frame rate, frame size, maximum packet size or packet rate,
-etc~\cite{draft.avt.cop}.
+etc.~\cite{draft.avt.cop}.
 
 \section{Reduced-Size RTCP Reports}
 % non-compound feedback
 
-An endpoint sends RTCP feedback as a \emph{compound}, or \emph{minimal} RTCP
-packet. A \emph{compound RTCP packet} is defined in~\cite{rfc3585}, contains
+An endpoint sends RTCP feedback as a \emph{compound}, or \emph{minimal}, RTCP
+packet. A \emph{compound RTCP packet} as defined in~\cite{rfc3585} contains
 at least a sender report (SR) or a receiver report (RR) or both, followed by
-Source Description (SDES) and any additional XR blocks. A \emph{minimal RTCP
-packet} is one that contains a SR and/or RR, and followed by an SDES
-containing just the canonical name (CNAME)\footnote{It is the real name
-(identifier) used to describe the source, it can be in any form desired by the
-user. Of the SDES items (username, email, phone, geo-location, etc.) CNAME is
-compulsory to include in every RTCP packet.}. Hence, every compound RTCP
+a Source Description (SDES) and any additional XR blocks. A \emph{minimal RTCP
+packet} is one that contains an SR and/or RR, and is followed by an SDES
+containing just the canonical name (CNAME)\footnote{The real name
+(identifier) used to describe the source; it can be in any form desired by the
+user. Of the SDES items (username, email, phone, geo-location, etc.), it is 
+compulsory to include CNAME in every RTCP packet.}. Hence, every compound RTCP
 packet is a minimal RTCP packet with additional report blocks. A typical RTCP
 packet size for conversational multimedia streams is 80 bytes (RTCP=8, SR=20,
 RR=24, SDES/CNAME =28).
@@ -355,20 +354,20 @@ independently. These fragmented report blocks are called \emph {reduced-size
 RTCP packets}~\cite{rfc5506}. Unlike compound RTCP packets, to transmit a
 reduced-size RTCP packet an endpoint does not need to include the minimal RTCP
 report. However, when using reduced-size RTCP packets, minimal packets need to
-be sent once in a while, to keep alive the CNAME-SSRC binding.
+be sent once in a while to keep the CNAME-SSRC binding alive.
 
 Reduced-size RTCP reports are beneficial in wireless networks where the packet
-loss rate increases with the packet size, i.e., larger sized packets are more
-susceptible to be dropped compared to smaller sized packets. Additionally, smaller
+loss rate increases with the packet size, i.e., larger-sized packets are more
+susceptible to being dropped compared with smaller-sized packets. Additionally, smaller
 packets have shorter serialization time, i.e., the amount of time it takes for
-the endpoint to put the data packet on to the link is short.
+the endpoint to put the data packet onto the link is short.
 
-The main reasons for the application to use an reduced-size RTCP reports are:
-1) notify the other endpoint of events, using the signaling channel would
+The main reasons for the application to use reduced-size RTCP reports are:
+1) to notify the other endpoint of events. Using the signaling channel would
 incur at least one RTT while implementing it as an RTCP extension would merely
-incur a one-way delay. 2) send codec control (e.g., TMMBR) or feedback (e.g.,
-NACK, RPSI) messages, these messages as reduced-size are more likely to be
-transmitted more often and with as little delay as possible. Especially since
+incur a one-way delay. 2) to send codec control (e.g., TMMBR) or feedback (e.g.,
+NACK, RPSI) messages. These reduced-size messages are more likely to be
+transmitted more often and with as little delay as possible, especially since
 these types of messages are more likely to be sent when link conditions are
 poor.
 
@@ -378,60 +377,60 @@ poor.
 
 % SDP O/A, declarative SDP, RTCP notify
 
-There are several ways to setup an interactive or conversational multimedia
+There are several ways to set up an interactive or conversational multimedia
 session, for example by implementing one of the following: H.323~\cite{H.323},
-Session Initiation Protocol (SIP)~\cite{rfc3261}, Jingle~\cite{XEP-0166} an
+Session Initiation Protocol (SIP)~\cite{rfc3261}, or Jingle~\cite{XEP-0166}, an
 extension to the Extensible Messaging and Presence Protocol
 (XMPP)~\cite{rfc6120}.
 
 SIP uses the Session Description Protocol (SDP)~\cite{rfc4566} to describe the
 endpoint's transport and media capabilities. An SDP description defines a
 single multimedia session, i.e., an association between a set of participants.
-It may however, carry multiple media streams in the session.
+It may, however, carry multiple media streams in the session.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\textwidth]{chap3-fig-sig-med}}
-\caption{shows the signaling and media paths between two endpoints engaging in
+\caption{The signaling and media paths between two endpoints engaging in
 a video call.}
 \label{fig:3:sig.media}
 \end{figure}
 
 
 The transport details in the SDP are mainly split into two parts: the protocol
-for delivering media packets (currently, TCP, UDP, or SCTP) and the 
+for delivering media packets (currently, TCP, UDP, or SCTP), and the 
 IP address of the endpoint. The protocol to deliver the media packets is
 chosen by the application, but identifying the IP address and port of an
 endpoint is a bit complex. It first requires gathering the endpoint's multiple
 IP addresses and later exchanging them with the other endpoints to establish
 connectivity.
 
-Multiple IP addresses arise not only from multiple interfaces but also due to
+Multiple IP addresses arise not only from multiple interfaces but also from
 the presence of NAT devices in the network, which may change the IP address of
 the outgoing packets. Since interactive media calls are between endpoints and
 media streams may eventually traverse a NAT at both ends, in some cases, the
-only way to deliver media packets between the two endpoints would be by using
+only way to deliver media packets between two endpoints would is by using
 a relay\footnote{Traversal Using Relays around NAT (TURN)} on the public
 Internet. Hence, the endpoint needs to discover its 2-tuple \texttt{[IP
-address:port]} on the host, which is relatively easy. Next, the public address
-if behind a NAT~\cite{rfc5389}. Discovering an endpoint's public address
-requires contacting a publicly hosted STUN server and comparing the endpoint's
+address:port]} on the host, which is relatively easy followed by the public 
+address, if behind a NAT~\cite{rfc5389}. Discovering an endpoint's public address
+requires contacting a publicly-hosted STUN\footnote{Session Traversal
+Utilities for NAT (STUN).} server and comparing the endpoint's
 host addresses with the one observed by the STUN server. Lastly, the endpoint
 discovers the address allocated by the TURN relay~\cite{rfc5766} and notifies
 the other endpoints about its transport details. This collection of 2-tuples
-is known as \emph{candidates}, at first each endpoint sorts their candidates
+is known as \emph{candidates}. First, each endpoint sorts its candidates
 in decreasing order of priority and exchanges these candidate addresses in the
 SDP with the other endpoint. On receiving the list of candidates, the endpoints
-perform probing between each combination of addresses in the two candidate
+probes between each combination of addresses in the two candidate
 lists; a pair of addresses is called a \emph{candidate pair}. The endpoint
 chooses the first candidate pair that successfully establishes connectivity
 (\emph{aggressive nomination}). This process of performing pair-wise
 \emph{connectivity checks} is called Interactive Connectivity Establishment
-(ICE)~\cite{rfc5245, rfc6544} and it relies on \emph{Session Traversal
-Utilities for NAT} (STUN) protocol~\cite{rfc5389} to establish connectivity
-across a NAT. In case it fails to establish direct connectivity between the
-two endpoints, the individual endpoints use the \emph{Traversal Using Relays
+(ICE)~\cite{rfc5245, rfc6544} and it relies on the STUN protocol~\cite{rfc5389} to establish connectivity
+across a NAT. In case direct connectivity between the two endpoints fails 
+to be established, the individual endpoints use the \emph{Traversal Using Relays
 around NAT} (TURN) server and the associated protocol~\cite{rfc5766} to relay
-media packets between the endpoints. Similar to the STUN server, the TURN
+media packets between them. Similar to the STUN server, the TURN
 server is hosted on the public Internet.
 
 % Depending on the type of NAT device (full-cone, address- or port-restricted
@@ -458,22 +457,22 @@ server is hosted on the public Internet.
 \label{fig:3:sdp}
 \end{figure}
 
-The second part of SDP carries the media capabilities, together with the
-transport parameters binds the SDP to the Offer/Answer (O/A) model. In the O/A
+The second part of SDP carries the media capabilities, together with the 
+transport parameters, that bind the SDP to the Offer/Answer model. In the O/A
 model, the sending endpoint \emph{offers} to the receiver a set of media
 capabilities in decreasing order of preference, typically, multiple options of
 audio/video codecs and ICE candidates. On receiving the sender's capabilities,
 the receiver compares its media capabilities with the sender's and responds
 with the one that best fits the receiver's requirements (\emph{answer}). The
-\emph{offer is rejected} in the case where the receiver is unable to pick any
-of the options provided by the sender or if ICE connectivity checks fail.
-Hence, the application at the sender needs to pick a minimum number of widely
-available audio and video codecs to avoid negotiation failure. If the
+\emph{offer is rejected} if the receiver is unable to pick any
+of the options provided by the sender, or if the ICE connectivity checks fail.
+Hence, the application at the sender needs to pick a minimum number of widely-available 
+audio and video codecs to avoid negotiation failure. If the
 \emph{offer is accepted}, both endpoints then know the following: 1) which
 audio and/or video codecs to use, 2) the payload types of the encoded media
 streams (possibly even their respective SSRCs), 3) to which IP address and
 port number to send the media stream, 4) the media session bandwidth, if
-indicated and 5) the encryption keys, if encrypting traffic.
+indicated, and 5) the encryption keys, if encrypting traffic.
 
 \begin{figure}
 \centering{\includegraphics[width=0.9\textwidth]{chap3-fig-rtp-stack}}
@@ -483,27 +482,27 @@ indicated and 5) the encryption keys, if encrypting traffic.
 
 Figure~\ref{fig:3:rtp-stack} shows the relationship of the RTP stack with the
 rest of the IP stack. RTP is usually transmitted over UDP, but under some
-constrained situations (e.g., restrictive firewalls or NATs) it may be
+constrained situations (e.g., restrictive firewalls or NATs), RTP may be
 encapsulated in TCP~\cite{rfc3550}. STUN~\cite{rfc5389} is used by ICE to
 discover the presence of a NAT device and obtain the mapped (public) IP
 address. When using a TURN relay server (in the presence of symmetric NATs or
-not to reveal the host address of the caller for privacy reasons), the RTP
-packets are encapsulated inside the TURN's \texttt{ChannelData}
-message~\cite{rfc5766}. In the Figure~\ref{fig:3:rtp-stack} four media streams
+when concealing the host address of the caller for privacy reasons), the RTP
+packets are encapsulated inside the TURN's \emph\texttt{ChannelData}
+message~\cite{rfc5766}. In Figure~\ref{fig:3:rtp-stack}, four media streams
 (SSRC \#1-4) are transmitted by RTP over UDP, but two streams (SSRC \#1-2) are
 relayed through a TURN server. Secure RTP (SRTP)~\cite{rfc3611} is a security
 framework that provides confidentiality by encrypting RTP payload (not the RTP
 headers) and supports source origin authentication. While SRTP is not the only
 security mechanism for RTP~\cite{draft.srtp-not-must}, it is widely
 applicable, especially to voice telephony and group communication. However,
-the main challenge for SRTP is key management~\cite{draft.sec-opts}, here too
+the main challenge for SRTP is key management~\cite{draft.sec-opts}, since
 many options exist (e.g., SRTP over DTLS in WebRTC~\cite{rfc5763}, MIKEY in
 SIP~\cite{rfc3830}, Security Description in SDP~\cite{rfc4566},
 ZRTP~\cite{RFC6189}, etc.).
 
 \section{Summary}
 
-In this chapter we introduce the basic features of RTP and RTCP; we discuss
+In this chapter we introduced the basic features of RTP and RTCP; we discussed
 the limits on reporting interval and the numerous RTP and RTCP extensions.
 The introduction to RTP and RTCP largely provides context and helps understand
 the design constraints  for multimedia congestion control which are discussed 
