@@ -487,7 +487,7 @@ encapsulated in TCP~\cite{rfc3550}. STUN~\cite{rfc5389} is used by ICE to
 discover the presence of a NAT device and obtain the mapped (public) IP
 address. When using a TURN relay server (in the presence of symmetric NATs or
 when concealing the host address of the caller for privacy reasons), the RTP
-packets are encapsulated inside the TURN's \emph\texttt{ChannelData}
+packets are encapsulated inside the TURN's \emph{ChannelData}
 message~\cite{rfc5766}. In Figure~\ref{fig:3:rtp-stack}, four media streams
 (SSRC \#1-4) are transmitted by RTP over UDP, but two streams (SSRC \#1-2) are
 relayed through a TURN server. Secure RTP (SRTP)~\cite{rfc3611} is a security
