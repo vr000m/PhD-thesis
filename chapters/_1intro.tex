@@ -3,27 +3,27 @@ In recent years, video has emerged as the dominant traffic\footnote{In 2012,
 partly due to the success of YouTube and other over-the-top media streaming
 services (e.g., Netflix, Vimeo, Dailymotion, etc.). Video streaming emerged as
 the most prominent traffic on the network only after it was easily accessible
-to Internet users in the web-browser. The initial growth for media streaming
-is attributed to the Adobe Flash Video plugin, but it became ubiquitous when
-the video tag was introduced into the HTML5 standard~\cite{html5-spec} and the
+to Internet users in the web-browser. The initial growth of media streaming
+is attributed to the Adobe Flash Video plugin, but video streaming became ubiquitous when
+the video tag was introduced into the HTML5 standard~\cite{html5-spec} and
 browsers natively supported rendering media streams. Currently, the same trend
 is observable for real-time communication; present day web services either use
-Adobe's Real-time Media Flow Protocol (RTMFP) \cite{draft.rtmfp} or write
-their own plugins\footnote{There are other  plugin-based services: Facebook
+Adobe's Real-time Media Flow Protocol (RTMFP) \cite{draft.rtmfp} or 
+their own plugins\footnote{There are other plugin-based services: Facebook
 Video based on Skype SDK, Google Talk, Google's Hangout/Helpout services,
-etc.}. Like before with media streaming, the community is currently working
+etc.}. As before with media streaming, the community is currently working
 towards standardizing the Web-based Real-Time Communication (WebRTC) stack,
-which will enable any web-service in need of providing real-time communication
-with a few lines of code and without expecting the user to install a plugin.
-Therefore, these forthcoming deployments of WebRTC services are going to kick
-start the growth of real-time communication on the Internet.
+which will enable any webservice to provide real-time communication
+with a few lines of code without requiring the user to install a plugin.
+Therefore, these forthcoming deployments of WebRTC services are going to 
+kick-start the growth of real-time communication on the Internet.
 
 
 There are some fundamental differences between media streaming and real-time
-communication; media streaming is used in video on demand and IP television
+communication. Media streaming is used in video on demand and IP television
 (IPTV) services wherein the content is pre-encoded and played back directly
-from storage, in streaming the challenge is to be able to simultaneously serve
-multiple customers (\emph{scaling}) and consistently provide high quality
+from storage; in streaming the challenge is to be able to simultaneously serve
+multiple customers (\emph{scaling}) and consistently provide a high-quality
 multimedia experience. The receiving endpoint in this case is mainly required
 to avoid pausing the playback midstream, which it does by pre-buffering
 several seconds of content. A larger pre-buffer not only removes the effect of
@@ -31,25 +31,23 @@ packet jitter but also helps in requesting lost packets (via
 \emph{retransmissions}), therefore using a large playout buffer provides the
 opportunity to deliver consistent video quality.
 On the other hand, in real-time communication, there is no pre-stored content
-and endpoints use small buffers. The small buffering duration maintains
+and endpoints use small buffers. The small buffering duration preserves
 interactivity by maintaining as low a delay as possible (limited only by the
 network delay); hence, endpoints modify the sending rate to best match the
 available capacity and not cause excessive delay.
 
-This thesis is about enabling congestion control for real-time communication,
+This thesis is about enabling congestion control for real-time communication and
 deploying it in heterogeneous networking environments containing a mixture of
-wireless and wired links. Furthermore, the multimedia system running on an
-endpoint may be connected to the Internet by one or more network interfaces,
-having more than one IP address, thus enabling the multimedia application to
-use multiple interfaces for increasing throughput or error-resilience. We
-define a congestion control framework and categorize the observed congestion
-cues and lastly, propose congestion control algorithms that work in diverse
+wireless and wired links. Nowadays multimedia system run on endpoints that may
+be connected to the Internet by one or more network interfaces or have more 
+than one IP address, thus enabling the multimedia application to
+use multiple interfaces to send or receive media. 
+We define a congestion control framework and categorize the observed congestion
+cues, and lastly, propose congestion control algorithms that work in diverse
 situations. We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry
-media flows, the congestion control algorithm is therefore built within the
-design constraints of RTP. Consequently, wherever possible we have attempted
-to fix these deficiencies by proposing extensions to RTP. This thesis is a
-bundle of scientific papers that discuss various parts of the framework and
-this summary puts them in context.
+media flows, and the congestion control algorithm is built within the
+design constraints of RTP. This thesis is a bundle of scientific papers that 
+discuss various parts of the framework and this summary puts them in context.
 
 % Video streaming endpoints overcome most of these challenges by using a larger
 % playout buffers, which allows the endpoint to prebuffer the video in case
@@ -93,11 +91,12 @@ this summary puts them in context.
 % \label{rg.ch.mcc}
 
 Interactive real-time media applications use RTP~\cite{rfc3550} to encapsulate
-multimedia content. RTP is capable of using TCP, UDP and DCCP for delivering
+multimedia content. RTP is capable of using Transmission Control Protocol (TCP), 
+User Datagram Protocol (UDP) and Datagram Congestion Control Protocol (DCCP) for delivering
 multimedia.  While TCP~\cite{rfc793} is extensively used to deliver video via
-HTTP streaming, it is not very suitable for real-time communication;
-especially when the path latencies are greater than 100 \emph{ms} \cite{Brosh:tcp-real-time}, 
-hence, UDP~\cite{rfc768} carries real-time multimedia traffic. Since
+HTTP streaming, it is not very suitable for real-time communication,
+especially when the path latencies are greater than 100 \emph{ms} \cite{Brosh:tcp-real-time}; 
+hence, UDP~\cite{rfc768} is used to carry real-time multimedia traffic. Since
 UDP provides no form of congestion control, which is essential for deployment
 on the Internet, multimedia applications have to implement their own congestion control.
 
@@ -105,38 +104,38 @@ Real-time multimedia communication on the Internet is subject to the
 unpredictability of the best-effort IP network. The uncertainty is mainly due
 to packet loss, packet re-ordering, and variable queuing delay.  Buffer-bloat
 \cite{gettys:bufferbloat} and drop-tail queues in the router  can cause long
-delays and bursty losses. The video is able to tolerate some amount of loss
-either by concealing it or using some form of error-resilience technique but
+delays and bursty losses. Video is able to tolerate some amount of loss
+either by concealing it or using some form of error-resilience technique, but
 bursty loss causes visual impairments which adversely affect the user's
 quality of experience~\cite{Zink03subjectiveimpression}.
 
 Additionally, in mobile networks  the capacity available to a user in a cell
 varies due to mobility, cell-loading, interference, fading, and handover.
-Similarly, the presence of cross-traffic on the bottleneck requires the real-time 
+Similarly, the presence of cross-traffic in the bottleneck requires the real-time 
 multimedia stream to compete for the available capacity, which may also
 vary depending on the amount of cross-traffic.  Coupling the variability in
 the available capacity to  the intrinsic variability in the captured media
-(either due to motion or due  to voice activity detection), variability in the
-size of the frames produced  by the video codec (I or P frames), the
+(either due to motion or due  to voice activity detection), the variability in the
+size of the frames produced  by the video codec (I or P frames), and the
 responsiveness of the codec to produce the media stream at the requested bit
 rate makes multimedia congestion control very challenging.
 
 Instead of performing congestion control, the application may reserve capacity
-for multimedia traffic, oftentimes this is done in IPTV deployments to
+for the multimedia traffic. This is often done in IPTV deployments to
 separate the operators' content from the customer's traffic, thereby
 guaranteeing good performance for the IPTV media. Similarly, it is possible
 for other multimedia services to attempt to reserve capacity. There are two
 ways to do it: IntServ (Integrated Services)~\cite{rfc1633} and DiffServ
-(Differentiated Services)~\cite{rfc2474}. In IntServ the application requests
-each QoS- capable router along the end-to-end path to reserve capacity by
+(Differentiated Services)~\cite{rfc2474}. In IntServ, the application requests
+each QoS-capable\footnote{Quality of Service.} router along the end-to-end path to reserve capacity by
 using the Resource Reservation Protocol (RSVP)~\cite{rfc2205}. The routers
 that agree to the reservation, keep tabs on the nature of the expected flow
 and actively police it. These routers maintain soft-state, which is removed
 when timeout occurs, but it is difficult to maintain the volume of updates
-when deployed on the Internet. In contrast, DiffServ was designed to not
-require setting up the end-to-end reservation beforehand, it relies on the
-endpoint labeling each packet before sending with a Differentiated Services
-Code Point (DSCP)~\cite{rfc2475}. The labeled packets are then subjected to
+when deployed on the Internet. In contrast, DiffServ was designed not to
+require setting up the end-to-end reservation beforehand; rather, it relies on the
+endpoint labeling each packet with a Differentiated Services
+Code Point (DSCP)~\cite{rfc2475} before the packet is sent. The labeled packets are then subjected to
 classification and policing by the intermediate routers~\cite{rfc5865}. The
 sending endpoint can only hope that the packets get the appropriate treatment,
 which cannot be guaranteed once the packet passes from one DiffServ
@@ -188,13 +187,13 @@ administrative domain to another~\cite{draft.rtcweb.qos}.
 
 % \end{itemize}
 
-In this thesis, we do not rely on the use of DiffServ or RSVP. The principal
-reason is that we would need to implement congestion control anyway if there
-is insufficient capacity in the service level agreement for a specific traffic
-class. Consequently, the multimedia endpoints need to implement congestion
-control, i.e., the endpoint monitors the media flows for congestion and vary
-(increase or decrease) the media encoding rate based on the observed
-congestion cues.
+In this thesis, we do not rely on the use of DiffServ or RSVP for delivering
+media traffic. The principal reason is that we would need to implement
+congestion control anyway if there is insufficient capacity in the 
+service-level agreement for a specific traffic class. Consequently, the multimedia
+endpoints need to implement congestion control, i.e., the endpoint monitors
+the media flows for congestion and vary (increase or decrease) the media
+encoding rate based on the observed congestion cues.
 
 % Further, we assume that the presence of DSCP markings will make the
 % performance of our algorithms better.
@@ -205,22 +204,22 @@ congestion cues.
 This thesis aimed to produce original scientific work that is widely
 applicable in the Internet community. The Association for Computing Machinery
 (ACM) defines several cultural styles for conducting scientific
-research~\cite{Denning:CS.Method}, from those our methodology falls into the
+research~\cite{Denning:CS.Method}, and our methodology falls into the
 \textit{abstraction} and \textit{design} paradigms. In the \emph{abstraction}
-paradigm the researcher iterates through ``modeling'' or ``experimentation''
-to construct a model and make a prediction, then design an experiment and
-collect data, lastly analyze the results. The \emph{design} paradigm is
+paradigm, the researcher iterates through ``modeling'' or ``experimentation''
+to construct a model and make a prediction, then designs an experiment and
+collects data, and lastly analyzes the results. The \emph{design} paradigm is
 related to  engineering and consists of the following steps: state the
 requirements, write a specification, build and test the system. Our research
-covers both these aspects, the results that make up the core of the thesis
+covers all of these aspects; the results that make up the core of the thesis
 were implemented as simulations, proof-of-concept prototypes and in test-beds. 
 
 In order to make significant impact in the Internet community, researchers not
-only have to produce significant results to motivate deployment but also solve
-engineering issues. These engineering solutions are instead typically
-described in standards documents, which facilitates interoperability and
-enthuses deployment. In our research, wherever possible, we have contributed
-back to the relevant standards body. To summarize, this thesis is made up
+only have to produce noteworthy results to motivate deployment but also solve
+engineering issues. These engineering solutions are typically
+described in standards documents, which facilitate interoperability and
+motivates deployment. In our research, wherever possible, we have contributed
+to the relevant standards body. To summarize, this thesis is made up
 of both our research work and our standards work.
 
 % For example, the protocol extensions to enable congestion control (i.e., to
@@ -233,7 +232,7 @@ of both our research work and our standards work.
 
 \section{Contributions}
 
-The following are the main contributions of this dissertation are:
+The main contributions of this dissertation are:
 
 \begin{itemize}
 \setlength{\itemsep}{0pt}
@@ -245,19 +244,19 @@ The following are the main contributions of this dissertation are:
 
 \item A mechanism to implement a rudimentary congestion control (circuit-breaker) 
 that aborts communication when it encounters congestion. By
-implementing such a mechanism the endpoints limit the impact of a non-adaptive
+implementing such a mechanism, the endpoints limit the impact of a non-adaptive
 media flow on other elastic traffic.
 
 \item A study on implementing the congestion controller for real-time media
 communication at the sender, receiver, or both. Additionally, we look at the
 possibility of reacting to congestion cues sent by the network elements on the
 media path. We also evaluate the performance of the congestion control
-currently implemented by the Chrome Web-browser.
+currently implemented by the Chrome web-browser.
 
 \item Applicability of an error-resilience scheme from a suite of
 error-resilience mechanisms based on latency and loss rate. Consequently, we
 also propose using Forward Error Correction (FEC) to perform congestion
-control instead of just using it for error-resilience.
+control instead of just using it for error resilience.
 
 \item A mechanism to use multiple interfaces to send and receive real-time
 multimedia. We also propose a scheduling and an adaptive playout algorithm
@@ -265,9 +264,8 @@ that takes into account the variability in path characteristics across diverse
 paths.
 
 \item A mechanism to create coverage maps, i.e., associate throughput to a
-geo-location. So that endpoints detect areas of good and poor coverage, and
-when passing through these areas adapt their sending rate to best fit the
-network conditions.
+geo-location so that endpoints detect areas of good and poor coverage and
+adapt their sending rate to best fit the network conditions.
 
 \end{itemize}
 
@@ -277,7 +275,7 @@ network conditions.
 This thesis consists of an introductory part and eight original publications.
 In~\citepub{c:cb}, we propose a set of circuit-breaker conditions which are
 applied to non-adaptive media flows. At the moment, these media flows do not
-implement congestion control and if deployed on the Internet, are expected to
+implement congestion control and, if deployed on the Internet, are expected to
 cause congestion. The circuit breaker triggers when the application appears to
 be causing congestion.
 
@@ -285,25 +283,25 @@ be causing congestion.
 discuss congestion control for interactive multimedia communication. The
 congestion control algorithms proposed in \citepub{c:3grc} were developed for
 a mobile environment. We additionally discuss three types of congestion
-control:  \emph{sender-driven}, the sender decides the new sending rate; 
-\emph{receiver-driven}, the receiver decides the new sending rate; and 
-\emph{network-assisted}, the network notifies the endpoints about the available
-rate (for e.g., by an in-path device, a 3G base station). \citepub{c:hetrc}
+control:  \emph{sender-driven}, in which the sender decides the new sending rate; 
+\emph{receiver-driven}, in which the receiver decides the new sending rate; and 
+\emph{network-assisted}, in which the network notifies the endpoints about the available
+rate (for e.g., by an in-path device, or a 3G base station). \citepub{c:hetrc}
 extends the sender-driven algorithm described in \citepub{c:3grc} for
 deployment in heterogeneous environments. \citepub{c:eval} evaluates the
 performance of Google's congestion control algorithm proposed for WebRTC and
-comment on its deployability on the Internet.
+comments on its deployability on the Internet.
 
 \citepub{c:err} discusses error resilience for interactive multimedia
 communication in a mobile (3G) environment. In this paper, we experiment with
 using different types of error resilience schemes, namely, Negative
 Acknowledgment (NACK) or Packet Loss Indication (PLI), Forward Error
 Correction (FEC) or Unequal Level of Protection (ULP), adaptive video slice
-sizes, and Reference Pictures Selection Indication (RPSI). Lastly it
-discusses, the applicability of these schemes based on observed packet loss
+sizes, and Reference Pictures Selection Indication (RPSI). Lastly, it
+discusses the applicability of these schemes based on observed packet loss
 ratio and delay.
 
-In \citepub{c:fecrc}, we propose unifying the concept of error-resilience and
+In \citepub{c:fecrc}, we propose unifying the concept of error resilience and
 congestion control. This new congestion control algorithm uses FEC to probe
 for available capacity and would replace the two separate algorithms currently
 implemented by existing interactive multimedia applications (e.g., Skype,
@@ -314,29 +312,29 @@ interaction between the multimedia application, the RTP stack and the codec
 for implementing congestion control.
 
 
-In \citepub{c:mprtp}, we enable multihoming for real-time flows and extend the
+In \citepub{c:mprtp}, we enable multi-homing for real-time flows and extend the
 capability of the current RTP system to send media over multiple paths. In
 this paper, we propose a scheduling algorithm for Multipath RTP (MPRTP) that
 sends media over paths with widely different path characteristics and also
 propose a de-jitter buffer algorithm that plays out packets smoothly when the
-path skew is large. The paper also discusses system and implementation related
+path skew is large. The paper also discusses system- and implementation-related
 issues involved in implementing MPRTP.
 
 In \citepub{c:glass}, we propose a system to enable network-assisted
-congestion control for mobile clients by building a network coverage maps
+congestion control for mobile clients by building network coverage maps
 (mainly, measuring throughput). This paper builds on the initial results
 presented in \citepub{c:3grc}, where the middleboxes in the media path assist
 in congestion control. However, in \citepub{c:glass}, mobile clients report
-their media throughput and geolocation to a \emph{coverage map service}, which
+their media throughput and geo-location to a network coverage map service, which
 collects, stores and summarizes this information per geo-location. The mobile
 clients query the coverage map service for available capacity at future
 geo-locations and make appropriate congestion control decisions.
 
 \section{Structure of the Thesis}
 
-This thesis describes techniques to modify the sending rate to changing
-network characteristics for different types of multimedia systems. The work is
-mainly a summary of scientific-papers, but is also supported by additional
+This thesis describes techniques to modify the sending rate in response to changing
+network characteristics in different types of multimedia systems. The work is
+mainly a summary of scientific papers, but is also supported by an additional
 body of work. We have co-authored a number of Internet Drafts\footnote{at the
 time of writing this thesis, several of these documents are still in the
 Internet Draft state, but will be published as RFCs shortly.} that complement
@@ -353,8 +351,8 @@ the area. The remainder of the thesis is organized as follows.
 %\chapter{RTP: Real-time Transport Protocol}
 % RTP, AVPF, CCM, XR, reduced-size, 
 
-Chapter~\ref{chap:rtp} provides the necessary background information to 
-Real-time Transport Protocol (RTP). RTP together with RTP Control Protocol (RTCP)
+Chapter~\ref{chap:rtp} provides the necessary background information on the 
+Real-time Transport Protocol (RTP). RTP together with the RTP Control Protocol (RTCP)
 forms the control loop that adapts media to the reported path characteristics.
 This chapter is based on the RTP protocol suite~\cite{rfc3550, rfc4585,
 rfc3611, rfc5104, rfc5506} and our contributions to
@@ -362,16 +360,16 @@ it~\cite{rfc7097, rfc7005, draft.xr.bytes.discarded, draft.xr.post.repair}.
 
 % \chapter{Rate-control Framework}
 
-Chapter~\ref{chap:cc.fw} provides an high-level overview to our proposed
+Chapter~\ref{chap:cc.fw} provides a high-level overview of our proposed
 `Congestion Cues Framework', discusses congestion cues, options for reporting
-intervals, criteria for evaluating congestion control. We also discuss the
-circuit breaker--a minimal congestion control--conditions under which a
+intervals, and criteria for evaluating congestion control. We also discuss the
+circuit breaker (a minimal congestion control) conditions under which a
 multimedia stream will be terminated. The circuit breaker is applicable to
-applications that do not currently implement congestion control, are about to
-be deployed on the wide Internet and do not want to cause a congestion
+applications that are about to be deployed on the wide Internet, but do not
+currently implement congestion control and do not want to cause a congestion
 collapse. This chapter is based on our contributions, which is documented
 in~\cite{Singh:control.loops.api, draft.rmcat.app.interaction,
-draft.rmcat.evaluate, Singh:PhDFw, draft.rtp.cb}, \citepub{c:cb}.
+draft.rmcat.evaluate, Singh:PhDFw, draft.rtp.cb}, and \citepub{c:cb}.
 
 
 % \chapter{Rate-control for Interactive Multimedia}
@@ -394,7 +392,7 @@ our contributions, which is documented in \citepub{c:err}, and
 
 % \chapter{Multihoming, Overlay and Mobility Consideration}
 
-Chapter~\ref{chap:mprtp} discusses using multihoming for real-time media
+Chapter~\ref{chap:mprtp} discusses using multi-homing for real-time media
 delivery and introduces Multipath RTP (MPRTP). The chapter is mainly based on
 our contributions, which is documented in~\cite{draft.mprtp, draft.mprtp.sdp,
 Globisch:AsymGrpComm, draft.rtcp.overlay}, and \citepub{c:mprtp}.
@@ -410,5 +408,6 @@ is based on our contributions, which is documented in \citepub{c:3grc},
 
 % \chapter{Conclusions}
 
-Chapter~\ref{chap:conc} concludes the thesis and we analyze the proposed
-congestion control algorithms with the areas in the framework.
+Chapter~\ref{chap:conc} concludes the thesis, we analyze the proposed
+congestion control framework, and synthesize a unified congestion control
+algorithm from the proposals discussed in the thesis.
