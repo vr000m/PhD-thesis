@@ -41,27 +41,27 @@ control algorithm proposed by Google for WebRTC. We evaluate the performance
 in diverse scenarios measuring scalability (\emph{how quickly is the
 congestion control able to utilize the available capacity}), self-fairness and
 competing against bursty cross-traffic. We evaluate the performance of
-web-browsers implementing the congestion control algorithm in our testbed that
+web browsers implementing the congestion control algorithm in our testbed that
 emulates the diverse scenarios.
 
 \section{Schemes of Congestion Control}
 
 The congestion control algorithm can be implemented at the sender, at the
-receiver, or the sender and receiver operate co-operatively. The
+receiver, or the sender and receiver can operate co-operatively. The
 \emph{sender-driven} scheme requires that the receiver measures the current
 network condition and signals the observed congestion cues to the sender, which
 calculates the sender's estimate and uses it as the new sending rate. In the
 \emph{receiver-driven} scheme, the receiver calculates the new sending rate
 (receiver's estimate) based on the observed congestion cues, and signals the
-new rate to the sender, which on receiving the new rate, adapts the media bit
-rate to received value. The \emph{co-operative} scheme is an extension to the
-\emph{sender-driven} scheme, in this case, the receiver calculates the
+new rate to the sender, which, on receiving the new rate, adapts the media bit
+rate to the received value. The \emph{co-operative} scheme is an extension to the
+\emph{sender-driven} scheme. In this case, the receiver calculates the
 receiver's estimated rate and signals it along with the observed congestion
-cues, the sender at its end calculates the sender's estimate based on the
-congestion cues and chooses a new sending rate, typically, between the
+cues; the sender at its end calculates its own estimate based on the
+congestion cues and chooses a new sending rate, typically a value in between the
 sender's estimate and the receiver's estimate. Figure~\ref{fig:cc:scheme}
 shows the interaction of the sender and receiver for each scheme. The figure
-merely shows the media flow in one direction, however, it should be noted that
+merely shows the media flow in one direction; however, it should be noted that
 the media in the simulation and the emulated testbed actually flow in both
 directions unless explicitly mentioned. This is mainly done for the
 convenience of representation and followed throughout the remainder of the
@@ -88,7 +88,7 @@ thesis.
       {chap5-fig-cc-scheme-c}
     }
   }
-  \caption{Congestion control schemes a) sender-driven, b) receiver-driven
+  \caption{Congestion control schemes: a) sender-driven, b) receiver-driven
 and c) co-operative.}
   \label{fig:cc:scheme}
 \end{figure}
@@ -97,7 +97,7 @@ TCP Friendly Rate Control (TFRC) is an equation-based congestion control
 algorithm implemented at the sender~\cite{tfrc_347397} and is also implemented
 as a profile~\cite{rfc4342} in the Datagram Congestion Control Protocol
 (DCCP)~\cite{rfc4340}. TFRC uses the average packet size, round trip time
-($RTT$), loss ratio ($p$)~\cite{rfc3448} to calculate the new sending rate.
+($RTT$), and loss ratio ($p$)~\cite{rfc3448} to calculate the new sending rate.
 Formally, the sending rate in TFRC is calculated as follows:
 
 \begin{align*}
@@ -109,11 +109,11 @@ where,\; b = &\; 1\\
 t_{RTO} = &\; 4 \times RTT
 \end{align*}
 
-TFRC cannot be directly be applied to RTP because TFRC requires per-packet
-feedback and in RTP, the RTCP feedback is not necessarily sent that
+TFRC cannot directly be applied to RTP because TFRC requires per-packet
+feedback, and in RTP, the RTCP feedback is not necessarily sent that
 often~\cite{draft.rmcat.feedback}. Therefore, \cite{draft.rtp.tfrc} maps the
-TFRC timing rules defined in~\cite{rfc4828, rfc5348} to that of RTP/RTCP
-feedback loop, it also proposes extensions to the timing rules in
+TFRC timing rules defined in~\cite{rfc4828, rfc5348} to that of the RTP/RTCP
+feedback loop. It also proposes extensions to the timing rules in the
 AVPF-profile~\cite{rfc4585} for very short RTTs ($<20ms$).
 \cite{Gharai06:ICME} and \cite{VladBalan:2007dq} show that TFRC is stable on
 paths with longer RTTs than those with smaller RTTs, but it too exhibits
@@ -122,20 +122,22 @@ produces a sawtooth media rate is not well suited for real-time communication
 because it generates a poor user-experience~\cite{Gharai:2002wt,
 Zink03subjectiveimpression}.
 
-Other sender-driven congestion control algorithms that we explored are: The
-Rate Adaption Protocol (RAP)~\cite{rap:752152} uses a windowed-approach and
-this too exhibits a sawtooth-type of behavior. Zhu~\textit{et
+Other sender-driven congestion control algorithms that we explored include the
+Rate Adaption Protocol (RAP)~\cite{rap:752152} that uses a windowed approach which 
+exhibits a sawtooth-type of behaviour. Zhu~\textit{et
 al.}~\cite{rmcat-nada} use Pre-Congestion Notification (PCN), Explicit
-Congestion Notification (ECN) and loss rate to get an accurate estimate delay
+Congestion Notification (ECN) and loss rate to get an accurate delay
 estimate for implementing congestion control. In this case, they assume all
-packets marked by ECN and PCN as lost. Instead of just relying on RTT and loss
-for congestion control, Garudadri~\textit{et al.}~\cite{4397059} also use the
-receiver playout buffer to detect underutilization and overuse, i.e., the
-receiver signals to the sender the current receiver buffer occupancy.
+packets marked by ECN and PCN as lost. Their algorithm as specified now, 
+relies on accurate measurement of one-way delay relying on clock synchrinization.
+Instead of just relying on RTT and loss for congestion control, 
+Garudadri~\textit{et al.}~\cite{4397059} also use the
+receiver playout buffer to detect the link utilization, i.e., the variation in the 
+receiver playout buffer occupancy indicates an increase or decrease in congestion.
 O'Hanlon~\textit{et al.}~\cite{rmcat-dflow} propose using a delay-based
-estimate when competing with similar traffic and using a windowed-approach
-when competing with TCP-type cross traffic, they switch modes by using a
-threshold on the observed end-to-end delay, the idea is similar to the one
+estimate when competing with similar traffic and, using a windowed-approach
+when competing with TCP-type cross traffic, they switch modes by applying a
+threshold on the observed end-to-end delay. The idea is similar to the one
 discussed in~\cite{budzisz2011fair}.
 
 
@@ -143,21 +145,21 @@ discussed in~\cite{budzisz2011fair}.
 
 \subsection{Receiver-driven Congestion Control Schemes}
 
-In receiver-driven congestion control, the receiver estimates the rate
+In receiver-driven congestion control, the receiver estimates the rate and
 notifies the sender about the new sending rate. Temporary Maximum Media 
-Bit-rate Request (TMMBR) is defined as a codec control messages in \cite{rfc5104}.
+Bit-rate Request (TMMBR) is defined as a codec control message in \cite{rfc5104}.
 It is generated by the receiver in a point-to-point video call. The receiver
 calculates the new estimate (available capacity) based on the average 
 inter-arrival time of RTP packets (\emph{video frames}). When the inter-arrival time
 of the video frames increases beyond the expected arrival time in an observed
-period, the receiver senses \emph{over-use}. When the frames arrive early, the
-receiver senses \emph{under-use}. If the over-use and under-use occur at short
-timescales, mainly because of I-frames, the receiver ignores the congestion
-event. The I-frames are large frames because they are spatially compressed and
+period, the receiver senses \emph{over utilization}. When the frames arrive early, the
+receiver senses \emph{under utilization}. The receiver ignores the congestion event 
+if it occur on short timescales abd when receiving I-frames. 
+The I-frames are large frames because they are spatially compressed and
 are not temporally correlated to previous frames. Hence, these I-frames are
-expected to observe queuing delay. The receiver, on detecting link \emph{over
-utilization} or \emph{under utilization}, modifies the \emph{receiver's
-capacity estimate}. The receiver sends the TMMBR message to the sender
+expected to cause queuing delay. The receiver, on detecting link over
+or under utilization}, modifies the \emph{receiver's capacity estimate}. 
+The receiver sends the TMMBR message to the sender
 indicating the maximum sending rate. Currently, interactive multimedia sessions
 in 3GPP~\cite{3gpp.26.114} use TMMBR messages to notify the sender of the
 expected sending rate. In WebRTC~\cite{jennings:2013:webrtc}, TMMBR is
@@ -171,11 +173,11 @@ which will blindly follow it.
 \subsection{Co-operative Congestion Control Schemes}
 \label{cc:co-op}
 
-Next Application Data Unit (NADU)~\cite{nadu.1070341,nadu.1530486} is designed
+The Next Application Data Unit (NADU)~\cite{nadu.1070341,nadu.1530486} is designed
 for rate adaptation for video streaming in 3GPP~\cite{3gpp.26.234}. A NADU
 receiver measures the playout delay (as a measure of buffer occupancy in time)
 and signals it to the sender along with the next sequence number to be played
-out. Conversational NADU (C-NADU) is an extension to NADU for congestion
+out. Conversational NADU (C-NADU) is an extension of NADU for congestion
 control for interactive multimedia and is described in \citepub{c:3grc} and
 \citepub{c:hetrc}. In C-NADU, the receiver also calculates the
 \emph{receiver's capacity estimate} by measuring the frame inter-arrival time
@@ -195,15 +197,15 @@ sending rate.
 Receiver-side Real-Time Congestion Control (RRTCC) is described in
 \cite{draft.rrtcc} and is proposed as one of the solution candidates for
 WebRTC by Google. Like C-NADU, RRTCC also has a receiver- and sender-side
-component. The receiver-side measures the capacity overuse and underuse by
-monitoring the timestamp jitter of the incoming frames. The arrival-times are
-modeled as a white Gaussian process; when the mean is 0 there is no
-congestion, the mean is expected to increase when there is ongoing congestion
+component. The receiver-side measures the under or over utilization by
+monitoring the timestamp jitter of the incoming frames. The arrival times are
+modeled as a white Gaussian process. When the mean is 0 there is no
+congestion; the mean is expected to increase when there is ongoing congestion
 and expected to decrease when the congestion abates. Based on this
 expectation, the receiver calculates the capacity estimate and signals it to
-the sender. The sender calculates its estimate based on TFRC and, finally
+the sender. The sender calculates its estimate based on TFRC, and finally,
 chooses the new sending rate as a value between the TFRC rate calculated by
-the sender and receiver estimate. Full details of the algorithm proposed by
+the sender and the receiver's estimate. Full details of the algorithm proposed by
 Google are documented in an Internet-Draft~\cite{draft.rrtcc}.
 
 
@@ -239,7 +241,7 @@ Google are documented in an Internet-Draft~\cite{draft.rrtcc}.
       {chap5_graph_3g_cnadu}
     }
   }
-  \caption{The plots show the performance of TFRC, TMMBR and C-NADU in a slow
+  \caption{TPerformance of TFRC, TMMBR and C-NADU in a slow
   time-varying link (a, c, e) and 3G network (b, d, f).}
   \label{fig:3grc}
 \end{figure}
@@ -267,14 +269,14 @@ simulations using 3G traces).}
 \section{Performance Analysis of TFRC, TMMBR, C-NADU, and RRTCC}
 
 This section briefly discusses the performance of each congestion control
-algorithm, the detailed analysis can be found in the respective papers.
+algorithm. The detailed analysis can be found in the respective papers.
 
-Our results in \citepub{c:3grc} shows that TFRC produces a sawtooth sending
+Our results in \citepub{c:3grc} show that TFRC produces a sawtooth sending
 rate, similar to the performance in~\cite{saurin:2006:thesis}. When the media
-stream is the only flow on the end-to-end path, we also observe the average
+stream is the only flow on the end-to-end path, we also observe that the average
 bandwidth utilization (ABU) is between 30-40\,\%, i.e., TFRC underutilizes the
-link and the loss ratio is about 6\,\% which results in a lower media quality
-(approximated by measuring PSNR) compared to the other two schemes (see
+link and the loss ratio is about 6\,\%, which results in a lower media quality
+(approximated by measuring PSNR) compared with the other two schemes (see
 Table~\ref{table:3grc}). TMMBR-based congestion control utilizes the link
 better than TFRC (ABU between 50-70\,\%) and produces a lower loss ratio
 ($\approx$3\,\%). Lastly, C-NADU has comparable bandwidth utilization
@@ -302,8 +304,8 @@ types of bottleneck links, a slow time-varying link and a 3G link.
 }
 %\hfill
 }
-\caption{The plots show the performance of five C-NADU calls competing for
-capacity on a shared bottleneck in a heterogeneous network. Each calls needs
+\caption{Performance of five C-NADU calls competing for
+capacity on a shared bottleneck in a heterogeneous network. Each call needs
 to quickly adapt to changes in 3G link capacity and fairly share the
 bottleneck link.}
 \label{fig:hetrc}
@@ -326,19 +328,19 @@ Call 5 & Excellent-Elevator-Poor & 130.23 & 2.25\% & 31.3 ($\sigma=0.13$)& 65.1\
 \end{tabular}
 }}
 \caption{C-NADU: Five calls in a heterogeneous network with end-to-end latency
-between \emph{60-120ms} and 0.5\% link-layer losses.}
+between 60-120\,\emph{ms} and 0.5\% link-layer losses.}
 \label{table:hetrc}
 \end{table}
 
 In \citepub{c:hetrc}, we show that C-NADU is self-fair with other C-NADU flows
-in both wired and wireless environments~\cite{singh:2010.thesis} and in
-\citepub{c:fecrc} we show that it competes fairly with TCP cross-traffic, both
-long and short (bursty) TCP flows. Figure~\ref{fig:hetrc} show 5 video calls,
+in both wired and wireless environments~\cite{singh:2010.thesis}, and in
+\citepub{c:fecrc} we show that it competes fairly with TCP cross-traffic, for both
+the long- and short-TCP flows. Figure~\ref{fig:hetrc} show five video calls in which
 each sender uses an independent 3G link into a common bottleneck to the
 receivers. The 3G links are based on radio link traces and have different
-capacities. Hence, at some instances of time the 3G link is the constraint and
-at other times the shared bottleneck link. Table~\ref{table:hetrc} shows that
-4 calls have comparable performance (see PSNR and goodput) and 1 call suffers
+capacities. Hence, at some instances of time, the 3G link is the constraint and
+at other times it is the shared bottleneck link. Table~\ref{table:hetrc} shows that
+four calls have comparable performance (see PSNR and goodput) and one call suffers
 due to poor connectivity (the 3G link has insufficient capacity which affects
 the quality).
 
@@ -357,7 +359,7 @@ the quality).
   }
   \caption{The plots show the performance of RRTCC on a link with varying
   delay and fractional loss rate. We observe that by the sending rate
-  decreases when increasing link latency or bit-error loss. }
+  decreases with increasing link latency or bit-error loss. }
   \label{fig:rrtcc-single}
 \end{figure}
 
@@ -383,13 +385,12 @@ the quality).
 In \citepub{c:eval}, we evaluate the performance of RRTCC in several
 scenarios: by itself on a bottleneck link, competing with other RRTCC flows
 and competing with TCP cross-traffic. Figure~\ref{fig:rrtcc-single} shows an
-example plot of the performance of RRTCC when increasing latency and
-fractional loss. For example, in Figure~\ref{fig:rrtcc-single}(a) by
+example plot of the performance of RRTCC. In Figure~\ref{fig:rrtcc-single}(a) when
 increasing the bottleneck link latency reduces the sending rate of RRTCC.
-Similarly, Figure~\ref{fig:rrtcc-single}(b) shows that increasing the loss
+Similarly, Figure~\ref{fig:rrtcc-single}(b) shows that when increasing the loss
 rate also affects the sending rate. However, Table~\ref{tab:rrtcc-loss} shows
-that even though the link has high loss rate, the residual loss rate is low
-(even when the loss is 20\,\%), mainly due to the use of NACKs, PLI and FEC.
+that even though the link has a high loss rate, the residual loss rate is low
+(even when the loss was 20\,\%), mainly due to the use of NACKs, PLI and FEC.
 
 
 \begin{figure}[!t]
@@ -425,21 +426,21 @@ that even though the link has high loss rate, the residual loss rate is low
     \label{tab:self-fair}
 \end{table}
 
-Next, we emulate three calls sharing a common bottleneck, in this case the
+Next, we emulate three calls sharing a common bottleneck. In this case, the
 individual media rates do not reach their individual maximum rate of 2Mbps.
-Figure~\ref{fig:rrtcc-self-fair}(a) shows three calls ramp-up at about the
+Figure~\ref{fig:rrtcc-self-fair}(a) shows that the three calls ramp up at about the
 same rate, reach a peak and drop their rate simultaneously. The sending rates
 synchronize, even though the flows originate from different endpoints using
-independent WebRTC stacks.
+independent RTP stacks.
 
 Lastly, instead of the three calls starting together, each call starts at 30\,\emph{s}
 intervals. We observe that while the media rate per call on average is higher,
-the first call has a disadvantage and in all the cases, temporarily starves
-when a new flow appears and after a few minutes starts to ramp-up again.
+the first call has a disadvantage. In all the cases, the first media flow temporarily 
+starves when a new flow appears, ramping up again after a few minutes.
 Figure~\ref{fig:rrtcc-self-fair}(b) shows the instantaneous rates of each of
-the calls. The first call temporarily starves when new flows appear because
-when it starts it is the only flow on the bottleneck and does not encounter
-any queues, it observes a certain RTT and uses that as the baseline. When the
+the calls. The first call temporarily starves when new flows appear because,
+when it starts, it is the only flow on the bottleneck and does not encounter
+any queues; it observes a certain RTT and uses that as the baseline. When the
 second flow appears, the second flow already observes queues from the existing
 stream and competes with it, while the initial flow observes an increase in
 queues and reduces the sending rate to avoid congestion.
@@ -449,21 +450,21 @@ To summarize, we observe that the performance of TFRC is bursty, which may
 lead to poor user-experience, whilst TMMBR, C-NADU and RRTCC have a more
 stable throughput. Lastly, TMMBR appears to be conservative with very low
 packet loss, while RRTCC appears to be aggressive with a lot more packet loss.
-C-NADU appears to be in between the two schemes with higher throughput than
+C-NADU appears to be in between the two schemes, with higher throughput than
 TMMBR and much lower packet loss compared to RRTCC. 
 
 \section{Summary}
 
-In this chapter we describe congestion control implemented using congestion
+In this chapter, we describe congestion control implemented using congestion
 cues from in-band sources and signaled in path (in RTCP). We further
 categorize the congestion control algorithms based on \emph{where they are
 implemented}: sender-driven scheme (e.g., TFRC), receiver-driven scheme (e.g.,
 TMMBR), or co-operative scheme (combination of sender and receiver, e.g.,
-C-NADU, RRTCC) and compare the performance of an algorithm in each scheme. Our
+C-NADU, RRTCC) and compare the performance of algorithms in each scheme. Our
 initial experiments show that that C-NADU or TMMBR would be preferred, but
 requires further investigation with more complex aggregate flows (mainly short
 or bursty TCP flows).
 
-In the next chapter we discuss the interaction between the error-resilience
+In the next chapter, we discuss the interaction between the error-resilience
 algorithm and the congestion control algorithm and evaluate if FEC can be used
 as a probing mechanism by a multimedia congestion control algorithm.
