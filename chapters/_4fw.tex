@@ -9,8 +9,8 @@ RTP transmits the media data over IP using a variety of transport layer
 protocols such as UDP, TCP, and Datagram Congestion Control Protocol (DCCP).
 Consequently, congestion control for RTP-based media flows is implemented
 either in the application or the media flows are transmitted over
-congestion-controlled transport (TCP or DCCP). While using a congestion
-controlled transport may be safe for the network, it is suboptimal for the
+congestion-controlled transport (TCP or DCCP). While using a congestion-controlled 
+transport may be safe for the network, it is sub-optimal for the
 media quality unless the congestion-controlled transport is designed to carry
 media flows. Unfortunately, TCP is only suitable for interactive multimedia
 for paths with very low RTT (<100\,\emph{ms} )~\cite{Brosh:tcp-real-time}, and
@@ -18,22 +18,22 @@ DCCP packets have problems with NAT traversal~\cite{schier:DCCP} unless DCCP is
 encapsulated in UDP~\cite{RFC6773}.
 
 This motivates the need for a UDP congestion control algorithm, where the
-congestion control is implemented in-between the application and the
-underlying transport. Thereby the congestion control algorithm can take into
-account both the application's and the transport's requirements/constraints
-and make the appropriate trade-off. In this thesis, we consider congestion
+congestion control is implemented between the application and the
+underlying transport, thereby taking into
+account both the application's and the transport's requirements or constraints
+and with appropriate trade-off. In this thesis, we consider congestion
 control for unicast RTP traffic running over the best-effort IP network.
 
 % CC should not cause queuing delay. Or define low-latency operation of
 % multimedia cc.
 
 Endpoints rely on RTCP feedback from the receiver to implement congestion
-control. Hence, the congestion control should consider the following 3 aspects
+control. Hence, the congestion control should consider the following three aspects
 in its design: congestion cues to report, block size of each report or the
 overhead incurred by reporting a cue, and the frequency of these feedback
 reports. In the following subsections, we describe the interaction between the
 application and the congestion control, list common congestion cues, discuss
-the feedback reporting frequency, the classification of cues, requirements and
+the feedback reporting frequency, the classification of cues, the metrics and
 criteria to evaluate congestion control proposals, and lastly, we discuss the
 RTP circuit breaker which stops transmission permanently after observing
 prolonged congestion.
@@ -44,13 +44,14 @@ prolonged congestion.
 Any real-time communication endpoint is made up of three basic components:
 codec (encoder and decoder), transport (RTP and UDP) and the application
 preferences (user and application settings, system policies, capturing and
-rendering constraints, etc.). The codec encodes and decode a media stream, a
-typical application comes with one codec each for audio and video. It may
-implement several other media codecs so that it is capable of inter-operating
+rendering constraints, etc.). The codec encodes and decodes a media stream. A
+typical application comes with at least one codec each for audio and video. 
+The application may also implement several other media codecs so that 
+it is capable of inter-operating
 with several different types of endpoints. The transport is mainly made up of
 RTP, which packetizes and depacketizes the media and UDP to transmit the
-media. The application preferences are made up of system polices (\emph{which
-interface to use?}, \emph{which codec to prefer?}), codec settings (the
+media. The application preferences are made up of system polices (which
+interface to use? which codec to prefer?), codec settings (the
 preferred or the minimum video resolution, preferred frame rate, etc.). The
 application preferences may also depend on the outcome of the session
 establishment, in which the participating endpoints negotiate the codec and
@@ -70,7 +71,7 @@ network settings.
     }
   }
   
-  \caption{Typical architecture of a multimedia system, a) sending endpoint,
+  \caption{Typical architecture of a multimedia system. a) sending endpoint,
   b) receiving endpoint.}
   \label{fig:4:appint}
 \end{figure}
@@ -79,41 +80,41 @@ Figure~\ref{fig:4:appint} shows a simplified architecture of a sending and
 receiving endpoint; typically, a real-time multimedia application would
 contain both these systems and perhaps even two of each for handling audio and
 video separately. Figure~\ref{fig:4:appint} (a) depicts the features of the
-sending-side RTP stack. The media packetizer, receives a video frame or a
-series of audio frames from the codec, which it packetizes in to RTP.  The
-resulting RTP packets are then passed on to the Media redundancy subsystem to
+sending-side RTP stack. The \emph{media packetizer} subsystem receives a video frame or a
+series of audio frames from the codec, which it packetizes into RTP.  The
+resulting RTP packets are then passed on to the \emph{media redundancy} subsystem to
 be cached if a NACK is received or for producing FEC packets. Additionally,
 the RTP packet size and count is sent to the RTCP subsystem for creating RTCP
-SR packets. Simultaneous to passing the packet to the media redundancy
-subsystem, the RTP packets are sent to the pacing buffer or scheduler which
+SR packets. Simultaneously while passing the packet to the media redundancy
+subsystem, the RTP packets are sent to the \emph{pacing buffer or scheduler} subsystem which
 transmits the packets in a single burst or trickles them on to the network
-before the next set of RTP packets are generated by the media packetizer. The
-sending endpoint also routinely receives RTCP RR packets, which are sent to
-the RTCP Feedback  subsystem and onwards to the Rate Controller. The rate
-controller monitors the congestion cues and based on the congestion control
+before the next set of RTP packets are generated by the media packetizer or codec. The
+sending endpoint also routinely generates and receives RTCP packets. 
+The RTCP RR packets are sent to the \emph{RTCP feedback} subsystem and 
+onwards to the \emph{Rate Controller} subsystem.
+The rate controller monitors the congestion cues and based on the congestion control
 algorithm calculates the  new target encoding rate. The codec attempts to
 compress the media stream to meet the new target encoding rate in a reasonable
-timeframe. Figure~\ref{fig:4:appint} (b) depicts the features of the
-receiving-side RTP stack. The received RTP packet is put in a dejitter buffer
-to reassemble out-of-order packets, the dejitter buffer may discard late
+time frame. Figure~\ref{fig:4:appint} (b) depicts the features of the
+receiving-side RTP stack. The received RTP packet is put in a \emph{dejitter buffer}
+to reassemble out-of-order packets. The dejitter buffer may discard late
 arriving packets and it also detects packet loss. Furthermore, the packet
-sequence number,  size of the packet, RTP timestamp and the reception
-timestamp are passed to RTCP feedback subsystem, which routinely generates an
+sequence number, size of the packet, RTP timestamp and the reception
+timestamp are passed to the \emph{RTCP feedback} subsystem, which routinely generates an
 RTCP RR packet and may additionally generate requests for retransmitting
-missing RTP packets. This information is also shared with receiver-side
-measurements and metrics subsystem, which may generate additional congestion
+missing RTP packets. This information is also shared with \emph{receiver-side
+measurements and metrics} subsystem, which may generate additional congestion
 cues to be sent along with the RTCP RR as RTCP extended reports (XRs). If FEC
 packets or other types of repair packets are received, they are passed on to
-the media repair subsystem which attempts to recover the missing packets in
-the dejitter buffer. The dejitter buffer is typically small to maintain
-communication interactivity and packets are sent to the media packetizer where
+the \emph{media repair} subsystem which attempts to recover the missing packets in
+the dejitter buffer. The dejitter buffer size is typically configured to a small value to maintain
+communication interactivity, so packets are sent to the \emph{media packetizer} where
 an audio or video frame is reconstructed and sent to the decoder for playback.
 
 
 We identify three control loops to implement congestion
 control~\cite{Singh:control.loops.api} based on the interaction between the
 above components in an multimedia system~\cite{draft.rmcat.app.interaction},
-they are:
 
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
@@ -125,14 +126,14 @@ needs to take into account the timeline in which the codec produces the new
 rate.
 
 \item \textbf{\texttt{Sender-Network}}: The sender packetizes media frames and
-sends them over the network to the receiver, it may however pace the
+sends them over the network to the receiver. The sender may however pace the
 fragmented frames on to the network instead of sending them in a single
-burst.. It also collects feedback messages from the receiver that may contain
-congestion cues (i.e., variation in RTT, indication for lost or discarded
+burst. It also collects feedback messages from the receiver that may contain
+congestion cues (i.e., variation in RTT, indication of lost or discarded
 packets, goodput, jitter, etc.).
 
 \item \textbf{\texttt{Receiver-Sender}}: The receiver has a playout buffer of
-media data waiting to be decoded and rendered; discarding packets that arrive
+media data waiting to be decoded and rendered, discarding packets that arrive
 late for playout, and attempting to conceal the missing packets from the
 observer. The receiver also monitors the media flow for packet losses,
 variation in jitter, receiver rate, goodput, etc. and reports these to the
@@ -142,10 +143,10 @@ sender to act upon.
 
 If an endpoint detects congestion rapidly, and the end-to-end path latency is
 sufficiently low so that this information can be communicated quickly, it is
-possible to change the encoding rate quickly to meet the variation in the 
-end-to-end path capacity. However in practice, this not always possible because
-\textbf{a)} it may take multiple reports or data packets to detect congestion,
-\textbf{b)} after detecting congestion, it takes at least one-way delay (OWD)
+possible to change the encoding rate promptly to meet the variation in the 
+end-to-end path capacity. However, in practice, this is not always possible because
+\textbf{a)} it may take multiple reports or data packets to detect congestion, and
+\textbf{b)} after detecting congestion, it takes at least a one-way delay (OWD)
 amount of time for the receiver to report it.
 
 
@@ -155,8 +156,8 @@ amount of time for the receiver to report it.
 Congestion control algorithms rely on cues to detect congestion. These cues
 are detected either by the sender, receiver, or by an intermediary router. The
 endpoint observes the congestion along the path and accordingly adapts the
-sending rate upon receiving the congestion cues. Some common (not all)
-congestion cues are listed below:
+sending rate upon receiving the congestion cues. 
+Some common congestion cues are listed below:
 
 \begin{itemize}
 \setlength{\itemsep}{0pt}
@@ -192,14 +193,14 @@ delay. Propagation delay is calculated from the ratio of the physical length
 of the interconnected link and the propagation speed over the specific
 medium\footnote{Usually, propagation speed is a fraction of the speed of light
 ($0.5$c-$0.8$c).}. The serialization delay is the time taken to send a
-complete packet on to the communication channel (link), it is a function of
-the link rate and the packet size. Processing delay is the time taken for the
+complete packet on to the communication channel (link) and is a function of
+the link rate and the packet size. The processing delay is the time taken for the
 router to determine the next hop or the destination of the packet. Lastly,
 when multiple packets are received, the router queues them and transmits them
-one by one. Having large sized buffers in the router causes \emph{buffer-bloat}
+one by one. Having large-sized buffers in the router causes \emph{buffer-bloat}
 \cite{gettys:bufferbloat} and increases the overall one-way delay.
 However, measuring one-way delay is difficult because the clocks at the
-endpoints are normally not synchronized instead, the endpoints rely on RTT
+endpoints are normally not synchronized; instead, the endpoints rely on RTT
 measurements for congestion control.
 
 %In a multihop environment, these delays are calculated per hop.
@@ -207,9 +208,9 @@ measurements for congestion control.
 \item \textbf{\texttt{Round trip time (RTT)}}: is the time taken for a packet
 to go from the sender to the receiver and then back. In RTP, it is calculated
 with the collaboration of sending RTCP SRs and receiving RTCP RRs. In
-conversational multimedia the media flows in both directions, the one-way
+conversational multimedia, the media flows in both directions, so the one-way
 delay (OWD) is approximated as half of the measured RTT. Observing the changes
-in RTT provides an indication of congestion and by smoothing the RTT
+in RTT provides an indication of congestion and smoothing the RTT
 (averaging over a short interval) protects against over-reacting to the subtle
 changes in RTT.
 
@@ -223,10 +224,10 @@ variation in inter-arrival time may be used to infer congestion.
 
 \end{itemize}
 
-To pick the right congestion cue an algorithm developer should consider the
+To pick the right congestion cue, an algorithm developer should consider the
 following: the type of media stream (audio or video), the expected packet or
 frame rate, typical MTU size, interdependence of the streams (audio/video
-sync, multi-view video), if it knows the operating environment (Internet-scale, 
+sync, multi-view video), whether the congestion controller knows the operating environment (Internet-scale, 
 low-delay local area deployment, heterogeneous environment with a mix
 of wired and wireless links) and the application requirements (audio preferred
 over video or vice versa).
@@ -242,21 +243,21 @@ shorter interval so that the sender can react to these immediately.
 \section{Congestion Reporting Frequency}
 \label{fw.freq}
 
-Normally congestion control requires a tight control loop, which means that
+Normally, congestion control requires a tight control loop, which means that
 the receiving endpoint should be able to provide feedback at very short
-intervals (at least once per RTT). Hence, the design of congestion control
+intervals (at least once per RTT). Hence, the design of a congestion control
 algorithm needs to be aware of the limits on the timing of the feedback. For
-example in TCP, the receiver sends an \emph{acknowledgement} packet in
-response to every packet (or every few packets) it receives. Whereas, RTCP
+example, in TCP, the receiver sends an \emph{acknowledgement} packet in
+response to every packet (or every few packets) it receives, whereas RTCP
 encourages infrequent feedback and specifies an upper-bound on the fraction of
 the session media bit rate that the feedback packets can use\footnote{The
 specified feedback rate is 5\,\% for each multimedia session.}.
 \cite{draft.rmcat.feedback} discusses three options for the short report
-intervals, they are:
+intervals,
 
 \textbf{\texttt{Per-packet feedback report}}: sends RTCP feedback every time
 the endpoint receives a packet. For low bit rate media sessions (e.g., audio
-streams) this would be quite difficult to achieve because the size of the
+streams), this would be quite difficult to achieve because the size of the
 feedback packet would be comparable to the size of the media packet, i.e., the
 feedback bit rate would larger than the 5\,\% fraction specified for it. If an
 endpoint receives packets in a burst or at very short time intervals, the
@@ -270,13 +271,13 @@ where a single video frame would be fragmented into multiple packets because
 the frame size exceeds MTU size. Typically, an average size of an RTCP packet
 size in a two-party call is $156$-$176$ bytes\footnote{The packet breakdown in
 bytes is: UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or
-more XR blocks (20 each).}. For a 30 FPS bidirectional video stream, the
+more XR blocks is 20 bytes each.}. For a 30 FPS bidirectional video stream, the
 $rtcp\_bw \approx$ 75\,\emph{kbps}, which requires the media session bit rate
 be set to a value higher than 1.5\,\emph{Mbps}. Consequently, it would not be
 possible to perform per-frame for sessions with lower media rates. It should
 be noted that the requirements for the media session bit rate needs to be 
-re-calculated if the number of participants change, or the number of reported
-blocks change or the frame rate changes.
+re-calculated if the number of participants change, the number of reported
+blocks change, or the frame rate changes.
 
 \textbf{\texttt{Per-RTT feedback report}}: sends RTCP feedback at regular
 intervals based on the RTT estimate. The requirement for the media session
@@ -294,35 +295,35 @@ rates).
 
 A rate-control or congestion control algorithm relies on congestion cues to
 pick a new sending rate. These cues are either observed at the receiver or by
-a intermediaries monitoring the flow, or be aggregated by a
-3$^{rd}$-party\footnote{A system outside the signaling or media path} or a
+intermediaries monitoring the flow, or are aggregated by a
+third-party\footnote{A system outside the signaling or media path} or a
 super-peer in an overlay network. Consequently, these observed cues need to be
 signaled back to the sender which will perform congestion control. We classify
 these congestion cues as a combination of \emph{where are they
-measured/observed?}, and \emph{how is the sender notified?} For each there are
-two options; In-path and Off-path \emph{sources} and In-band and Out-of-band 
+measured/observed?}, and \emph{how is the sender notified?} For each, there are
+two options: In-path and Off-path \emph{sources} and In-band and Out-of-band 
 \emph{signaling}~\cite{Singh:PhDFw}. In-path congestion cues are measured
 by the receiver or by intermediaries along the path. Off-path congestion
 cues are reported by devices outside the media path (congestion maps,
-overlays, etc.). The combination forms four cases, they are visualized in
+overlays, etc.). The combination forms four cases which are visualized in
 Figure~\ref{fig:4:fw}.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{chap4-fig-fw-outline}
-\caption{Framework for Classifying Congestion Control~\cite{Singh:PhDFw}.}
+\caption{Framework for classifying congestion control~\cite{Singh:PhDFw}.}
 \label{fig:4:fw}
 \end{figure}
 
-A congestion control algorithm needs to pick one or more measurement points,
-where picking multiple adds to the feedback overhead and then choose a method
-to signal it to the sending endpoint. It can choose to report it in-band by
-encapsulating the cues either by piggybacking them on endpoint's own media
+A congestion control algorithm needs to pick one or more measurement point
+(picking multiple adds to the feedback overhead) and then choose a method
+to signal it to the sending endpoint. The algorithm can choose to report it in-band by
+encapsulating the cues, either by piggybacking them on the endpoint's own media
 packets as RTP header extensions (this adds to the header overhead of a media
 packet) or as RTCP extension blocks (see section~\ref{fw.freq} for details on
 feedback frequency). Or the congestion control algorithm can choose to signal
 the cues out-of-band, i.e., re-use the signaling path (e.g., SIP, XMPP) or
-setup an alternate signaling path (e.g., HTTP or websockets). Following are
-the examples for each category in the framework:
+setup an alternate signaling path (e.g., HTTP or websockets). THe following are
+examples for each category in the framework:
 
 \textbf{\texttt{A) In-path, In-band}}: The congestion control algorithm in
 this case relies on the cues reported in an RTCP feedback from the receiver.
@@ -331,19 +332,21 @@ reported by ECN markings, Temporary Maximum Media Stream Bit Rate Request
 (TMMBR), Receiver Estimated Max Bit rate (REMB).
 
 \textbf{\texttt{B) In-path, Out-of-band}}: The congestion control algorithm
-relies on the cues reported in signaling channel, for example, RTSP implements
-a \emph{Speed} parameter to vary the transmission rate, or announcing
-bandwidth in the SDP at the start of the session (instead of starting at a low
-media bit rate) for rudimentary congestion control.
+relies on the cues reported in the signaling channel; for example, RTSP implements
+a \emph{Speed} parameter to vary the transmission rate, or 3G base stations announce
+the new rate when capacity changes due to cell-loading or handover.
+
+% announcing bandwidth in the SDP at the start of the session (instead of
+% starting at a low media bit rate) for rudimentary congestion control,
 
 \textbf{\texttt{C) Off-path, In-band}}: The congestion control algorithm
-relies on reports from multiple in-band sources, for example, in Multipath
+relies on reports from multiple in-band sources; for example, in Multipath
 RTP, congestion on one path causes a change in the fractional distribution of
 traffic on each path.
 
 \textbf{\texttt{D) Off-path, Out-of-band}}: The congestion control
 algorithm relies on third party sources such as receiving bandwidth or
-congestion notifications from congestion maps, bandwidth lookup service,
+congestion notifications from congestion maps, bandwidth lookup services,
 super-peers and overlays.
 
 % monitoring: long-term, short-term
@@ -361,50 +364,49 @@ super-peers and overlays.
 \section{Congestion Control Evaluation}
 \label{fw.cc.eval}
 
-We need to define a set of requirements in order to design a congestion
-control algorithm for multimedia streams. As a second step these requirements
-are used as a checklist to evaluate the suitability of the proposed
-algorithms.
+% We need to define a set of requirements in order to design a congestion
+% control algorithm for multimedia streams. Later these requirements are used as
+% a checklist to evaluate the suitability of the proposed algorithms.
 
 Real-time interactive communication differs greatly from \emph{elastic}
 traffic because the sender generates media packets in real-time and expects it
-to be delivered in 100s of milliseconds and the receiver consumes the media
-packets almost immediately, hence late arriving packets are useless.
+to be delivered in hundreds of milliseconds, and the receiver consumes the media
+packets almost immediately, hence late-arriving packets are useless.
 Additionally, real-time communication systems are able to tolerate some amount
 of packet loss and adapt the media rate over a fairly large range.
 \cite{draft.rmcat.req} lists a set of requirements for RTP-based interactive
-multimedia sessions, these requirements form the basis of the guidelines
+multimedia sessions; these requirements form the basis of the guidelines
 described in~\cite{draft.rmcat.evaluate}. In~\cite{draft.rmcat.eval.test}, we
 define a catalog of \emph{traffic flows} traversing through a \emph{network
 topology} with varying \emph{link characteristics} and diverse \emph{queuing}
-strategies. By picking one feature from each category in the category, we
+strategies. By picking one feature from each category, we
 construct scenarios to evaluate the performance of the congestion control. The
 evaluation scenarios are built using the following components: network
 topology, link and router characteristics.
 
 The difference between testing in real-world deployments and in simulations is
-also important to consider. It mainly affects the accuracy of RTT
-measurements, impacting delay based algorithm (e.g., TFRC). Time slot driven
+also important to consider, mainly in terms of the accuracy of RTT
+measurements which impacts delay-based algorithms (e.g., TFRC). Time-slot-driven
 simulation systems, such as \emph{ns-2}~\cite{ns2}, have accurate timing that
 is not representative of real-world systems. Testbeds usually use
-dummynet~\cite{Carbone:2010p3502} or NetEm~\cite{netem} or packet traces to
+dummynet~\cite{Carbone:2010p3502}, NetEm~\cite{netem}, or packet traces to
 emulate the variation in link capacity, latency, intermediate router queue
 length, and packet losses. 
 
 It is also possible to use actual machines placed at geographically distinct
-locations and send media traffic between them, however, in this case, it is
-not possible to run a controlled experiment anymore because the varying amount
-of cross-traffic generated by other hosts in the network. This is usually the
-last step in the evaluation process, to deploy it on several (thousands of)
-endpoints and to show that the proposed congestion control behaves as
-described and does not break anything on the network (i.e., cause a congestion
+locations and send media traffic between them; however, in this case, it is
+not possible to run a controlled experiment anymore because of the varying
+amount of cross-traffic generated by other hosts in the network.  Usually the
+last step in the evaluation process involves deploying the congestion control
+algorithm on several (thousands of) endpoints and showing that it behaves as
+described without breaking anything on the network (i.e., causing a congestion
 collapse).
 
 \subsection{Network flows}
 
 In this section, we describe typical test scenarios for evaluating congestion
 control algorithms. These test scenarios are not supposed to be exhaustive
-but show the applicability range of the algorithm. The test scenarios are:
+but show the applicability range of the algorithm.
 
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
@@ -412,12 +414,12 @@ but show the applicability range of the algorithm. The test scenarios are:
 \item \textbf{\texttt{Single media flow on an end-to-end path}}: This scenario
 describes the best case, wherein the network puts each flow identified by its
 5-tuple (protocol, source and destination IP address, source and destination
-port numbers) on its own queue, thereby the flow using the proposed congestion
+port numbers) in its own queue, thus the flow using the proposed congestion
 control algorithm does not encounter any cross-traffic.
 
 \item \textbf{\texttt{Single media flow competing with multiple similar
 flows}}: In this scenario, the flow using the proposed congestion control
-algorithm competes with flows using the same congestion control algorithm
+algorithm competes with multiple flows using the same congestion control algorithm
 (i.e., all flows are interactive multimedia).
 
 
@@ -440,16 +442,16 @@ common web-traffic patterns or \emph{long} TCP flows depicting bulk transfers
 \subsection{Link characteristics}
 
 The link characteristics can be broken down into the following categories:
-capacity, latency, loss. The capacity of a link mainly varies in wireless
-networks (for example in 3G, LTE, WLAN, etc). In Wireless LAN (WLAN) networks
-it varies depending on the density of nodes using the network. The capacity in
+capacity, latency, and loss. The capacity of a link mainly varies in wireless
+networks (for example in 3G, LTE, WLAN, etc). In Wireless LAN (WLAN) networks,
+the capacity varies depending on the density of nodes using the network. The capacity in
 mobile networks (e.g., 3G, LTE) fluctuates for each user because of fading,
-interference, mobility, handover, cell loading, etc. Next, latency of a link
-is the propagation and serialization delay. Queuing delay is based on the
-queue-size of the router and hence, a router characteristic. Latencies between
-nodes typically varies from a few milliseconds to a few seconds. Commonly used
-values are: LAN (very low delay, <1\,\emph{ms} ), Low delay (<40\,\emph{ms}),
-trans-continental (>100\,\emph{ms}), or Satellite links (>500\,\emph{ms}).
+interference, mobility, handover, cell loading, etc. The latency of a link
+is measured as the propagation and serialization delay. Queuing delay is based on the
+queue size of the router and hence, is a router characteristic. Latencies between
+nodes typically vary from a few milliseconds to a few seconds. Commonly used
+values are: LAN (very low delay, <1\,\emph{ms} ), low delay (<40\,\emph{ms}),
+trans-continental (>100\,\emph{ms}), or satellite links (>500\,\emph{ms}).
 Packet losses are modeled using the Gilbert-Elliott
 Model~\cite{gilbert1960capacity, elliott1963estimates} or by packet
 traces~\cite{ellis:2011:dataset, 3gppSim}.
@@ -460,17 +462,17 @@ traces~\cite{ellis:2011:dataset, 3gppSim}.
  % Queue-size and Queue type.
 
 Apart from managing packet routing, a router also manages congestion; when a
-packet arrives at a higher rate than it can process the packet, it queues the
+packet arrives at a higher rate than it can be processed, the router queues the
 packet. The routers then use \emph{priority queuing}, \emph{fair queuing}, or
 \emph{weighted fair queuing (WFQ)}~\cite{rfc4594} to decide which traffic
 class to transmit or drop packets from during congestion. When congestion
-occurs within the same traffic class the router discards packets using
-\emph{tail drop}, \emph{Random Early Detection (RED)}~\cite{Floyd:RED} or
+occurs within the same traffic class, the router discards packets using
+\emph{tail drop}, \emph{Random Early Detection (RED)}~\cite{Floyd:RED}, or
 \emph{Weighted Random Early Detection (WRED)}.
 
 We describe the queue sizes as a function of time, i.e., it is the depth of
 the queue or the amount of time the packet will remain in the queue before it
-is discarded. However, in practice the queue size is measured in number of
+is discarded. However, in practice, the queue size is measured in number of
 packets. We convert the queue depth (measured in time) to queue length (number
 of packets, MTU is typically 1500 bytes) using:
 
@@ -480,16 +482,16 @@ of packets, MTU is typically 1500 bytes) using:
     \mathrm{Throughput}_\mathrm{bps}}{\mathrm{MTU} \times \mathrm{8}}
 \end{equation*}
 
-For example, a router with a throughput of 1Mbps and a 1s queue depth would be
-capable of handling 83 packets (queue length). For example, the 100\,\emph{ms}
-queue depth may represent a short queue, while the 10s queue depth represents
+For example, a router with a throughput of 1Mbps and a 1\,\emph{s} queue depth would be
+capable of handling 83 packets (queue length). A 100\,\emph{ms}
+queue depth may represent a short queue, while a 10\,\emph{s} queue depth represents
 a buffer-bloated queue.
 
 \subsection{Network topology}
 
 We should run different types of network topologies to evaluate the
-performance of congestion control. Depending on the amount of cross-traffic
-the bottleneck link will move from one node to another in the network. Also
+performance of congestion control. Depending on the amount of cross-traffic,
+the bottleneck link will move from one node to another in the network. Also,
 the bottleneck in each direction may be different due to the asymmetry of
 access links. Additionally, the varying capacity of the access link (e.g., in
 wireless environments) may be the bottleneck.
@@ -497,9 +499,8 @@ wireless environments) may be the bottleneck.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{chap4_fig_sim_topology}
-\caption{Typical network topology for evaluating congestion control; it
-consists of traffic flows (evaluating flow and cross traffic), links and
-routers.} 
+\caption{Typical network topology for evaluating congestion control consisting
+of traffic flows (evaluating flow and cross traffic), links and routers.}
 \label{fig:4:topology}
 \end{figure}
 
@@ -520,14 +521,14 @@ measure and analyze the performance of the multimedia system.
 \subsection{Our Evaluation Setup}
 
 Our research made use of the network simulator (\emph{ns-2})~\cite{ns2} or a
-test bed made up of real-machines. The individual link characteristics in the
+testbed made up of real-machines. The individual link characteristics in the
 testbed were either controlled by NetEm~\cite{netem} or by
 dummynet~\cite{Carbone:2010p3502}; the intermediate machines that ran
 NetEm/Dummuynet ran kernels re-compiled at 1000Hz for better performance. The
 endpoints typically ran stock Linux, such as Ubuntu 10.04 or 12.04. In some
-cases we used bandwidth and packet loss traces provided by
+cases, we used bandwidth and packet loss traces provided by
 3GPP~\cite{s4.eval.bitrate} or collected them ourselves~\cite{sharmistha-thesis}. 
-Additionally, we ran some tests between machines in Helsinki and
+Additionally, we ran some tests between machines in Helsinki and the
 Amazon data centers located in Virgina (US-EAST) and Ireland. The details of the
 individual test scenarios are discussed in detail in the associated scientific 
 papers.
@@ -541,7 +542,7 @@ the changes in the cues, by modifying the encoding/sending rate to match the
 available end-to-end bit rate. The sender's goal is to minimize losses at the
 receiver while maintaining a stable throughput. Losses are caused by
 congestion or by  bit-errors and are detrimental to video quality. Although,
-real-time communication is tolerant to small amount of losses, bursty loss
+real-time communication is tolerant to a small amount of losses, bursty loss
 should be avoided.  
 
 % Bit-errors are due to the physical properties of the network and cannot be
@@ -553,7 +554,7 @@ should be avoided.
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{chap4_fig-perf-metrics}
-\caption{Metrics for Congestion Control.}
+\caption{Metrics for congestion control.}
 \label{fig:4:rc_model}
 \end{figure}
 
@@ -581,7 +582,7 @@ discarded.
 % is more tolerant to video glitches~\cite{s4.eval.fw}.
 
 \item The \textbf{\texttt{short-term delay peak}} reflects the maximum delay
-peak encountered during a congestion control operation, this may be either
+peak encountered during a congestion control operation. This may be either
 caused by the appearance of cross-traffic on the bottleneck link or due to
 congestion resulting in self-inflicted delay.
 
@@ -601,22 +602,22 @@ arrival delay violated threshold 2.
 \end{itemize}
 
 Additionally, we measure the instantaneous and average encoder rate, receiver
-rate and goodput. The instantaneous rate is calculated at 1s intervals. The
+rate and goodput. The instantaneous rate is calculated at 1 second intervals. The
 Average Bandwidth Utilization (ABU) is the ratio between the instantaneous
 goodput (or encoding, receiving bit rate) and the instantaneous channel
-capacity at 1 second intervals. ABU larger than 100\% represents over-utilization 
+capacity at 1 second intervals. An ABU larger than 100\% represents over-utilization 
 and the duration over which it is over 100\% signifies the congestion period.
 
 
 Peak Signal-to-Noise Ratio (PSNR) is the ratio between the maximum possible
 power of a signal and the power of a noisy signal. The maximum power signal is
-presumed to be the original signal while the noisy signal is the received data
+presumed to be the original signal, while the noisy signal is the received data
 signal that has undergone the cycle of compression-transmission-decompression.
 While PSNR is the most widely used objective video quality metric, it does not
 perfectly correlate with perceived visual quality due to the non-linear
 behavior of the human visual system~\cite{itu-t-j247}. Another criticism
 against PSNR is that it does not incorporate time in its calculation. Despite
-its shortcomings we use it as a yet another indicator for measuring the
+its shortcomings, we use PSNR as a yet another indicator for measuring the
 performance of congestion control.
 
 % It has been observed that the pictorial quality perceived by the human visual
@@ -630,11 +631,11 @@ performance of congestion control.
 
 If congestion control is not implemented by multimedia applications, they can
 cause severe congestion in the network, especially if high data rate media
-traffic is sent over low capacity networks. This can not just disrupt
+traffic is sent over low-capacity networks. This can not just disrupt the
 multimedia's quality of experience but also other applications on the network.
 
 We are developing a circuit breaker algorithm that can work with unmodified
-RTP applications, and determine when these non-adaptive multimedia
+RTP applications to determine when these non-adaptive multimedia
 applications are causing excessive network congestion and force them to cease
 transmission.  We envision that the congestion control algorithms for
 multimedia standardized in the IETF will need to work inside the envelope of
@@ -649,7 +650,7 @@ during which time the congestion control algorithm is developed. Developing
 standard congestion control algorithms for unicast RTP-based interactive
 multimedia applications is expected to be a multi-year process in the IETF.
 Therefore, the development of the circuit breaker is on a tight schedule, to
-be ready for inclusion in the initial roll out of the WebRTC (Web-based 
+be ready for inclusion in the initial roll-out of the WebRTC (Web-based 
 Real-time Communication) framework~\cite{jennings:2013:webrtc} in web browsers.
 
 \subsection{Circuit Breaker Design}
@@ -663,54 +664,54 @@ congestion.
 
 The congestion indicators considered for implementing circuit breakers are: 1)
 the network \emph{round trip time} (RTT) calculated  using timing information
-in RTCP SR and RR packets, 2) \emph{jitter} estimated by the receiver over the
-last reporting interval, and 3) fractional packet loss and cumulative
-\emph{loss} reported by the receiver during the last RTCP interval. These
+in RTCP SR and RR packets, 2) the \emph{jitter} estimated by the receiver over the
+last reporting interval, and 3) \emph{fractional packet loss} and \emph{cumulative
+loss} reported by the receiver during the last RTCP interval. These
 indicators  unfortunately only provide a limited insight into the behavior of
 the network and cannot be used as strong signals for a circuit breaker.
 
 Variation in RTT is used as a congestion indicator in delay-based congestion
 control algorithms. Additionally, some algorithms use RTT estimates to
 configure connection timeouts. In RTP/RTCP, the RTT is estimated infrequently
-because the feedback intervals are rather long making it difficult to detect
+because the feedback intervals are rather long, making it difficult to detect
 the cause in variation of delay. Likewise, variation in jitter can indicate a
-transient network congestion but do not provide a strong signals to implement
+transient network congestion but does not provide a strong enough signal to implement
 a circuit breaker. On the other hand, loss is a strong indicator of congestion
-in networks where packet losses predominantly occur due to queue overflows and
-less accurate indicator where packet loss can occur due to bit-error
+in networks where packet losses predominantly occur due to queue overflows, and
+is a less accurate indicator where packet loss occurs due to bit-error
 corruption (e.g., wireless and mobile links). Therefore, we base the circuit
-breaker conditions on packet losses. They are:
+breaker conditions on packet losses. 
 
 \begin{enumerate}
 \setlength{\itemsep}{0pt}
 
-\item \textbf{\texttt{Media Timeout}}: An endpoint is sending media data but
+\item \textbf{\texttt{Media Timeout}}: An endpoint is sending media data but when
 the receiver reports a non-increasing \emph{Highest Sequence Number} (HSN) for
-two consecutive RTCP intervals the flow is terminated.
+two consecutive RTCP intervals, the flow is terminated.
 
-\item \textbf{\texttt{RTCP Timeout}}: An endpoint is sending media data but
-receives no RTCP RR for three consecutive RTCP intervals the flow is
+\item \textbf{\texttt{RTCP Timeout}}: An endpoint is sending media data but if it
+receives no RTCP RR for three consecutive RTCP intervals, the flow is
 terminated.
 
-\item \textbf{\texttt{Congestion}}: An endpoint is sending media data and
-receives RTCP RRs indicating fractional packet loss, it calculates the TCP
-friendly rate and compares it to the sending rate. If the sending rate exceeds
-the TCP friendly rate  by a factor of 10 for two consecutive RTCP intervals
+\item \textbf{\texttt{Congestion}}: An endpoint is sending media data and if it
+receives RTCP RRs indicating fractional packet loss, it calculates the TCP-friendly 
+rate and compares it to the sending rate. If the sending rate exceeds
+the TCP-friendly rate  by a factor of 10 for two consecutive RTCP intervals,
 the flow is terminated.
 
 \end{enumerate}
 
 Full details of the RTP circuit breaker algorithm is specified
 in~\cite{draft.rtp.cb}, which is a work in progress and covers various
-deployment cases such as multiple media sources, impact of shorter than
-standard reporting interval, deployment of Explicit Congestion Notification
+deployment cases such as multiple media sources, impact of shorter-than-standard 
+reporting interval, deployment of Explicit Congestion Notification
 (ECN), etc.
 
 In \citepub{c:cb}, we apply these circuit breaker conditions to non-adaptive
 RTP media flows deployed on ADSL and cable modem links.  Such flows typically
 do not implement congestion control at this time, and are likely to cause
 congestion if deployed on the Internet. We carried out a series of experiments
-based on real-world traces and on a test-bed emulating real-world conditions.
+based on real-world traces and on a testbed emulating real-world conditions.
 Our results show that the proposed RTP circuit breaker performs well,
 triggering in cases of bursty loss and in sessions that are congesting the
 links, and does not trigger in low-loss and non-bursty scenarios.
@@ -727,7 +728,7 @@ links, and does not trigger in low-loss and non-bursty scenarios.
       {chap4_graph_cb_bursty}
     }
   }
-  \caption{The plots show a sample non-bursty and bursty packet loss traces.
+  \caption{Sample non-bursty (a) and bursty (b) packet loss traces.
   The bursty packet triggers the circuit breaker even though the overall
   packet loss ratio is 0.6\,\%.}
   \label{fig:4:bursty}
@@ -744,7 +745,7 @@ links, and does not trigger in low-loss and non-bursty scenarios.
           Bursty loss  &  11.9\% &  88.1\% \\
     \bottomrule
     \end{tabular}
-    \caption{Sessions triggering circuit breaker by loss pattern.}
+    \caption{Sessions triggering the circuit breaker by loss pattern.}
     \label{tab:4:cb_bursty}
   \end{center}
 \end{table}
@@ -754,11 +755,11 @@ corresponding to the measurements collected in \emph{dataset-A} and
 \emph{dataset-B} of~\cite{ellis:2011:dataset}. Of these, $1626$ traces have no
 packet loss, and hence cannot trigger the RTP circuit breaker. The remaining
 traces each include at least one lost packet. We categorize the remaining
-traces into two categories: those that have non-bursty packet loss; and those
+traces into two categories: those that have non-bursty packet loss, and those
 that exhibit bursty loss using the definition of bursty loss
 from~\cite{rfc3611} (Figure~\ref{fig:4:bursty} shows representative samples of
 the non-bursty and bursty packet loss patterns). The data comprises $1344$
-traces with bursty loss, $863$ traces with non-bursty loss.
+traces with bursty loss and $863$ traces with non-bursty loss.
 
 
 
@@ -773,19 +774,19 @@ packet loss.
   \centerline{
     {\includegraphics[width=\textwidth]{chap4_graph_cb_cmp_trr_2s}}
   }
-  \caption{The plot shows the impact of using a shorter RTCP interval on the
-  circuit breaker. Each scenario is run 50 times and the error bars represent
+  \caption{Impact of using a shorter RTCP interval on the
+  circuit breaker. Each scenario was run 50 times and the error bars represent
   the 95\,\% confidence level.}
   \label{fig:4:short-rtcp}
 \end{figure}
 
-The circuit breaker conditions trigger mainly due to loss, Figure~\ref{fig:4:short-rtcp} 
-shows the percentage of sessions triggering the circuit breaker
+The circuit breaker conditions trigger mainly due to loss. Figure~\ref{fig:4:short-rtcp} 
+shows that the percentage of sessions triggering the circuit breaker
 increases with the increase in loss rate. The figure also shows the impact of
-the RTCP reporting interval, i.e., by reducing the RTCP interval from 5s to
-2.5s, fewer sessions are terminated. The endpoints become robust to loss of
-feedback packets by sending feedback often and we observe a longer time to
-trigger the circuit breaker ($t_{CB}$).
+the RTCP reporting interval, i.e., by reducing the RTCP interval from 5\,\emph{s} to
+2.5\,\emph{s}, fewer sessions are terminated. The endpoints become robust to loss of
+feedback packets by sending feedback often and we observe a longer time for
+triggering the circuit breaker ($t_{CB}$).
 
 \subsection{Discussion about TCP throughput equations}
 
@@ -796,7 +797,7 @@ equation~\cite{padhye1998modeling} or using Mathis's simplified TCP throughput
 equation~\cite{mathis1997macroscopic}.
 
 In~\cite{padhye1998modeling}, Padhye \emph{et al.} show that the TCP
-throughput For a long-lived TCP Reno connection can be estimated using the
+throughput for a long-lived TCP Reno connection can be estimated using the
 following equation:
 \begin{align*}
 X_{kbps} = &\frac{8 \times s}{R \times \sqrt{\frac{2*b*p}{3}}+t_{RTO} \times (3 \times \sqrt{\frac{3*b*p}{8}})\times p \times (1+32 \times p^2)}\\
@@ -823,20 +824,20 @@ Padhye's full equation with reasonable accuracy~\cite{mathis1997macroscopic} .
 
 In \citepub{c:cb}, our experiments on residential networks shows that the
 simplified TCP throughput equation performs effectively, while using Padhye's
-full TCP equation triggers the circuit breaker earlier. The data shows that
+full TCP equation triggers the circuit breaker earlier. The data show that
 the full TCP equation tends to be more sensitive to packet loss. In LTE
-networks where the combination of a low RTT and high packet loss rate (due to
-AQM) causes the circuit breaker using the simplified TCP throughput equation
-not to trigger~\cite{Sarker:CB.lte}. However, using the Padhye's full TCP
+networks with a combination of a low RTT and high packet loss rate (due to
+AQM), the circuit breaker using the simplified TCP throughput equation
+does not trigger at all~\cite{Sarker:CB.lte}. However, using the Padhye's full TCP
 throughput equation in these cases gives better
 performance~\cite{Sarker:CB.lte}. We believe some of this over-sensitivity is
 due to averaging packet loss events over long RTCP reporting intervals and the
 fact that the RTT is estimated only once in that interval.
 
-Overall, our preliminary results derived from experiments in a test-bed
-emulating the real-world and simulations based on real-world traces show that
+Overall, our preliminary results derived from experiments in a testbed,
+and simulations based on real-world traces show that
 the proposed RTP circuit breaker performs as intended, triggering in the case
-of bursty  packet loss and does not trigger in the low-loss and non-bursty
+of bursty  packet loss and  not triggering in the low-loss and non-bursty
 scenarios. 
 
 % The current analysis is based on measurements done in the UK and
@@ -848,7 +849,7 @@ scenarios.
 
 \section{Summary}
 
-In this chapter we aimed to classify congestion control cues for real-time
+In this chapter, we aimed to classify congestion control cues for real-time
 communication based on: \emph{where they are measured?} (by in-path or  off-
 path sources) and \emph{how they are reported?} (via in-band or out-of-band
 signaling). We also describe other fundamental choices needed to implement
@@ -864,8 +865,8 @@ that it works as intended, i.e., it provides enough time for a congestion
 control algorithm to respond to congestion cues before triggering the circuit
 breaker. We also show that the endpoint can slightly vary the sensitivity of
 the circuit breaker by choosing between the full and simplified TCP throughput
-equation. In the forthcoming chapters we discuss our proposals for congestion
-control in various environments, several of these work within the constraints
+equation. In the forthcoming chapters, we discuss our proposals for congestion
+control in various environments, several of which work within the constraints
 imposed by the circuit breaker algorithm.
 
 
