@@ -153,7 +153,7 @@ rules that take the constraints applied by the multimedia application. We do
 not use B-frames and do not discard any packets at the sender. Furthermore, we
 try to maintain optimal playout by choosing paths that meet the latency
 constraints (<500\,\emph{ms}) and try to maintain a very short de-jitter
-buffer (100s of \emph{ms}), so that the scheduling algorithm can be extended
+buffer (hundreds of \emph{ms}), so that the scheduling algorithm can be extended
 to include interactive applications.
 
 \subsection{Multipath Scheduling and Adaptive Playout}
@@ -225,7 +225,7 @@ calculation~\cite{Fober05,Colin03}: $Playout_{delay} = \frac{MAX([SW]) + 124
 
 Depending on the fractional traffic distribution and RTT per path, our
 experiments show that our proposed method performs better in adapting the
-playout quickly. It takes some 3s to adapt the playout while the one
+playout quickly. It takes some 3\,\emph{s} to adapt the playout while the one
 implemented in~\cite{Fober05,Colin03} takes $15$-$20$s. Also our algorithm
 converges more quickly than the receiver can report the RTT to the sender, the
 typical RTCP interval is $5\pm2.5$s.

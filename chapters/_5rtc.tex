@@ -259,7 +259,7 @@ C-NADU & 92 & 2.2\% & 31.9 \\%
 \hline
 \end{tabular}
 }
-\caption{Comparing TFRC, TMMBR, C-NADU for calls over mobile nodes (180s
+\caption{Comparing TFRC, TMMBR, C-NADU for calls over mobile nodes (180\,\emph{s}
 simulations using 3G traces).}
 \label{table:3grc}
 \end{table}
@@ -399,13 +399,13 @@ that even though the link has high loss rate, the residual loss rate is low
     {chap5-graph-rrtcc-three-calls-sync}}
   }
   \centerline{
-  \subfloat[Start 30s apart]
+  \subfloat[Start 30\,\emph{s} apart]
     {\includegraphics[width=0.8\textwidth]
     {chap5-graph-rrtcc-three-calls-async}}
   }
    \caption{The plots show the variation in receiver rate of three RRTCC
-   flows, a) starting together, b) starting 30s apart. The total duration of
-   the call is 5 mins (300s).}
+   flows, a) starting together, b) starting 30\,\emph{s} apart. The total duration of
+   the call is 5 mins (300\,\emph{s}).}
 \label{fig:rrtcc-self-fair}
 \end{figure}
 
@@ -432,7 +432,7 @@ same rate, reach a peak and drop their rate simultaneously. The sending rates
 synchronize, even though the flows originate from different endpoints using
 independent WebRTC stacks.
 
-Lastly, instead of the three calls starting together, each call starts at 30s
+Lastly, instead of the three calls starting together, each call starts at 30\,\emph{s}
 intervals. We observe that while the media rate per call on average is higher,
 the first call has a disadvantage and in all the cases, temporarily starves
 when a new flow appears and after a few minutes starts to ramp-up again.
