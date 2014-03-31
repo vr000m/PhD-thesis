@@ -45,7 +45,7 @@
 
 \usepackage[footnote,draft,silent,nomargin]{fixme} %added FIXME!
 
-\usepackage{multirow}		% for multirows
+\usepackage{multirow}   % for multirows
 \usepackage{rotating}
 
 \usepackage{setspace} 
@@ -83,7 +83,53 @@
 %% The abstract of the dissertation in English
 % Use this command!
 \draftabstract{
-TBD
+
+The deployment of WebRTC and telepresence systems is going to start wide-scale
+adoption of high quality real-time communication. To deliver high quality
+video not only corresponds to an increase in required network capacity, but
+also assurance of network stability. A real-time multimedia application that
+uses the Real-time Transport Protocol (RTP) over UDP needs to implement
+congestion control since UDP does not implement any congestion control. This
+thesis is about enabling congestion control for real-time communication and
+deploying it on the public Internet containing a mixture of wired and wireless
+links.
+
+A congestion control algorithm relies on congestion cues, such as RTT and
+loss. Hence, in this thesis, we first propose a framework for classifying
+congestion cues. We classify the congestion cues as a combination of: where
+they are measured or observed? And, how is the sending endpoint notified?  For
+each there are two options, i.e., the cues are either observed and reported by
+an in-path or by an off-path source, and, the cue is either reported in-band
+or out-of-band, which results in four combinations. Hence, the framework
+provides options to look at congestion cues beyond those reported by the
+receiver.
+
+We propose a sender-driven, a receiver-driven and an hybrid congestion control
+algorithm. The hybrid algorithm relies on both the sender and receiver co-
+operating to perform congestion control. Lastly, we compare the performance of
+these different algorithms. We also explore the idea of using capacity
+notifications from middleboxes (e.g., 3G/LTE base stations) along the path as
+cues for a congestion control algorithm. Further, we look at the interaction
+between error-resilience mechanisms and show that FEC can be used in a
+congestion control algorithm for probing for additional capacity.
+
+We propose Multipath RTP (MPRTP) an extension to RTP, which uses multiple
+paths for either aggregating capacity or for increasing error-resilience.  We
+show that our proposed scheduling algorithm works in diverse scenarios (e.g.,
+3G and WLAN, 3G and 3G, etc.) with paths with varying latencies.
+
+Lastly, we propose a network coverage map service (NCMS), which aggregates
+throughput measurements from mobile users consuming multimedia services. The
+NCMS sends notifications to its subscribers about the upcoming network
+conditions, which take these notifications into account when performing
+congestion control.
+
+In order to test and refine the ideas presented in this thesis, we have
+implemented most of them in proof-of-concept prototypes, and conducted
+experiments and simulations to validate our assumptions and gain new insights.
+
+
+
 }
 % Let's add another one in Finnish
 %\draftabstract[finnish]{\lipsum[4-6]}
@@ -104,8 +150,6 @@ for encouraging me to pursue the interaction of multimedia and congestion
 control in more detail. He is an outstanding guide, his timely interactions
 kept spirits high when faced with disappointments and for his patience to stay
 the course. An equal measure of gratitude is due to all my co-authors. 
-
-[TBD]
 
 % First, Igor Curcio of Nokia Research Center for introducing me to the
 % challenges faced by multimedia on mobile devies. 
