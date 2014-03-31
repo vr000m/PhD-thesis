@@ -85,11 +85,11 @@
 \draftabstract{
 
 The deployment of WebRTC and telepresence systems is going to start wide-scale
-adoption of high quality real-time communication. To deliver high quality
-video not only corresponds to an increase in required network capacity, but
-also assurance of network stability. A real-time multimedia application that
-uses the Real-time Transport Protocol (RTP) over UDP needs to implement
-congestion control since UDP does not implement any congestion control. This
+adoption of high quality real-time communication. Delivering high quality
+video usually corresponds to an increase in required network capacity and also
+requires an assurance of network stability. A real-time multimedia application
+that uses the Real-time Transport Protocol (RTP) over UDP needs to implement
+congestion control since UDP does not implement any such mechanism. This
 thesis is about enabling congestion control for real-time communication and
 deploying it on the public Internet containing a mixture of wired and wireless
 links.
@@ -104,7 +104,7 @@ or out-of-band, which results in four combinations. Hence, the framework
 provides options to look at congestion cues beyond those reported by the
 receiver.
 
-We propose a sender-driven, a receiver-driven and an hybrid congestion control
+We propose a sender-driven, a receiver-driven and a hybrid congestion control
 algorithm. The hybrid algorithm relies on both the sender and receiver co-
 operating to perform congestion control. Lastly, we compare the performance of
 these different algorithms. We also explore the idea of using capacity
@@ -127,7 +127,6 @@ congestion control.
 In order to test and refine the ideas presented in this thesis, we have
 implemented most of them in proof-of-concept prototypes, and conducted
 experiments and simulations to validate our assumptions and gain new insights.
-
 
 
 }
