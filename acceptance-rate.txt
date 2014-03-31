@@ -1,7 +1,0 @@
-Acceptance Rate
-ISM	'08		24%
-MoViD '09	33%
-WoWMoM '12	145	32  22%
-PacketVideo '13	22	66	33%
-MMSys '13	63	15	24%
-MMSys '14	59	15	25%
