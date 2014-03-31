@@ -52,3 +52,5 @@ dissertation.info
 dissertation.fonts
 *.sublime-*
 jo-*.pdf
+acceptance-rate.*
+school/*
