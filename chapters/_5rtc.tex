@@ -129,7 +129,7 @@ al.}~\cite{rmcat-nada} use Pre-Congestion Notification (PCN), Explicit
 Congestion Notification (ECN) and loss rate to get an accurate delay
 estimate for implementing congestion control. In this case, they assume all
 packets marked by ECN and PCN as lost. Their algorithm as specified now, 
-relies on accurate measurement of one-way delay relying on clock synchrinization.
+relies on accurate measurement of one-way delay relying on clock synchronization.
 Instead of just relying on RTT and loss for congestion control, 
 Garudadri~\textit{et al.}~\cite{4397059} also use the
 receiver playout buffer to detect the link utilization, i.e., the variation in the 
@@ -154,7 +154,7 @@ inter-arrival time of RTP packets (\emph{video frames}). When the inter-arrival 
 of the video frames increases beyond the expected arrival time in an observed
 period, the receiver senses \emph{over utilization}. When the frames arrive early, the
 receiver senses \emph{under utilization}. The receiver ignores the congestion event 
-if it occur on short timescales abd when receiving I-frames. 
+if it occur on short timescales and when receiving I-frames. 
 The I-frames are large frames because they are spatially compressed and
 are not temporally correlated to previous frames. Hence, these I-frames are
 expected to cause queuing delay. The receiver, on detecting link over
@@ -274,7 +274,7 @@ algorithm. The detailed analysis can be found in the respective papers.
 Our results in \citepub{c:3grc} show that TFRC produces a sawtooth sending
 rate, similar to the performance in~\cite{saurin:2006:thesis}. When the media
 stream is the only flow on the end-to-end path, we also observe that the average
-bandwidth utilization (ABU) is between 30-40\,\%, i.e., TFRC underutilizes the
+bandwidth utilization (ABU) is between 30-40\,\%, i.e., TFRC under utilizes the
 link and the loss ratio is about 6\,\%, which results in a lower media quality
 (approximated by measuring PSNR) compared with the other two schemes (see
 Table~\ref{table:3grc}). TMMBR-based congestion control utilizes the link

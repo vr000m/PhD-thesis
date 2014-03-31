@@ -86,7 +86,7 @@ estimate and the receiver's bit rate request.
 Figure~\ref{fig:tmmbn} shows the sample performance of TMMBR-A and TMMBR-B,
 where both endpoints are sending media over a 3G network. TMMBR-A, due to its
 knowledge about the network conditions at the uplink and the downlink, provides
-an average througput of 180\,\emph{Kbps} and 0\,\% loss, while TMMBR-B provides a
+an average throughput of 180\,\emph{Kbps} and 0\,\% loss, while TMMBR-B provides a
 comparable throughput of 178\,\emph{Kbps} but with a 2\,\% loss ratio.
 
 % Eventhough modern 3G/LTE networks are capable of providing these updates, they
@@ -302,7 +302,7 @@ sender will be able to vary the sending rate preemptively without probing.
 We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and  pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality. This system wprks for video streaming and can be adapted for
+quality. This system works for video streaming and can be adapted for
 interactive media communication, wherein the sender employs a co-operative
 congestion control scheme, i.e., the sender receives the \emph{estimated
 capacity vector} from the receiver and \emph{coverage map information} for
@@ -317,7 +317,7 @@ out-of-band signaling, but use in-path and off-path sources, respectively. First
 the in-path sources is based on receiving congestion cues from middleboxes
 (e.g., 3G or LTE base-stations) and uses standard RTP extensions (e.g., TMMBR)
 for signaling. Second, the off-path source is a crowd-sourced 3G coverage
-map that collects throughput and geo-location information from users and then
+map that collects throughput and geolocation information from users and then
 notifies the subscribed endpoints about the available capacity in their
 respective neighborhoods. We propose a system to collect and query coverage
 maps. The endpoints query the coverage server using out-of-band signaling to
@@ -350,4 +350,4 @@ drops, it would stay there unless the endpoints probe for additional capacity.
 While we show that NCMS can be used for streaming both the live and stored
 multimedia content, it can be adapted to work with interactive media services.
 However, we believe that the NCMS notifications would perform best when
-working alongside an exisiting congestion control algorithm.
+working alongside an existing congestion control algorithm.

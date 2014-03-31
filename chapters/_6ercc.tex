@@ -7,7 +7,7 @@ error-resilience and congestion control.
 In \citepub{c:err}, we evaluate the performance of the various
 error-resilience schemes available for use in interactive multimedia
 communication (mainly applicable to H.264). These are: using Negative
-Acknowledgement (NACK) or Packet Loss Indication (PLI), Forward Error
+Acknowledgment (NACK) or Packet Loss Indication (PLI), Forward Error
 Correction (FEC) or Unequal Level of Protection (ULP), adaptive slice sizes,
 and Reference Pictures Selection Indication (RPSI). We evaluate the
 performance of the proposed mechanisms in diverse scenarios in a simulated
@@ -333,9 +333,9 @@ Table~\ref{table:fecrc-var-res}). Figures~\ref{fig:fecrc-var}(a)--(b) show
 that the FBRA can quite quickly bounce-back after undershooting. The figure
 also shows that the FEC probing rate increases when the FBRA ramps up and the
 FEC rate is low or disabled when the FBRA undershoots. However, FBRA is
-primarily a delay-based control algorithm, and for the 240\emph{ms} bottleneck
+primarily a delay-based control algorithm, and for the 240\,\emph{ms} bottleneck
 delay, it observes that the packets are arriving very close to the 
-application-defined maximum delay ($\approx$400ms) and is therefore, conservative in its
+application-defined maximum delay ($\approx$400\,ms) and is therefore, conservative in its
 probing for available bandwidth (this is observed by the low FEC rate in
 Figure~\ref{fig:fecrc-var}(c)). The FEC rate is about 10\,\% of the media rate at
 about 15-20\,\emph{Kbps} and the packet loss recovery is around 30\,\%.

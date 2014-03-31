@@ -247,7 +247,7 @@ Normally, congestion control requires a tight control loop, which means that
 the receiving endpoint should be able to provide feedback at very short
 intervals (at least once per RTT). Hence, the design of a congestion control
 algorithm needs to be aware of the limits on the timing of the feedback. For
-example, in TCP, the receiver sends an \emph{acknowledgement} packet in
+example, in TCP, the receiver sends an \emph{acknowledgment} packet in
 response to every packet (or every few packets) it receives, whereas RTCP
 encourages infrequent feedback and specifies an upper-bound on the fraction of
 the session media bit rate that the feedback packets can use\footnote{The
