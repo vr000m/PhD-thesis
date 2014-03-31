@@ -605,8 +605,8 @@ Additionally, we measure the instantaneous and average encoder rate, receiver
 rate and goodput. The instantaneous rate is calculated at 1 second intervals. The
 Average Bandwidth Utilization (ABU) is the ratio between the instantaneous
 goodput (or encoding, receiving bit rate) and the instantaneous channel
-capacity at 1 second intervals. An ABU larger than 100\% represents over-utilization 
-and the duration over which it is over 100\% signifies the congestion period.
+capacity at 1 second intervals. An ABU larger than 100\,\% represents over-utilization 
+and the duration over which it is over 100\,\% signifies the congestion period.
 
 
 Peak Signal-to-Noise Ratio (PSNR) is the ratio between the maximum possible
@@ -740,9 +740,9 @@ links, and does not trigger in low-loss and non-bursty scenarios.
     \toprule
       \textbf{Loss Pattern}   & \textbf{Triggered} & \textbf{Did not trigger} \\
     \midrule
-             Loss free &   0.0\% & 100.0\% \\
-       Non-bursty loss &   0.0\% & 100.0\% \\
-          Bursty loss  &  11.9\% &  88.1\% \\
+             Loss free &   0.0\,\% & 100.0\,\% \\
+       Non-bursty loss &   0.0\,\% & 100.0\,\% \\
+          Bursty loss  &  11.9\,\% &  88.1\,\% \\
     \bottomrule
     \end{tabular}
     \caption{Sessions triggering the circuit breaker by loss pattern.}
