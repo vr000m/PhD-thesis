@@ -84,20 +84,20 @@
 % Use this command!
 \draftabstract{
 
-The deployment of WebRTC and telepresence systems is going to start wide-scale
-adoption of high quality real-time communication. Delivering high quality
-video usually corresponds to an increase in required network capacity and also
-requires an assurance of network stability. A real-time multimedia application
-that uses the Real-time Transport Protocol (RTP) over UDP needs to implement
-congestion control since UDP does not implement any such mechanism. This
-thesis is about enabling congestion control for real-time communication and
-deploying it on the public Internet containing a mixture of wired and wireless
-links.
+The deployment of WebRTC and telepresence systems is going to start a wide-
+scale adoption of high quality real-time communication. Delivering high
+quality video usually corresponds to an increase in required network capacity
+and also requires an assurance of network stability. A real-time multimedia
+application that uses the Real-time Transport Protocol (RTP) over UDP needs to
+implement congestion control since UDP does not implement any such mechanism.
+This thesis is about enabling congestion control for real-time communication,
+and deploying it on the public Internet containing a mixture of wired and
+wireless links.
 
 A congestion control algorithm relies on congestion cues, such as RTT and
 loss. Hence, in this thesis, we first propose a framework for classifying
 congestion cues. We classify the congestion cues as a combination of: where
-they are measured or observed? And, how is the sending endpoint notified?  For
+they are measured or observed? And, how is the sending endpoint notified? For
 each there are two options, i.e., the cues are either observed and reported by
 an in-path or by an off-path source, and, the cue is either reported in-band
 or out-of-band, which results in four combinations. Hence, the framework
@@ -113,8 +113,8 @@ cues for a congestion control algorithm. Further, we look at the interaction
 between error-resilience mechanisms and show that FEC can be used in a
 congestion control algorithm for probing for additional capacity.
 
-We propose Multipath RTP (MPRTP) an extension to RTP, which uses multiple
-paths for either aggregating capacity or for increasing error-resilience.  We
+We propose Multipath RTP (MPRTP), an extension to RTP, which uses multiple
+paths for either aggregating capacity or for increasing error-resilience. We
 show that our proposed scheduling algorithm works in diverse scenarios (e.g.,
 3G and WLAN, 3G and 3G, etc.) with paths with varying latencies.
 
@@ -127,7 +127,7 @@ congestion control.
 In order to test and refine the ideas presented in this thesis, we have
 implemented most of them in proof-of-concept prototypes, and conducted
 experiments and simulations to validate our assumptions and gain new insights.
-
+ 
 
 }
 % Let's add another one in Finnish
