@@ -190,6 +190,9 @@ the course. An equal measure of gratitude is due to all my co-authors.
 \chapter*{List of Abbreviations}
 \input{./chapters/_0lists}
 
+\chapter*{List of Symbols}
+\input{./chapters/_0symbols}
+
 %% The main matter, one can obviously use \input or \include
 \chapter{Introduction}
 \label{chap1}
@@ -238,13 +241,24 @@ the course. An equal measure of gratitude is due to all my co-authors.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%\bibliographystyle{IEEEtran} %plain, amsalpha
+
+\bibliographystyle{plain}
+
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../allpapers}
+
+\bibliography{bib/diss,bib/rfc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% The first publication (journal article)
 % Set the publication information.
 % This command musts to be the first!
 
 \addpublication[conference]{V. Singh, S. McQuistin, M. Ellis, C.
 Perkins}{Circuit Breakers for Multimedia Congestion Control}{IEEE Packet
-Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:cb}
+Video}{San Jose, USA}{Dec}{2013, Pages 1--8}{IEEE}{c:cb}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -260,7 +274,7 @@ scenario and analyzing the results.}
 % Add the publication pdf file, the filename is the parameter (must be the
 % last).
 
-% \addpublicationpdf{add/9_cb.pdf}
+\addpublicationpdf{add/9_cb.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -269,7 +283,7 @@ scenario and analyzing the results.}
 
 \addpublication[conference]{V.Singh, J. Ott, I. D. D. Curcio}{Rate adaptation
 for 3G Conversational Video}{IEEE Infocom Workshops}{Rio de Janeiro,
-Brazil}{04}{2009}{IEEE}{c:3grc}
+Brazil}{Apr}{2009, Pages 1--7}{IEEE}{c:3grc}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -278,7 +292,7 @@ paper~\cite{Singh:3gRC}. He equally contributed to the ideas and concepts
 discussed in the paper, and also implemented the algorithm and the overall
 system, conducted the experiments and analyzed the results.}
 
-% \addpublicationpdf{add/2_3g_ra.pdf}
+\addpublicationpdf{add/2_3g_ra.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -289,7 +303,7 @@ system, conducted the experiments and analyzed the results.}
 \addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Rate Adaption
 for Conversational Video in Heterogeneous Environments}{IEEE World of
 Wireless, Mobile and Multimedia (WoWMoM)}{San Francisco,
-USA}{06}{2012}{IEEE}{c:hetrc}
+USA}{Jun}{2012, Pages 1--7}{IEEE}{c:hetrc}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -298,13 +312,13 @@ paper~\cite{Singh:HetRC}. He equally contributed to the ideas and concepts
 discussed in the paper, and also implemented the algorithm and the overall
 system, conducted the experiments and analyzed the results.}
 
-% \addpublicationpdf{add/3_het_ra.pdf}
+\addpublicationpdf{add/3_het_ra.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addpublication[conference]{V. Singh, A. A. Lozano, J. Ott}{Performance
 Analysis of Receive-Side Real-Time Congestion Control for WebRTC}{IEEE Packet
-Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:eval}
+Video}{San Jose, USA}{Dec}{2013, Pages 1--8}{IEEE}{c:eval}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -312,13 +326,13 @@ Video}{San Jose, USA}{Dec}{2013}{IEEE}{c:eval}
 paper~\cite{Singh:rrtcc.eval}. His contribution consisted of designing the
 experiments and analyzing the results discussed in the paper.}
 
-% \addpublicationpdf{add/10_rrtcc.pdf}
+\addpublicationpdf{add/10_rrtcc.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addpublication[conference]{Devadoss J., Singh V., Liu C., Ott J., Wang Y-K.,
 Curcio I.}{Evaluation of Error Resilience Mechanisms for 3G Conversational
-Video}{IEEE ISM}{Berkley, USA}{Dec}{2008}{IEEE}{c:err}
+Video}{IEEE ISM}{Berkley, USA}{Dec}{2008, Pages 378--383}{IEEE}{c:err}
 
 % Add the dissertation author's contribution to that publication (the order
 % can be interchanged with \adderrata).
@@ -329,13 +343,13 @@ of the 4 ideas (NACK, Slice-size adaptation) discussed in the paper,
 implementing the corresponding algorithms, conducting the  experiments and 
 co-editing the paper.}
 
-% \addpublicationpdf{add/1_3g_er.pdf}
+\addpublicationpdf{add/1_3g_er.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addpublication[submitted]{M. Nagy, V. Singh, J. Ott, L. Eggert}{Rate-control
 using FEC for Interactive Multimedia Communication}{ACM Multimedia Systems (MMSys)}
-{Singapore,Singapore}{03}{2014}{ACM}{c:fecrc}
+{Singapore, Singapore}{March}{2014, Pages 191--202}{ACM}{c:fecrc}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -345,13 +359,13 @@ main idea and concept for the paper with the lead author, designing the
 experiments, implementing the comparative algorithms and providing the
 corresponding results, and co-editing the paper.}
 
-% \addpublicationpdf{add/6_fec_ra.pdf}
+\addpublicationpdf{add/6_fec_ra.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addpublication[conference]{V. Singh, S. Ahsan, J. Ott}{MPRTP: Multipath
 Considerations for Real-time Media}{ACM Multimedia Systems (MMSys)}{Oslo,
-Norway}{02}{2013}{ACM}{c:mprtp}
+Norway}{Feb}{2013, Pages 190--201}{ACM}{c:mprtp}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -361,7 +375,7 @@ idea for the paper, providing the configurations for the experiments,
 performing the statistical analysis, and acting as the main editor of the
 paper.}
 
-% \addpublicationpdf{add/5_mprtp.pdf}
+\addpublicationpdf{add/5_mprtp.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -372,7 +386,7 @@ paper.}
 
 \addpublication[conference]{V. Singh, J. Ott, I. D. D. Curcio}{Predictive
 Buffering for Streaming Video in 3G Networks}{IEEE World of Wireless, Mobile
-and Multimedia (WoWMoM)}{San Francisco, USA}{06}{2012}{IEEE}{c:glass}
+and Multimedia (WoWMoM)}{San Francisco, USA}{Jun}{2012, Pages 1--10}{IEEE}{c:glass}
 
 % Add the dissertation author's contribution to that publication.
 
@@ -381,17 +395,6 @@ paper~\cite{Singh:Glass}. He equally contributed to the ideas and concepts
 discussed in the paper, and also implemented the algorithm and the overall
 system, conducted the experiments and analyzed the results.}
 
-% \addpublicationpdf{add/4_glass.pdf}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\bibliographystyle{IEEEtran} %plain, amsalpha
-
-\bibliographystyle{plain}
-
-% argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../allpapers}
-
-\bibliography{bib/diss,bib/rfc}
+\addpublicationpdf{add/4_glass.pdf}
 
 \end{document}
