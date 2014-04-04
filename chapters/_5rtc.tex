@@ -102,11 +102,11 @@ Formally, the sending rate in TFRC is calculated as follows:
 
 \begin{align*}
  TFRC = &\; \frac{8 \times avg\_packet\_size}
-{RTT \times \sqrt[]{\frac{2 \times b \times p}{3}} + t_{RTP} \times 
+{R \times \sqrt[]{\frac{2 \times b \times p}{3}} + t_{RTO} \times 
 \left( 3 \times \sqrt[]{\frac{3 \times b \times p}{8}}\right) \times p \times
 \left( 1+32 \times p^2 \right)}\\
 where,\; b = &\; 1\\
-t_{RTO} = &\; 4 \times RTT
+t_{RTO} = &\; 4 \times R
 \end{align*}
 
 TFRC cannot directly be applied to RTP because TFRC requires per-packet
