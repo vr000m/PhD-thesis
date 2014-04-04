@@ -81,11 +81,11 @@ following gains can be achieved:
 
 \item \textbf{\texttt{Higher quality}}: Pooling the resource capacity of
 multiple Internet paths allows higher bit-rate and higher quality codecs to be
-used. From the application perspective, the available bandwidth between the
+used. From the application perspective, the overall available capacity between the
 two endpoints increases.
 
 \item \textbf{\texttt{Load balancing}}: Transmitting an RTP stream over
-multiple paths reduces the bandwidth usage on a single path, which in turn
+multiple paths reduces the capacity usage on a single path, which in turn
 reduces the impact of the media stream on other traffic on that path. Also,
 seamlessly offloading a flow from one path to another allows for some gains
 such as reduced energy consumption, reduced access costs, or reduced
@@ -131,7 +131,7 @@ transmitting redundant voice traffic over multiple paths performs better than
 an FEC-protected single stream. Chesterfield \emph{et al.}~\cite{1498479}
 show that sending media over one 3G interface and UEP packets over a separate 
 3G interface can compensate for losses on the first path. 
-Chebrolu \emph{et al.}~\cite{1599407} propose bandwidth aggregation for
+Chebrolu \emph{et al.}~\cite{1599407} propose capacity aggregation for
 multimedia applications by computing the earliest delivery time for each
 packet. They further propose to drop less important frames (e.g., B-frames) if
 the available capacity is smaller than the current encoding
@@ -174,13 +174,14 @@ path reports only losses and no discards in successive intervals, it is
 considered \emph{lossy}. A path without losses or discards is considered
 \emph{non-congested}.
 
-A multipath sender chooses the paths that meet the capacity and latency
-requirements. Next, it groups the paths based on the path latencies--bandwidth
+A multipath sender chooses the paths that meet the media rate and latency
+requirements. Next, it groups the paths based on the path latencies--capacity
 is additive for paths with similar latencies~\cite{Wischik:2008:RPP}.
 Subsequently, it sorts the path groups in decreasing order of
-$\frac{bandwidth}{latency}$, so that groups with high bandwidth and low delay
-are preferred. The endpoint chooses the set of paths from the groups that meet
-the capacity requirements and marks these paths as \emph{`active'}; the rest
+$\frac{capacity}{latency}$, so that groups of paths with high capacity 
+and low latency are preferred. 
+The endpoint chooses the set of paths from the groups that meet
+the encoded media's requirements and marks these paths as \emph{`active'}; the rest
 are marked \emph{`passive'}. The \emph{`passive'} paths are used when the
 chosen paths begin to fail. Depending on the amount of packet loss (due
 to bit-errors), it may affect the quality of experience. Therefore, an MPRTP
@@ -191,11 +192,11 @@ observes the following rules:
 \setlength{\itemsep}{0pt}
 
   \item If the next scheduled frame is an I-frame then the corresponding RTP
-  packets are assigned to the path with the highest $\frac{bandwidth}{delay}$,
-  bandwidth and lowest loss rate.
+  packets are assigned to the path with the highest $\frac{capacity}{latency}$,
+  path capacity and lowest loss rate.
 
   \item On receiving a NACK, transmit the requested packet on the path with
-  the highest $\frac{bandwidth}{delay}$, least RTT and lowest loss rate.
+  the highest $\frac{capacity}{latency}$, least RTT and lowest loss rate.
 
   \item The \emph{mildly congested} and \emph{congested} paths get a smaller
   fractional distribution, in an attempt to reduce congestion on those paths.
@@ -216,12 +217,12 @@ chose a relatively small window size to prevent the receiver from under-flowing
 by changing the playout very late. Every time the endpoint receives a packet
 on a path, it calculates the drift and inserts it into the window. The
 receiver then sorts the window and chooses the median ($\widetilde{DW}$) value
-for calculating the path skew: $Path\ Skew = 0.01 \times \widetilde{DW} + 0.99
-\times PathSkew_{prev}$. 
+for calculating the path skew: $Path\,Skew_{now} = 0.01 \times \widetilde{DW} + 0.99
+\times Path\,Skew_{prev}$. 
 
 The path skew values are fed into the regular playout delay
-calculation~\cite{Fober05,Colin03}: $Playout_{delay} = \frac{MAX([SW]) + 124
-\times Playout_{prev}}{125}$.
+calculation~\cite{Fober05,Colin03}: $Playout\,Delay_{now} = \frac{MAX([SW]) + 124
+\times Playout\,Delay_{prev}}{125}$.
 
 Depending on the fractional traffic distribution and RTT per path, our
 experiments show that our proposed method performs better in adapting the
