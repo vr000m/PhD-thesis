@@ -11,6 +11,7 @@
 # files are static and are not removed.
 TEX_BASE      = dissertation
 TEX_STATIC    = chapters/_0lists.tex \
+				chapters/_0symbols.tex \
                 chapters/_1intro.tex \
                 chapters/_2rg.tex \
                 chapters/_3rtp.tex \
