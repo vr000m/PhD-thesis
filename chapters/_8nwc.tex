@@ -130,7 +130,7 @@ strength as an influential factor for rate-control and show that predicting
 based on signal strength alone is insufficient. Yet, their results indicate
 that past information can be used to predict future network characteristics.
 
-\cite{6012045} proposes a similar architecture (\emph{bandwidth lookup
+Riiser\emph{et al.}~\cite{6012045} proposes a similar architecture (\emph{bandwidth lookup
 service}) to the one in \citepub{c:glass}, but uses different types of
 averaging algorithms to predict future network characteristics in Dynamic
 Adaptive Streaming over HTTP (DASH). While the averaging algorithm is not a
@@ -143,20 +143,20 @@ divides the Earth's geographic map into 100m\,x\,100m squares. All measurements 
 specific area are averaged, and the maximum, minimum and mean values for 
 each operator in that area is reported. 
 
-\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
-route in steps of 100 meters, which we find limiting. Instead, we propose
-multiple methods for discovering areas with poor connectivity (e.g., known
-travel route, area look ahead, geo-fencing or subscribing to coverage holes.)
-and show that not only looking up future bandwidth but also when to vary the
-sending rate affects the usefulness of the service. A preliminary analysis
-using simulations of our system is done in~\cite{Curcio:glass}.
-
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{chap8-fig-ecv}
   \caption{Endpoints using a Network Coverage Map Service to send coverage
   updates, query for upcoming congestion and receive coverage updates.}
 \label{fig:cc:ecv}
 \end{figure}
+
+Riiser\emph{et al.}~\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
+route in steps of 100 meters, which we find limiting. Instead, we propose
+multiple methods for discovering areas with poor connectivity (e.g., known
+travel route, area look ahead, geo-fencing or subscribing to coverage holes.)
+and show that not only looking up future bandwidth but also when to vary the
+sending rate affects the usefulness of the service. A preliminary analysis
+using simulations of our system is done in~\cite{Curcio:glass}.
 
 \begin{figure}
   \centerline{
@@ -167,7 +167,7 @@ using simulations of our system is done in~\cite{Curcio:glass}.
   }
   \centerline{
     \subfloat[Known travel route Lookahead]{
-      \includegraphics[width=0.8\textwidth]
+      \includegraphics[width=0.9\textwidth]
       {chap8-graph_route_thin_throughput}
     }
   }
@@ -196,6 +196,7 @@ for each lookahead requests, the NCMS responds with an coverage map info,
 i.e., the expected throughput at every geolocation along the route or
 requested area.
 
+
 The receiver uses these hints provided by the NCMS to implement congestion
 control and sends an \emph{estimated capacity vector} (a data structure
 containing a time-series of available throughput, thus preserving user's
@@ -206,9 +207,9 @@ pre-buffer. Changing the encoding rate is only possible in interactive
 real-time media, because the RTP sender co-operates with the encoder to  modify the
 encoding rate. Rate-switching is possible for streaming content  encoded at
 different bit rates. It is also possible to use rate-switching  for
-interactive real-time media involving scalable video codecs or simulcast
+interactive real-time media involving Scalable Video Codecs (SVC) or simulcast
 media, wherein a media stream is encoded at different bit rates and the
-application switches between the stored media files. The performance of the
+application switches between these different media streams. The performance of the
 congestion control in this case depends on the granularity of the chosen bit
 rates for the individual media streams. Lastly, varying the amount of 
 pre-buffered video provides a more consistent experience to the user,  because the
