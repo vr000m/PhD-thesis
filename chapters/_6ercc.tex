@@ -167,7 +167,7 @@ frames per second, we observe that the error propagation is stopped by RPS in ab
   \centering{
   \subfloat [Foreman]{
     \includegraphics[width=0.5\textwidth]{chap6-graph-rpsi-1}
-  } \\
+  }
   \subfloat [News]{
     \includegraphics[width=0.5\textwidth]{chap6-graph-rpsi-3}
   } \\
@@ -252,20 +252,6 @@ their results show a significant increase in media quality. MSTFP, on the other
 hand, does not use RTP/RTCP and acknowledges each packet for calculating the
 TFRC estimate.
 
-
-\begin{figure}
-  \centering
-  \subfloat [Concept]{
-    \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-concept}
-  } \\
-  \subfloat [State-machine]{
-    \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-state}
-  }
-\caption{a) Interaction of FEC and congestion control, b) FEC-Based Rate
-Adaptation (FBRA) state machine.}
-\label{fig:fecrc-intro}
-\end{figure}
-
 Our concept in \citepub{c:err} is similar to that described in
 \cite{Zhu:2001tu} but applied to interactive multimedia. The concept is as
 follows: the sender chooses a high FEC rate to aggressively probe for
@@ -279,6 +265,19 @@ can be especially useful when the sending rate is close to the bottleneck link
 rate: by choosing an appropriate FEC rate, the endpoint is able to probe for
 available capacity without affecting the user-experience because the media
 encoding rate remains constant.
+
+\begin{figure}
+  \centering
+  \subfloat [Concept]{
+    \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-concept}
+  } \\
+  \subfloat [State-machine]{
+    \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-state}
+  }
+\caption{a) Interaction of FEC and congestion control, b) FEC-Based Rate
+Adaptation (FBRA) state machine.}
+\label{fig:fecrc-intro}
+\end{figure}
 
 % Figure with the idea: FEC for CC
 
@@ -352,23 +351,23 @@ throughput than C-NADU and lower loss ratio than RRTCC.
   \begin{tabular}{c c c c c}
   \hline
   \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{FBRA} & \textbf{RRTCC} & \textbf{C-NADU} \\ \cline{3-5}
-  & & avg. $\pm\sigma$ & avg. $\pm\sigma$ & avg. $\pm\sigma$ \\ \hline
-  \multirow{3}{*}{\begin{sideways} 50ms \end{sideways}} & Goodput [Kbps] & 179.13 $\pm$2.26 &181.8 $\pm$3.11& 165.42 $\pm$3.87 \\ %\cline{2-8}
-  & Loss rate [\%] & 1.23 $\pm$0.28 & 4.27 $\pm$0.78 & 0.34 $\pm$0.11\\ %\cline{2-8}
+  & & avg. $\,\pm\,\sigma$ & avg. $\,\pm\,\sigma$ & avg. $\,\pm\,\sigma$ \\ \hline
+  \multirow{3}{*}{\begin{sideways} 50ms \end{sideways}} & Goodput [Kbps] & 179.13 $ \pm $ 2.26 &181.8 $ \pm $ 3.11& 165.42 $ \pm $ 3.87 \\ %\cline{2-8}
+  & Loss rate [\%] & 1.23 $ \pm $ 0.28 & 4.27 $ \pm $ 0.78 & 0.34 $ \pm $ 0.11\\ %\cline{2-8}
   %& \textbf{FEC rate [Kbps]} & 17.51 & 1.18 & - & -& -& -\\ \cline{2-8}
-  & No. of lost frames & 441.43 $\pm$82.37 & 1842 $\pm$25.4&93.67 $\pm$29.64 \\ \hline
+  & No. of lost frames & 441.43 $ \pm $ 82.37 & 1842 $ \pm $ 25.4&93.67 $ \pm $ 29.64 \\ \hline
   %& \textbf{No. of FEC protected lost frames} & 91.37 & 36.55 & - & -& -& - \\ \cline{2-8}
   %&\textbf{FRCC[\%]}& 92.57 & 2.84 & - & -& -& - \\ \hline
-  \multirow{3}{*}{\begin{sideways} 100ms \end{sideways}} & Goodput [Kbps] & 172.83 $\pm$2.74 & 172.48 $\pm$6.6 & 163.84 $\pm$3.11\\ %\cline{2-8}
-  & Loss rate [\%] & 1.72 $\pm$0.37 & 3.09 $\pm$0.85 & 0.17 $\pm$0.09\\ %\cline{2-8}
+  \multirow{3}{*}{\begin{sideways} 100ms \end{sideways}} & Goodput [Kbps] & 172.83 $ \pm $ 2.74 & 172.48 $ \pm $ 6.6 & 163.84 $ \pm $ 3.11\\ %\cline{2-8}
+  & Loss rate [\%] & 1.72 $ \pm $ 0.37 & 3.09 $ \pm $ 0.85 & 0.17 $ \pm $ 0.09\\ %\cline{2-8}
   %& \textbf{FEC rate [Kbps]} & 20.05 & 1.34 & - & -& -& - \\ \cline{2-8}
-  & No. of lost frames & 562.83 $\pm$103.44 & 740 $\pm$42.82& 46.4 $\pm$22.94\\ \hline
+  & No. of lost frames & 562.83 $ \pm $ 103.44 & 740 $ \pm $ 42.82& 46.4 $ \pm $ 22.94\\ \hline
   %& \textbf{No. of FEC protected lost frames} & 130.57 & 45.41 & - & -& -& - \\ \cline{2-8}
   %& \textbf{FRCC[\%]} & 95.85 & 1.95 & - & -& -& - \\ \hline
-  \multirow{3}{*}{\begin{sideways} 240ms \end{sideways}} &Goodput [Kbps] & 144.89 $\pm$8.35 & 169.22 $\pm$5.68 & 153.52 $\pm$6.81\\ %\cline{2-8}
-  & Loss rate [\%] & 2.82 $\pm$0.89 & 2.98 $\pm$0.55&0.19 $\pm$0.07 \\ %\cline{2-8}
+  \multirow{3}{*}{\begin{sideways} 240ms \end{sideways}} &Goodput [Kbps] & 144.89 $ \pm $ 8.35 & 169.22 $ \pm $ 5.68 & 153.52 $ \pm $ 6.81\\ %\cline{2-8}
+  & Loss rate [\%] & 2.82 $ \pm $ 0.89 & 2.98 $ \pm $ 0.55&0.19 $ \pm $ 0.07 \\ %\cline{2-8}
   %& \textbf{FEC rate [Kbps]} & 16.22 & 0.56 & - & -& -& - \\ \cline{2-8}
-  & No. of lost frames & 789.93 $\pm$223.55 & 705.67 $\pm$41.33 & 53.23  $\pm$21.41 \\ \hline
+  & No. of lost frames & 789.93 $ \pm $ 223.55 & 705.67 $ \pm $ 41.33 & 53.23  $ \pm $ 21.41 \\ \hline
   %& \textbf{No. of FEC protected lost frames} & 178.07 & 69.92 & - & -& -& - \\ \cline{2-8}
   %& \textbf{FRCC[\%]} & 90.1 & 7.26 & - & -& -& - \\ \hline
   \end{tabular}
@@ -397,22 +396,22 @@ throughput than C-NADU and lower loss ratio than RRTCC.
   \begin{tabular}{cccc}
   \hline
   \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
-  & & avg. $\pm \sigma$ & avg. $\pm \sigma$ \\ \hline 
+  & & avg. $ \pm \sigma$ & avg. $ \pm \sigma$ \\ \hline 
   \multirow{5}{*}{\begin{sideways} 50ms \end{sideways}} 
-  & Goodput [kb/s] & 375.39 $\pm$ 88.25 & 348.77 $\pm$ 83.64 \\ 
-  & Loss rate [\%] & 1.21 $\pm$ 0.19 & 1.39 $\pm$ 0.69 \\ 
-  & FEC rate [kb/s] & 12.24 $\pm$ 1.64 & 11.78 $\pm$ 1.39 \\ 
-  & No. of FEC protected lost frames & 15.3 $\pm$ 3.44 & 14.6 $\pm$ 2.73 \\ 
-  & No. of recovered frames & 7.4 $\pm$ 2.83 & 6.9 $\pm$ 3.33 \\ 
-  & PSNR [dB] & 38.08 $\pm$ 2.1 & 37.7 $\pm$ 1.53 \\ \hline
+  & Goodput [kb/s] & 375.39 $ \pm $ 88.25 & 348.77 $ \pm $ 83.64 \\ 
+  & Loss rate [\%] & 1.21 $ \pm $ 0.19 & 1.39 $ \pm $ 0.69 \\ 
+  & FEC rate [kb/s] & 12.24 $ \pm $ 1.64 & 11.78 $ \pm $ 1.39 \\ 
+  & No. of FEC protected lost frames & 15.3 $ \pm $ 3.44 & 14.6 $ \pm $ 2.73 \\ 
+  & No. of recovered frames & 7.4 $ \pm $ 2.83 & 6.9 $ \pm $ 3.33 \\ 
+  & PSNR [dB] & 38.08 $ \pm $ 2.1 & 37.7 $ \pm $ 1.53 \\ \hline
   %& \textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
   \multirow{5}{*}{\begin{sideways} 100ms \end{sideways}} 
-  & Goodput [kb/s] & 295.33 $\pm$ 48.27 & 351.1 $\pm$ 63.4 \\ 
-  & Loss rate [\%] & 3.15 $\pm$ 0.93 & 2.33 $\pm$ 0.87 \\ 
-  & FEC rate [kb/s] & 10.7 $\pm$ 0.68 & 11.69 $\pm$ 1.52 \\ 
-  & No. of FEC protected lost frames & 3.0 $\pm$ 2.1 & 4.1 $\pm$ 3.14 \\ 
-  & No. of recovered frames & 7.3 $\pm$ 3.03 & 4.5 $\pm$ 3.07 \\ 
-  & PSNR [dB] & 35.64 $\pm$ 1.17 & 37.32 $\pm$ 1.65 \\ \hline
+  & Goodput [kb/s] & 295.33 $ \pm $ 48.27 & 351.1 $ \pm $ 63.4 \\ 
+  & Loss rate [\%] & 3.15 $ \pm $ 0.93 & 2.33 $ \pm $ 0.87 \\ 
+  & FEC rate [kb/s] & 10.7 $ \pm $ 0.68 & 11.69 $ \pm $ 1.52 \\ 
+  & No. of FEC protected lost frames & 3.0 $ \pm $ 2.1 & 4.1 $ \pm $ 3.14 \\ 
+  & No. of recovered frames & 7.3 $ \pm $ 3.03 & 4.5 $ \pm $ 3.07 \\ 
+  & PSNR [dB] & 35.64 $ \pm $ 1.17 & 37.32 $ \pm $ 1.65 \\ \hline
   %& \textbf{Lossless PSNR [dB]} & & & & \\ \hline 
   \end{tabular}
   }}
@@ -441,15 +440,15 @@ experience \cite{Zink03subjectiveimpression}.
   \begin{tabular}{ccc}
   \hline
   \textbf{Metric} & \textbf{50ms delay} & \textbf{100ms delay} \\ \cline{2-3}
-  & avg. $\pm\,\sigma$ & avg. $\pm\,\sigma$ \\ \hline 
-  Goodput [kb/s] & 302.24 $\pm$ 87.07 & 280.97 $\pm$ 92.15 \\
-  Loss rate [\%] & 4.24 $\pm$ 0.89 & 4.1 $\pm$ 0.58 \\
-  FEC rate [kb/s] & 13.6 $\pm$ 2.15 & 12.58 $\pm$ 2.18 \\
-  No. of lost frames & 154.6 $\pm$ 16.56 & 170.9 $\pm$ 12.38 \\
-  No. of FEC protected lost frames & 38.0 $\pm$ 6.08 & 23.7 $\pm$ 8.99 \\ 
-  No. of recovered frames & 7.4 $\pm$ 2.83 & 6.9 $\pm$ 3.33 \\
-  PSNR [dB] & 35.62 $\pm$ 1.49 & 34.7 $\pm$ 2.26 \\
-  TCP throughput [kbit/s] & 612.22 $\pm$ 48.45 & 575.11 $\pm$ 45.67 \\ \hline
+  & avg. $ \pm \,\sigma$ & avg. $ \pm \,\sigma$ \\ \hline 
+  Goodput [kb/s] & 302.24 $ \pm $ 87.07 & 280.97 $ \pm $ 92.15 \\
+  Loss rate [\%] & 4.24 $ \pm $ 0.89 & 4.1 $ \pm $ 0.58 \\
+  FEC rate [kb/s] & 13.6 $ \pm $ 2.15 & 12.58 $ \pm $ 2.18 \\
+  No. of lost frames & 154.6 $ \pm $ 16.56 & 170.9 $ \pm $ 12.38 \\
+  No. of FEC protected lost frames & 38.0 $ \pm $ 6.08 & 23.7 $ \pm $ 8.99 \\ 
+  No. of recovered frames & 7.4 $ \pm $ 2.83 & 6.9 $ \pm $ 3.33 \\
+  PSNR [dB] & 35.62 $ \pm $ 1.49 & 34.7 $ \pm $ 2.26 \\
+  TCP throughput [kbit/s] & 612.22 $ \pm $ 48.45 & 575.11 $ \pm $ 45.67 \\ \hline
   %\textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
   \end{tabular}
   }}
