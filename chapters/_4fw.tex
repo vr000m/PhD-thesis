@@ -274,7 +274,7 @@ the frame size exceeds MTU size. Typically, an average size of an RTCP packet
 size in a two-party call is $156$-$176$ bytes\footnote{The packet breakdown in
 bytes is: UDP=16, IPv4=20 or IPv6=40, RTCP=8, SR=20, RR=24, SDES=28, one or
 more XR blocks is 20 bytes each.}. For a 30 FPS bidirectional video stream, the
-$rtcp\_bw \approx$ 75\,\emph{Kbps}, which requires the media session bit rate
+$rtcp\_bw \approx$ 75\,\emph{kbps}, which requires the media session bit rate
 be set to a value higher than 1.5\,\emph{Mbps}. Consequently, it would not be
 possible to perform per-frame for sessions with lower media rates. It should
 be noted that the requirements for the media session bit rate needs to be 
@@ -802,17 +802,17 @@ In~\cite{padhye1998modeling}, Padhye \emph{et al.} show that the TCP
 throughput for a long-lived TCP Reno connection can be estimated using the
 following equation:
 \begin{align*}
-X_{Kbps} = &\frac{8 \times s}{R \times \sqrt{\frac{2*b*p}{3}}+t_{RTO} \times (3 \times \sqrt{\frac{3*b*p}{8}})\times p \times (1+32 \times p^2)}\\
+X_{kbps} = &\frac{8 \times s}{R \times \sqrt{\frac{2*b*p}{3}}+t_{RTO} \times (3 \times \sqrt{\frac{3*b*p}{8}})\times p \times (1+32 \times p^2)}\\
 \end{align*}
 While Mathis \emph{et al.} in \cite{mathis1997macroscopic} show that under
 conditions of low packet loss, Padhye's equation can be simplified to:
 \begin{align*}
-    X_{Kbps} = & \frac{8 \times s}{R \times \sqrt{\frac{p \times 2}{3})}}
+    X_{kbps} = & \frac{8 \times s}{R \times \sqrt{\frac{p \times 2}{3})}}
 \end{align*}
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 {\footnotesize
-\item[] \texttt{X is the transmit rate in Kbps.}
+\item[] \texttt{X is the transmit rate in kbps.}
 \item[] \texttt{s is the average packet size in bytes.} 
 \item[] \texttt{R is the round trip time in seconds. }
 \item[] \texttt{p is the loss event rate, $\forall p \in [0.0, \cdots ,1.0]$.}

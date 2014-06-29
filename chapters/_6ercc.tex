@@ -322,7 +322,7 @@ FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
 
 In \citepub{c:fecrc}, we compare the performance of FEC-Based Rate Adaptation
 (FBRA), RRTCC and C-NADU. The bottleneck link capacity varies between
-100\,\emph{Kbps} and 256\,\emph{Kbps}. In the scenario, we evaluate the
+100\,\emph{kbps} and 256\,\emph{kbps}. In the scenario, we evaluate the
 reactivity and convergence of the rate-control algorithm to the available 
 end-to-end capacity for different path latencies. Our simulations in
 \emph{ns-2}~\cite{ns2} shows that, for the 50\,\emph{ms} and 100\,\emph{ms}
@@ -337,7 +337,7 @@ delay, it observes that the packets are arriving very close to the
 application-defined maximum delay ($\approx$400\,ms) and is therefore, conservative in its
 probing for available bandwidth (this is observed by the low FEC rate in
 Figure~\ref{fig:fecrc-var}(c)). The FEC rate is about 10\,\% of the media rate at
-about 15-20\,\emph{Kbps} and the packet loss recovery is around 30\,\%.
+about 15-20\,\emph{kbps} and the packet loss recovery is around 30\,\%.
 Compared to FBRA, RRTCC tries to achieve high throughput at the cost of
 incurring packet losses (this behavior is also observed in \ref{tab:rrtcc-loss}), 
 while C-NADU trades off packet loss for throughput. In our
@@ -352,21 +352,21 @@ throughput than C-NADU and lower loss ratio than RRTCC.
   \hline
   \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{FBRA} & \textbf{RRTCC} & \textbf{C-NADU} \\ \cline{3-5}
   & & avg. $\,\pm\,\sigma$ & avg. $\,\pm\,\sigma$ & avg. $\,\pm\,\sigma$ \\ \hline
-  \multirow{3}{*}{\begin{sideways} 50ms \end{sideways}} & Goodput [Kbps] & 179.13 $ \pm $ 2.26 &181.8 $ \pm $ 3.11& 165.42 $ \pm $ 3.87 \\ %\cline{2-8}
+  \multirow{3}{*}{\begin{sideways} 50ms \end{sideways}} & Goodput [kbps] & 179.13 $ \pm $ 2.26 &181.8 $ \pm $ 3.11& 165.42 $ \pm $ 3.87 \\ %\cline{2-8}
   & Loss rate [\%] & 1.23 $ \pm $ 0.28 & 4.27 $ \pm $ 0.78 & 0.34 $ \pm $ 0.11\\ %\cline{2-8}
-  %& \textbf{FEC rate [Kbps]} & 17.51 & 1.18 & - & -& -& -\\ \cline{2-8}
+  %& \textbf{FEC rate [kbps]} & 17.51 & 1.18 & - & -& -& -\\ \cline{2-8}
   & No. of lost frames & 441.43 $ \pm $ 82.37 & 1842 $ \pm $ 25.4&93.67 $ \pm $ 29.64 \\ \hline
   %& \textbf{No. of FEC protected lost frames} & 91.37 & 36.55 & - & -& -& - \\ \cline{2-8}
   %&\textbf{FRCC[\%]}& 92.57 & 2.84 & - & -& -& - \\ \hline
-  \multirow{3}{*}{\begin{sideways} 100ms \end{sideways}} & Goodput [Kbps] & 172.83 $ \pm $ 2.74 & 172.48 $ \pm $ 6.6 & 163.84 $ \pm $ 3.11\\ %\cline{2-8}
+  \multirow{3}{*}{\begin{sideways} 100ms \end{sideways}} & Goodput [kbps] & 172.83 $ \pm $ 2.74 & 172.48 $ \pm $ 6.6 & 163.84 $ \pm $ 3.11\\ %\cline{2-8}
   & Loss rate [\%] & 1.72 $ \pm $ 0.37 & 3.09 $ \pm $ 0.85 & 0.17 $ \pm $ 0.09\\ %\cline{2-8}
-  %& \textbf{FEC rate [Kbps]} & 20.05 & 1.34 & - & -& -& - \\ \cline{2-8}
+  %& \textbf{FEC rate [kbps]} & 20.05 & 1.34 & - & -& -& - \\ \cline{2-8}
   & No. of lost frames & 562.83 $ \pm $ 103.44 & 740 $ \pm $ 42.82& 46.4 $ \pm $ 22.94\\ \hline
   %& \textbf{No. of FEC protected lost frames} & 130.57 & 45.41 & - & -& -& - \\ \cline{2-8}
   %& \textbf{FRCC[\%]} & 95.85 & 1.95 & - & -& -& - \\ \hline
-  \multirow{3}{*}{\begin{sideways} 240ms \end{sideways}} &Goodput [Kbps] & 144.89 $ \pm $ 8.35 & 169.22 $ \pm $ 5.68 & 153.52 $ \pm $ 6.81\\ %\cline{2-8}
+  \multirow{3}{*}{\begin{sideways} 240ms \end{sideways}} &Goodput [kbps] & 144.89 $ \pm $ 8.35 & 169.22 $ \pm $ 5.68 & 153.52 $ \pm $ 6.81\\ %\cline{2-8}
   & Loss rate [\%] & 2.82 $ \pm $ 0.89 & 2.98 $ \pm $ 0.55&0.19 $ \pm $ 0.07 \\ %\cline{2-8}
-  %& \textbf{FEC rate [Kbps]} & 16.22 & 0.56 & - & -& -& - \\ \cline{2-8}
+  %& \textbf{FEC rate [kbps]} & 16.22 & 0.56 & - & -& -& - \\ \cline{2-8}
   & No. of lost frames & 789.93 $ \pm $ 223.55 & 705.67 $ \pm $ 41.33 & 53.23  $ \pm $ 21.41 \\ \hline
   %& \textbf{No. of FEC protected lost frames} & 178.07 & 69.92 & - & -& -& - \\ \cline{2-8}
   %& \textbf{FRCC[\%]} & 90.1 & 7.26 & - & -& -& - \\ \hline
@@ -378,12 +378,12 @@ throughput than C-NADU and lower loss ratio than RRTCC.
 \end{table}
 
 
-% RRTCC achieves the best goodput ($169$-$180 Kbps$) for the three bottleneck
+% RRTCC achieves the best goodput ($169$-$180 kbps$) for the three bottleneck
 % link latencies, but has the worst loss rate ($3$-$4\%$). RRTCC is aggressive
 % in its probing for available bandwidth and does not react to losses up to
 % $2\%$. On the other hand, C-NADU achieves excellent reliability
 % ($0.15$-$0.5\%$) results in all the cases, but observes lower goodput (about
-% $10$-$15Kbps$ lower than RRTCC). The two algorithms trade-off throughput for
+% $10$-$15\,kbps$ lower than RRTCC). The two algorithms trade-off throughput for
 % packet loss and vice-versa.
 
 % Table of FEC, C-NADU and RRTCC :)
@@ -423,7 +423,7 @@ throughput than C-NADU and lower loss ratio than RRTCC.
 In \citepub{c:fecrc}, we also measure the performance of two FBRA calls
 competing on a bottleneck link (1\,\emph{Mbps}) in a testbed. The difference in the
 goodput of the calls in the two latency scenarios (50\,\emph{ms} and
-100\,\emph{ms}) is about 30-50\,\emph{Kbps}, but the PSNR of these calls is
+100\,\emph{ms}) is about 30-50\,\emph{kbps}, but the PSNR of these calls is
 similar (see Table~\ref{table:fecrc-rw-udp}). Therefore, as far as we can tell from
 PSNR, the small rate variations have little bearing on the quality of the
 call. The FEC recovery is low due to the small amount of packet loss, and most of
@@ -459,11 +459,11 @@ experience \cite{Zink03subjectiveimpression}.
 
 
 When competing with short TCP flows, the FBRA achieves an average goodput of
-302\,\emph{Kbps} and 280\,\emph{Kbps} in the 50\,\emph{ms} and 100\,\emph{ms}
+302\,\emph{kbps} and 280\,\emph{kbps} in the 50\,\emph{ms} and 100\,\emph{ms}
 latency scenario, respectively (see Table~\ref{table:fecrc-rw-tcp}).
 Additionally, about 85\,\% of the times FEC was enabled, resulted in an
 increase in media rate. The TCP flow achieves a throughput of around
-600\,\emph{Kbps} on average. The PSNR in both scenarios are very similar
+600\,\emph{kbps} on average. The PSNR in both scenarios are very similar
 ($\approx$ 35dB), but the PSNR is lower for the 100\,\emph{ms} delay scenario because the
 average goodput is also a bit lower in this case (see Figure~\ref{fig:fecrc-dnet}).
 
@@ -490,7 +490,7 @@ the minor Y-axis).}
 % a host on Amazon EC2 instance in Ireland and a machine at Aalto University. We
 % observe varying results between each successive run, as the public Internet
 % has varying amount of cross traffic. The goodput ranges between $100$-$700$
-% \emph{Kbps}, the maximum loss rate does not exceed $1.5\%$, the PSNR of the
+% \emph{kbps}, the maximum loss rate does not exceed $1.5\%$, the PSNR of the
 % calls varies between $35$-$40$ \emph{dB}. Despite the diversity in results, it
 % show that FBRA may work in the public Internet.
 
