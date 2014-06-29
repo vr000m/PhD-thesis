@@ -228,6 +228,8 @@ multipath operation:
 \begin{align*}
 Playout\,Delay_{now} = \frac{MAX([SW]) + 124 \times Playout\,Delay_{prev}}{125}
 \end{align*}
+We use the MAX value of the Skew Window (SW) instead of the median because we
+want to include the high latency path as soon as possible.
 
 Depending on the fractional traffic distribution and RTT per path, our
 experiments show that our proposed method performs better in adapting the
