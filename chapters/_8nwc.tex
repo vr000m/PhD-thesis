@@ -1,7 +1,7 @@
 Figure~\ref{fig:4:fw} in Chapter~\ref{chap:cc.fw} shows the structure of the
 congestion control framework described in this thesis. The framework
-categorizes \emph{in-path} and \emph{off-path} sources and \emph{out-of-band}
-signaling for implementing congestion control (corresponds to
+categorises \emph{in-path} and \emph{off-path} sources and \emph{out-of-band}
+signalling for implementing congestion control (corresponds to
 \emph{Block B and D} of Figure~\ref{fig:4:fw}). This chapter is based on our
 work on network-assisted congestion control, which is documented in
 \citepub{c:3grc}, \citepub{c:glass} and \cite{glass:patent}.
@@ -18,7 +18,7 @@ lakes or in the archipelago, rural areas).
 In \citepub{c:3grc}, when the available link capacity changes at a base
 station, it notifies the endpoints connected to it about the current capacity.
 Based on these notifications, the sender adapts the media sending rate. Hence,
-this paper covers the \emph{in-path} sources and \emph{out-of-band} signaling
+this paper covers the \emph{in-path} sources and \emph{out-of-band} signalling
 of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
 performance of employing network assistance for congestion control in a
 simulated environment using real-world 3G traces.
@@ -135,7 +135,7 @@ service}) to the one in \citepub{c:glass}, but uses different types of
 averaging algorithms to predict future network characteristics in Dynamic
 Adaptive Streaming over HTTP (DASH). While the averaging algorithm is not a
 focus of this thesis, we use K-means~\cite{Kanungo:2002:LSA:513400.513402} and
-K-nearest neighbor (K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to
+K-nearest neighbour (K-NN)~\cite{Iwerks:2003:CKN:1315451.1315496} algorithms to
 form regions with similar capacity. Details of the averaging algorithms
 employed by our coverage map server are discussed in~\cite{sharmistha-thesis}.
 A contrary approach is employed by \emph{Netradar.org}~\cite{6576402} which
@@ -221,7 +221,7 @@ much before before it detects poor coverage.
 In \citepub{c:glass}, video is sent from a server to mobile clients. The user
 in the experiments mainly commuted around the city of Helsinki and Espoo using
 public transport. The NCMS collected the measured throughput for each client;
-thereafter, we conducted simulated experiments of users traveling at different
+thereafter, we conducted simulated experiments of users travelling at different
 vehicular speeds through the Helsinki region. In total, the NCMS collected
 over 400,000 updates over a month of operation (about 40-50 bus trips). The
 NCMS received more than 10,000 updates for 6 geographical areas
@@ -283,7 +283,7 @@ scheduling} outperforms the rest of the schemes in terms of media quality
 (measured in terms of average PSNR, $PSNR_{avg}$=48.43) mainly because it
 attempts to stream media at a single quality level; it relies heavily on 
 pre-buffering, constantly updating the size of the pre-buffer to compensate for
-the longest disruption it finds along the travel-route or in the viscinity of
+the longest disruption it finds along the travel-route or in the vicinity of
 the user. Another reason is that, in our measurements, we found low density of
 poor coverage areas and good connectivity in areas in between, allowing the
 client to pre-buffer content. However, when it is not possible to pre-buffer,
@@ -314,14 +314,14 @@ discussed in Chapter~\ref{chap:cc}).
 \section{Summary}
 
 In this chapter, we describe two congestion control mechanisms that both use 
-out-of-band signaling, but use in-path and off-path sources, respectively. First,
+out-of-band signalling, but use in-path and off-path sources, respectively. First,
 the in-path sources is based on receiving congestion cues from middleboxes
 (e.g., 3G or LTE base-stations) and uses standard RTP extensions (e.g., TMMBR)
-for signaling. Second, the off-path source is a crowd-sourced 3G coverage
+for signalling. Second, the off-path source is a crowd-sourced 3G coverage
 map that collects throughput and geolocation information from users and then
 notifies the subscribed endpoints about the available capacity in their
-respective neighborhoods. We propose a system to collect and query coverage
-maps. The endpoints query the coverage server using out-of-band signaling to
+respective neighbourhoods. We propose a system to collect and query coverage
+maps. The endpoints query the coverage server using out-of-band signalling to
 discover areas of poor coverage; based on these notifications the endpoints
 vary their sending rate.
 

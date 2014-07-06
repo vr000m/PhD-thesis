@@ -7,7 +7,7 @@ error-resilience and congestion control.
 In \citepub{c:err}, we evaluate the performance of the various
 error-resilience schemes available for use in interactive multimedia
 communication (mainly applicable to H.264). These are: using Negative
-Acknowledgment (NACK) or Packet Loss Indication (PLI), Forward Error
+Acknowledgement (NACK) or Packet Loss Indication (PLI), Forward Error
 Correction (FEC) or Unequal Level of Protection (ULP), adaptive slice sizes,
 and Reference Pictures Selection Indication (RPSI). We evaluate the
 performance of the proposed mechanisms in diverse scenarios in a simulated
@@ -42,7 +42,7 @@ that combine source-coding and network-coding mechanisms.
 
 The H.264/AVC codec has several features that support error-resilient
 mechanisms for video communication that correspond to the above
-categorization~\cite{310669}. At the codec level, the following are available:
+categorisation~\cite{310669}. At the codec level, the following are available:
 adaptive slice size, Reference Picture Selection (RPS), and Flexible
 Macroblock Ordering (FMO)~\cite{err_res_h264_std, wenger_ott_jscc}. Similarly,
 at the channel level, the following are available: Selective Retransmission
@@ -183,7 +183,7 @@ error propagation for (a) Foreman, (b) News, and (c) Football sequences.}
 Table~\ref{tab:err-sch-psnr} presents the average PSNR of the different 
 error-resilience schemes for links with 0.5\,\% fractional loss. We observe that the
 RPS performs better than UEP and NACK and is comparable to adaptive slices.
-The UEP underperforms mainly because the media stream is encoded at a lower
+The UEP under performs mainly because the media stream is encoded at a lower
 rate to make room for FEC, compared to the media streams of the other
 error-resilience mechanisms.
 
@@ -210,7 +210,7 @@ loss rate is 0.5\,\% at each 3G link.}
 
 In \citepub{c:err}, we model the error-resilience mechanisms as a function of
 observed packet loss and end-to-end delay (or latency), and
-Figure~\ref{fig:apply_err} summarizes the applicability of the
+Figure~\ref{fig:apply_err} summarises the applicability of the
 error-resilience mechanisms based on our experiments. NACK is useful when loss
 rates are low and the end-to-end delay is also low. Adaptive slice size (SSA)
 is applicable to the whole operational region because it attempts to scale the
@@ -339,7 +339,7 @@ probing for available bandwidth (this is observed by the low FEC rate in
 Figure~\ref{fig:fecrc-var}(c)). The FEC rate is about 10\,\% of the media rate at
 about 15-20\,\emph{kbps} and the packet loss recovery is around 30\,\%.
 Compared to FBRA, RRTCC tries to achieve high throughput at the cost of
-incurring packet losses (this behavior is also observed in \ref{tab:rrtcc-loss}), 
+incurring packet losses (this behaviour is also observed in \ref{tab:rrtcc-loss}), 
 while C-NADU trades off packet loss for throughput. In our
 experiments, FBRA's performance is placed between the two trade-offs: better
 throughput than C-NADU and lower loss ratio than RRTCC.
@@ -398,17 +398,17 @@ throughput than C-NADU and lower loss ratio than RRTCC.
   \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
   & & avg. $ \pm \sigma$ & avg. $ \pm \sigma$ \\ \hline 
   \multirow{5}{*}{\begin{sideways} 50ms \end{sideways}} 
-  & Goodput [kb/s] & 375.39 $ \pm $ 88.25 & 348.77 $ \pm $ 83.64 \\ 
+  & Goodput [kbps] & 375.39 $ \pm $ 88.25 & 348.77 $ \pm $ 83.64 \\ 
   & Loss rate [\%] & 1.21 $ \pm $ 0.19 & 1.39 $ \pm $ 0.69 \\ 
-  & FEC rate [kb/s] & 12.24 $ \pm $ 1.64 & 11.78 $ \pm $ 1.39 \\ 
+  & FEC rate [kbps] & 12.24 $ \pm $ 1.64 & 11.78 $ \pm $ 1.39 \\ 
   & No. of FEC protected lost frames & 15.3 $ \pm $ 3.44 & 14.6 $ \pm $ 2.73 \\ 
   & No. of recovered frames & 7.4 $ \pm $ 2.83 & 6.9 $ \pm $ 3.33 \\ 
   & PSNR [dB] & 38.08 $ \pm $ 2.1 & 37.7 $ \pm $ 1.53 \\ \hline
   %& \textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
   \multirow{5}{*}{\begin{sideways} 100ms \end{sideways}} 
-  & Goodput [kb/s] & 295.33 $ \pm $ 48.27 & 351.1 $ \pm $ 63.4 \\ 
+  & Goodput [kbps] & 295.33 $ \pm $ 48.27 & 351.1 $ \pm $ 63.4 \\ 
   & Loss rate [\%] & 3.15 $ \pm $ 0.93 & 2.33 $ \pm $ 0.87 \\ 
-  & FEC rate [kb/s] & 10.7 $ \pm $ 0.68 & 11.69 $ \pm $ 1.52 \\ 
+  & FEC rate [kbps] & 10.7 $ \pm $ 0.68 & 11.69 $ \pm $ 1.52 \\ 
   & No. of FEC protected lost frames & 3.0 $ \pm $ 2.1 & 4.1 $ \pm $ 3.14 \\ 
   & No. of recovered frames & 7.3 $ \pm $ 3.03 & 4.5 $ \pm $ 3.07 \\ 
   & PSNR [dB] & 35.64 $ \pm $ 1.17 & 37.32 $ \pm $ 1.65 \\ \hline
@@ -441,14 +441,14 @@ experience \cite{Zink03subjectiveimpression}.
   \hline
   \textbf{Metric} & \textbf{50ms delay} & \textbf{100ms delay} \\ \cline{2-3}
   & avg. $ \pm \,\sigma$ & avg. $ \pm \,\sigma$ \\ \hline 
-  Goodput [kb/s] & 302.24 $ \pm $ 87.07 & 280.97 $ \pm $ 92.15 \\
+  Goodput [kbps] & 302.24 $ \pm $ 87.07 & 280.97 $ \pm $ 92.15 \\
   Loss rate [\%] & 4.24 $ \pm $ 0.89 & 4.1 $ \pm $ 0.58 \\
-  FEC rate [kb/s] & 13.6 $ \pm $ 2.15 & 12.58 $ \pm $ 2.18 \\
+  FEC rate [kbps] & 13.6 $ \pm $ 2.15 & 12.58 $ \pm $ 2.18 \\
   No. of lost frames & 154.6 $ \pm $ 16.56 & 170.9 $ \pm $ 12.38 \\
   No. of FEC protected lost frames & 38.0 $ \pm $ 6.08 & 23.7 $ \pm $ 8.99 \\ 
   No. of recovered frames & 7.4 $ \pm $ 2.83 & 6.9 $ \pm $ 3.33 \\
   PSNR [dB] & 35.62 $ \pm $ 1.49 & 34.7 $ \pm $ 2.26 \\
-  TCP throughput [kbit/s] & 612.22 $ \pm $ 48.45 & 575.11 $ \pm $ 45.67 \\ \hline
+  TCP throughput [kbps] & 612.22 $ \pm $ 48.45 & 575.11 $ \pm $ 45.67 \\ \hline
   %\textbf{Lossless PSNR [dB]} &  &  &  &  \\ \hline 
   \end{tabular}
   }}
@@ -512,7 +512,7 @@ successfully, sender rate increases by the amount of the FEC rate.
 The trade-off is that we get a smoother ramp-up and, if a packet gets
 lost, it may be recovered by the FEC packet. The sender also implements a
 variable FEC interval, i.e., it varies the number of packets for which FEC is
-generated. Hence, if the sender thinks that it is under utilizing the link by a
+generated. Hence, if the sender thinks that it is under utilising the link by a
 large margin, it introduces a shorter FEC interval (up to 33\,\% redundancy)
 and therefore ramps up quickly. Consequently, when the sender thinks that it is closer
 to the bottleneck link capacity, it introduces a longer FEC interval (up to
@@ -528,6 +528,6 @@ because interactive multimedia flows have very tight delay constraints and FEC
 may not arrive in time for recovering the packet.
 
 This chapter concludes the discussion of congestion control based on 
-\emph{in-path} sources and \emph{in-band} signaling. In the next two chapters, we will
+\emph{in-path} sources and \emph{in-band} signalling. In the next two chapters, we will
 discuss the use of congestion cues from off-path sources to perform congestion
 control.

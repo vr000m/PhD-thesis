@@ -1,6 +1,6 @@
 Figure~\ref{fig:4:fw} in Chapter~\ref{chap:cc.fw} shows the structure of the
 congestion control framework described in this thesis. The framework
-categorizes \emph{off-path} sources and \emph{in-band} signaling for
+categorises \emph{off-path} sources and \emph{in-band} signalling for
 implementing congestion control (corresponds to \emph{Block C} in
 Figure~\ref{fig:4:fw}), which are discussed in this chapter. This chapter is
 based on our work on Multipath RTP (MPRTP), which is documented in
@@ -26,13 +26,13 @@ multiple distribution trees to distribute video streams in a very large
 video conference call with few active speakers and many passive participants
 listening in. The multiple distribution trees carry separate MPRTP subflows
 and participants are members of multiple distribution trees, but actively
-forward media flows tp one of the distribution trees. Therefore, a node is an
+forward media flows to one of the distribution trees. Therefore, a node is an
 overlay node in a few (e.g., one) distribution trees and a leaf node in the
-rest. In the paper, we use a centralized focus to manage joining, leaving
+rest. In the paper, we use a centralised focus to manage joining, leaving
 and inserting a participant in the appropriate position in the distribution
 tree. \cite{draft.rtcp.overlay} is a work in progress and proposes protocol
 extensions to perform tree constructions in a distribution tree without the
-need for a centralized conferencing focus.
+need for a centralised conferencing focus.
 
 
 \section{Multipath RTP (MPRTP)}
@@ -146,8 +146,8 @@ would not work for interactive multimedia and live video streams where the
 application cannot read ahead (into future packets).
 
 Our proposed scheduling algorithm in \citepub{c:mprtp} calculates the per path
-rate based on the following: \textbf{a)} the characterization of the path based on
-the observed network behavior, \textbf{b)} the choice of performant paths from the
+rate based on the following: \textbf{a)} the characterisation of the path based on
+the observed network behaviour, \textbf{b)} the choice of performant paths from the
 available paths for active transmission, \textbf{c)} packet scheduling
 rules that use the constraints applied by the multimedia application. We do
 not use B-frames and do not discard any packets at the sender. Furthermore, we
@@ -162,13 +162,13 @@ The scheduling algorithm at startup assigns equal fractional distributions and
 the per-path distribution changes depending on the observed path
 characteristics. Hence, the MPRTP sender calculates the estimated receiver
 rate for each path based on the Subflow Receiver Reports~\cite{draft.mprtp}.
-Next, the sender characterizes the paths based on the observed packet discards
+Next, the sender characterises the paths based on the observed packet discards
 and losses. From these paths, the sender chooses a set of \emph{active paths}
 from the available paths. Lastly, it calculates the per-path fractional
 distribution.
 
 A path that reports discards and losses in a single or consecutive intervals
-is considered \emph{mildly congested}. If this behavior is observed over three
+is considered \emph{mildly congested}. If this behaviour is observed over three
 successive intervals, it is considered \emph{congested}. Furthermore, if a
 path reports only losses and no discards in successive intervals, it is
 considered \emph{lossy}. A path without losses or discards is considered
@@ -223,7 +223,7 @@ Path\,Skew_{now} = 0.01 \times \widetilde{DW} + 0.99\times Path\,Skew_{prev}
 \end{align*}
 
 The path skew values are then fed into the regular playout delay
-calculation~\cite{Fober05,Colin03} to yeild the playout delay  applicable for
+calculation~\cite{Fober05,Colin03} to yield the playout delay  applicable for
 multipath operation:
 \begin{align*}
 Playout\,Delay_{now} = \frac{MAX([SW]) + 124 \times Playout\,Delay_{prev}}{125}
@@ -321,7 +321,7 @@ declarative mechanism would suffice. The endpoint mainly wants to notify the
 other endpoints of its interfaces. Likewise, when multiple interfaces become
 available at the other endpoint, it would notify its peers.
 
-To summarize, in \cite{draft.mprtp}, we define an \emph{in-band} mechanism to
+To summarise, in \cite{draft.mprtp}, we define an \emph{in-band} mechanism to
 advertise interfaces in RTCP. The endpoint is able to update its existing
 interfaces or advertise new ones, whenever the RTCP interval expires.
 Advertising in-band is mainly useful when the endpoints are not deployed
@@ -373,12 +373,12 @@ path is variable, demonstrating the sensitivity of the scheduling algorithm
 to the changes in network capacity, which may be caused by \emph{cross-
 traffic}. In Figure~\ref{chap7:fig_sim_var_bw}, the Path B's capacity varies
 while Path A's capacity remains constant. The figure also shows the
-instantaneous bandwidth utilization for each MPRTP subflow. In this case where
+instantaneous bandwidth utilisation for each MPRTP subflow. In this case where
 congestion is observed on Path B, the scheduling algorithm reallocates the media
 on to the other paths (see the points where the link rate drops).
 
 \textbf{\texttt{Multihoming}}: Figure~\ref{chap7:fig_sim_bb_3g} shows the
-bandwidth utilization of a WLAN and 3G path and the overall bandwidth
+bandwidth utilisation of a WLAN and 3G path and the overall bandwidth
 distribution between the paths. The bandwidth is more evenly shared except
 when the 3G path is constrained and the scheduling algorithm offloads the
 remaining media on to the WLAN path. However, the algorithm does not quickly reallocate
@@ -472,7 +472,7 @@ constrained path) and multihoming (with WLAN and 3G paths).}
 In this chapter, we propose using the multiple interfaces of an endpoint (e.g.,
 mobile device, tablet, SOHO gateways) for increasing throughput and
 robustness. This corresponds to using congestion cues from out-of-band  sources
-(different paths) and signaled in path (in RTCP). We design a protocol
+(different paths) and signalled in path (in RTCP). We design a protocol
 extension (MPRTP) to RTP that is backwards compatible and exploits multipath
 capabilities. We implement a scheduling algorithm that takes application
 requirements and current path characteristics into consideration to send
@@ -499,6 +499,6 @@ is to add energy awareness to the system policy; the multimedia application
 can then control the access to the particular interface depending on the
 battery level. This is similar to exposing any capacity or download
 restriction a user may have from their mobile operator. However, any further
-optimization would require a deeper study of the energy consumption by a
+optimisation would require a deeper study of the energy consumption by a
 particular type of network interface (e.g., WLAN or 3G/LTE), and is left as a
 possible direction for future work.

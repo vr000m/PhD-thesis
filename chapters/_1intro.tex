@@ -12,7 +12,7 @@ Adobe's Real-time Media Flow Protocol (RTMFP) \cite{draft.rtmfp} or
 their own plugins\footnote{There are other plugin-based services: Facebook
 Video based on Skype SDK, Google Talk, Google's Hangout/Helpout services,
 etc.}. As before with media streaming, the community is currently working
-towards standardizing the Web-based Real-Time Communication (WebRTC) stack,
+towards standardising the Web-based Real-Time Communication (WebRTC) stack,
 which will enable any webservice to provide real-time communication by adding
 a few lines of code and without requiring the user to install a plugin.
 Therefore, these forthcoming deployments of WebRTC services are going to 
@@ -42,7 +42,7 @@ wireless and wired links. Nowadays multimedia system run on endpoints that may
 be connected to the Internet by one or more network interfaces or have more 
 than one IP address, thus enabling the multimedia application to
 use multiple interfaces to send and/or receive media. 
-We define a congestion control framework and categorize the observed congestion
+We define a congestion control framework and categorise the observed congestion
 cues, and lastly, propose congestion control algorithms that work in diverse
 situations. We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry
 media flows, and the congestion control algorithm is built within the
@@ -134,8 +134,8 @@ and actively police it. These routers maintain soft-state, which is removed
 when timeout occurs, but it is difficult to maintain the volume of updates
 when deployed on the Internet. In contrast, DiffServ was designed not to
 require setting up the end-to-end reservation beforehand; rather, it relies on the
-endpoint labeling each packet with a Differentiated Services
-Code Point (DSCP)~\cite{rfc2475} before the packet is sent. The labeled packets are then subjected to
+endpoint labelling each packet with a Differentiated Services
+Code Point (DSCP)~\cite{rfc2475} before the packet is sent. The labelled packets are then subjected to
 classification and policing by the intermediate routers~\cite{rfc5865}. The
 sending endpoint can only hope that the packets get the appropriate treatment,
 which cannot be guaranteed once the packet passes from one DiffServ
@@ -209,9 +209,9 @@ applicable in the Internet community. The Association for Computing Machinery
 (ACM) defines several cultural styles for conducting scientific
 research~\cite{Denning:CS.Method}, and our methodology falls into the
 \textit{abstraction} and \textit{design} paradigms. In the \emph{abstraction}
-paradigm, the researcher iterates through ``modeling'' or ``experimentation''
+paradigm, the researcher iterates through ``modelling'' or ``experimentation''
 to construct a model and make a prediction, then designs an experiment and
-collects data, and finally analyzes the results. The \emph{design} paradigm is
+collects data, and finally analyses the results. The \emph{design} paradigm is
 related to  engineering and consists of the following steps: state the
 requirements, write a specification, build and test the system. Our research
 covers all of these aspects; the results that make up the core of the thesis
@@ -222,7 +222,7 @@ only have to produce noteworthy results to motivate deployment but also solve
 engineering issues. These engineering solutions are typically
 described in standards documents, which facilitate interoperability and
 motivates deployment. In our research, wherever possible, we have contributed
-to the relevant standards body. To summarize, this thesis is made up
+to the relevant standards body. To summarise, this thesis is made up
 of both our research work and our standards work.
 
 % For example, the protocol extensions to enable congestion control (i.e., to
@@ -298,7 +298,7 @@ comments on its deployability on the Internet.
 \citepub{c:err} discusses error resilience for interactive multimedia
 communication in a mobile (3G) environment. In this paper, we experiment with
 using different types of error resilience schemes, namely, Negative
-Acknowledgment (NACK) or Packet Loss Indication (PLI), Forward Error
+Acknowledgement (NACK) or Packet Loss Indication (PLI), Forward Error
 Correction (FEC) or Unequal Level of Protection (ULP), adaptive video slice
 sizes, and Reference Pictures Selection Indication (RPSI). Lastly, it
 discusses the applicability of these schemes based on observed packet loss
@@ -319,7 +319,7 @@ In \citepub{c:mprtp}, we enable multi-homing for real-time flows and extend
 the capability of the current RTP system to send media over multiple paths. In
 this paper, we propose a scheduling algorithm for Multipath RTP (MPRTP) that
 sends media over paths with widely different path characteristics and also
-propose a de-jitter buffer algorithm that plays out packets smoothly when the
+propose a dejitter buffer algorithm that plays out packets smoothly when the
 path latency between the paths (\emph{skew}) is large. The paper also
 discusses system- and implementation-related issues involved in deploying
 MPRTP.
@@ -330,7 +330,7 @@ congestion control for mobile clients by building network coverage maps
 presented in \citepub{c:3grc}, where the middleboxes in the media path assist
 in congestion control. However, in \citepub{c:glass}, mobile clients report
 their media throughput and geolocation to a third-party service called
-``network coverage map service'', which collects, stores, and summarizes this
+``network coverage map service'', which collects, stores, and summarises this
 information for each geolocation. The mobile clients query the coverage map
 service for available capacity at future geolocations and make appropriate
 congestion control decisions.
@@ -346,7 +346,7 @@ Internet Draft state, but will be published as RFCs shortly.} that complement
 the scientific results discussed in the thesis. The chapters describing the
 various parts of the congestion control framework discuss both our scientific
 and engineering work, while associating it with the relevant related work in
-the area. The remainder of the thesis is organized as follows.
+the area. The remainder of the thesis is organised as follows.
 
 % Chapter~\ref{chap:rg} describes the research goal of the thesis, which
 % consists of discussing terminology, challenges with DSCP markings,
@@ -413,6 +413,6 @@ is based on our contributions, which is documented in \citepub{c:3grc},
 
 % \chapter{Conclusions}
 
-Chapter~\ref{chap:conc} concludes the thesis, we analyze the proposed
-congestion control framework, and synthesize a unified congestion control
+Chapter~\ref{chap:conc} concludes the thesis, we analyse the proposed
+congestion control framework, and synthesise a unified congestion control
 algorithm from the proposals discussed in the thesis.

@@ -99,7 +99,7 @@ format.
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |           extended highest sequence number received           |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         |                      interarrival jitter                      |
+         |                      inter-arrival jitter                     |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |                         last SR (LSR)                         |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -286,7 +286,7 @@ Indication (SLI), and the Reference Picture Selection Indication (RPSI).
 
 Endpoints use RTCP Extended Reports (XRs)~\cite{rfc3611} to describe complex
 metrics that are not exposed by the RTCP Receiver Report (RR). Some examples of
-XRs relevant to performance monitoring and congestion control are: de-jitter
+XRs relevant to performance monitoring and congestion control are: dejitter
 buffer metrics~\cite{rfc7005}, Packet Delay Variation (PDV)~\cite{rfc6798},
 delay metrics~\cite{rfc6843}, burst-gap discard~\cite{rfc7003}, burst-gap
 loss~\cite{rfc6958}, Run-Length Encoded (RLE) loss~\cite{rfc3611}, discard

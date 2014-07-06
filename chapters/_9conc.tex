@@ -9,7 +9,7 @@ capacity or for increasing error-resilience, or to use capacity notifications fr
 middleboxes along the path, or to build a coverage map that provides
 congestion notification as a third-party services. Each of these techniques
 apply to one of the four areas described in the framework; however, the
-definitions of each area are generalized enough to allow the application of a
+definitions of each area are generalised enough to allow the application of a
 broad range of techniques, not just those proposed in this thesis.
 
 % insights and criticism
@@ -86,7 +86,7 @@ session may help the endpoint pick a better start rate.
 
 Block D of Figure~\ref{chap9:all_in} shows that the receiver sends an RTCP
 RR and XR containing typical congestion cues. It also sends any estimate made
-by a receiver-side congestion control algorithm (e.g., using TMMNR, REMB).
+by a receiver-side congestion control algorithm (e.g., using TMMBR, REMB).
 Furthermore, it adds any throughput notifications it may have received from an
 in-path middlebox (RTCP XR containing ECN markings or capacity changes
 indicated by a base station) or from a NCMS server. The sender decides the new
@@ -107,12 +107,12 @@ Another aspect of MPRTP that is not discussed in detail in this thesis is the
 role of MPRTP in overlay networks, or for processing media in data centers. Very
 large conferences, with hundreds of participants can be arranged in complex
 topologies containing combinations of cascaded meshes and trees. Such very
-large video conferences (e.g., massive open online courses, serminars or
+large video conferences (e.g., massive open online courses, seminars or
 conferences), usually have a low peer churn because all participants arrive
 and leave roughly at the same time. Also, the active participants produce the
 media flows, while the dormant/passive participants consume it and occasionally
 chime in with questions and comments. Instead of broadcasting to all the
-participants, which may create load on a centralized server and require
+participants, which may create load on a centralised server and require
 scaling, we can exploit the asymmetric relationship between the participants
 by using them as overlays. This would require participants to forward at least
 as much as they receive, if not more, and using multiple paths eases this
@@ -126,14 +126,14 @@ requirement~\cite{Noh2008,Li2010a,Globisch:AsymGrpComm}.
 % considerations overlap. 
 
 In the near-term, we see the following elements of emerging. First,
-the emergence of WebRTC requires standardized congestion control.
+the emergence of WebRTC requires standardised congestion control.
 Chapters~\ref{chap:cc} and~\ref{chap:er-cc} make some proposals that may fit
 this purpose, but it requires more extensive evaluations to be deployment-ready.
-Second, using FEC for congestion control needs to be generalized to work with
+Second, using FEC for congestion control needs to be generalised to work with
 any other multimedia congestion control algorithm, to enhance the
 applicability of the congestion control. Third, multipath scheduling needs to be reconsidered for
 interactive multimedia communication. One way of achieving this would require
-implementing a coupled congestion control that synthesizes all the subflow
+implementing a coupled congestion control that synthesises all the subflow
 cues to arrive at an overall rate that would fit the combined paths and then
 let the current scheduling algorithm allocate the bits per subflow. Fourth,
 the scalability and robustness of the network coverage map service needs to
