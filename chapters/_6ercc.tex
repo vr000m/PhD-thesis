@@ -3,7 +3,7 @@ control, mainly because error-resilience caters to handling
 packet loss while congestion control caters to the amount of information sent
 over the network. This chapter is based on our work on unifying
 error-resilience and congestion control, which is documented in 
-\cite{draft.adaptive.fec}, \citepub{c:err}, and \citepub{c:fecrc}.
+\citepub{c:err}, \citepub{c:fecrc}, and \cite{draft.adaptive.fec}.
 
 In \citepub{c:err}, we evaluate the performance of the various
 error-resilience schemes available for use in interactive multimedia
@@ -299,7 +299,7 @@ sender increases the sending rate and disables FEC (\texttt{\textbf{UP
 state}}), and 3) Unstable conditions are detected, and the sender reduces the
 sending rate \texttt{\textbf{DOWN state}}. If FEC is disabled for the last two
 intervals and no change in path characteristics is observed, FEC is enabled
-(\texttt{\textbf{PROBE state}}).
+(\texttt{\textbf{PROBE state}})~\cite{draft.adaptive.fec}.
 
 
 \begin{figure}
