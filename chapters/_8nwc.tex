@@ -17,11 +17,11 @@ lakes or in the archipelago, rural areas).
 
 In \citepub{c:3grc}, when the available link capacity changes at a base
 station, it notifies the endpoints connected to it about the current capacity.
-Based on these notifications, the sender adapts the media sending rate. Hence,
+Based on these notifications, the sender adapts the media encoding rate. Hence,
 this paper covers the \emph{in-path} sources and \emph{out-of-band} signalling
 of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
-performance of employing network assistance for congestion control in a
-simulated environment using real-world 3G traces.
+performance of employing network assistance for congestion control of conversational
+multimedia in a simulated environment using real-world 3G traces.
 
 In \citepub{c:glass}, we explore the use of coverage maps for congestion
 control. The map server collects throughput information from the mobile
@@ -65,7 +65,8 @@ In wireless networks, such as 3G/LTE, the last hop is typically the bottleneck
 because the core network is well provisioned. In \citepub{c:3grc}, we
 implement a network-assisted congestion control scheme wherein base-stations
 (along the media path) notify the mobile terminals about the available link
-capacity. In TMMBR-A, the base-stations notify both the sending and receiving
+capacity over the wireless interface. 
+In TMMBR-A, the base-stations notify both the sending and receiving
 endpoints about the available capacity, i.e., the sender is notified about the
 uplink capacity and the receiver is notified about the downlink capacity. If
 an endpoint sends and receives data, it is notified asynchronously about the
@@ -77,7 +78,7 @@ control scheme, wherein the receiver sends a TMMBR request to the sender
 containing the current downlink capacity. In TMMBR-A, the sender also receives
 a notification about the uplink capacity from the base-station; hence,
 comparing the request from the receiver and the notification from the base-station, 
-the sender chooses the minimum of the two values as the new target bit rate. In
+the sender chooses the minimum of the two values as the new target media bit rate. In
 TMMBR-B, the sender calculates the \emph{sender's estimate} (similar to the
 one described in~\ref{cc:co-op}) and chooses the minimum of the sender's
 estimate and the receiver's bit rate request. 
@@ -314,11 +315,12 @@ discussed in Chapter~\ref{chap:cc}).
 \section{Summary}
 
 In this chapter, we describe two congestion control mechanisms that both use 
-out-of-band signalling, but use in-path and off-path sources, respectively. First,
-the in-path sources is based on receiving congestion cues from middleboxes
+out-of-band signalling, but use in-path and off-path sources, respectively. 
+First, the in-path sources is based on receiving congestion cues from middleboxes
 (e.g., 3G or LTE base-stations) and uses standard RTP extensions (e.g., TMMBR)
-for signalling. Second, the off-path source is a crowd-sourced 3G coverage
-map that collects throughput and geolocation information from users and then
+for signalling bit rate changes. 
+Second, the off-path source is a crowd-sourced 3G coverage map that collects 
+throughput and geolocation information from users and then
 notifies the subscribed endpoints about the available capacity in their
 respective neighbourhoods. We propose a system to collect and query coverage
 maps. The endpoints query the coverage server using out-of-band signalling to
@@ -326,8 +328,8 @@ discover areas of poor coverage; based on these notifications the endpoints
 vary their sending rate.
 
 We show that notification from middleboxes such as base stations would
-help endpoints perform better congestion control, in for example, mobile network. 
-When an LTE cell is experiencing extreme load\footnote{Extreme load
+help endpoints perform better congestion control, for example, when an LTE cell 
+in a mobile network is experiencing extreme load\footnote{Extreme load
 occurs when an LTE cell has about 10x more users than when it is busy.}.
 Furthermore, we also show that using congestion maps also aids in performing
 congestion control. A congestion map is a measurement service that aggregates
@@ -349,6 +351,6 @@ may also lead to inefficiency because once an aggregation value in a region
 drops, it would stay there unless the endpoints probe for additional capacity.
 
 While we show that NCMS can be used for streaming both the live and stored
-multimedia content, it can be adapted to work with interactive media services.
+multimedia content, it can be adapted to work with conversational multimedia.
 However, we believe that the NCMS notifications would perform best when
 working alongside an existing congestion control algorithm.
