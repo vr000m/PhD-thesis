@@ -378,12 +378,13 @@ encapsulates these slices into packets, which can be transmitted over IP
 networks.
 
 H.264~\cite{h264} has three types of frames: I-, P-, and B-frames. The I-frame
-is an \emph{intra-coded frame, which does not dependnt on any previous frame
+is an \emph{intra-coded frame}, which does not dependnt on any previous frame
 and is in effect like a compressed static image. While the other two types of
 frames hold only parts of the image, are hence smaller in size but depend on
-other frames to be successfully decoded. A P-frame encodes only the changes
-from the previous frame, while a B-frame encodes the changes from the previous
-and next (future) frame. In conversational multimedia, the use of B-frames is
+other frames to be successfully decoded. A P-frame is a \emph{predictive coded
+frame}, it encodes only the changes from the previous frame. A B-frame is a
+\emph{bipredictive coded frame}, it encodes the changes from the previous and
+next (future) frame. In conversational multimedia, the use of B-frames is
 avoided because depending on future frames introduces unneccessary delay in
 transmission. Therefore, all the algorithms proposed in this thesis use just
 I- and P-frames during media encoding.
