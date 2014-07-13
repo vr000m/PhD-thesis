@@ -36,18 +36,20 @@ interactivity by maintaining as low a delay as possible (limited only by the
 network delay); hence, endpoints modify the sending rate to best match the
 available capacity and not cause excessive packet delay.
 
-This thesis is about enabling congestion control for unicast real-time communication and
-deploying it in heterogeneous networking environments containing a mixture of
-wireless and wired links. Nowadays multimedia system run on endpoints that may
-be connected to the Internet by one or more network interfaces or have more 
-than one IP address, thus enabling the multimedia application to
-use multiple interfaces to send and/or receive media. 
-We define a congestion control framework and categorise the observed congestion
+This thesis is about enabling congestion control for unicast real-time
+communication and deploying it in heterogeneous networking environments
+containing a mixture of wireless and wired links. Nowadays multimedia system
+run on endpoints that may be connected to the Internet by one or more network
+interfaces or have more  than one IP address, thus enabling the multimedia
+application to use multiple interfaces to send and/or receive media.  We
+define a congestion control framework and categorise the observed congestion
 cues, and lastly, propose congestion control algorithms that work in diverse
-situations. We use Real-time Transport Protocol (RTP)~\cite{rfc3550} to carry
-media flows, and the congestion control algorithm is built within the
-design constraints of RTP. This thesis is a bundle of scientific papers that 
-discuss various parts of the framework and this summary puts them in context.
+situations. The Real-time Transport Protocol (RTP)~\cite{rfc3550} is the
+chosen transport for carrying media in WebRTC~\cite{draft.rtcweb.transport},
+and we too use it for our media flows. Further, the congestion control
+algorithm is built within the design constraints of RTP. This thesis is a
+bundle of scientific papers that  discuss various parts of the framework and
+this summary puts them in context.
 
 % Video streaming endpoints overcome most of these challenges by using a larger
 % playout buffers, which allows the endpoint to prebuffer the video in case
