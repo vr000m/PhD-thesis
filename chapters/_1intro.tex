@@ -189,14 +189,17 @@ administrative domain to another~\cite{draft.rtcweb.qos}.
 
 In this thesis, we do not rely on the use of DiffServ or RSVP for delivering
 media traffic. The principal reason is that we would need to implement
-congestion control anyway if there is insufficient capacity in the  service-
-level agreement for a specific traffic class. Consequently, the multimedia
+congestion control anyway if there is insufficient capacity in the service-level 
+agreement for a specific traffic class. Consequently, the multimedia
 endpoints need to implement congestion control, i.e., the endpoint monitors
-the media flows for congestion and vary (increase or decrease) the media
+the media flows for congestion and varies (increases or decreases) the media
 encoding rate based on the observed congestion cues. Further, we limit the
 applicability of the congestion control algorithms discussed in this thesis to
 unicast real-time communication and specifically exclude the use of multicast
-transmission. 
+transmission. The main reason we exclude multicast is because the proposed
+algorithms rely on feedback from a single endpoint, when multiple endpoints
+are involved the congestion control at a every source needs a strategy to adapt 
+the transmission rate for each receiver or a sub-group of receivers.
 
 % Further, we assume that the presence of DSCP markings will make the
 % performance of our algorithms better.
