@@ -17,7 +17,7 @@ lakes or in the archipelago, rural areas).
 
 In \citepub{c:3grc}, when the available link capacity changes at a base
 station, it notifies the endpoints connected to it about the current capacity.
-Based on these notifications, the sender adapts the media encoding rate. Hence,
+Based on these notifications, the endpoint adapts the media encoding rate. Hence,
 this paper covers the \emph{in-path} sources and \emph{out-of-band} signalling
 of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
 performance of employing network assistance for congestion control of conversational
@@ -314,18 +314,21 @@ discussed in Chapter~\ref{chap:cc}).
 
 \section{Summary}
 
-In this chapter, we describe two congestion control mechanisms that both use 
-out-of-band signalling, but use in-path and off-path sources, respectively. 
-First, the in-path sources is based on receiving congestion cues from middleboxes
-(e.g., 3G or LTE base-stations) and uses standard RTP extensions (e.g., TMMBR)
-for signalling bit rate changes. 
-Second, the off-path source is a crowd-sourced 3G coverage map that collects 
-throughput and geolocation information from users and then
-notifies the subscribed endpoints about the available capacity in their
-respective neighbourhoods. We propose a system to collect and query coverage
-maps. The endpoints query the coverage server using out-of-band signalling to
-discover areas of poor coverage; based on these notifications the endpoints
-vary their sending rate.
+In this chapter, we describe two congestion control mechanisms that both use
+out-of-band signalling, but use in-path and off-path sources, respectively.
+First, the in-path middleboxes (e.g., 3G or LTE base-stations) notifies
+subscribed  endpoints about bit rate changes using standard RTP extensions
+(e.g., TMMBR). The subscribed endpoints can use these bit rate changes to
+modify the encoding rate in conversational multimedia applications or change
+the transmission rate in the case of video on demand services.
+%
+Second, the off-path source is a crowd-sourced 3G coverage map that collects
+throughput and geolocation information from users and then notifies the
+subscribed endpoints about the available capacity in their respective
+neighbourhoods. We propose a system to collect and query coverage maps. The
+endpoints query the coverage server using out-of-band signalling to discover
+areas of poor coverage. Similarly, based on these notifications the endpoints
+vary their encoding or transmission rate.
 
 We show that notification from middleboxes such as base stations would
 help endpoints perform better congestion control, for example, when an LTE cell 
