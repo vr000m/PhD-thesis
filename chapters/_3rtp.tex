@@ -2,7 +2,7 @@
 
 The Real-time Transport Protocol (RTP)~\cite{rfc3550} is designed for
 multimedia telephony (voice-over-IP, video conferencing, telepresence
-systems), multimedia streaming (video-on-demand, live streaming), and
+systems), multimedia streaming (video on demand, live streaming), and
 multimedia broadcast. RTP's design is based on the fundamental principles of
 \textit {application-layer framing} and \textit{integrated layer
 processing}~\cite{clark:alf}. To this end, RTP provides the following
@@ -202,7 +202,7 @@ payload-specific header and the associated media data.}
 RTP header extensions carry media-independent information, i.e., data that may
 be generically applicable to multiple payload formats (e.g., timing
 information), and needs to be reported more frequently than RTCP reports are
-emitted. A commonly-cited example is the sending of NACK packets for interactive video,
+emitted. A commonly-cited example is the sending of NACK packets for interactive media,
 where media flows in both directions and RTP packets are generated every tens
 of milliseconds. In this case, the RTP header extension can indicate which sequence numbers
 were correctly received or lost, thereby not completely relying on the RTCP
@@ -213,7 +213,7 @@ compatible, i.e., an endpoint that does not understand them is able ignore
 them. Some current use-cases for RTP header extensions include reporting the
 network send timestamp: instead of bursting packets from a large frame on to
 the network, the sender paces these packets.  Another example is equalizing a
-client's audio levels across multiple streams in a video conference. Lastly,
+client's audio levels across multiple streams in a media conference. Lastly,
 RTP header extensions are generic, there is no need to redefine the same extension
 for each media codec.
 
@@ -343,7 +343,7 @@ containing just the canonical name (CNAME)\footnote{The real name
 user. Of the SDES items (username, email, phone, geolocation, etc.), it is 
 compulsory to include CNAME in every RTCP packet.}. Hence, every compound RTCP
 packet is a minimal RTCP packet with additional report blocks. A typical RTCP
-packet size for conversational multimedia streams is 80 bytes (RTCP=8, SR=20,
+packet size for interactive multimedia streams is 80 bytes (RTCP=8, SR=20,
 RR=24, SDES/CNAME =28).
 
 Including any of the additional SDES items or adding XR blocks makes the
@@ -391,7 +391,7 @@ It may, however, carry multiple media streams in the session.
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\textwidth]{chap3-fig-sig-med}}
 \caption{The signaling and media paths between two endpoints engaging in
-a video call.}
+a interactive video call.}
 \label{fig:3:sig.media}
 \end{figure}
 

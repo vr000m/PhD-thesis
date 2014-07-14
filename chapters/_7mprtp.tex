@@ -23,7 +23,7 @@ extensions required to set up MPRTP sessions and also ICE extensions to advertis
 MPRTP interfaces and perform NAT traversal.
 
 In \cite{Globisch:AsymGrpComm}, we propose using a network topology with
-multiple distribution trees to distribute video streams in a very large
+multiple distribution trees to distribute media streams in a very large
 video conference call with few active speakers and many passive participants
 listening in. The multiple distribution trees carry separate MPRTP subflows
 and participants are members of multiple distribution trees, but actively
@@ -143,7 +143,7 @@ proposed in this paper. However, they also propose sending future packets over
 high-latency paths by reading ahead in the media stream. While this is an
 interesting concept, it would require larger buffers and keeping more state at the
 sender (typically, RTSP servers) to read ahead the stored media stream, which
-would not work for interactive multimedia and live video streams where the 
+would not work for interactive multimedia and live media streams where the 
 application cannot read ahead (into future packets).
 
 Our proposed scheduling algorithm in \citepub{c:mprtp} calculates the per path

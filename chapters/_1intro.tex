@@ -29,7 +29,7 @@ to avoid pausing the playback midstream, which it does by pre-buffering
 several seconds of content. A larger pre-buffer not only removes the effect of
 packet jitter but also helps in requesting lost packets (via
 \emph{retransmissions}), therefore using a large playout buffer provides the
-opportunity to deliver consistent video quality.
+opportunity to deliver consistent media quality.
 On the other hand, in real-time communication, there is no pre-stored content
 and endpoints use small buffers. The small buffering duration preserves
 interactivity by maintaining as low a delay as possible (limited only by the
@@ -95,7 +95,7 @@ this summary puts them in context.
 Interactive real-time media applications use RTP~\cite{rfc3550} to encapsulate
 multimedia content. RTP is capable of using Transmission Control Protocol (TCP), 
 User Datagram Protocol (UDP) and Datagram Congestion Control Protocol (DCCP) for delivering
-multimedia.  While TCP~\cite{rfc793} is extensively used to deliver video via
+multimedia.  While TCP~\cite{rfc793} is extensively used to deliver multimedia via
 HTTP streaming, it is not very suitable for real-time communication,
 especially when the path latencies are greater than 100 \emph{ms} \cite{Brosh:tcp-real-time}; 
 hence, UDP~\cite{rfc768} is used to carry real-time multimedia traffic. Since

@@ -20,7 +20,7 @@ station, it notifies the endpoints connected to it about the current capacity.
 Based on these notifications, the endpoint adapts the media encoding rate. Hence,
 this paper covers the \emph{in-path} sources and \emph{out-of-band} signalling
 of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
-performance of employing network assistance for congestion control of conversational
+performance of employing network assistance for congestion control of interactive
 multimedia in a simulated environment using real-world 3G traces.
 
 In \citepub{c:glass}, we explore the use of coverage maps for congestion
@@ -304,7 +304,7 @@ sender will be able to vary the sending rate preemptively without probing.
 We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and  pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality. This system works for video streaming and can be adapted for
+quality. This system works for media streaming and can be adapted for
 interactive media communication, wherein the sender employs a co-operative
 congestion control scheme, i.e., the sender receives the \emph{estimated
 capacity vector} from the receiver and \emph{coverage map information} for
@@ -319,7 +319,7 @@ out-of-band signalling, but use in-path and off-path sources, respectively.
 First, the in-path middleboxes (e.g., 3G or LTE base-stations) notifies
 subscribed  endpoints about bit rate changes using standard RTP extensions
 (e.g., TMMBR). The subscribed endpoints can use these bit rate changes to
-modify the encoding rate in conversational multimedia applications or change
+modify the encoding rate in interactive multimedia applications or change
 the transmission rate in the case of video on demand services.
 %
 Second, the off-path source is a crowd-sourced 3G coverage map that collects
@@ -354,6 +354,6 @@ may also lead to inefficiency because once an aggregation value in a region
 drops, it would stay there unless the endpoints probe for additional capacity.
 
 While we show that NCMS can be used for streaming both the live and stored
-multimedia content, it can be adapted to work with conversational multimedia.
+multimedia content, it can be adapted to work with interactive multimedia.
 However, we believe that the NCMS notifications would perform best when
 working alongside an existing congestion control algorithm.
