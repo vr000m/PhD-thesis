@@ -13,7 +13,6 @@ TEX_BASE      = dissertation
 TEX_STATIC    = chapters/_0lists.tex \
 				chapters/_0symbols.tex \
                 chapters/_1intro.tex \
-                chapters/_2rg.tex \
                 chapters/_3rtp.tex \
                 chapters/_4fw.tex \
                 chapters/_5rtc.tex \
