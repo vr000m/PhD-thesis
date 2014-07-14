@@ -48,10 +48,10 @@ today feature multiple network interfaces (e.g., WLAN and 3G on mobile
 devices). This may yield the opportunity for two endpoints to communicate via
 multiple paths. While exploiting multipath characteristics
 \cite{Wischik:2008:RPP} has been explored for TCP (e.g.,
-MPTCP~\cite{rfc6824}), the requirements for real-time traffic differs notably
+MPTCP~\cite{wischik:2011nsdi,rfc6824}), the requirements for real-time traffic differs notably
 and TCP can at best serve real-time communication within tight delay
 constraints of the network~\cite{Brosh:tcp-real-time}. In the multipath case,
-the scheduling algorithms do not consider real-time bounds when spreading data
+the (MPTCP) scheduling algorithms do not consider real-time bounds when spreading data
 segments across different paths, and diverse paths may lead to worst-case delay
 and thus even longer buffering time.
 
