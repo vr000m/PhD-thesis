@@ -6,12 +6,12 @@ systems), multimedia streaming (video on demand, live streaming), and
 multimedia broadcast. RTP's design is based on the fundamental principles of
 \textit {application-layer framing} and \textit{integrated layer
 processing}~\cite{clark:alf}. To this end, RTP provides the following
-mechanisms: source and payload type identification, stream synchronization,
-packet loss and re-ordering, and media stream monitoring. RTP utilizes the RTP
+mechanisms: source and payload type identification, stream synchronisation,
+packet loss and re-ordering, and media stream monitoring. RTP utilises the RTP
 Control Protocol (RTCP) to report the performance of the media stream.
 Figure~\ref{fig:3:rtp:model} describes the features provided by RTP and RTCP.
 The media sender transmits encoded media encapsulated in RTP; in addition it
-also sends RTCP Sender Reports (SR) to facilitate playback synchronization of
+also sends RTCP Sender Reports (SR) to facilitate playback synchronisation of
 different media streams (typically audio and video). The receiver maintains a
 dejitter buffer to reorder media packets and play them out as per the timing
 information encoded in the packet. If a packet is missing the receiver attempts
@@ -32,7 +32,7 @@ J\"org Ott, ``Networked Multimedia Protocols and Systems''}.}
 Figure~\ref{fig:3:rtp.hdr} describes the RTP packet header format. The
 \textit{synchronization source} (SSRC) assists in determining the source
 endpoint, typically useful when an endpoint sends multiple media streams that
-need to be synchronized (e.g., audio and video lip-sync). The \textit{RTP
+need to be synchronised (e.g., audio and video lip-sync). The \textit{RTP
 timestamp} assists in playing out the received packets at the appropriate
 instance of time and recomposing the media frame from RTP packets. The
 \textit{RTP sequence number} assists in identifying the lost packets and 
@@ -116,7 +116,7 @@ format.
 \end{spacing}
 \caption{The RTCP packet format for carrying the Sender Report (SR) and
 the Receiver Report (RR). The SR carries transport statistics and enables 
-stream synchronization, while the RR carries the receiver transport 
+stream synchronisation, while the RR carries the receiver transport 
 characteristics.}
 \label{fig:3:rtcp.hdr}
 \end{figure}
@@ -134,7 +134,7 @@ The receiver measures the incoming streams and reports the coarse-grained
 transport statistics in an RTCP Receiver Report (RR). The RTCP RR contains the
 current loss fraction, jitter, and the highest sequence number received, and it
 facilitates in calculating the round-trip time (RTT). The sender uses RTCP Sender Reports (SRs)
-to assist in synchronizing the media streams (audio and video) by relating the
+to assist in synchronising the media streams (audio and video) by relating the
 RTP timestamps of the individual media streams to the wall clock time (NTP)
 and notifying the receiver about the current packet rate and bit rate.
 Figure~\ref{fig:3:rtcp.hdr} shows the RTCP packet header format for a
@@ -212,7 +212,7 @@ The advantage of using header extensions is that they are backwards
 compatible, i.e., an endpoint that does not understand them is able ignore
 them. Some current use-cases for RTP header extensions include reporting the
 network send timestamp: instead of bursting packets from a large frame on to
-the network, the sender paces these packets.  Another example is equalizing a
+the network, the sender paces these packets.  Another example is equalising a
 client's audio levels across multiple streams in a media conference. Lastly,
 RTP header extensions are generic, there is no need to redefine the same extension
 for each media codec.
@@ -240,7 +240,7 @@ are a large number of receivers but a small number of senders, it is
 recommended that a quarter of the reporting bandwidth (\emph{rtcp\_bw}) be
 shared equally by the senders and the remaining three-quarters by the receivers. The
 main reason for this allocation ratio is to allow newly-joining participants to quickly receive the
-CNAME and synchronization timestamps from the Sender Reports (SRs). 
+CNAME and synchronisation timestamps from the Sender Reports (SRs). 
 For new participants (even if they are just receivers), the RTCP
 interval is halved to quickly declare their presence.  Lastly, the recommended
 value for a fixed minimum RTCP interval is 5 seconds, while the value for a
@@ -270,7 +270,7 @@ that with AVP profile, the endpoint reports at regular intervals, whereas with A
 the endpoint it gets the opportunity to send feedback early in every other reporting
 interval. Along with the possibility of providing timely feedback, the AVPF
 profile also defines a suite of error-resilience feedback messages, namely,
-Negative Acknowledgments (NACK), Picture Loss Indication (PLI), Slice Loss
+Negative Acknowledgement (NACK), Picture Loss Indication (PLI), Slice Loss
 Indication (SLI), and the Reference Picture Selection Indication (RPSI).
 
 \begin{figure}[!t]
@@ -359,11 +359,11 @@ be sent once in a while to keep the CNAME-SSRC binding alive.
 Reduced-size RTCP reports are beneficial in wireless networks where the packet
 loss rate increases with the packet size, i.e., larger-sized packets are more
 susceptible to being dropped compared with smaller-sized packets. Additionally, smaller
-packets have shorter serialization time, i.e., the amount of time it takes for
+packets have shorter serialisation time, i.e., the amount of time it takes for
 the endpoint to put the data packet onto the link is short.
 
 The main reasons for the application to use reduced-size RTCP reports are:
-1) to notify the other endpoint of events. Using the signaling channel would
+1) to notify the other endpoint of events. Using the signalling channel would
 incur at least one RTT while implementing it as an RTCP extension would merely
 incur a one-way delay. 2) to send codec control (e.g., TMMBR) or feedback (e.g.,
 NACK, RPSI) messages. These reduced-size messages are more likely to be
@@ -390,7 +390,7 @@ It may, however, carry multiple media streams in the session.
 
 \begin{figure}[!h]
 \centerline{\includegraphics[width=\textwidth]{chap3-fig-sig-med}}
-\caption{The signaling and media paths between two endpoints engaging in
+\caption{The signalling and media paths between two endpoints engaging in
 a interactive video call.}
 \label{fig:3:sig.media}
 \end{figure}
@@ -476,7 +476,7 @@ indicated, and 5) the encryption keys, if encrypting traffic.
 
 \begin{figure}
 \centering{\includegraphics[width=0.9\textwidth]{chap3-fig-rtp-stack}}
-\caption{Relationship of RTP with STUN, TURN, DTLS and the signaling protocol.}
+\caption{Relationship of RTP with STUN, TURN, DTLS and the signalling protocol.}
 \label{fig:3:rtp-stack}
 \end{figure}
 

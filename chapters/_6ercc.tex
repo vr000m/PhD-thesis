@@ -317,7 +317,7 @@ intervals and no change in path characteristics is observed, FEC is enabled
 \caption{Performance of a single RTP flow using FBRA in a
 varying link capacity scenario with different bottleneck latencies. The plots
 also show the FEC probing rate. We observe that the FEC rate is low when the
-FBRA rate drops and FEC rate is high when the FBRA is ramping-up.}
+FBRA rate drops and FEC rate is high when the FBRA is ramping up.}
 \label{fig:fecrc-var}
 \end{figure}
 
@@ -510,7 +510,7 @@ In the second case, we propose a congestion control scheme where instead of
 increasing the rate when network conditions seem stable, the sender introduces
 FEC for one RTCP interval. If the FEC and the media packets are received
 successfully, sender rate increases by the amount of the FEC rate. 
-The trade-off is that we get a smoother ramp-up and, if a packet gets
+The trade-off is that we get a smoother ramp up and, if a packet gets
 lost, it may be recovered by the FEC packet. The sender also implements a
 variable FEC interval, i.e., it varies the number of packets for which FEC is
 generated. Hence, if the sender thinks that it is under utilising the link by a
