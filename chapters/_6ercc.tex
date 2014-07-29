@@ -3,7 +3,7 @@ control, mainly because error-resilience caters to handling
 packet loss while congestion control caters to the amount of information sent
 over the network. This chapter is based on our work on unifying
 error-resilience and congestion control, which is documented in 
-\citepub{c:err}, \citepub{c:fecrc}, and \cite{draft.adaptive.fec}.
+\citepub{c:err}, \citepub{c:fecrc}, \cite{draft.1d2d.fec}, and \cite{draft.adaptive.fec}.
 
 In \citepub{c:err}, we evaluate the performance of the various
 error-resilience schemes available for use in interactive multimedia
@@ -63,7 +63,7 @@ for paths with higher packet loss or higher latency.
 % The combination of end-to-end delay requirements, capacity constraints and
 % varying packet loss rate require different error resilience mechanisms.
 
-\begin{figure}
+\begin{figure}[!t]
 \centerline {
 \includegraphics[width=0.66\textwidth]{chap6-graph-slicesize_mot}
 }
@@ -84,7 +84,8 @@ for paths with higher packet loss or higher latency.
 
   \item \textbf{\texttt{Adapting Slice Sizes}}: the encoder adapts the size of
   the picture slice based on the link characteristics; when the channel is
-  lossless there can be one picture per slice (up to the MTU size) and when
+  lossless there can be one picture per slice (can be larger than MTU, but an 
+  endpoint may limit the slice to MTU size) and when
   high losses are reported, the slices are reduced in size (up to 100 bytes).
   Larger slice sizes improve encoding efficiency, but are more vulnerable to
   frame losses. Figure~\ref{fig:slicesize_mot} shows the variation of average
@@ -126,7 +127,7 @@ NACK is an effective mechanism for low delay scenarios. Similarly, protecting
 the media flows with UEP incurred a 15-25\,\% overhead, and about 21-24\,\% of
 the lost packets were recovered.
 
-\begin{figure}
+\begin{figure}[!t]
 \centerline {
 \includegraphics[width=0.66\textwidth, 
     clip=true, trim=0cm 0cm 0cm 2.5cm]{chap6-graph-ssa_adapt}
@@ -218,9 +219,10 @@ is applicable to the whole operational region because it attempts to scale the
 packet size based on the observed loss rate, but does not help in packet
 repair. RPS works better on links with bursty packet loss, where NACK would
 not be effective. By correctly choosing a new reference picture, the sender is
-more effective when network latency is higher. UEP/FEC schemes are mainly useful when
-the sender and receiver cannot effectively co-operate to repair the stream and
-the fractional loss is within the FEC's chosen protection range.
+more effective in repairing the error and it works when network latency is higher. 
+UEP/FEC schemes are mainly useful when the sender and receiver cannot effectively 
+co-operate to repair the stream and the fractional loss is within the FEC's chosen 
+protection range.
 
 \begin{figure}
 \centerline {
@@ -241,7 +243,40 @@ application trades off additional sending rate for redundant packets to reduce
 the effect of losses. In \citepub{c:err}, we show that 21-24\,\% of the lost
 packets are recovered using a static amount of FEC. In \citepub{c:fecrc}, we
 investigate the use of FEC packets not only for error-resilience but also as a
-probing mechanism for congestion control.
+probing mechanism for congestion control. The FEC packets are sent in 
+a repair flow separate from the media flow that carries the source symbols. 
+Figure~\ref{fig:fec_fw} shows the sender-side FEC framework and describes
+the interaction between the FEC module, FEC scheme, and the RTP stack.
+
+\begin{figure}[!t]
+\centerline {
+\includegraphics[width=0.5\textwidth]{chap6-fig-fec-framework}
+}
+\caption{Interaction between FEC and RTP.}
+\label{fig:fec_fw}
+\end{figure}
+
+In \citepub{c:fecrc}, the sender generates the FEC packets using the 
+non-interleaved or interleaved parity codes from a set of source media packets
+encapsulated in RTP. The parity codes are a set of systematic codes in which a
+number of repair packets are generated from a set of source media packets.
+There are several FEC schemes, namely, non-interleaved (1-d) parity,
+interleaved (2-d) parity, linear parity codes (ldpc), Reed-Solomon (RS), etc.
+In the non-interleaved parity scheme an XOR packet is generated for every  N
+source packets. Consequently, this FEC scheme is able to recover from a single
+random packet loss in N packets. In addition to the 1-d parity FEC, if we
+apply the XOR operation on source packets that are N sequence numbers apart
+from each other and in blocks of B packets (multiple of N packets), the
+resulting N repair packets are referred to as interleaved (2-d) FEC packets.
+This scheme (2-d parity) is able to cope with burst loss of at least N packet
+in every B block of packets. Typically, the repair packets are encapsulated in 
+an RTP payload format, for example using the packet format described in 
+\cite{rfc5109} or \cite{draft.1d2d.fec}.
+
+% The non-interleaved and interleaved parity codes offer a good protection
+% against random and bursty packet losses, respectively, at a cost of
+% decent complexity.
+
 
 Zhu~\textit{et al.}\cite{Zhu:2001tu,springerlink:1022865704606} propose using
 ULP for both congestion control and error-resilience. 
@@ -253,7 +288,7 @@ their results show a significant increase in media quality. MSTFP, on the other
 hand, does not use RTP/RTCP and acknowledges each packet for calculating the
 TFRC estimate.
 
-Our concept in \citepub{c:err} is similar to that described in
+Our concept in \citepub{c:fecrc} is similar to that described in
 \cite{Zhu:2001tu} but applied to interactive multimedia. The concept is as
 follows: the sender chooses a high FEC rate to aggressively probe for
 available capacity and conversely chooses a low FEC rate to conservatively
@@ -267,7 +302,8 @@ rate: by choosing an appropriate FEC rate, the endpoint is able to probe for
 available capacity without affecting the user-experience because the media
 encoding rate remains constant.
 
-\begin{figure}
+
+\begin{figure}[!t]
   \centering
   \subfloat [Concept]{
     \includegraphics[width=0.66\textwidth]{chap6-fig-fecrc-concept}
@@ -286,9 +322,10 @@ Figure~\ref{fig:fecrc-intro}(b) illustrates the state machine of a
 congestion-control algorithm incorporating FEC. The state machine includes 4
 states: \texttt{\textbf{STAY}}, \texttt{\textbf{PROBE}}, \texttt{\textbf{UP}},
 and \texttt{\textbf{DOWN}}. The congestion control monitors the congestion
-cues (such as, RTT, packet loss or discard rate~\cite{rfc7002, rfc7097, rfc7243}, jitter, frame inter-arrival
-delay variation, post-repair~\cite{rfc5725, draft.xr.post.repair} etc.) to stay in the current state, or transit to
-another. The state machine specifies only a generic description of path
+cues (such as, RTT, packet loss or discard rate~\cite{rfc7002, rfc7097, rfc7243}, 
+jitter, frame inter-arrival delay variation, 
+post-repair~\cite{rfc5725, draft.xr.post.repair} etc.) to stay in the current state,
+or transit to another. The state machine specifies only a generic description of path
 conditions for the transition between states and leaves the interpretation to
 the underlying congestion control algorithm.
 
@@ -297,12 +334,12 @@ occur: 1) No more bandwidth is available and the sender keeps the current sendin
 rate (\texttt{\textbf{STAY state}}), 2) Stable conditions are detected and the
 sender increases the sending rate and disables FEC (\texttt{\textbf{UP
 state}}), and 3) Unstable conditions are detected, and the sender reduces the
-sending rate \texttt{\textbf{DOWN state}}. If FEC is disabled for the last two
+sending rate \texttt{\textbf{DOWN state}}. If FEC is disabled for two consecutive
 intervals and no change in path characteristics is observed, FEC is enabled
 (\texttt{\textbf{PROBE state}})~\cite{draft.adaptive.fec}.
 
 
-\begin{figure}
+\begin{figure}[!t]
   \centering{
   \subfloat [OWD=50ms]{
     \includegraphics[width=0.5\textwidth]{chap6-graph-fecrc-var-50ms-2}
@@ -469,7 +506,7 @@ increase in media rate. The TCP flow achieves a throughput of around
 average goodput is also a bit lower in this case (see Figure~\ref{fig:fecrc-dnet}).
 
 
-\begin{figure}
+\begin{figure}[!t]
   \centering{
   \subfloat [50ms]{
     \includegraphics[width=0.66\textwidth]{chap6-graph-fecrc-dummynet-50ms-2}
