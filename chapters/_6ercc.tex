@@ -256,21 +256,23 @@ the interaction between the FEC module, FEC scheme, and the RTP stack.
 \label{fig:fec_fw}
 \end{figure}
 
-In \citepub{c:fecrc}, the sender generates the FEC packets using the 
-non-interleaved or interleaved parity codes from a set of source media packets
-encapsulated in RTP. The parity codes are a set of systematic codes in which a
-number of repair packets are generated from a set of source media packets.
-There are several FEC schemes, namely, non-interleaved (1-d) parity,
-interleaved (2-d) parity, linear parity codes (ldpc), Reed-Solomon (RS), etc.
-In the non-interleaved parity scheme an XOR packet is generated for every  N
-source packets. Consequently, this FEC scheme is able to recover from a single
-random packet loss in N packets. In addition to the 1-d parity FEC, if we
-apply the XOR operation on source packets that are N sequence numbers apart
-from each other and in blocks of B packets (multiple of N packets), the
-resulting N repair packets are referred to as interleaved (2-d) FEC packets.
-This scheme (2-d parity) is able to cope with burst loss of at least N packet
-in every B block of packets. Typically, the repair packets are encapsulated in 
-an RTP payload format, for example using the packet format described in 
+In \citepub{c:fecrc}, the sender generates the FEC packets using parity codes
+from a set of source media packets encapsulated in RTP. The parity codes are a
+set of systematic codes in which a number of repair packets are generated from
+a set of source media packets. There are several FEC schemes available, such
+as, 1-d and 2-d parity scheme, Reed-Solomon (RS), etc. In the non-interleaved
+parity scheme an XOR packet is generated for every  N source packets.
+Consequently, this FEC scheme is able to recover from a single random packet
+loss in N packets. Alternatively, if we apply the XOR operation on  source
+packets that are N sequence numbers apart from each other, the resulting N
+repair packets are referred to as interleaved FEC packets, which can protect
+against burst loss as long as the chosen length of ``N'' RTP packets  is
+longer than the burst packet loss length. To protect against both single
+random loss event and burst losses, the endpoint ought to use a combination of
+non-interleaved and interleaved parity FEC. This scheme (2-d parity scheme) is
+able to cope with burst loss of at least N packet in every B block of packets
+(multiple of N packets). Typically, the repair packets  are encapsulated in an
+RTP payload format, for example using the packet format  described in
 \cite{rfc5109} or \cite{draft.1d2d.fec}.
 
 % The non-interleaved and interleaved parity codes offer a good protection
