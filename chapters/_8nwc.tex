@@ -54,7 +54,7 @@ reported ECN markings, and one-way delay measurements into a single cue. The
 sender calculates the new rate based on the variation in the delay compared 
 to earlier measurements and the priority of the multimedia stream~\cite{pv-nada}.
 
-\begin{figure}
+\begin{figure}[!t]
 \includegraphics[width=\textwidth]{chap8-fig-tmmbr}
   \caption{Endpoints receiving capacity indication from the middleboxes
   (TMMBR) for implementing congestion control.}
@@ -93,7 +93,7 @@ comparable throughput of 178\,\emph{kbps} but with a 2\,\% loss ratio.
 % Eventhough modern 3G/LTE networks are capable of providing these updates, they
 % do not for several reasons
 
-\begin{figure}
+\begin{figure}[!t]
   \centerline{
     \subfloat[TMMBR-A]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
@@ -144,7 +144,7 @@ divides the Earth's geographic map into 100m\,x\,100m squares. All measurements 
 specific area are averaged, and the maximum, minimum and mean values for 
 each operator in that area is reported. 
 
-\begin{figure}
+\begin{figure}[!t]
 \includegraphics[width=0.9\textwidth]{chap8-fig-ecv}
   \caption{Endpoints using a Network Coverage Map Service to send coverage
   updates, query for upcoming congestion and receive coverage updates.}
@@ -159,7 +159,7 @@ and show that not only looking up future bandwidth but also when to vary the
 sending rate affects the usefulness of the service. A preliminary analysis
 using simulations of our system is done in~\cite{Curcio:glass}.
 
-\begin{figure}
+\begin{figure}[!t]
   \centerline{
     \subfloat[Map area lookahead]{
       \includegraphics[width=0.8\textwidth]
@@ -292,7 +292,7 @@ the client will perform a rate-switch. Finally, we expect the performance of
 the congestion control to be at least that of rate-switching because the
 sender will be able to vary the sending rate preemptively without probing.
 
-\begin{figure}
+\begin{figure}[!t]
 \includegraphics[width=0.9\textwidth]{chap8-graph-sim7-3}
   \caption{The plot shows the variation of sending rate to 3G link capacity
   based on a) no adaptation b) Omniscient c) Rate-switching d) Late scheduling

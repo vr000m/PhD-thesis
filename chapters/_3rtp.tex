@@ -20,7 +20,7 @@ endpoint reports rough or detailed statistics that enables the media sender to
 adapt its media encoding rate, change to a better codec, or vary the amount of
 forward error correction.
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 \centering{
   \includegraphics[width=\textwidth]{chap3-fig-rtp-rtcp}
 }
@@ -47,7 +47,7 @@ format.
 % \label{fig:3:rtp.hdr}
 % \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 \begin{spacing}{0.5}
 \centering
 {\small
@@ -72,7 +72,7 @@ format.
 \end{figure}
 
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 \begin{spacing}{0.5}
 {\footnotesize
 \begin{verbatim}
@@ -161,7 +161,7 @@ or firewalls.
 % simplifies processing and decoding at the receiver (i.e., be able to decode
 % individual packets without relying on receiving other packets).
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 \begin{spacing}{0.5}
 {\footnotesize
 \begin{verbatim}
@@ -388,7 +388,7 @@ endpoint's transport and media capabilities. An SDP description defines a
 single multimedia session, i.e., an association between a set of participants.
 It may, however, carry multiple media streams in the session.
 
-\begin{figure}[!h]
+\begin{figure}[!t]
 \centerline{\includegraphics[width=\textwidth]{chap3-fig-sig-med}}
 \caption{The signalling and media paths between two endpoints engaging in
 a interactive video call.}
@@ -474,7 +474,7 @@ streams (possibly even their respective SSRCs), 3) to which IP address and
 port number to send the media stream, 4) the media session bandwidth, if
 indicated, and 5) the encryption keys, if encrypting traffic.
 
-\begin{figure}
+\begin{figure}[!t]
 \centering{\includegraphics[width=0.9\textwidth]{chap3-fig-rtp-stack}}
 \caption{Relationship of RTP with STUN, TURN, DTLS and the signalling protocol.}
 \label{fig:3:rtp-stack}
