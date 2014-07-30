@@ -157,7 +157,16 @@ multiple methods for discovering areas with poor connectivity (e.g., known
 travel route, area look ahead, geo-fencing or subscribing to coverage holes.)
 and show that not only looking up future bandwidth but also when to vary the
 sending rate affects the usefulness of the service. A preliminary analysis
-using simulations of our system is done in~\cite{Curcio:glass}.
+using simulations of our system is done in~\cite{Curcio:glass}. 
+
+Siris~\emph{et al.}~\cite{siris2013improving} use bandwidth maps to offload
+data from WLAN to 3G and vice-versa, choosing the best interface to transfer
+streaming video, but does not use the interfaces simultaneously like MPRTP.
+Similarly, 3GPP's Access Network Discovery and Selection Function (ANDSF)
+standard~\cite{3gpp.andsf} assists mobile endpoints to discover other access
+networks (e.g., WLAN) that may be used instead of the 3G/LTE access network.
+In this case, the operator needs to maintain a service map containing 
+geolocations of WLAN access points.
 
 \begin{figure}[!t]
   \centerline{
