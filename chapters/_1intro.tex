@@ -8,7 +8,7 @@ is attributed to the Adobe Flash Video plugin, but video streaming became ubiqui
 the video tag was introduced into the HTML5 standard~\cite{html5-spec} and
 browsers natively supported rendering media streams. Currently, the same trend
 is observable for real-time communication; present day web services either use
-Adobe's Real-time Media Flow Protocol (RTMFP) \cite{draft.rtmfp} or 
+Adobe's Real-time Media Flow Protocol (RTMFP) \cite{RFC7016} or 
 their own plugins\footnote{There are other plugin-based services: Facebook
 Video based on Skype SDK, Google Talk, Google's Hangout/Helpout services,
 etc.}. As before with media streaming, the community is currently working
@@ -95,10 +95,10 @@ this summary puts them in context.
 Interactive real-time media applications use RTP~\cite{rfc3550} to encapsulate
 multimedia content. RTP is capable of using Transmission Control Protocol (TCP), 
 User Datagram Protocol (UDP) and Datagram Congestion Control Protocol (DCCP) for delivering
-multimedia.  While TCP~\cite{rfc793} is extensively used to deliver multimedia via
+multimedia.  While TCP~\cite{rfc0793} is extensively used to deliver multimedia via
 HTTP streaming, it is not very suitable for real-time communication,
 especially when the path latencies are greater than 100 \emph{ms} \cite{Brosh:tcp-real-time}; 
-hence, UDP~\cite{rfc768} is used to carry real-time multimedia traffic. Since
+hence, UDP~\cite{rfc0768} is used to carry real-time multimedia traffic. Since
 UDP provides no form of congestion control, which is essential for deployment
 on the Internet, multimedia applications have to implement their own congestion control.
 

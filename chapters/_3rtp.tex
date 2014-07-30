@@ -292,8 +292,8 @@ delay metrics~\cite{rfc6843}, burst-gap discard~\cite{rfc7003}, burst-gap
 loss~\cite{rfc6958}, Run-Length Encoded (RLE) loss~\cite{rfc3611}, discard
 RLE~\cite{rfc7097}, the number of discarded packets~\cite{rfc7002} and
 bytes~\cite{rfc7243}, summary statistics~\cite{rfc7004},
-Quality of Experience (QoE)~\cite{draft.xr.qoe}, and loss
-concealment~\cite{draft.xr.conceal}, etc. RTP allows for new metrics to be
+Quality of Experience (QoE)~\cite{rfc7266}, and loss
+concealment~\cite{rfc7294}, etc. RTP allows for new metrics to be
 defined; the main requirement is to document what is measured, how it is
 measured and how it is reported to the other endpoints.
 
@@ -493,12 +493,12 @@ message~\cite{rfc5766}. In Figure~\ref{fig:3:rtp-stack}, four media streams
 relayed through a TURN server. Secure RTP (SRTP)~\cite{rfc3611} is a security
 framework that provides confidentiality by encrypting RTP payload (not the RTP
 headers) and supports source origin authentication. While SRTP is not the only
-security mechanism for RTP~\cite{draft.srtp-not-must}, it is widely
+security mechanism for RTP~\cite{rfc7202}, it is widely
 applicable, especially to voice telephony and group communication. However,
-the main challenge for SRTP is key management~\cite{draft.sec-opts}, since
+the main challenge for SRTP is key management~\cite{rfc7201}, since
 many options exist (e.g., SRTP over DTLS in WebRTC~\cite{rfc5763}, MIKEY in
 SIP~\cite{rfc3830}, Security Description in SDP~\cite{rfc4566},
-ZRTP~\cite{RFC6189}, etc.).
+ZRTP~\cite{rfc6189}, etc.).
 
 \section{Summary}
 
