@@ -844,13 +844,13 @@ can estimate the TCP throughput either using Padhye's full TCP throughput
 equation~\cite{padhye1998modeling} or using Mathis's simplified TCP throughput
 equation~\cite{mathis1997macroscopic}.
 
-In~\cite{padhye1998modeling}, Padhye \emph{et al.} show that the TCP
+In~\cite{padhye1998modeling}, Padhye~\emph{et al.} show that the TCP
 throughput for a long-lived TCP Reno connection can be estimated using the
 following equation:
 \begin{align*}
 X_{kbps} = &\frac{8 \times s}{R \times \sqrt{\frac{2*b*p}{3}}+t_{RTO} \times (3 \times \sqrt{\frac{3*b*p}{8}})\times p \times (1+32 \times p^2)}\\
 \end{align*}
-While Mathis \emph{et al.} in \cite{mathis1997macroscopic} show that under
+While Mathis~\emph{et al.} in \cite{mathis1997macroscopic} show that under
 conditions of low packet loss, Padhye's equation can be simplified to:
 \begin{align*}
     X_{kbps} = & \frac{8 \times s}{R \times \sqrt{\frac{p \times 2}{3})}}
@@ -866,7 +866,7 @@ conditions of low packet loss, Padhye's equation can be simplified to:
 \item[] \texttt{b is the number of acknowledged packets in TCP; typically set $\mathbf{b=1}$.}
 }
 \end{itemize}
-Mathis \emph{et al.} also show that the simplified TCP equation approximates
+Mathis~\emph{et al.} also show that the simplified TCP equation approximates
 Padhye's full equation with reasonable accuracy~\cite{mathis1997macroscopic} .
 
 
