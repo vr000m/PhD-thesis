@@ -366,28 +366,28 @@ super-peers and overlays.
 \section{Types of Video Frames in Interactive Multimedia}
 
 In this subsection we briefly discuss codec design related to interactive
-multimedia and limit the discussion to H.264 and VP8 codecs, however it may
-apply to other modern codecs as well. Both H.264~\cite{h264} and
-VP8~\cite{rfc6386} internally decompose a video frame into square blocks
-called \emph{macroblocks}. The macroblock coder typically uses inter frame
-prediction with motion compensation for compression. Further, the codec design
-is conceptually divided into a Video Coding Layer (VCL) and a Network
-Abstraction Layer (NAL). The VCL takes a complete uncompressed frame and
-outputs slices, which is a group of one or more macroblock. The NAL
-encapsulates these slices into packets, which can be transmitted over IP
+multimedia, for which we limit the discussion to H.264~\cite{h264} and
+VP8~\cite{rfc6386} codecs. However it may apply to other modern codecs as well.
+Typically, the codec design is conceptually divided into a Video Coding Layer
+(VCL) and a Network Abstraction Layer (NAL). The VCL takes a complete
+uncompressed frame and outputs slices, which contains one or more macroblock.
+The NAL encapsulates these slices into packets, which can be transmitted over IP
 networks.
 
 H.264~\cite{h264} has three types of frames: I-, P-, and B-frames. The I-frame
 is an \emph{intra-coded frame}, which does not dependant on any previous frame
-and is in effect like a compressed static image. While the other two types of
-frames hold only parts of the image, are hence smaller in size but depend on
+and is in effect like a compressed static image. In contrast the other two types
+of frames hold only parts of the image, are hence smaller in size but depend on
 other frames to be successfully decoded. A P-frame is a \emph{predictive coded
 frame}, it encodes only the changes from the previous frame. A B-frame is a
 \emph{bipredictive coded frame}, it encodes the changes from the previous and
 next (future) frame. In interactive multimedia, the use of B-frames is
 avoided because depending on future frames introduces unnecessary delay in
-transmission. Therefore, all the algorithms proposed in this thesis use just
-I- and P-frames during media encoding.
+decoding them\footnote{B-frames are extensively used in media streaming 
+applications, as it aids in rewinding and fast forwarding.}.
+Therefore, all the algorithms proposed in this thesis use just I- and P-frames 
+during media encoding.
+
 
 VP8~\cite{rfc6386} has two types of frames: intraframes and interframes.
 Intraframes\footnote{Also known as I-frames or key frames in H.26x codecs} are
@@ -402,7 +402,10 @@ subsequent dependent interframes i.e., rendering errors will occur, until a
 new intraframe is received. To overcome this limitation, VP8 introduces a
 concept of golden frames or alternate reference frames, wherein interframes
 can refer to not only the most recent interframe but also to previous
-intraframe.
+intraframe. This strategy increases the coding overhead and attempts to avoid 
+retransmitting the lost intraframe, but requires the decoder to keep more 
+intraframes in memory for correctly decoding interframes with several 
+reference frames. 
 
 
 \section{Congestion Control Evaluation}
