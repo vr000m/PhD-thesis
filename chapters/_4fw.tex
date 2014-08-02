@@ -303,8 +303,8 @@ super-peer in an overlay network. Consequently, these observed cues need to be
 signalled back to the sender which will perform congestion control. We classify
 these congestion cues as a combination of \emph{where are they
 measured/observed?}, and \emph{how is the sender notified?} For each, there are
-two options: In-path and Off-path \emph{sources} and In-band and Out-of-band 
-\emph{signalling}~\cite{Singh:PhDFw}. In-path congestion cues are measured
+two options: On-path and Off-path \emph{sources} and In-band and Out-of-band 
+\emph{signalling}~\cite{Singh:PhDFw}. On-path congestion cues are measured
 by the receiver or by intermediaries along the path. Off-path congestion
 cues are reported by devices outside the media path (congestion maps,
 overlays, etc.). The combination forms four cases which are visualised in
@@ -327,13 +327,13 @@ the cues out-of-band, i.e., re-use the signalling path (e.g., SIP, XMPP) or
 setup an alternate signalling path (e.g., HTTP or websockets). The following are
 examples for each category in the framework:
 
-\textbf{\texttt{A) In-path, In-band}}: The congestion control algorithm in
+\textbf{\texttt{A) On-path, In-band}}: The congestion control algorithm in
 this case relies on the cues reported in an RTCP feedback from the receiver.
 For example, TFRC using information in RTCP RR, TFRC using additional loss
 reported by ECN markings, Temporary Maximum Media Stream Bit Rate Request
 (TMMBR), Receiver Estimated Max Bit rate (REMB).
 
-\textbf{\texttt{B) In-path, Out-of-band}}: The congestion control algorithm
+\textbf{\texttt{B) On-path, Out-of-band}}: The congestion control algorithm
 relies on the cues reported in the signalling channel; for example, RTSP implements
 a \emph{Speed} parameter to vary the transmission rate, or 3G base stations announce
 the new rate when capacity changes due to cell-loading or handover.
@@ -903,7 +903,7 @@ scenarios.
 \section{Summary}
 
 In this chapter, we aimed to classify congestion control cues for real-time
-communication based on: \emph{where they are measured?} (by in-path or off-
+communication based on: \emph{where they are measured?} (by on-path or off-
 path sources) and \emph{how they are reported?} (via in-band or out-of-band
 signalling). We also describe other fundamental choices needed to implement
 congestion control: congestion cues, reporting frequency and circuit-breaker

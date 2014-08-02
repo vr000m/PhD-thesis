@@ -1,6 +1,6 @@
 Figure~\ref{fig:4:fw} in Chapter~\ref{chap:cc.fw} shows the structure of the
 congestion control framework described in this thesis. The framework
-categorises \emph{in-path} and \emph{off-path} sources and \emph{out-of-band}
+categorises \emph{on-path} and \emph{off-path} sources and \emph{out-of-band}
 signalling for implementing congestion control (corresponds to
 \emph{Block B and D} of Figure~\ref{fig:4:fw}). This chapter is based on our
 work on network-assisted congestion control, which is documented in
@@ -18,7 +18,7 @@ lakes or in the archipelago, rural areas).
 In \citepub{c:3grc}, when the available link capacity changes at a base
 station, it notifies the endpoints connected to it about the current capacity.
 Based on these notifications, the endpoint adapts the media encoding rate. Hence,
-this paper covers the \emph{in-path} sources and \emph{out-of-band} signalling
+this paper covers the \emph{on-path} sources and \emph{out-of-band} signalling
 of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
 performance of employing network assistance for congestion control of interactive
 multimedia in a simulated environment using real-world 3G traces.
@@ -34,7 +34,7 @@ discusses the protocol and implementation aspects of such a service. Lastly,
 we evaluate the performance of using a coverage map for congestion control by
 collecting 3G traces and emulating it in our testbed.
 
-\section{In-path Congestion Cues}
+\section{On-path Congestion Cues}
 
 % ECN, PCN, BW indication
 
@@ -323,9 +323,9 @@ discussed in Chapter~\ref{chap:cc}).
 
 \section{Summary}
 
-In this chapter, we describe two congestion control mechanisms that both use
-out-of-band signalling, but use in-path and off-path sources, respectively.
-First, the in-path middleboxes (e.g., 3G or LTE base-stations) may notify the
+In this chapter, we have described two congestion control mechanisms that uses
+out-of-band signalling, but use on-path and off-path sources, respectively.
+First, the on-path middleboxes (e.g., 3G or LTE base-stations) may notify the
 subscribed  endpoints about bit rate changes using standard RTP extensions
 (e.g., TMMBR). The subscribed endpoints can use these bit rate (change) indications to
 modify the encoding rate in interactive multimedia applications or change
@@ -347,7 +347,7 @@ Furthermore, we also show that using congestion maps also aids in performing
 congestion control. A congestion map is a measurement service that aggregates
 throughput information from multiple users and sends notification of areas
 with poor coverage to its subscribers. We expect these notifications to be
-used as congestion cues and not as a replacement to in-band, in-path
+used as congestion cues and not as a replacement to in-band, on-path
 congestion control. The main reason for restricting the use of such a service
 to notify congestion cues is that such a service is vulnerable to data
 pollution, i.e., the clients may report incorrect measurements, not

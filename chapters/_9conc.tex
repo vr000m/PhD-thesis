@@ -88,10 +88,10 @@ Block D of Figure~\ref{chap9:all_in} shows that the receiver sends an RTCP
 RR and XR containing typical congestion cues. It also sends any estimate made
 by a receiver-side congestion control algorithm (e.g., using TMMBR, REMB).
 Furthermore, it adds any throughput notifications it may have received from an
-in-path middlebox (RTCP XR containing ECN markings or capacity changes
+on-path middlebox (RTCP XR containing ECN markings or capacity changes
 indicated by a base station) or from a NCMS server. The sender decides the new
 target bit rate based on the congestion cues reported by the receiver, and the
-notifications it has also been receiving from an in-path middlebox or from the
+notifications it has also been receiving from an on-path middlebox or from the
 NCMS (Block E of Figure~\ref{chap9:all_in}).
 
 
