@@ -325,14 +325,14 @@ discussed in Chapter~\ref{chap:cc}).
 
 In this chapter, we describe two congestion control mechanisms that both use
 out-of-band signalling, but use in-path and off-path sources, respectively.
-First, the in-path middleboxes (e.g., 3G or LTE base-stations) notifies
+First, the in-path middleboxes (e.g., 3G or LTE base-stations) may notify the
 subscribed  endpoints about bit rate changes using standard RTP extensions
-(e.g., TMMBR). The subscribed endpoints can use these bit rate changes to
+(e.g., TMMBR). The subscribed endpoints can use these bit rate (change) indications to
 modify the encoding rate in interactive multimedia applications or change
 the transmission rate in the case of video on demand services.
 %
-Second, the off-path source is a crowd-sourced 3G coverage map that collects
-throughput and geolocation information from users and then notifies the
+Second, we introduce an off-path source, which is a crowd-sourced 3G coverage map 
+that collects throughput and geolocation information from users, and it notifies the
 subscribed endpoints about the available capacity in their respective
 neighbourhoods. We propose a system to collect and query coverage maps. The
 endpoints query the coverage server using out-of-band signalling to discover
