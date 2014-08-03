@@ -30,11 +30,11 @@ several seconds of content. A larger pre-buffer not only removes the effect of
 packet jitter but also helps in requesting lost packets (via
 \emph{retransmissions}), therefore using a large playout buffer provides the
 opportunity to deliver consistent media quality.
-On the other hand, in real-time communication, there is no pre-stored content
+On the other hand, in real-time communication, the content is not pre-stored
 and endpoints use small buffers. The small buffering duration preserves
 interactivity by maintaining as low a delay as possible (limited only by the
-network delay); hence, endpoints modify the sending rate to best match the
-available capacity and not cause excessive packet delay.
+network delay); hence, endpoints have to modify the sending rate to best match the
+available capacity and not cause excessive packet delay. 
 
 This thesis is about enabling congestion control for unicast real-time
 communication and deploying it in heterogeneous networking environments
@@ -111,7 +111,7 @@ either by concealing it or using some form of error-resilience technique, but
 bursty loss causes visual impairments which adversely affect the user's
 quality of experience~\cite{Zink03subjectiveimpression}.
 
-Additionally, in mobile networks  the capacity available to a user in a cell
+Additionally, in mobile networks the capacity available to a user in a cell
 varies due to mobility, cell-loading, interference, fading, and handover.
 Similarly, the presence of cross-traffic in the bottleneck requires the real-time
 multimedia stream to compete for the available capacity, which may also
