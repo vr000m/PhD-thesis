@@ -84,32 +84,32 @@
 % Use this command!
 \draftabstract{
 
-The deployment of WebRTC and telepresence systems is going to start a wide-
-scale adoption of high quality real-time communication. Delivering high
+The deployment of WebRTC and telepresence systems is going to enable wide-scale 
+adoption of high quality real-time communication. Delivering high
 quality video usually corresponds to an increase in required network capacity
 and also requires an assurance of network stability. A real-time multimedia
 application that uses the Real-time Transport Protocol (RTP) over UDP needs to
 implement congestion control since UDP does not implement any such mechanism.
 This thesis is about enabling congestion control for real-time communication,
-and deploying it on the public Internet containing a mixture of wired and
+and deploying it on the public Internet, which consists of a mixture of wired and
 wireless links.
 
 A congestion control algorithm relies on congestion cues, such as RTT and
 loss. Hence, in this thesis, we first propose a framework for classifying
 congestion cues. We classify the congestion cues as a combination of: where
 they are measured or observed? And, how is the sending endpoint notified? For
-each there are two options, i.e., the cues are either observed and reported by
-an in-path or by an off-path source, and, the cue is either reported in-band
+each, there are two options, i.e., the cues are either observed and reported by
+an on-path or by an off-path source, and, the cue is either reported in-band
 or out-of-band, which results in four combinations. Hence, the framework
 provides options to look at congestion cues beyond those reported by the
 receiver.
 
-We propose a sender-driven, a receiver-driven and a hybrid congestion control
-algorithm. The hybrid algorithm relies on both the sender and receiver co-
-operating to perform congestion control. Lastly, we compare the performance of
+We propose a sender-driven, a receiver-driven, and a hybrid congestion control
+algorithm. The hybrid algorithm relies on both the sender and receiver 
+co-operating to perform congestion control. Lastly, we compare the performance of
 these different algorithms. We also explore the idea of using capacity
 notifications from middleboxes (e.g., 3G/LTE base stations) along the path as
-cues for a congestion control algorithm. Further, we look at the interaction
+cues for a congestion control algorithm. Further, we observe the interaction
 between error-resilience mechanisms and show that FEC can be used in a
 congestion control algorithm for probing for additional capacity.
 
@@ -125,7 +125,7 @@ conditions, which take these notifications into account when performing
 congestion control.
 
 In order to test and refine the ideas presented in this thesis, we have
-implemented most of them in proof-of-concept prototypes, and conducted
+implemented them in proof-of-concept prototypes, and conducted
 experiments and simulations to validate our assumptions and gain new insights.
  
 
@@ -154,7 +154,7 @@ Igor Curcio and Nokia Research Center, presented the practical problems faced
 by multimedia in mobile networks; his experience with mobile systems was
 influential in shaping my early ideas related to congestion control.  
 %
-Colin Perkins, his book on RTP is a practioners guide -- covers aspects of the
+Colin Perkins, his book on RTP is a practitioners guide -- covers aspects of the
 design which are not covered in the RFCs. Additionally, the numerous 
 discussions I had with him during over the span of the last few years has been 
 very beneficial. 
@@ -178,7 +178,7 @@ Widmer. I want to thank them both for their efforts in reviewing the thesis.
 Their comments and suggestions helped improve the quality of the thesis. 
 
 Special thanks my friends: Irena, L\'{a}szl\'{o}, M\'{a}rio, Cathy, Jakub, 
-Markus, J\'{o}se-Luis, Pavan and Tatu for the help and support during
+Markus, Jos\'{e}-Luis, Pavan and Tatu for the help and support during
 the years of research. An extended gratitude to the folks at Aalto 
 Entrepreneurship Society and Startup Sauna -- you rock! To my family for
 the sacrifice they have patiently made. Finally, I thank Irena for helping
@@ -292,11 +292,11 @@ me understand that the benefits out-weigh the risk when following your heart.
 
 % Add the dissertation author's contribution to that publication.
 
-\addcontribution{The author of this dissertation was the main author of this
-paper and co-edited the paper with Colin Perkins. He equally contributed to 
-the ideas and concepts discussed in the paper and he also contributed to
-implementing the algorithm and the overall system, conducting experiments for
-the interactive video scenario and analysing the results.}
+\addcontribution{The author of this dissertation was the main author of 
+this paper and co-edited the paper with Colin Perkins. He equally contributed 
+to the ideas and concepts discussed in the paper.  He also implemented the 
+algorithm, conducted and analysed experiments for the interactive video 
+scenario.}
 
 % Add the errata of the publication, remove if there are none (the order can
 % be interchanged with \addauthorscontribution).

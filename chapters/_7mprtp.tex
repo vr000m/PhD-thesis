@@ -23,7 +23,7 @@ extensions required to set up MPRTP sessions and also ICE extensions to advertis
 MPRTP interfaces and perform NAT traversal.
 
 In \cite{Globisch:AsymGrpComm}, we propose using a network topology with
-multiple distribution trees to distribute video streams in a very large
+multiple distribution trees to distribute media streams in a very large
 video conference call with few active speakers and many passive participants
 listening in. The multiple distribution trees carry separate MPRTP subflows
 and participants are members of multiple distribution trees, but actively
@@ -48,14 +48,14 @@ today feature multiple network interfaces (e.g., WLAN and 3G on mobile
 devices). This may yield the opportunity for two endpoints to communicate via
 multiple paths. While exploiting multipath characteristics
 \cite{Wischik:2008:RPP} has been explored for TCP (e.g.,
-MPTCP~\cite{rfc6824}), the requirements for real-time traffic differs notably
+MPTCP~\cite{wischik:2011nsdi,rfc6824}), the requirements for real-time traffic differs notably
 and TCP can at best serve real-time communication within tight delay
 constraints of the network~\cite{Brosh:tcp-real-time}. In the multipath case,
-the scheduling algorithms do not consider real-time bounds when spreading data
+the (MPTCP) scheduling algorithms do not consider real-time bounds when spreading data
 segments across different paths, and diverse paths may lead to worst-case delay
 and thus even longer buffering time.
 
-\begin{figure}
+\begin{figure}[!t]
 \centerline {
 \includegraphics[width=0.9\textwidth]{chap7-fig_mprtp-1}
 }
@@ -101,7 +101,7 @@ network to another.
 \end{enumerate}
 
 
-\begin{figure}
+\begin{figure}[!t]
 \centerline {
 \includegraphics[width=0.75\textwidth]{chap7-fig-mprtp-stack}
 }
@@ -127,23 +127,23 @@ demands of the application. From a protocol perspective, RTP must be extended
 to perform these functions, yet maintain backwards compatibility.
 
 
-Specifically for multimedia, Liang \emph{et al.}~\cite{Liang01} show that
+Specifically for multimedia, Liang~\emph{et al.}~\cite{Liang01} show that
 transmitting redundant voice traffic over multiple paths performs better than 
-an FEC-protected single stream. Chesterfield \emph{et al.}~\cite{1498479}
+an FEC-protected single stream. Chesterfield~\emph{et al.}~\cite{1498479}
 show that sending media over one 3G interface and UEP packets over a separate 
 3G interface can compensate for losses on the first path. 
-Chebrolu \emph{et al.}~\cite{1599407} propose capacity aggregation for
+Chebrolu~\emph{et al.}~\cite{1599407} propose capacity aggregation for
 multimedia applications by computing the earliest delivery time for each
 packet. They further propose to drop less important frames (e.g., B-frames) if
 the available capacity is smaller than the current encoding
-rate~\cite{1313320}. Jurca \emph{et al.}~\cite{4130370:jurca} propose a
+rate~\cite{1313320}. Jurca~\emph{et al.}~\cite{4130370:jurca} propose a
 frame-aware scheduling algorithm that sends key frames and other important
 media packets over less lossy paths, and this approach is similar to the one
 proposed in this paper. However, they also propose sending future packets over
 high-latency paths by reading ahead in the media stream. While this is an
 interesting concept, it would require larger buffers and keeping more state at the
 sender (typically, RTSP servers) to read ahead the stored media stream, which
-would not work for interactive multimedia and live video streams where the 
+would not work for interactive multimedia and live media streams where the 
 application cannot read ahead (into future packets).
 
 Our proposed scheduling algorithm in \citepub{c:mprtp} calculates the per path
@@ -235,7 +235,7 @@ want to include the high latency path as soon as possible.
 Depending on the fractional traffic distribution and RTT per path, our
 experiments show that our proposed method performs better in adapting the
 playout quickly. It takes some 3\,\emph{s} to adapt the playout, while the method
-implemented in~\cite{Fober05,Colin03} takes $15$-$20$s. Also, our algorithm
+implemented in~\cite{871096,Fober05,Colin03} takes $15$-$20$s. Also, our algorithm
 converges more quickly than the receiver can report the RTT to the sender; the
 typical RTCP interval is $5\,\pm\,2.5$s.
 
@@ -359,7 +359,7 @@ is orthogonal to rate adaptation--which would just change the aggregate media
 rate to spread across each subflow.
 
 
-\begin{figure}
+\begin{figure}[!t]
     \centerline{
         {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap7-graph_variable_bw_13073-2p5-2}}
@@ -371,8 +371,8 @@ rate to spread across each subflow.
 
 \textbf{\texttt{Offloading}}: In this scenario, the end-to-end capacity on one
 path is variable, demonstrating the sensitivity of the scheduling algorithm
-to the changes in network capacity, which may be caused by \emph{cross-
-traffic}. In Figure~\ref{chap7:fig_sim_var_bw}, the Path B's capacity varies
+to the changes in network capacity, which may be caused by 
+\emph{cross-traffic}. In Figure~\ref{chap7:fig_sim_var_bw}, the Path B's capacity varies
 while Path A's capacity remains constant. The figure also shows the
 instantaneous bandwidth utilisation for each MPRTP subflow. In this case where
 congestion is observed on Path B, the scheduling algorithm reallocates the media
@@ -391,7 +391,7 @@ to prefer sending more media over the WLAN path. Despite using two lossy paths,
 the PSNR of the media stream (see Table~\ref{table-bb-3g}) in this scenario is
 close to that of the original stream.
 
-\begin{figure}
+\begin{figure}[!t]
     \centerline{
         {\includegraphics[width=0.8\textwidth] %clip=true, trim=0 1cm 0 1.5cm]
         {chap7_graph_bb_3g_s17075-2p3-2}}

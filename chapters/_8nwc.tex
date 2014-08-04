@@ -1,6 +1,6 @@
 Figure~\ref{fig:4:fw} in Chapter~\ref{chap:cc.fw} shows the structure of the
 congestion control framework described in this thesis. The framework
-categorises \emph{in-path} and \emph{off-path} sources and \emph{out-of-band}
+categorises \emph{on-path} and \emph{off-path} sources and \emph{out-of-band}
 signalling for implementing congestion control (corresponds to
 \emph{Block B and D} of Figure~\ref{fig:4:fw}). This chapter is based on our
 work on network-assisted congestion control, which is documented in
@@ -17,10 +17,10 @@ lakes or in the archipelago, rural areas).
 
 In \citepub{c:3grc}, when the available link capacity changes at a base
 station, it notifies the endpoints connected to it about the current capacity.
-Based on these notifications, the sender adapts the media encoding rate. Hence,
-this paper covers the \emph{in-path} sources and \emph{out-of-band} signalling
+Based on these notifications, the endpoint adapts the media encoding rate. Hence,
+this paper covers the \emph{on-path} sources and \emph{out-of-band} signalling
 of the framework defined in Chapter~\ref{chap:cc.fw}. We evaluate the
-performance of employing network assistance for congestion control of conversational
+performance of employing network assistance for congestion control of interactive
 multimedia in a simulated environment using real-world 3G traces.
 
 In \citepub{c:glass}, we explore the use of coverage maps for congestion
@@ -34,7 +34,7 @@ discusses the protocol and implementation aspects of such a service. Lastly,
 we evaluate the performance of using a coverage map for congestion control by
 collecting 3G traces and emulating it in our testbed.
 
-\section{In-path Congestion Cues}
+\section{On-path Congestion Cues}
 
 % ECN, PCN, BW indication
 
@@ -54,7 +54,7 @@ reported ECN markings, and one-way delay measurements into a single cue. The
 sender calculates the new rate based on the variation in the delay compared 
 to earlier measurements and the priority of the multimedia stream~\cite{pv-nada}.
 
-\begin{figure}
+\begin{figure}[!t]
 \includegraphics[width=\textwidth]{chap8-fig-tmmbr}
   \caption{Endpoints receiving capacity indication from the middleboxes
   (TMMBR) for implementing congestion control.}
@@ -93,7 +93,7 @@ comparable throughput of 178\,\emph{kbps} but with a 2\,\% loss ratio.
 % Eventhough modern 3G/LTE networks are capable of providing these updates, they
 % do not for several reasons
 
-\begin{figure}
+\begin{figure}[!t]
   \centerline{
     \subfloat[TMMBR-A]{
       \includegraphics[width=0.5\textwidth, clip=true, trim=3cm 0 4.5cm 0]
@@ -131,7 +131,7 @@ strength as an influential factor for rate-control and show that predicting
 based on signal strength alone is insufficient. Yet, their results indicate
 that past information can be used to predict future network characteristics.
 
-Riiser\emph{et al.}~\cite{6012045} proposes a similar architecture (\emph{bandwidth lookup
+Riiser~\emph{et al.}~\cite{6012045} proposes a similar architecture (\emph{bandwidth lookup
 service}) to the one in \citepub{c:glass}, but uses different types of
 averaging algorithms to predict future network characteristics in Dynamic
 Adaptive Streaming over HTTP (DASH). While the averaging algorithm is not a
@@ -144,22 +144,31 @@ divides the Earth's geographic map into 100m\,x\,100m squares. All measurements 
 specific area are averaged, and the maximum, minimum and mean values for 
 each operator in that area is reported. 
 
-\begin{figure}
+\begin{figure}[!t]
 \includegraphics[width=0.9\textwidth]{chap8-fig-ecv}
   \caption{Endpoints using a Network Coverage Map Service to send coverage
   updates, query for upcoming congestion and receive coverage updates.}
 \label{fig:cc:ecv}
 \end{figure}
 
-Riiser\emph{et al.}~\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
+Riiser~\emph{et al.}~\cite{Riiser:2012:2240136} proposes fetching the bandwidth along a travel
 route in steps of 100 meters, which we find limiting. Instead, we propose
 multiple methods for discovering areas with poor connectivity (e.g., known
 travel route, area look ahead, geo-fencing or subscribing to coverage holes.)
 and show that not only looking up future bandwidth but also when to vary the
 sending rate affects the usefulness of the service. A preliminary analysis
-using simulations of our system is done in~\cite{Curcio:glass}.
+using simulations of our system is done in~\cite{Curcio:glass}. 
 
-\begin{figure}
+Siris~\emph{et al.}~\cite{siris2013improving} use bandwidth maps to offload
+data from WLAN to 3G and vice-versa, choosing the best interface to transfer
+streaming video, but does not use the interfaces simultaneously like MPRTP.
+Similarly, 3GPP's Access Network Discovery and Selection Function (ANDSF)
+standard~\cite{3gpp.andsf} assists mobile endpoints to discover other access
+networks (e.g., WLAN) that may be used instead of the 3G/LTE access network.
+In this case, the operator needs to maintain a service map containing 
+geolocations of WLAN access points.
+
+\begin{figure}[!t]
   \centerline{
     \subfloat[Map area lookahead]{
       \includegraphics[width=0.8\textwidth]
@@ -292,7 +301,7 @@ the client will perform a rate-switch. Finally, we expect the performance of
 the congestion control to be at least that of rate-switching because the
 sender will be able to vary the sending rate preemptively without probing.
 
-\begin{figure}
+\begin{figure}[!t]
 \includegraphics[width=0.9\textwidth]{chap8-graph-sim7-3}
   \caption{The plot shows the variation of sending rate to 3G link capacity
   based on a) no adaptation b) Omniscient c) Rate-switching d) Late scheduling
@@ -304,7 +313,7 @@ sender will be able to vary the sending rate preemptively without probing.
 We find that the information provided by the NCMS is suitable for both
 predictive rate-switching and  pre-buffering and helped in avoiding almost all
 packet losses in the scenarios we investigated, noticeably increasing video
-quality. This system works for video streaming and can be adapted for
+quality. This system works for media streaming and can be adapted for
 interactive media communication, wherein the sender employs a co-operative
 congestion control scheme, i.e., the sender receives the \emph{estimated
 capacity vector} from the receiver and \emph{coverage map information} for
@@ -314,18 +323,21 @@ discussed in Chapter~\ref{chap:cc}).
 
 \section{Summary}
 
-In this chapter, we describe two congestion control mechanisms that both use 
-out-of-band signalling, but use in-path and off-path sources, respectively. 
-First, the in-path sources is based on receiving congestion cues from middleboxes
-(e.g., 3G or LTE base-stations) and uses standard RTP extensions (e.g., TMMBR)
-for signalling bit rate changes. 
-Second, the off-path source is a crowd-sourced 3G coverage map that collects 
-throughput and geolocation information from users and then
-notifies the subscribed endpoints about the available capacity in their
-respective neighbourhoods. We propose a system to collect and query coverage
-maps. The endpoints query the coverage server using out-of-band signalling to
-discover areas of poor coverage; based on these notifications the endpoints
-vary their sending rate.
+In this chapter, we have described two congestion control mechanisms that uses
+out-of-band signalling, but use on-path and off-path sources, respectively.
+First, the on-path middleboxes (e.g., 3G or LTE base-stations) may notify the
+subscribed  endpoints about bit rate changes using standard RTP extensions
+(e.g., TMMBR). The subscribed endpoints can use these bit rate (change) indications to
+modify the encoding rate in interactive multimedia applications or change
+the transmission rate in the case of video on demand services.
+%
+Second, we introduce an off-path source, which is a crowd-sourced 3G coverage map 
+that collects throughput and geolocation information from users, and it notifies the
+subscribed endpoints about the available capacity in their respective
+neighbourhoods. We propose a system to collect and query coverage maps. The
+endpoints query the coverage server using out-of-band signalling to discover
+areas of poor coverage. Similarly, based on these notifications the endpoints
+vary their encoding or transmission rate.
 
 We show that notification from middleboxes such as base stations would
 help endpoints perform better congestion control, for example, when an LTE cell 
@@ -335,7 +347,7 @@ Furthermore, we also show that using congestion maps also aids in performing
 congestion control. A congestion map is a measurement service that aggregates
 throughput information from multiple users and sends notification of areas
 with poor coverage to its subscribers. We expect these notifications to be
-used as congestion cues and not as a replacement to in-band, in-path
+used as congestion cues and not as a replacement to in-band, on-path
 congestion control. The main reason for restricting the use of such a service
 to notify congestion cues is that such a service is vulnerable to data
 pollution, i.e., the clients may report incorrect measurements, not
@@ -351,6 +363,6 @@ may also lead to inefficiency because once an aggregation value in a region
 drops, it would stay there unless the endpoints probe for additional capacity.
 
 While we show that NCMS can be used for streaming both the live and stored
-multimedia content, it can be adapted to work with conversational multimedia.
+multimedia content, it can be adapted to work with interactive multimedia.
 However, we believe that the NCMS notifications would perform best when
 working alongside an existing congestion control algorithm.
