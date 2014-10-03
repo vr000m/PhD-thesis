@@ -285,17 +285,17 @@ Indication (SLI), and the Reference Picture Selection Indication (RPSI).
 \section{RTCP Extended Reports (XRs) for Performance Monitoring}
 
 Endpoints use RTCP Extended Reports (XRs)~\cite{rfc3611} to describe complex
-metrics that are not exposed by the RTCP Receiver Report (RR). Some examples of
-XRs relevant to performance monitoring and congestion control are: dejitter
+metrics that are not exposed by the RTCP Receiver Report (RR). Some examples
+of XRs relevant to performance monitoring and congestion control are: dejitter
 buffer metrics~\cite{rfc7005}, Packet Delay Variation (PDV)~\cite{rfc6798},
 delay metrics~\cite{rfc6843}, burst-gap discard~\cite{rfc7003}, burst-gap
 loss~\cite{rfc6958}, Run-Length Encoded (RLE) loss~\cite{rfc3611}, discard
 RLE~\cite{rfc7097}, the number of discarded packets~\cite{rfc7002} and
-bytes~\cite{rfc7243}, summary statistics~\cite{rfc7004},
-Quality of Experience (QoE)~\cite{rfc7266}, and loss
-concealment~\cite{rfc7294}, etc. RTP allows for new metrics to be
-defined; the main requirement is to document what is measured, how it is
-measured and how it is reported to the other endpoints.
+bytes~\cite{rfc7243}, post-repair loss count~\cite{draft.xr.post.repair},
+summary statistics~\cite{rfc7004, draft.webrtc.stats}, Quality of Experience
+(QoE)~\cite{rfc7266}, and loss concealment~\cite{rfc7294}, etc. RTP allows for
+new metrics to be defined; the main requirement is to document what is
+measured, how it is measured and how it is reported to the other endpoints.
 
 
 % The RTCP Extended Reports (XR) [RFC3611] allow reporting of more
