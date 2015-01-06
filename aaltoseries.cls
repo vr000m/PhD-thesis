@@ -411,7 +411,7 @@
 	\gdef\AaltoSeriesPrefaceEnding{#1}%
 }{%
 	\vskip2\baselineskip%
-	\noindent\ifthenelse{\equal{\AaltoSeriesPrefaceEnding}{}}{}{\AaltoSeriesPrefaceEnding, }\@date,\vskip2\baselineskip%
+	\noindent\ifthenelse{\equal{\AaltoSeriesPrefaceEnding}{}}{}{\AaltoSeriesPrefaceEnding, } July 31, 2014.,\vskip2\baselineskip%
 	\noindent\AaltoSeriesPrefaceAuthor%
 	\gdef\AaltoSeriesPrefaceEnding{}
 }
@@ -655,6 +655,7 @@
 
 %% Renew the bibliography environment
 \makeatletter
+\renewcommand{\bibname}{References}
 \renewenvironment{thebibliography}[1]{%
 	\ifthenelse{\boolean{aaltoseriesnochapters}}{%
 		\section*{\bibname}%
