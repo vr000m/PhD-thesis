@@ -44,14 +44,14 @@ management (e.g., RED). A router marks a packet, indicating that the packet
 experienced congestion and that the router would soon drop packets for this
 flow~\cite{rfc3168}. The receiver on receiving this indication keeps a counter
 for the number of ECN-marked IP packets and signals it to the sender. For
-performing congestion control, the sender typically treats the count of 
+performing congestion control, the sender typically treats the count of
 ECN-marked packets as lost packets~\cite{rfc6679}. For example, the sender uses
 the sum of the reported loss events and the reported ECN events as the
 \emph{p} (loss) value in the TFRC equation. Network-Assisted Dynamic
-Adaptation (NADA)~\cite{rmcat-nada} proposes a delay-based congestion control 
+Adaptation (NADA)~\cite{rmcat-nada} proposes a delay-based congestion control
 wherein the receiver measures congestion by aggregating the packet loss count,
 reported ECN markings, and one-way delay measurements into a single cue. The
-sender calculates the new rate based on the variation in the delay compared 
+sender calculates the new rate based on the variation in the delay compared
 to earlier measurements and the priority of the multimedia stream~\cite{pv-nada}.
 
 \begin{figure}[!t]
@@ -65,7 +65,7 @@ In wireless networks, such as 3G/LTE, the last hop is typically the bottleneck
 because the core network is well provisioned. In \citepub{c:3grc}, we
 implement a network-assisted congestion control scheme wherein base-stations
 (along the media path) notify the mobile terminals about the available link
-capacity over the wireless interface. 
+capacity over the wireless interface.
 In TMMBR-A, the base-stations notify both the sending and receiving
 endpoints about the available capacity, i.e., the sender is notified about the
 uplink capacity and the receiver is notified about the downlink capacity. If
@@ -77,11 +77,11 @@ downlink capacity. Both TMMBR-A and TMMBR-B employ a co-operative congestion
 control scheme, wherein the receiver sends a TMMBR request to the sender
 containing the current downlink capacity. In TMMBR-A, the sender also receives
 a notification about the uplink capacity from the base-station; hence,
-comparing the request from the receiver and the notification from the base-station, 
+comparing the request from the receiver and the notification from the base-station,
 the sender chooses the minimum of the two values as the new target media bit rate. In
 TMMBR-B, the sender calculates the \emph{sender's estimate} (similar to the
 one described in~\ref{cc:co-op}) and chooses the minimum of the sender's
-estimate and the receiver's bit rate request. 
+estimate and the receiver's bit rate request.
 
 
 Figure~\ref{fig:tmmbn} shows the sample performance of TMMBR-A and TMMBR-B,
@@ -141,8 +141,8 @@ form regions with similar capacity. Details of the averaging algorithms
 employed by our coverage map server are discussed in~\cite{sharmistha-thesis}.
 A contrary approach is employed by \emph{Netradar.org}~\cite{6576402} which
 divides the Earth's geographic map into 100m\,x\,100m squares. All measurements in a
-specific area are averaged, and the maximum, minimum and mean values for 
-each operator in that area is reported. 
+specific area are averaged, and the maximum, minimum and mean values for
+each operator in that area is reported.
 
 \begin{figure}[!t]
 \includegraphics[width=0.9\textwidth]{chap8-fig-ecv}
@@ -157,7 +157,7 @@ multiple methods for discovering areas with poor connectivity (e.g., known
 travel route, area look ahead, geo-fencing or subscribing to coverage holes.)
 and show that not only looking up future bandwidth but also when to vary the
 sending rate affects the usefulness of the service. A preliminary analysis
-using simulations of our system is done in~\cite{Curcio:glass}. 
+using simulations of our system is done in~\cite{Curcio:glass}.
 
 Siris~\emph{et al.}~\cite{siris2013improving} use bandwidth maps to offload
 data from WLAN to 3G and vice-versa, choosing the best interface to transfer
@@ -165,7 +165,7 @@ streaming video, but does not use the interfaces simultaneously like MPRTP.
 Similarly, 3GPP's Access Network Discovery and Selection Function (ANDSF)
 standard~\cite{3gpp.andsf} assists mobile endpoints to discover other access
 networks (e.g., WLAN) that may be used instead of the 3G/LTE access network.
-In this case, the operator needs to maintain a service map containing 
+In this case, the operator needs to maintain a service map containing
 geolocations of WLAN access points.
 
 \begin{figure}[!t]
@@ -213,7 +213,7 @@ containing a time-series of available throughput, thus preserving user's
 location privacy) to the sender, which can alter the sending rate based on the
 received information. The sender can use one of the following techniques to pick the
 sending rate: 1) adapt the encoding rate, 2) perform a rate-switch, or, 3)
-pre-buffer. Changing the encoding rate is only possible in interactive 
+pre-buffer. Changing the encoding rate is only possible in interactive
 real-time media, because the RTP sender co-operates with the encoder to  modify the
 encoding rate. Rate-switching is possible for streaming content  encoded at
 different bit rates. It is also possible to use rate-switching  for
@@ -221,11 +221,11 @@ interactive real-time media involving Scalable Video Codecs (SVC) or simulcast
 media, wherein a media stream is encoded at different bit rates and the
 application switches between these different media streams. The performance of the
 congestion control in this case depends on the granularity of the chosen bit
-rates for the individual media streams. Lastly, varying the amount of 
+rates for the individual media streams. Lastly, varying the amount of
 pre-buffered video provides a more consistent experience to the user,  because the
 technique attempts to maintain multimedia playback at a constant media
-encoding rate. This is only applicable to stored content since the multimedia 
-application typically reads ahead in the media stream and sends more data 
+encoding rate. This is only applicable to stored content since the multimedia
+application typically reads ahead in the media stream and sends more data
 much before before it detects poor coverage.
 
 In \citepub{c:glass}, video is sent from a server to mobile clients. The user
@@ -247,8 +247,8 @@ four different algorithms: 1) the \emph{omniscient algorithm}, in which the
 endpoint is aware of the exact end-to-end channel capacity and is expected to
 perform the perfect rate-adaptation. 2) \emph{no adaptation}, in which the endpoints
 perform no congestion control and the stream is transmitted at a constant bit
-rate. In the periods when the link capacity falls below the media rate, the 
-receiver will observe an increase in losses/discards, which may result in 
+rate. In the periods when the link capacity falls below the media rate, the
+receiver will observe an increase in losses/discards, which may result in
 frequent pausing of the video. 3) \emph{Rate-switching}, in which the endpoints perform short
 \emph{lookaheads}, which enables the endpoints to detect outages a few moments
 before the user enters a location with poor connectivity. In this case, the
@@ -267,8 +267,8 @@ uses the congestion control algorithm proposed in \citepub{c:glass}.
 Method & $SR_{avg}$ & $PSNR_{avg}$ & $\sigma_{PSNR}$ & PLR \\ \hline
 % & $buffer_{max}$\\ \hline
 No adaptation   & 865   & 27.48 & 4.55  & 6.6 \\
-Omniscient      & 929   & 43.12 & 1.9   & 0.33 \\ 
-Rate-switching  & 881   & 42.75 & 2.21  & 0.0  \\ 
+Omniscient      & 929   & 43.12 & 1.9   & 0.33 \\
+Rate-switching  & 881   & 42.75 & 2.21  & 0.0  \\
 Late scheduling & 1014  & 48.43 & 0.18 & 0.0  \\ \hline
 \end{tabular}
 \caption{A bus ride with good 3G coverage.}
@@ -280,7 +280,7 @@ Late scheduling & 1014  & 48.43 & 0.18 & 0.0  \\ \hline
 Table~\ref{table-glass-sim7res} compares the results for the different schemes
 and Figure~\ref{fig:glass:sim7res} shows the sending/receiver rate variation
 to channel throughput for one out of 10, simulation runs. The \emph{omniscient
-algorithm} provides the best rate-adaptation but since it is unable to 
+algorithm} provides the best rate-adaptation but since it is unable to
 pre-buffer, the PSNR ($PSNR_{avg}$=43) is lower than that of late scheduling
 ($PSNR_{avg}$=48). Alternatively, performing \emph{no adaptation} causes
 frequent pausing when the capacity is lower than the media rate, additionally,
@@ -291,7 +291,7 @@ lower than the minimum reported throughput. There are no losses and the average
 PSNR is 42.75, which is comparable to the \emph{omniscient} case. \emph{Late
 scheduling} outperforms the rest of the schemes in terms of media quality
 (measured in terms of average PSNR, $PSNR_{avg}$=48.43) mainly because it
-attempts to stream media at a single quality level; it relies heavily on 
+attempts to stream media at a single quality level; it relies heavily on
 pre-buffering, constantly updating the size of the pre-buffer to compensate for
 the longest disruption it finds along the travel-route or in the vicinity of
 the user. Another reason is that, in our measurements, we found low density of
@@ -331,7 +331,7 @@ subscribed  endpoints about bit rate changes using standard RTP extensions
 modify the encoding rate in interactive multimedia applications or change
 the transmission rate in the case of video on demand services.
 %
-Second, we introduce an off-path source, which is a crowd-sourced 3G coverage map 
+Second, we introduce an off-path source, which is a crowd-sourced 3G coverage map
 that collects throughput and geolocation information from users, and it notifies the
 subscribed endpoints about the available capacity in their respective
 neighbourhoods. We propose a system to collect and query coverage maps. The
@@ -340,7 +340,7 @@ areas of poor coverage. Similarly, based on these notifications the endpoints
 vary their encoding or transmission rate.
 
 We show that notification from middleboxes such as base stations would
-help endpoints perform better congestion control, for example, when an LTE cell 
+help endpoints perform better congestion control, for example, when an LTE cell
 in a mobile network is experiencing extreme load\footnote{Extreme load
 occurs when an LTE cell has about 10x more users than when it is busy.}.
 Furthermore, we also show that using congestion maps also aids in performing

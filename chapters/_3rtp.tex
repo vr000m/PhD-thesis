@@ -35,7 +35,7 @@ endpoint, typically useful when an endpoint sends multiple media streams that
 need to be synchronised (e.g., audio and video lip-sync). The \textit{RTP
 timestamp} assists in playing out the received packets at the appropriate
 instance of time and recomposing the media frame from RTP packets. The
-\textit{RTP sequence number} assists in identifying the lost packets and 
+\textit{RTP sequence number} assists in identifying the lost packets and
 re-ordering packets in the case of out-of-order packet arrival. Lastly, RTP uses
 the \textit{`payload type'} (PT) to describe the encoding of the media data it is
 carrying. Consequently, each codec needs to specify its corresponding payload
@@ -115,8 +115,8 @@ format.
 }
 \end{spacing}
 \caption{The RTCP packet format for carrying the Sender Report (SR) and
-the Receiver Report (RR). The SR carries transport statistics and enables 
-stream synchronisation, while the RR carries the receiver transport 
+the Receiver Report (RR). The SR carries transport statistics and enables
+stream synchronisation, while the RR carries the receiver transport
 characteristics.}
 \label{fig:3:rtcp.hdr}
 \end{figure}
@@ -124,8 +124,8 @@ characteristics.}
 % \begin{figure}[!h]
 % \centering{\includegraphics[width=\textwidth]{chap3_fig_hdr_rtcp}}
 % \caption{shows the RTCP packet format for carrying the Sender Report (SR) and
-% the Receiver Report (RR). The SR carries transport statistics and enables 
-% stream synchronization, while the RR carries the receiver transport 
+% the Receiver Report (RR). The SR carries transport statistics and enables
+% stream synchronization, while the RR carries the receiver transport
 % characteristics.}
 % \label{fig:3:rtcp.hdr}
 % \end{figure}
@@ -142,8 +142,8 @@ interactive unicast media stream (i.e., both sending and receiving media).
 
 \section{RTP Payload Formats}
 
-The general principle for defining payload formats/types is to 
-identify the encoding of the media packets. These encodings are either  
+The general principle for defining payload formats/types is to
+identify the encoding of the media packets. These encodings are either
 codec-specific (e.g., H.264, H.263, H.261, MPEG-2, JPEG, G.711, G.722, AMR, etc.),
 or generic (e.g., Forward Error Correction (FEC), NACK, multiplexed streams).
 Typically, a payload document specifies a well-defined packet format for media
@@ -240,7 +240,7 @@ are a large number of receivers but a small number of senders, it is
 recommended that a quarter of the reporting bandwidth (\emph{rtcp\_bw}) be
 shared equally by the senders and the remaining three-quarters by the receivers. The
 main reason for this allocation ratio is to allow newly-joining participants to quickly receive the
-CNAME and synchronisation timestamps from the Sender Reports (SRs). 
+CNAME and synchronisation timestamps from the Sender Reports (SRs).
 For new participants (even if they are just receivers), the RTCP
 interval is halved to quickly declare their presence.  Lastly, the recommended
 value for a fixed minimum RTCP interval is 5 seconds, while the value for a
@@ -326,7 +326,7 @@ independent of any particular codec or application.
 
 On the other hand, the payload-specific feedback messages carry information
 specific to a certain payload type and are acted upon by the codec layer. Some
-examples of these type of messages are: Full Intra Request (FIR), 
+examples of these type of messages are: Full Intra Request (FIR),
 temporal-spatial tradeoff, frame rate, frame size, maximum packet size or packet rate,
 etc.~\cite{draft.avt.cop}.
 
@@ -340,7 +340,7 @@ a Source Description (SDES) and any additional XR blocks. A \emph{minimal RTCP
 packet} is one that contains an SR and/or RR, and is followed by an SDES
 containing just the canonical name (CNAME)\footnote{The real name
 (identifier) used to describe the source; it can be in any form desired by the
-user. Of the SDES items (username, email, phone, geolocation, etc.), it is 
+user. Of the SDES items (username, email, phone, geolocation, etc.), it is
 compulsory to include CNAME in every RTCP packet.}. Hence, every compound RTCP
 packet is a minimal RTCP packet with additional report blocks. A typical RTCP
 packet size for interactive multimedia streams is 80 bytes (RTCP=8, SR=20,
@@ -397,7 +397,7 @@ a interactive video call.}
 
 
 The transport details in the SDP are mainly split into two parts: the protocol
-for delivering media packets (currently, TCP, UDP, or SCTP), and the 
+for delivering media packets (currently, TCP, UDP, or SCTP), and the
 IP address of the endpoint. The protocol to deliver the media packets is
 chosen by the application, but identifying the IP address and port of an
 endpoint is a bit complex. It first requires gathering the endpoint's multiple
@@ -411,7 +411,7 @@ media streams may eventually traverse a NAT at both ends, in some cases, the
 only way to deliver media packets between two endpoints would is by using
 a relay\footnote{Traversal Using Relays around NAT (TURN)} on the public
 Internet. Hence, the endpoint needs to discover its 2-tuple \texttt{[IP
-address:port]} on the host, which is relatively easy followed by the public 
+address:port]} on the host, which is relatively easy followed by the public
 address, if behind a NAT~\cite{rfc5389}. Discovering an endpoint's public address
 requires contacting a publicly-hosted STUN\footnote{Session Traversal
 Utilities for NAT (STUN).} server and comparing the endpoint's
@@ -427,7 +427,7 @@ chooses the first candidate pair that successfully establishes connectivity
 (\emph{aggressive nomination}). This process of performing pair-wise
 \emph{connectivity checks} is called Interactive Connectivity Establishment
 (ICE)~\cite{rfc5245, rfc6544} and it relies on the STUN protocol~\cite{rfc5389} to establish connectivity
-across a NAT. In case direct connectivity between the two endpoints fails 
+across a NAT. In case direct connectivity between the two endpoints fails
 to be established, the individual endpoints use the \emph{Traversal Using Relays
 around NAT} (TURN) server and the associated protocol~\cite{rfc5766} to relay
 media packets between them. Similar to the STUN server, the TURN
@@ -449,7 +449,7 @@ server is hosted on the public Internet.
         m=audio 45664 RTP/AVP 0
         a=rtpmap:0 PCMU/8000
         a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
-        a=candidate:2 1 UDP 1694498815 195.148.127.98 45664 typ srflx 
+        a=candidate:2 1 UDP 1694498815 195.148.127.98 45664 typ srflx
             raddr 10.0.1.1 rport 8998
 \end{verbatim}
 }
@@ -457,7 +457,7 @@ server is hosted on the public Internet.
 \label{fig:3:sdp}
 \end{figure}
 
-The second part of SDP carries the media capabilities, together with the 
+The second part of SDP carries the media capabilities, together with the
 transport parameters, that bind the SDP to the Offer/Answer model. In the O/A
 model, the sending endpoint \emph{offers} to the receiver a set of media
 capabilities in decreasing order of preference, typically, multiple options of
@@ -466,7 +466,7 @@ the receiver compares its media capabilities with the sender's and responds
 with the one that best fits the receiver's requirements (\emph{answer}). The
 \emph{offer is rejected} if the receiver is unable to pick any
 of the options provided by the sender, or if the ICE connectivity checks fail.
-Hence, the application at the sender needs to pick a minimum number of widely-available 
+Hence, the application at the sender needs to pick a minimum number of widely-available
 audio and video codecs to avoid negotiation failure. If the
 \emph{offer is accepted}, both endpoints then know the following: 1) which
 audio and/or video codecs to use, 2) the payload types of the encoded media
@@ -505,5 +505,5 @@ ZRTP~\cite{rfc6189}, etc.).
 In this chapter we introduced the basic features of RTP and RTCP; we discussed
 the limits on reporting interval and the numerous RTP and RTCP extensions.
 The introduction to RTP and RTCP largely provides context and helps understand
-the design constraints  for multimedia congestion control which are discussed 
+the design constraints  for multimedia congestion control which are discussed
 in more detail in the forthcoming chapters.

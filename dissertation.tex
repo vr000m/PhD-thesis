@@ -17,27 +17,27 @@
 \usepackage{graphicx}
  \graphicspath{{graphs/}}
  \DeclareGraphicsExtensions{.pdf}
- 
+
 \usepackage{amsmath}% http://ctan.org/pkg/amsmath
 %%,amsfonts,amsthm,amsxtra,amsbsy,amssymb,mathrsfs}   % Mathematics
 %\usepackage{bm} % bold math argument, http://www.ctan.org/pkg/bm
 
-\usepackage{url}                   
+\usepackage{url}
                 % http://ctan.org/tex-archive/macros/latex/contrib/url
-\usepackage[caption=false,font=footnotesize]{subfig}                
+\usepackage[caption=false,font=footnotesize]{subfig}
                 % http://ctan.org/tex-archive/macros/latex/contrib/subfig
 \usepackage[labelfont=bf]{caption}  % , justification=centering
-\usepackage{acronym}               
+\usepackage{acronym}
                 % http://ctan.org/tex-archive/macros/latex/contrib/acronym
-\usepackage{booktabs}              
+\usepackage{booktabs}
                 % http://ctan.org/tex-archive/macros/latex/contrib/booktabs
-\usepackage{bytefield}             
+\usepackage{bytefield}
                 % http://ctan.org/tex-archive/macros/latex/contrib/bytefield
-\usepackage{listings}              
+\usepackage{listings}
                 % http://ctan.org/tex-archive/macros/latex/contrib/listings
 \usepackage{float}                 % Needed for hyperref - see note above
 \usepackage{hyperref}              % Problematic - see note above
-\usepackage{algorithm}             
+\usepackage{algorithm}
                 % http://ctan.org/tex-archive/macros/latex/contrib/algorithms
 \usepackage{algorithmic}           % (also part of the algorithms bundle)
 
@@ -48,7 +48,7 @@
 \usepackage{multirow}   % for multirows
 \usepackage{rotating}
 
-\usepackage{setspace} 
+\usepackage{setspace}
 
 %\floatstyle{plain}
 %\newfloat{program}{thp}{figures}[chapter]
@@ -65,7 +65,7 @@
   pdfauthor={Varun Singh},
   pdftitle={Protocols and Algorithms for Adaptive Multimedia Systems},
   pdfsubject={RTP Congestion Control},
-  pdfkeywords={RTP} {Congestion Control} {MPRTP} {Geo-location} 
+  pdfkeywords={RTP} {Congestion Control} {MPRTP} {Geo-location}
               {Multipath RTP} {Interactive Multimedia}
 }
 
@@ -84,7 +84,7 @@
 % Use this command!
 \draftabstract{
 
-The deployment of WebRTC and telepresence systems is going to enable wide-scale 
+The deployment of WebRTC and telepresence systems is going to enable wide-scale
 adoption of high quality real-time communication. Delivering high
 quality video usually corresponds to an increase in required network capacity
 and also requires an assurance of network stability. A real-time multimedia
@@ -105,7 +105,7 @@ provides options to look at congestion cues beyond those reported by the
 receiver.
 
 We propose a sender-driven, a receiver-driven, and a hybrid congestion control
-algorithm. The hybrid algorithm relies on both the sender and receiver 
+algorithm. The hybrid algorithm relies on both the sender and receiver
 co-operating to perform congestion control. Lastly, we compare the performance of
 these different algorithms. We also explore the idea of using capacity
 notifications from middleboxes (e.g., 3G/LTE base stations) along the path as
@@ -127,7 +127,6 @@ congestion control.
 In order to test and refine the ideas presented in this thesis, we have
 implemented them in proof-of-concept prototypes, and conducted
 experiments and simulations to validate our assumptions and gain new insights.
- 
 
 }
 % Let's add another one in Finnish
@@ -146,40 +145,40 @@ This dissertation is based on several years of research at Aalto University
 Internet Engineering Task Force (IETF). My sincere thanks to all the people who
 helped me with the research. Foremost, I would like to thank Prof. J\"{o}rg Ott
 for encouraging me to pursue the interaction of multimedia and congestion
-control in more detail. He is an outstanding guide, and an inspiration. His 
-timely interactions kept spirits high especially when faced with 
+control in more detail. He is an outstanding guide, and an inspiration. His
+timely interactions kept spirits high especially when faced with
 disappointments and for his patience to stay the course.
 
 Igor Curcio and Nokia Research Center, presented the practical problems faced
 by multimedia in mobile networks; his experience with mobile systems was
-influential in shaping my early ideas related to congestion control.  
+influential in shaping my early ideas related to congestion control.
 %
 Colin Perkins, his book on RTP is a practitioners guide -- covers aspects of the
-design which are not covered in the RFCs. Additionally, the numerous 
-discussions I had with him during over the span of the last few years has been 
-very beneficial. 
+design which are not covered in the RFCs. Additionally, the numerous
+discussions I had with him during over the span of the last few years has been
+very beneficial.
 %
-Lars Eggert encouraged me to contribute to the IETF and that participation 
+Lars Eggert encouraged me to contribute to the IETF and that participation
 has generated several new collaborations, including working with some of the
 brightest minds in the Internet/networking world.
 
-During the course of my research, I worked with several colleagues on a 
-day-to-day basis. They were: Sharmistha Chatterjee (2010), Saba Ahsan (2011), 
-Marcin Nagy (2012), and Albert Abello (2013). This experience was tremendously 
+During the course of my research, I worked with several colleagues on a
+day-to-day basis. They were: Sharmistha Chatterjee (2010), Saba Ahsan (2011),
+Marcin Nagy (2012), and Albert Abello (2013). This experience was tremendously
 beneficial because I learnt several skills beyond just performing research.
 
 An equal measure of gratitude is due to all the co-authors of  the papers that
-make up the thesis. They are: J\"{o}rg Ott, Igor Curcio, Saba Ahsan, Marcin 
-Nagy, Albert Abello, Colin Perkins, Lars Eggert, Jegadish Devadoss,  Martin  
+make up the thesis. They are: J\"{o}rg Ott, Igor Curcio, Saba Ahsan, Marcin
+Nagy, Albert Abello, Colin Perkins, Lars Eggert, Jegadish Devadoss,  Martin
 Ellis, Chenghao Liu, and Ye-Kui Wang.
 
 The pre-examiners for this thesis were Professors Carsten Griwodz and J\"{o}rg
-Widmer. I want to thank them both for their efforts in reviewing the thesis. 
-Their comments and suggestions helped improve the quality of the thesis. 
+Widmer. I want to thank them both for their efforts in reviewing the thesis.
+Their comments and suggestions helped improve the quality of the thesis.
 
-Special thanks my friends: Irena, L\'{a}szl\'{o}, M\'{a}rio, Cathy, Jakub, 
+Special thanks my friends: Irena, L\'{a}szl\'{o}, M\'{a}rio, Cathy, Jakub,
 Markus, Jos\'{e}-Luis, Pavan and Tatu for the help and support during
-the years of research. An extended gratitude to the folks at Aalto 
+the years of research. An extended gratitude to the folks at Aalto
 Entrepreneurship Society and Startup Sauna -- you rock! To my family for
 the sacrifice they have patiently made. Finally, I thank Irena for helping
 me understand that the benefits out-weigh the risk when following your heart.
@@ -292,10 +291,10 @@ me understand that the benefits out-weigh the risk when following your heart.
 
 % Add the dissertation author's contribution to that publication.
 
-\addcontribution{The author of this dissertation was the main author of 
-this paper and co-edited the paper with Colin Perkins. He equally contributed 
-to the ideas and concepts discussed in the paper.  He also implemented the 
-algorithm, conducted and analysed experiments for the interactive video 
+\addcontribution{The author of this dissertation was the main author of
+this paper and co-edited the paper with Colin Perkins. He equally contributed
+to the ideas and concepts discussed in the paper.  He also implemented the
+algorithm, conducted and analysed experiments for the interactive video
 scenario.}
 
 % Add the errata of the publication, remove if there are none (the order can
@@ -339,8 +338,8 @@ experiments and analysed the results.}
 % Add the dissertation author's contribution to that publication.
 
 \addcontribution{The author of this dissertation was the main author of the
-paper. He equally contributed to the ideas and concepts discussed in the 
-paper, and implemented the algorithm and the overall system, conducted the 
+paper. He equally contributed to the ideas and concepts discussed in the
+paper, and implemented the algorithm and the overall system, conducted the
 experiments and analysed the results.}
 
 \addpublicationpdf{add/3_het_ra.pdf}

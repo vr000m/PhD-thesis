@@ -5,8 +5,8 @@ implementing congestion control (corresponds to \emph{Block C} in
 Figure~\ref{fig:4:fw}), which are discussed in this chapter. This chapter is
 based on our work on Multipath RTP (MPRTP), which is documented in
 \citepub{c:mprtp}, in \cite{draft.mprtp}, \cite{draft.mprtp.sdp},
-\cite{draft.mmusic.pcp.best.int}, \cite{Globisch:AsymGrpComm}, and 
-\cite{draft.rtcp.overlay}.
+\cite{draft.mmusic.pcp.best.int}, \cite{draft.tram.path.char},
+\cite{Globisch:AsymGrpComm}, and \cite{draft.rtcp.overlay}.
 
 In \citepub{c:mprtp}, we propose design goals to implement a
 multipath protocol for multimedia, protocol details, a scheduling algorithm to
@@ -17,10 +17,13 @@ Lastly, we discuss the system consideration for deployment.
 
 In \cite{draft.mprtp}, we describe the requirements, functional blocks and
 protocol formats to extend RTP for enabling multipath capabilities. However,
-\cite{draft.mprtp} does not define a scheduling algorithm and therefore allows 
-for multiple proposals. In \cite{draft.mprtp.sdp}, we describe SDP and RTSP 
-extensions required to set up MPRTP sessions and also ICE extensions to advertise 
-MPRTP interfaces and perform NAT traversal.
+\cite{draft.mprtp} does not define a scheduling algorithm and therefore allows
+for multiple proposals. In \cite{draft.mprtp.sdp}, we describe SDP and RTSP
+extensions required to set up MPRTP sessions and also ICE extensions to advertise
+MPRTP interfaces and perform NAT traversal. \cite{draft.tram.path.char} is an
+extension to ICE candidate checks and measures RTT and loss while testing
+for connectivity. Thus, providing early measurement metrics for each path
+before MPRTP sends any media on those paths.
 
 In \cite{Globisch:AsymGrpComm}, we propose using a network topology with
 multiple distribution trees to distribute media streams in a very large
@@ -118,7 +121,7 @@ respectively. To discover its available interfaces, the multimedia application
 either uses the ICE procedures (hence, STUN) or implements a similar
 lightweight interface discovery process.
 
-The design goals for MPRTP from our perspective are: an MPRTP-enabled system that 
+The design goals for MPRTP from our perspective are: an MPRTP-enabled system that
 makes use of multiple paths and adapts to their relative capacity
 changes by redistributing the load. As different paths will likely exhibit
 different RTTs, mechanisms must be developed to overcome the resulting skew.
@@ -128,10 +131,10 @@ to perform these functions, yet maintain backwards compatibility.
 
 
 Specifically for multimedia, Liang~\emph{et al.}~\cite{Liang01} show that
-transmitting redundant voice traffic over multiple paths performs better than 
+transmitting redundant voice traffic over multiple paths performs better than
 an FEC-protected single stream. Chesterfield~\emph{et al.}~\cite{1498479}
-show that sending media over one 3G interface and UEP packets over a separate 
-3G interface can compensate for losses on the first path. 
+show that sending media over one 3G interface and UEP packets over a separate
+3G interface can compensate for losses on the first path.
 Chebrolu~\emph{et al.}~\cite{1599407} propose capacity aggregation for
 multimedia applications by computing the earliest delivery time for each
 packet. They further propose to drop less important frames (e.g., B-frames) if
@@ -143,7 +146,7 @@ proposed in this paper. However, they also propose sending future packets over
 high-latency paths by reading ahead in the media stream. While this is an
 interesting concept, it would require larger buffers and keeping more state at the
 sender (typically, RTSP servers) to read ahead the stored media stream, which
-would not work for interactive multimedia and live media streams where the 
+would not work for interactive multimedia and live media streams where the
 application cannot read ahead (into future packets).
 
 Our proposed scheduling algorithm in \citepub{c:mprtp} calculates the per path
@@ -179,8 +182,8 @@ A multipath sender chooses the paths that meet the media rate and latency
 requirements. Next, it groups the paths based on the path latencies--capacity
 is additive for paths with similar latencies~\cite{Wischik:2008:RPP}.
 Subsequently, it sorts the path groups in decreasing order of
-$\frac{capacity}{latency}$, so that groups of paths with high capacity 
-and low latency are preferred. 
+$\frac{capacity}{latency}$, so that groups of paths with high capacity
+and low latency are preferred.
 The endpoint chooses the set of paths from the groups that meet
 the encoded media's requirements and marks these paths as \emph{`active'}; the rest
 are marked \emph{`passive'}. The \emph{`passive'} paths are used when the
@@ -218,7 +221,7 @@ chose a relatively small window size to prevent the receiver from under-flowing
 by changing the playout very late. Every time the endpoint receives a packet
 on a path, it calculates the drift and inserts it into the window. The
 receiver then sorts the window and chooses the median ($\widetilde{DW}$) value
-for calculating the path skew: 
+for calculating the path skew:
 \begin{align*}
 Path\,Skew_{now} = 0.01 \times \widetilde{DW} + 0.99\times Path\,Skew_{prev}
 \end{align*}
@@ -269,12 +272,12 @@ play out packets across different path skews is discussed in detail in
   \scalebox{1.0}{
   \begin{tabular}{cccc} \hline
    & $PSNR_{avg}$ & $\sigma_{PSNR}$ & PLR\\ \hline
-  \multirow {2}{*}{} 
-  1-Path (no loss) & 48.427 & 0.00 & 0.00 \\ 
+  \multirow {2}{*}{}
+  1-Path (no loss) & 48.427 & 0.00 & 0.00 \\
   2-Path (no loss) & 48.427 & 0.00 & 0.00 \\
   3-Path (no loss) & 48.427 & 0.00 & 0.00 \\ \hline
   \multicolumn{4}{c}{Variable losses per path} \\ \hline	
-  \multirow {2}{*}{} 
+  \multirow {2}{*}{}
   1-Path (0.5\,\% loss) & 40.887 & 0.506 & 0.49 \\
   1-Path (1\,\% loss) & 36.172 & 0.705 & 1.01 \\ %\hline
   2-Path (0-0.5\,\%) & 43.4 & 1.9 & 0.24 \\
@@ -307,7 +310,7 @@ MPTCP~\cite{rfc6824}).
 
 % Endpoints will generally use a signaling protocol to establish a media
 % session. With the existence of such a signaling relationship, two alternatives
-% become available to advertise an endpoint's multiple interfaces: \emph{in-band} 
+% become available to advertise an endpoint's multiple interfaces: \emph{in-band}
 % (over the media path) or \emph{out-of-band} (over the signaling path).
 
 Typically, performing interface advertisement is tightly coupled with NAT and
@@ -349,7 +352,7 @@ mechanism when they have to use ICE and SDP anyway.
 \section{Offloading and Multihoming}
 
 In \citepub{c:mprtp}, we focus on spreading a constant bit rate (CBR) media
-stream across multiple paths, for which we present a scheduling algorithm 
+stream across multiple paths, for which we present a scheduling algorithm
 that allocates traffic based on path characteristics. We use an adaptive dejitter
 buffer at the receiver so that the endpoint can play back media packets from
 paths with diverse characteristics. In our experiments, the application
@@ -371,7 +374,7 @@ rate to spread across each subflow.
 
 \textbf{\texttt{Offloading}}: In this scenario, the end-to-end capacity on one
 path is variable, demonstrating the sensitivity of the scheduling algorithm
-to the changes in network capacity, which may be caused by 
+to the changes in network capacity, which may be caused by
 \emph{cross-traffic}. In Figure~\ref{chap7:fig_sim_var_bw}, the Path B's capacity varies
 while Path A's capacity remains constant. The figure also shows the
 instantaneous bandwidth utilisation for each MPRTP subflow. In this case where
