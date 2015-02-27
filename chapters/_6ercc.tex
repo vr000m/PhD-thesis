@@ -3,7 +3,7 @@ control, mainly because error-resilience caters to handling
 packet loss while congestion control caters to the amount of information sent
 over the network. This chapter is based on our work on unifying
 error-resilience and congestion control, which is documented in
-\citepub{c:err}, \citepub{c:fecrc}, \cite{draft.1d2d.fec}, and \cite{draft.adaptive.fec}.
+\citepub{c:err}, \citepub{c:fecrc}, \cite{draft.flex.fec}, and \cite{draft.adaptive.fec}.
 
 In \citepub{c:err}, we evaluate the performance of the various
 error-resilience schemes available for use in interactive multimedia
@@ -280,7 +280,7 @@ non-interleaved and interleaved parity FEC. This scheme (2-d parity scheme) is
 able to cope with burst loss of at least N packet in every B block of packets
 (multiple of N packets). Typically, the repair packets  are encapsulated in an
 RTP payload format, for example using the packet format  described in
-\cite{rfc5109} or \cite{draft.1d2d.fec}.
+\cite{rfc5109} or \cite{draft.flex.fec}.
 
 % The non-interleaved and interleaved parity codes offer a good protection
 % against random and bursty packet losses, respectively, at a cost of
@@ -443,7 +443,7 @@ throughput than C-NADU and lower loss ratio than RRTCC.
   \begin{tabular}{cccc}
   \hline
   \multirow{2}{*}{\textbf{Delay}} & \multirow{2}{*}{\textbf{Metric}} & \textbf{Call 1} & \textbf{Call 2} \\ \cline{3-4}
-  & & avg. $ \pm \sigma$ & avg. $ \pm \sigma$ \\ \hline 
+  & & avg. $ \pm \sigma$ & avg. $ \pm \sigma$ \\ \hline
   \multirow{5}{*}{\begin{sideways} 50ms \end{sideways}}
   & Goodput [kbps] & 375.39 $ \pm $ 88.25 & 348.77 $ \pm $ 83.64 \\
   & Loss rate [\%] & 1.21 $ \pm $ 0.19 & 1.39 $ \pm $ 0.69 \\
