@@ -411,7 +411,7 @@
 	\gdef\AaltoSeriesPrefaceEnding{#1}%
 }{%
 	\vskip2\baselineskip%
-	\noindent\ifthenelse{\equal{\AaltoSeriesPrefaceEnding}{}}{}{\AaltoSeriesPrefaceEnding, } July 31, 2014.,\vskip2\baselineskip%
+	\noindent\ifthenelse{\equal{\AaltoSeriesPrefaceEnding}{}}{}{\AaltoSeriesPrefaceEnding, } July 31, 2014.\vskip2\baselineskip%
 	\noindent\AaltoSeriesPrefaceAuthor%
 	\gdef\AaltoSeriesPrefaceEnding{}
 }
